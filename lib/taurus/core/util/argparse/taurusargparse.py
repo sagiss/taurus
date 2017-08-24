@@ -53,7 +53,7 @@ Currently, the known options are:
 
     #. ``--help`` prints the total number of available options
     #. ``--taurus-log-level`` sets the taurus log level
-    #. ``--tango-host`` sets the default tango host
+    #. ``--authority`` sets the default tango host
     #. ``--taurus-polling-period`` sets the default taurus global polling period (milliseconds)
     #. ``--taurus-serialization-mode`` sets the default taurus serialization mode
     #. ``--remote-console-port`` enables remote debugging using the given port
@@ -103,7 +103,7 @@ def get_taurus_parser(parser=None):
 
         help_tauruslog = "taurus log level. Allowed values are (case insensitive): critical, "\
                          "error, warning/warn, info, debug, trace"
-        help_tangohost = "Tango host name (either HOST:PORT or a Taurus URI, e.g. tango://foo:1234)"
+        help_authority = "A Taurus authority URI (e.g. tango://foo:1234)"
         help_tauruspolling = "taurus global polling period in milliseconds"
         help_taurusserial = "taurus serialization mode. Allowed values are (case insensitive): "\
             "serial, concurrent (default)"
@@ -114,8 +114,8 @@ def get_taurus_parser(parser=None):
                          help=help_tauruspolling, type="int", default=None)
         group.add_option("--taurus-serialization-mode", dest="taurus_serialization_mode", metavar="SERIAL",
                          help=help_taurusserial, type="str", default="Concurrent")
-        group.add_option("--tango-host", dest="tango_host", metavar="TANGO_HOST",
-                         help=help_tangohost, type="str", default=None)
+        group.add_option("--authority", dest="authority", metavar="AUTHORITY",
+                         help=help_authority, type="str", default=None)
         group.add_option("--remote-console-port", dest="remote_console_port", metavar="PORT",
                          help=help_rcport, type="int", default=None)
         parser.add_option_group(group)
@@ -168,11 +168,16 @@ def init_taurus_args(parser=None, args=None, values=None):
         log_level = getattr(taurus, log_level_str)
         taurus.setLogLevel(log_level)
 
-    # initialize tango host
-    if options.tango_host is not None:
-        tango_factory = taurus.Factory("tango")
-        tango_host = options.tango_host
-        tango_factory.set_default_tango_host(tango_host)
+    if options.authority is not None:
+        authority = options.authority
+        scheme = authority.split("://")[0]
+
+        # initialize tango host
+        if ("://" not in authority or
+                ("://" in authority and scheme.lower() == "tango")):
+            tango_factory = taurus.Factory("tango")
+            tango_authority = options.authority
+            tango_factory.set_default_tango_host(tango_authority)
 
     # initialize taurus polling period
     if options.taurus_polling_period is not None:
