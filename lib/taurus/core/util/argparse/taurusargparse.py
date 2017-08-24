@@ -53,7 +53,7 @@ Currently, the known options are:
 
     #. ``--help`` prints the total number of available options
     #. ``--taurus-log-level`` sets the taurus log level
-    #. ``--authority`` sets the default tango host
+    #. ``--authority`` sets the default authority
     #. ``--taurus-polling-period`` sets the default taurus global polling period (milliseconds)
     #. ``--taurus-serialization-mode`` sets the default taurus serialization mode
     #. ``--remote-console-port`` enables remote debugging using the given port
@@ -80,6 +80,8 @@ __all__ = ["get_taurus_parser", "init_taurus_args", "parse_taurus_args",
            "split_taurus_args"]
 
 __docformat__ = "restructuredtext"
+
+from taurus import tauruscustomsettings
 
 
 def get_taurus_parser(parser=None):
@@ -170,12 +172,16 @@ def init_taurus_args(parser=None, args=None, values=None):
 
     if options.authority is not None:
         authority = options.authority
-        scheme = authority.split("://")[0]
 
-        # initialize tango host
-        if ("://" not in authority or
-                ("://" in authority and scheme.lower() == "tango")):
-            tango_factory = taurus.Factory("tango")
+        if "://" in authority:
+            scheme = authority.split("://")[0]
+        else:
+            scheme = getattr(tauruscustomsettings, "DEFAULT_SCHEME", "tango")
+        scheme = scheme.lower()
+
+        if scheme == "tango":
+            # initialize tango host
+            tango_factory = taurus.Factory(scheme)
             tango_authority = options.authority
             tango_factory.set_default_tango_host(tango_authority)
 
