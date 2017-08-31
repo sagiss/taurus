@@ -46,6 +46,7 @@ Release data for the taurus project. It contains the following members:
 # the tarballs and RPMs made by distutils, so it's best to lowercase it.
 name = 'taurus'
 
+# Added commentS
 # we use semantic versioning (http://semver.org/) and we update it using the
 # bumpversion script (https://github.com/peritus/bumpversion)
 version = '4.1.0'
