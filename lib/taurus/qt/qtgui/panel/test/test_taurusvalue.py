@@ -36,7 +36,7 @@ DEV_NAME = TangoSchemeTestLauncher.DEV_NAME
 
 @insertTest(helper_name='texts',
             model='tango:' + DEV_NAME + '/double_scalar',
-            expected=('double_scalar', '1.23', '0.0 mm', 'mm'),
+            expected=('double_scalar', '1.23', '0.00 mm', 'mm'),
             # expected=('double_scalar', '1.23', '0.0', 'mm'),
             # TODO: change taurusvalue's line edit to hide units
             )
@@ -54,7 +54,7 @@ class TaurusValueTest(TangoSchemeTestLauncher, BaseWidgetTestCase,
         self._widget.setModel('tango:' + DEV_NAME + '/double_scalar')
         label = 'MIXEDcase'
         w.setLabelConfig(label)
-        self._app.processEvents()  # required
+        self.processEvents(repetitions=10, sleep=.1)
         shownLabel = str(w.labelWidget().text())
         msg = 'Shown label ("%s") differs from set label ("%s")' % (shownLabel,
                                                                     label)
@@ -66,7 +66,7 @@ class TaurusValueTest(TangoSchemeTestLauncher, BaseWidgetTestCase,
         self._widget.setModel(model)
         if fgRole is not None:
             self._widget.setFgRole(fgRole)
-        self._app.processEvents()
+        self.processEvents(repetitions=10, sleep=.1)
         got = (str(self._widget.labelWidget().text()),
                str(self._widget.readWidget().text()),
                str(self._widget.writeWidget().displayText()),

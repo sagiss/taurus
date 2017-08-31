@@ -43,7 +43,7 @@ DEV_NAME = TangoSchemeTestLauncher.DEV_NAME
             expected='1+2')
 @insertTest(helper_name='getDisplayValue',
             model='eval:1+2',
-            expected='3 ')  # @TODO: change to '3' if/when pint supports it
+            expected='3')
 # This checks if the pre-tep3 behavior is kept (and it fails)
 # ...but I think it should *not* be kept
 @insertTest(helper_name='getDisplayValue',
@@ -94,11 +94,6 @@ class GetDisplayValueTestCase(TangoSchemeTestLauncher, BaseWidgetTestCase,
     def getDisplayValue(self, model=None, expected=None):
         '''Check if setModel works when using parent model'''
         self._widget.setModel(model)
-        # ----------------------------
-        # workaround for https://sourceforge.net/p/tauruslib/tickets/334/
-        import time
-        time.sleep(BaseWidgetTestCase._BUG_334_WORKAROUND_TIME)
-        # ----------------------------
         got = self._widget.getDisplayValue()
         msg = ('getDisplayValue for "%s" should be %r (got %r)' %
                (model, expected, got))

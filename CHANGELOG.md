@@ -5,16 +5,102 @@ This file follows the formats and conventions from [keepachangelog.com]
 
 Note: changes in the [support-3.x] branch (which was split from 
 the master branch after [3.7.1] and maintained in parallel to the 
-develop branch)  won't be reflected in this file. 
+develop branch) won't be reflected in this file.
 
-## [Unreleased]
+
+## [4.1.0] - 2017-07-21
 
 ### Added
-- bumpversion support
+- Formatting API in TaurusBaseComponent (#444)
+- TangoAttribute.format_spec and taurus.core.util.tangoFormatter
+- Write support for eval scheme (#425)
+- Arbitrary module support in eval scheme (#423)
+- TaurusGUI New GUI wizard generates setuptools distribution (#477)
+- TaurusModel.parentObject property (#415)
+- TangoAttribute.getAttributeProxy (#450)
+- `taurusdemo` launcher (#416)
 
+### Changed
+- pint_local updated to v 0.8 (#445)
+- Improve config properties of TaurusTrend2D (#489)
+- Make taurusplot and taurustrend (re)store their geometry (#508)
+- Improve logs when handling unsupported units in
+  TangoAttributes (#420, #495, #403)
+- Improve logs when TangoAttribute read fails (#478)
+- Allow subscribing to Tango attributess without emiting firsat event (#482)
+- Use dependencies (and optional deps) in setuptools distribution (#479)
+- Make TaurusPlot inspector mode use the attribute format for display (#509)
+
+### Deprecated
+- TangoAttribute.format
+- taurus.qt.qtgui.console (#385)
+- taurustrend1d (#514)
+- tauruscurve (#514)
+
+### Removed
+- `taurus.external.ordereddict` (#223)
+- `taurus.qt.qtgui.Q*` modules (Qt, QtCore, QtGui, Qwt5,...)
+- `taurus.qt.qtgui.util.taurusropepatch` module
+- `taurusqt.qtgui.util.genwidget`
+
+### Fixed
+- Taurus4 ignoring Tango format (#392)
+- Incompatibility with Tango9.2 (#458)
+- Bug in handling of nanoseconds by TaurusTimeVal (#453)
+- Import error when PyTango is not installed (#398)
+- Issues affecting TaurusPlot (and Trends) (#422, #438, #440, #475, #508 )
+- Issues affecting TaurusLCD (#467)
+- Issues when changing tango host (#79, #378, #382, #487)
+- Issues affecting Eval (#428, #448)
+- Docs issues (#249, #267,  #397, #430, #490)
+- [Many other issues](https://github.com/taurus-org/taurus/issues?q=milestone%3AJul17+label%3Abug)
+
+
+## [4.0.3] - 2017-01-16
+[Jan17 milestone](https://github.com/taurus-org/taurus/milestone/1)
+Bugfix release.
+For a full log of commits since Jul16, run (in your git repo):
+`git log 4.0.1..4.0.3` 
+
+### Added
+- Generic Attribute, Device and  Authority getters in TaurusFactory`
+- spyder >=3 support (#343)
+- bumpversion support (for maintainers) (#347)
+- Contribution policy explicited in CONTRIBUTING.md
+- Continuous Integration for Windows support (Appveyor) (PR#10)
+
+### Changed
+- TangoAttribute now decodes uchars as integers instead of strings (#367)
+- Allow empty path in Attr and Dev URIs (#269)
+- Project migrated to Github (TEP16)
+- Versioning policy (use of `-alpha` suffix for unreleased branches)
 
 ### Deprecated
 - `taurus.Release.version_info` and `taurus.Release.revision` variables
+- `TaurusAttribute.isState` (#2)
+- `taurus.external.ordereddict` (#8)
+
+### Fixed
+- Taurus4 regressions in:
+    - TangoAttribute (when handling Tango config errors) (#365)
+    - TaurusValueSpinBox (#7)
+    - taurusgui --new-gui (#275)
+    - TaurusGui Sardana instrument panels (#372)
+    - Macrolistener (affects sardana) (#373)
+    - Synoptics (#363)
+    - TaurusValueLineEdit (#265)
+    - taurusgui.macrolistener` (#260)
+    - TaurusEditor (#343)
+- Bug causing high CPU usage in TaurusForms (#247)
+- Deprecation warnings in `TaurusWheelEdit` (#337)
+- Exceptions in `taurusconfigurationpanel` for non-tango models (#354)
+- Exception when creating non-exported tango devices (#262)
+- Bug causing random failures in the test suite(#261)
+- Documentation issues(#351, #350, #349)
+
+### Removed
+- `TaurusBaseEditor2` class
+
 
 ## [4.0.1] - 2016-07-19
 Jul16 milestone. 
@@ -152,14 +238,16 @@ and several other places](https://sf.net/p/tauruslib/tickets/milestone/Jul15/)
 
 
 [keepachangelog.com]: http://keepachangelog.com
-[TEP3]: https://sf.net/p/tauruslib/wiki/TEP3/
-[TEP14]: https://sf.net/p/tauruslib/wiki/TEP14/
-[Unreleased]: https://sf.net/p/tauruslib/taurus.git/ci/develop/tree/
-[4.0.1]: https://sf.net/p/tauruslib/taurus.git/ci/4.0.0/tree/
-[3.7.1]: https://sf.net/p/tauruslib/taurus.git/ci/3.7.1/tree/
-[3.7.0]: https://sf.net/p/tauruslib/taurus.git/ci/3.7.0/tree/
-[3.6.0]: https://sf.net/p/tauruslib/taurus.git/ci/3.6.0/tree/
-[support-3.x]: https://sf.net/p/tauruslib/taurus.git/ci/support-3.x/tree/
+[TEP3]: http://www.taurus-scada.org/tep/?TEP3.md
+[TEP14]: http://www.taurus-scada.org/tep/?TEP14.md
+[Unreleased]: https://github.com/taurus-org/taurus/tree/develop
+[4.1.0]: https://github.com/taurus-org/taurus/tree/4.1.0
+[4.0.3]: https://github.com/taurus-org/taurus/tree/4.0.3
+[4.0.1]: https://github.com/taurus-org/taurus/tree/4.0.1
+[3.7.1]: https://github.com/taurus-org/taurus/tree/3.7.1
+[3.7.0]: https://github.com/taurus-org/taurus/tree/3.7.0
+[3.6.0]: https://github.com/taurus-org/taurus/tree/3.6.0
+[support-3.x]: https://github.com/taurus-org/taurus/tree/support-3.x
 
 
 
