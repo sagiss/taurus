@@ -34,11 +34,6 @@ _setup_dir = os.path.abspath(os.path.join(_this_dir, os.path.pardir,
 _lib_dir = os.path.join(_setup_dir, 'lib')
 _doc_dir = os.path.join(_setup_dir, 'doc')
 _api_dir = os.path.join(_doc_dir, 'source', 'devel', 'api')
-_mock_path = os.path.join(_doc_dir, 'mock.zip')
-
-
-# append mock dir to the sys path (mocks will be used if needed)
-sys.path.append(_mock_path)
 
 # Import code from src distribution
 sys.path.insert(0, os.path.abspath(_lib_dir))
