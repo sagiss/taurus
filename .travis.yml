@@ -20,7 +20,18 @@ matrix:
 before_install:
   - docker run -d --name=taurus-test -h taurus-test --volume=`pwd`:/taurus $DOCKER_IMG
   - sleep 10
+  - docker exec taurus-test /bin/bash -c "apt-get -qq update"
+  - docker exec taurus-test /bin/bash -c "apt-get install -y python-sphinx-rtd-theme"
   
 script:
   - docker exec taurus-test /bin/bash -c "cd taurus ; python setup.py install"
-  - docker exec taurus-test /bin/bash -c "TAURUS_STARTER_WAIT=5 taurustestsuite -e 'taurus\.core\.util\.test\.test_timer'"
+  - travis_wait docker exec taurus-test /bin/bash -c "TAURUS_STARTER_WAIT=5 taurustestsuite -e 'taurus\.core\.util\.test\.test_timer'"
+  - docker exec taurus-test /bin/bash -c "cd taurus ; python setup.py build_sphinx"
+  
+deploy:
+  provider: pages
+  local_dir: ./build/sphinx/html
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  on:
+    branch: develop
