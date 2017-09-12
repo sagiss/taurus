@@ -20,8 +20,6 @@ matrix:
 before_install:
   - docker run -d --name=taurus-test -h taurus-test --volume=`pwd`:/taurus $DOCKER_IMG
   - sleep 10
-  - docker exec taurus-test /bin/bash -c "apt-get -qq update"
-  - docker exec taurus-test /bin/bash -c "apt-get install -y python-sphinx-rtd-theme"
   
 script:
   - docker exec taurus-test /bin/bash -c "cd taurus ; python setup.py install"
