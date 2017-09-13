@@ -27,8 +27,8 @@ before_install:
 script:
   - docker exec taurus-test /bin/bash -c "cd /taurus ; python setup.py install"
   - travis_wait docker exec taurus-test /bin/bash -c "TAURUS_STARTER_WAIT=5 taurustestsuite -e 'taurus\.core\.util\.test\.test_timer'"
-  - if [ $BUILD_DOC == "Y" ]; then docker exec taurus-test /bin/bash -c "cd /taurus ; python setup.py build_sphinx"; fi
-  - if [ $BUILD_DOC == "Y" ]; then docker exec taurus-test /bin/bash -c "touch /taurus/build/sphinx/html/.nojekyll"; fi 
+  - if [ $BUILD_DOC = "Y" ]; then docker exec taurus-test /bin/bash -c "cd /taurus ; python setup.py build_sphinx"; fi
+  - if [ $BUILD_DOC = "Y" ]; then docker exec taurus-test /bin/bash -c "touch /taurus/build/sphinx/html/.nojekyll"; fi 
   
 deploy:
   provider: pages
