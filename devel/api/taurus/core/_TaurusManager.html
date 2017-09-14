@@ -1,0 +1,630 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusManager &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="taurus.core" href="../core.html"/>
+        <link rel="next" title="TaurusModel" href="_TaurusModel.html"/>
+        <link rel="prev" title="TaurusLockInfo" href="_TaurusLockInfo.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../core.html"><code class="docutils literal"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">TaurusManager</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../_sources/devel/api/taurus/core/_TaurusManager.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusmanager">
+<h1><a class="reference internal" href="#taurus.core.TaurusManager" title="taurus.core.TaurusManager"><code class="xref py py-class docutils literal"><span class="pre">TaurusManager</span></code></a><a class="headerlink" href="#taurusmanager" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../_images/inheritance-ddde0ae779808dfc4a31e53adc3b7bec812f9c32.png" alt="Inheritance diagram of TaurusManager" usemap="#inheritance2f5bf39b1f" class="inheritance"/>
+<map id="inheritance2f5bf39b1f" name="inheritance2f5bf39b1f">
+<area shape="rect" id="node1" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="112,101,184,149"/>
+<area shape="rect" id="node4" title="A :class:`taurus.core.util.singleton.Singleton` class designed to provide Taurus management." alt="" coords="42,197,161,245"/>
+<area shape="rect" id="node3" title="This class allows Singleton objects" alt="" coords="5,101,88,149"/>
+</map>
+<dl class="class">
+<dt id="taurus.core.TaurusManager">
+<em class="property">class </em><code class="descname">TaurusManager</code><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.core.util.singleton.Singleton</span></code>, <code class="xref py py-class docutils literal"><span class="pre">taurus.core.util.log.Logger</span></code></p>
+<p>A <code class="xref py py-class docutils literal"><span class="pre">taurus.core.util.singleton.Singleton</span></code> class designed to provide Taurus management.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">taurus.core.taurusmanager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">manager</span> <span class="o">==</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="taurus.core.TaurusManager.DefaultSerializationMode">
+<code class="descname">DefaultSerializationMode</code><em class="property"> = 1</em><a class="headerlink" href="#taurus.core.TaurusManager.DefaultSerializationMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.TaurusManager.PLUGIN_KEY">
+<code class="descname">PLUGIN_KEY</code><em class="property"> = '__taurus_plugin__'</em><a class="headerlink" href="#taurus.core.TaurusManager.PLUGIN_KEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.addJob">
+<code class="descname">addJob</code><span class="sig-paren">(</span><em>job</em>, <em>callback=None</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.addJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.addJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new job (callable) to the queue. The new job will be processed
+by a separate thread</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>job</strong> (<code class="xref py py-class docutils literal"><span class="pre">callable</span></code>) &#8211; a callable object</li>
+<li><strong>callback</strong> (<code class="xref py py-class docutils literal"><span class="pre">callable</span></code>) &#8211; called after the job has been processed</li>
+<li><strong>args</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>) &#8211; list of arguments passed to the job</li>
+<li><strong>kw</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; keyword arguments passed to the job</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.applyPendingOperations">
+<code class="descname">applyPendingOperations</code><span class="sig-paren">(</span><em>ops</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.applyPendingOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.applyPendingOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the given operations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ops</strong> (<em>sequence&lt;taurus.core.taurusoperation.TaurusOperation&gt;</em>) &#8211; the sequence of operations</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.buildPlugins">
+<code class="descname">buildPlugins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.buildPlugins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.buildPlugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current valid plugins</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">dic</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">plugins</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.changeDefaultPollingPeriod">
+<code class="descname">changeDefaultPollingPeriod</code><span class="sig-paren">(</span><em>period</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.changeDefaultPollingPeriod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.changeDefaultPollingPeriod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.cleanUp">
+<code class="descname">cleanUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.cleanUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.cleanUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleanup</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.TaurusManager.default_scheme">
+<code class="descname">default_scheme</code><em class="property"> = 'tango'</em><a class="headerlink" href="#taurus.core.TaurusManager.default_scheme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.findObject">
+<code class="descname">findObject</code><span class="sig-paren">(</span><em>absolute_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.findObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.findObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the object with the given name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>absolute_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the object name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the taurus model object or None if
+no suitable name found</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.findObjectClass">
+<code class="descname">findObjectClass</code><span class="sig-paren">(</span><em>absolute_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.findObjectClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.findObjectClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the object class for the given object name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>absolute_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the object name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the taurus model class object or
+None if no suitable name found</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getAttribute">
+<code class="descname">getAttribute</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a attribute object for the given name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; attribute name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusAttribute</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the attribute for the given name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getAuthority">
+<code class="descname">getAuthority</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getAuthority"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getAuthority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a database object for the given name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; database name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusAuthority</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the authority for the given name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getConfiguration">
+<code class="descname">getConfiguration</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.TaurusManager.getConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a configuration object for the given name</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">type name:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">param name:</th><td class="field-body">configuration name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusConfiguration</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">the configuration for the given name</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getAttribute instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getDatabase">
+<code class="descname">getDatabase</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated. Use getAuthority instead</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getDefaultFactory">
+<code class="descname">getDefaultFactory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getDefaultFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getDefaultFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the default factory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusFactory</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the default taurus factory</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getDevice">
+<code class="descname">getDevice</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a device object for the given name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; device name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusDevice</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the device for the given name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getFactory">
+<code class="descname">getFactory</code><span class="sig-paren">(</span><em>scheme=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the factory class object supporting the given scheme</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scheme</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the scheme. If None the default scheme is used</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusFactory</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the factory class object for the
+given scheme or None if a proper factory is not found</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getObject">
+<code class="descname">getObject</code><span class="sig-paren">(</span><em>cls</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the object for the given class with the given name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cls</strong> (<code class="xref py py-class docutils literal"><span class="pre">TaurusModel</span></code>) &#8211; object class</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the object name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal"><span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a taurus model object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getOperationMode">
+<code class="descname">getOperationMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getOperationMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getOperationMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated. Gives the current operation mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">OperationMode</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the current operation mode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getPlugins">
+<code class="descname">getPlugins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getPlugins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getPlugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the information about the existing plugins</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">TaurusFactory</span></code>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the list of plugins</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getScheme">
+<code class="descname">getScheme</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getScheme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getScheme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the scheme name for a given model name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; model name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">scheme name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.getSerializationMode">
+<code class="descname">getSerializationMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.getSerializationMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.getSerializationMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the serialization operation mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusSerializationMode</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the current serialization mode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.init">
+<code class="descname">init</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Singleton instance initialization.
+For internal usage only. Do <strong>NOT</strong> call this method directly</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.reInit">
+<code class="descname">reInit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.reInit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.reInit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reinitialization</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.setOperationMode">
+<code class="descname">setOperationMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.setOperationMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.setOperationMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated. Sets the operation mode for the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<code class="xref py py-class docutils literal"><span class="pre">OperationMode</span></code>) &#8211; the new operation mode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.setSerializationMode">
+<code class="descname">setSerializationMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.setSerializationMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.setSerializationMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the serialization mode for the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<code class="xref py py-class docutils literal"><span class="pre">TaurusSerializationMode</span></code>) &#8211; the new serialization mode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusModel.html" class="btn btn-neutral float-right" title="TaurusModel" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusLockInfo.html" class="btn btn-neutral" title="TaurusLockInfo" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

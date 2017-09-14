@@ -1,0 +1,919 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Logger &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="taurus.core.resource" href="../resource.html"/>
+        <link rel="next" title="ResourcesFactory" href="_ResourcesFactory.html"/>
+        <link rel="prev" title="taurus.core.resource" href="../resource.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../core.html"><code class="docutils literal"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+      
+          <li><a href="../resource.html"><code class="docutils literal"><span class="pre">taurus.core.resource</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">Logger</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../_sources/devel/api/taurus/core/resource/_Logger.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="logger">
+<h1><a class="reference internal" href="#taurus.core.resource.Logger" title="taurus.core.resource.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a><a class="headerlink" href="#logger" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../_images/inheritance-ffb8b62cde3a62da6f9cc48b0e138997eb2e6651.png" alt="Inheritance diagram of Logger" usemap="#inheritance8bff363ae7" class="inheritance"/>
+<map id="inheritance8bff363ae7" name="inheritance8bff363ae7">
+<area shape="rect" id="node1" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="5,101,77,149"/>
+</map>
+<dl class="class">
+<dt id="taurus.core.resource.Logger">
+<em class="property">class </em><code class="descname">Logger</code><span class="sig-paren">(</span><em>name=''</em>, <em>parent=None</em>, <em>format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.core.util.object.Object</span></code></p>
+<p>The taurus logger class. All taurus pertinent classes should inherit
+directly or indirectly from this class if they need taurus logging
+facilities.</p>
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.Critical">
+<code class="descname">Critical</code><em class="property"> = 50</em><a class="headerlink" href="#taurus.core.resource.Logger.Critical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Critical message level (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.Debug">
+<code class="descname">Debug</code><em class="property"> = 10</em><a class="headerlink" href="#taurus.core.resource.Logger.Debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Debug message level (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.DftLogFormat">
+<code class="descname">DftLogFormat</code><em class="property"> = &lt;logging.Formatter object&gt;</em><a class="headerlink" href="#taurus.core.resource.Logger.DftLogFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default log format (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.DftLogLevel">
+<code class="descname">DftLogLevel</code><em class="property"> = 20</em><a class="headerlink" href="#taurus.core.resource.Logger.DftLogLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default log level (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.DftLogMessageFormat">
+<code class="descname">DftLogMessageFormat</code><em class="property"> = '%(threadName)-14s %(levelname)-8s %(asctime)s %(name)s: %(message)s'</em><a class="headerlink" href="#taurus.core.resource.Logger.DftLogMessageFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default log message format (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.Error">
+<code class="descname">Error</code><em class="property"> = 40</em><a class="headerlink" href="#taurus.core.resource.Logger.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error message level (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.Fatal">
+<code class="descname">Fatal</code><em class="property"> = 50</em><a class="headerlink" href="#taurus.core.resource.Logger.Fatal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fatal message level (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.Info">
+<code class="descname">Info</code><em class="property"> = 20</em><a class="headerlink" href="#taurus.core.resource.Logger.Info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Info message level (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.Trace">
+<code class="descname">Trace</code><em class="property"> = 5</em><a class="headerlink" href="#taurus.core.resource.Logger.Trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trace message level (constant)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.Warning">
+<code class="descname">Warning</code><em class="property"> = 30</em><a class="headerlink" href="#taurus.core.resource.Logger.Warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Warning message level (constant)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.addChild">
+<code class="descname">addChild</code><span class="sig-paren">(</span><em>child</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.addChild"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.addChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new logging child</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>child</strong> (<a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a>) &#8211; the new child</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.addLevelName">
+<em class="property">classmethod </em><code class="descname">addLevelName</code><span class="sig-paren">(</span><em>level_no</em>, <em>level_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.addLevelName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.addLevelName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a new log level</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>level_no</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; the level number</li>
+<li><strong>level_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the corresponding name</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.addLogHandler">
+<code class="descname">addLogHandler</code><span class="sig-paren">(</span><em>handler</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.addLogHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.addLogHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a new handler in this object&#8217;s logger</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>handler</strong> (<a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Handler" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">Handler</span></code></a>) &#8211; the new handler to be added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.addRootLogHandler">
+<em class="property">classmethod </em><code class="descname">addRootLogHandler</code><span class="sig-paren">(</span><em>h</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.addRootLogHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.addRootLogHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new handler to the root logger</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>h</strong> (<a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Handler" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">Handler</span></code></a>) &#8211; the new log handler</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.changeLogName">
+<code class="descname">changeLogName</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.changeLogName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.changeLogName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the log name for this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the new log name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.cleanUp">
+<code class="descname">cleanUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.cleanUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.cleanUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The cleanUp. Default implementation does nothing
+Overwrite when necessary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.copyLogHandlers">
+<code class="descname">copyLogHandlers</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.copyLogHandlers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.copyLogHandlers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies the log handlers of other object to this object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; object which contains &#8216;log_handlers&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.critical">
+<code class="descname">critical</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.critical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a critical message in this object&#8217;s logger. Accepted <em>args</em> and
+<em>kwargs</em> are the same as <a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.critical" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.critical()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+<li><strong>kw</strong> &#8211; list of keyword arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a debug message in this object&#8217;s logger. Accepted <em>args</em> and
+<em>kwargs</em> are the same as <a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.debug" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.debug()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+<li><strong>kw</strong> &#8211; list of keyword arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.deprecated">
+<code class="descname">deprecated</code><span class="sig-paren">(</span><em>msg=None</em>, <em>dep=None</em>, <em>alt=None</em>, <em>rel=None</em>, <em>dbg_msg=None</em>, <em>_callerinfo=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.deprecated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.deprecated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a deprecated warning message in this object&#8217;s logger.
+If message is not passed, a estandard deprecation message is
+constructued using dep, alt, rel arguments.
+Also, an extra debug message can be recorded, followed by traceback
+info.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded (if None passed, it will
+be constructed using dep (and, optionally, alt and rel)</li>
+<li><strong>dep</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; name of deprecated feature (in case msg is None)</li>
+<li><strong>alt</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; name of alternative feature (in case msg is None)</li>
+<li><strong>rel</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; name of release from which the feature was
+deprecated (in case msg is None)</li>
+<li><strong>dbg_msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; msg for debug (or None to log only the warning)</li>
+<li><strong>_callerinfo</strong> &#8211; for internal use only. Do not use this argument.</li>
+<li><strong>kw</strong> &#8211; any additional keyword arguments, are passed to
+<a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.warning" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.warning()</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.disableLogOutput">
+<em class="property">classmethod </em><code class="descname">disableLogOutput</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.disableLogOutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.disableLogOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disables the <a class="reference external" href="https://docs.python.org/dev/library/logging.handlers.html#logging.StreamHandler" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">logging.StreamHandler</span></code></a> which dumps log records,
+by default, to the stderr.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.enableLogOutput">
+<em class="property">classmethod </em><code class="descname">enableLogOutput</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.enableLogOutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.enableLogOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables the <a class="reference external" href="https://docs.python.org/dev/library/logging.handlers.html#logging.StreamHandler" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">logging.StreamHandler</span></code></a> which dumps log records,
+by default, to the stderr.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record an error message in this object&#8217;s logger. Accepted <em>args</em> and
+<em>kwargs</em> are the same as <a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.error" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.error()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+<li><strong>kw</strong> &#8211; list of keyword arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.exception">
+<code class="descname">exception</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a message with severity &#8216;ERROR&#8217; on the root logger, with
+exception information.. Accepted <em>args</em> are the same as
+<a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.exception" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.exception()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.fatal">
+<code class="descname">fatal</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.fatal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.fatal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a fatal message in this object&#8217;s logger. Accepted <em>args</em> and
+<em>kwargs</em> are the same as <code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.fatal()</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+<li><strong>kw</strong> &#8211; list of keyword arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.flushOutput">
+<code class="descname">flushOutput</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.flushOutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.flushOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flushes the log output</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.getChildren">
+<code class="descname">getChildren</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getChildren"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log children for this object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the list of log children</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.getLogFormat">
+<em class="property">classmethod </em><code class="descname">getLogFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getLogFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getLogFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns the current log message format (the root log format)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the log message format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.getLogFullName">
+<code class="descname">getLogFullName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getLogFullName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getLogFullName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the full log name for this object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the full log name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.getLogLevel">
+<em class="property">classmethod </em><code class="descname">getLogLevel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getLogLevel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getLogLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns the current log level (the root log level)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a number representing the log level</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.getLogName">
+<code class="descname">getLogName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getLogName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getLogName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the log name for this object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the log name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.getLogObj">
+<code class="descname">getLogObj</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getLogObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getLogObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log object for this object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the log object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.getLogger">
+<em class="property">classmethod </em><code class="descname">getLogger</code><span class="sig-paren">(</span><em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getLogger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.getParent">
+<code class="descname">getParent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getParent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log parent for this object or None if no parent exists</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the log parent for this object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.getRootLog">
+<em class="property">classmethod </em><code class="descname">getRootLog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.getRootLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.getRootLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns the root logger</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the root logger</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record an info message in this object&#8217;s logger. Accepted <em>args</em> and
+<em>kwargs</em> are the same as <a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.info" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.info()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+<li><strong>kw</strong> &#8211; list of keyword arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.initRoot">
+<em class="property">classmethod </em><code class="descname">initRoot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.initRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.initRoot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method to initialize the root logger. Do <strong>NOT</strong> call this
+method directly in your code</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>level</em>, <em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a log message in this object&#8217;s logger. Accepted <em>args</em> and
+<em>kwargs</em> are the same as <a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.log" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.log()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>level</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; the record level</li>
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+<li><strong>kw</strong> &#8211; list of keyword arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.log_format">
+<code class="descname">log_format</code><em class="property"> = &lt;logging.Formatter object&gt;</em><a class="headerlink" href="#taurus.core.resource.Logger.log_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default log message format</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.log_level">
+<code class="descname">log_level</code><em class="property"> = 20</em><a class="headerlink" href="#taurus.core.resource.Logger.log_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current global log level</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.removeRootLogHandler">
+<em class="property">classmethod </em><code class="descname">removeRootLogHandler</code><span class="sig-paren">(</span><em>h</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.removeRootLogHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.removeRootLogHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the given handler from the root logger</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>h</strong> (<a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Handler" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">Handler</span></code></a>) &#8211; the handler to be removed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.resetLogFormat">
+<em class="property">classmethod </em><code class="descname">resetLogFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.resetLogFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.resetLogFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the log message format (the root log format)</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.resetLogLevel">
+<em class="property">classmethod </em><code class="descname">resetLogLevel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.resetLogLevel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.resetLogLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the log level (the root log level)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.root_init_lock">
+<code class="descname">root_init_lock</code><em class="property"> = &lt;thread.lock object&gt;</em><a class="headerlink" href="#taurus.core.resource.Logger.root_init_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal usage</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.root_inited">
+<code class="descname">root_inited</code><em class="property"> = True</em><a class="headerlink" href="#taurus.core.resource.Logger.root_inited" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal usage</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.setLogFormat">
+<em class="property">classmethod </em><code class="descname">setLogFormat</code><span class="sig-paren">(</span><em>format</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.setLogFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.setLogFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the new log message format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>level</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the new log message format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.core.resource.Logger.setLogLevel">
+<em class="property">classmethod </em><code class="descname">setLogLevel</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.setLogLevel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.setLogLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the new log level (the root log level)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>level</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; the new log level</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.stack">
+<code class="descname">stack</code><span class="sig-paren">(</span><em>target=5</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.stack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.stack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log the usual stack information, followed by a listing of all the
+local variables in each frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>target</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; the log level assigned to the record</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The stack string representation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.Logger.stream_handler">
+<code class="descname">stream_handler</code><em class="property"> = &lt;logging.StreamHandler object&gt;</em><a class="headerlink" href="#taurus.core.resource.Logger.stream_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>the main stream handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.syncLog">
+<code class="descname">syncLog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.syncLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.syncLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Synchronises the log output</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.trace">
+<code class="descname">trace</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.trace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a trace message in this object&#8217;s logger. Accepted <em>args</em> and
+<em>kwargs</em> are the same as <a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.log" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.log()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+<li><strong>kw</strong> &#8211; list of keyword arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.traceback">
+<code class="descname">traceback</code><span class="sig-paren">(</span><em>level=5</em>, <em>extended=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.traceback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log the usual traceback information, followed by a listing of all the
+local variables in each frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>level</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; the log level assigned to the traceback record</li>
+<li><strong>extended</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the log record message will have multiple lines</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The traceback string representation</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.Logger.warning">
+<code class="descname">warning</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#Logger.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Logger.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record a warning message in this object&#8217;s logger. Accepted <em>args</em> and
+<em>kwargs</em> are the same as <a class="reference external" href="https://docs.python.org/dev/library/logging.html#logging.Logger.warning" title="(in Python v3.7)"><code class="xref py py-meth docutils literal"><span class="pre">logging.Logger.warning()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the message to be recorded</li>
+<li><strong>args</strong> &#8211; list of arguments</li>
+<li><strong>kw</strong> &#8211; list of keyword arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_ResourcesFactory.html" class="btn btn-neutral float-right" title="ResourcesFactory" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../resource.html" class="btn btn-neutral" title="taurus.core.resource" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

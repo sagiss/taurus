@@ -1,0 +1,1122 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.input.qwheel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.input.qwheel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.input.qwheel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides an arrow based widget.&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QWheelEdit&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.pint</span> <span class="k">import</span> <span class="n">Q_</span>
+
+<span class="k">class</span> <span class="nc">_ArrowButton</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Private class to be used by QWheelEdit for an arrow button&quot;&quot;&quot;</span>
+
+    <span class="n">ArrowPixmapName</span> <span class="o">=</span> <span class="s2">&quot;extra_icons:arrow01.svg&quot;</span>
+
+    <span class="n">ButtonSize</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">IconSize</span> <span class="o">=</span> <span class="n">ButtonSize</span> <span class="o">-</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAutoDefault</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">pixmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPixmap</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">pixmap</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">_ArrowButton</span><span class="o">.</span><span class="n">IconSize</span><span class="p">,</span> <span class="n">_ArrowButton</span><span class="o">.</span><span class="n">IconSize</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ClickFocus</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFlat</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;_ArrowButton { border: 0px; }&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="n">_ArrowButton</span><span class="o">.</span><span class="n">ButtonSize</span><span class="p">,</span> <span class="n">_ArrowButton</span><span class="o">.</span><span class="n">ButtonSize</span><span class="p">)</span>
+        <span class="c1">#self.setMinimumSize(_ArrowButton.ButtonSize, _ArrowButton.ButtonSize)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_inc</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_UpArrowButton</span><span class="p">(</span><span class="n">_ArrowButton</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Private class to be used by QWheelEdit for an up arrow button&quot;&quot;&quot;</span>
+
+    <span class="n">ArrowPixmapKey</span> <span class="o">=</span> <span class="s2">&quot;upArrow01&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">_ArrowButton</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getPixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">_UpArrowButton</span><span class="o">.</span><span class="n">ArrowPixmapKey</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ArrowPixmapName</span><span class="p">)</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">_UpArrowButton</span><span class="o">.</span><span class="n">ArrowPixmapKey</span><span class="p">,</span> <span class="n">pm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pm</span>
+
+
+<span class="k">class</span> <span class="nc">_DownArrowButton</span><span class="p">(</span><span class="n">_ArrowButton</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Private class to be used by QWheelEdit for a down arrow button&quot;&quot;&quot;</span>
+
+    <span class="n">ArrowPixmapKey</span> <span class="o">=</span> <span class="s2">&quot;downArrow01&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">_ArrowButton</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_inc</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_inc</span>
+
+    <span class="k">def</span> <span class="nf">getPixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">_DownArrowButton</span><span class="o">.</span><span class="n">ArrowPixmapKey</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ArrowPixmapName</span><span class="p">)</span>
+            <span class="n">pm</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">transformed</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMatrix</span><span class="p">()</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">180</span><span class="p">))</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">_DownArrowButton</span><span class="o">.</span><span class="n">ArrowPixmapKey</span><span class="p">,</span> <span class="n">pm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pm</span>
+
+<span class="k">class</span> <span class="nc">_DigitLabel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A private single digit label to be used by QWheelEdit widget&quot;&quot;&quot;</span>
+
+    <span class="n">PixmapKeys</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;blank&#39;</span><span class="p">,</span> <span class="s1">&#39;minus&#39;</span><span class="p">,</span> <span class="s1">&#39;point&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lbl</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">StrongFocus</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;QLabel:focus {background-color: rgb(180,180,255); border-width: 1px; border-style: solid; border-color: rgb(200,200,255);}&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetSkin</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">lbl</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upButton</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_downButton</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">setButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">up</span><span class="p">,</span> <span class="n">down</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upButton</span> <span class="o">=</span> <span class="n">up</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_downButton</span> <span class="o">=</span> <span class="n">down</span>
+
+    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key_event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Up</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_upButton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key_event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Down</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_downButton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key_event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Right</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">focusNextChild</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key_event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Left</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">focusPreviousChild</span><span class="p">()</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_skin_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">skin</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;digits&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSkin</span><span class="p">())</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PixmapKeys</span><span class="p">):</span>
+            <span class="n">full_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">skin</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+            <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">full_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.png&#39;</span> <span class="o">%</span> <span class="n">full_name</span>
+                <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">pm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">pm</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+                    <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">full_name</span><span class="p">,</span> <span class="n">pm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setSkin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skin_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_skin</span> <span class="o">=</span> <span class="n">skin_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_skin_cache</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">getSkin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_skin</span>
+
+    <span class="k">def</span> <span class="nf">resetSkin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSkin</span><span class="p">(</span><span class="s1">&#39;Nixie&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="s1">&#39;point&#39;</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="s1">&#39;minus&#39;</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="s1">&#39;blank&#39;</span>
+
+        <span class="n">k</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;digits&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSkin</span><span class="p">(),</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pm</span><span class="p">)</span>
+
+    <span class="n">skin</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">,</span> <span class="n">getSkin</span><span class="p">,</span> <span class="n">setSkin</span><span class="p">,</span> <span class="n">resetSkin</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_NumericEditor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A private editor to be used by QWheelEdit widget&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFrame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="QWheelEdit"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit">[docs]</a><span class="k">class</span> <span class="nc">QWheelEdit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A widget designed to handle numeric scalar values. It allows interaction</span>
+<span class="sd">    based on single digit as well as normal value edition.&quot;&quot;&quot;</span>
+
+    <span class="n">numberChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">numberEdited</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">returnPressed</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="n">DefaultIntDigitCount</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">DefaultDecDigitCount</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;__init__(self, parent = None) -&gt; QWheelEdit</span>
+
+<span class="sd">        Constructor</span>
+
+<span class="sd">        @param[in] parent (QWidget) the parent widget (optional, default is None</span>
+<span class="sd">                          meaning there is no parent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_roundFunc</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_previous_value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_str</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minValue</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">min</span>  <span class="c1"># -inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maxValue</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span>  <span class="c1"># inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showArrowButtons</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setDigits</span><span class="p">(</span><span class="n">QWheelEdit</span><span class="o">.</span><span class="n">DefaultIntDigitCount</span><span class="p">,</span>
+                        <span class="n">QWheelEdit</span><span class="o">.</span><span class="n">DefaultDecDigitCount</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_getMinPossibleValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_getMinPossibleValue(self) -&gt; None</span>
+
+<span class="sd">        Determines which is the minimum possible value that can be represented</span>
+<span class="sd">        with the current total number of digits.</span>
+
+<span class="sd">        @return (float) the minimum possible value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">decmax</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDecDigitCount</span><span class="p">()):</span>
+            <span class="n">decmax</span> <span class="o">+=</span> <span class="mi">9</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getIntDigitCount</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">decmax</span>
+
+    <span class="k">def</span> <span class="nf">_getMaxPossibleValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_getMaxPossibleValue(self) -&gt; None</span>
+
+<span class="sd">        Determines which is the maximum possible value that can be represented</span>
+<span class="sd">        with the current total number of digits.</span>
+
+<span class="sd">        @return (float) the maximum possible value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">decmax</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDecDigitCount</span><span class="p">()):</span>
+            <span class="n">decmax</span> <span class="o">+=</span> <span class="mi">9</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getIntDigitCount</span><span class="p">())</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">decmax</span>
+
+    <span class="k">def</span> <span class="nf">_build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_build(self) -&gt; None</span>
+
+<span class="sd">        Builds this widget sub-items&quot;&quot;&quot;</span>
+
+        <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setMargin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getIntDigitCount</span><span class="p">()</span>
+        <span class="n">dd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDecDigitCount</span><span class="p">()</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDigitCount</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QButtonGroup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QButtonGroup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span><span class="p">:</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+
+        <span class="n">showDot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDecDigitCount</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+        <span class="n">signLabel</span> <span class="o">=</span> <span class="n">_DigitLabel</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+        <span class="n">signLabel</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
+        <span class="n">signLabel</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">signLabel</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">signLabel</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setRowMinimumHeight</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">signLabel</span><span class="o">.</span><span class="n">minimumSizeHint</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setColumnMinimumWidth</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_ArrowButton</span><span class="o">.</span><span class="n">ButtonSize</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setColumnStretch</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">_DigitLabel</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+            <span class="n">up</span> <span class="o">=</span> <span class="n">_UpArrowButton</span><span class="p">(</span><span class="nb">id</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">down</span> <span class="o">=</span> <span class="n">_DownArrowButton</span><span class="p">(</span><span class="nb">id</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">setButtons</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="n">down</span><span class="p">)</span>
+            <span class="n">up</span><span class="o">.</span><span class="n">setFocusProxy</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">setFocusProxy</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">down</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getShowArrowButtons</span><span class="p">():</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">down</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">showDot</span><span class="p">:</span>
+            <span class="n">dotLabel</span> <span class="o">=</span> <span class="n">_DigitLabel</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+            <span class="n">dotLabel</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
+            <span class="n">dotLabel</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dotLabel</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">dotLabel</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">digits</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">showDot</span><span class="p">:</span>
+                <span class="n">col</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">_DigitLabel</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+            <span class="n">up</span> <span class="o">=</span> <span class="n">_UpArrowButton</span><span class="p">(</span><span class="nb">id</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">down</span> <span class="o">=</span> <span class="n">_DownArrowButton</span><span class="p">(</span><span class="nb">id</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">setButtons</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="n">down</span><span class="p">)</span>
+            <span class="n">up</span><span class="o">.</span><span class="n">setFocusProxy</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">setFocusProxy</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">down</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getShowArrowButtons</span><span class="p">():</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">down</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttonClicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buttonPressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">buttonClicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buttonPressed</span><span class="p">)</span>
+
+        <span class="n">ed</span> <span class="o">=</span> <span class="n">_NumericEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editingFinished</span><span class="p">)</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">editingFinished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ed</span><span class="o">.</span><span class="n">hide</span><span class="p">)</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">cellRect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">topLeft</span><span class="p">(),</span>
+                        <span class="n">l</span><span class="o">.</span><span class="n">cellRect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">bottomRight</span><span class="p">())</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getMinValue</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMaxValue</span><span class="p">(),</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">getDecDigitCount</span><span class="p">())</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span> <span class="o">=</span> <span class="n">ed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearWarning</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_clear(self) -&gt; None</span>
+
+<span class="sd">        Clears this widget sub-items&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttonClicked</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buttonPressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">buttonClicked</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buttonPressed</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">removeButton</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">removeButton</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span><span class="p">:</span>
+            <span class="n">label</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">label</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_setMinMax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_setMinMax(self, min, max) -&gt; None</span>
+
+<span class="sd">        Sets the minimum and maximum values for this widget</span>
+
+<span class="sd">        @param[in] min(float) minimum value</span>
+<span class="sd">        @param[in] max(float) maximum value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minValue</span> <span class="o">=</span> <span class="nb">min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maxValue</span> <span class="o">=</span> <span class="nb">max</span>
+
+    <span class="k">def</span> <span class="nf">_setDigits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">int_nb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dec_nb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_setDigits(self, int_nb=None, dec_nb=None) -&gt; None</span>
+
+<span class="sd">        Sets the number of digits that this widget shows. It will ensure that</span>
+<span class="sd">        the current value can be displayed (i.e., int_nb will be forced to be</span>
+<span class="sd">        large enough for displaying the integer representation of the value)</span>
+
+<span class="sd">        @param[in] int_nb (int) number of integer digits (optional, default is</span>
+<span class="sd">                   None, meaning use the existing number of integer digits</span>
+<span class="sd">        @param[in] dec_nb (int) number of decimal digits (optional, default is</span>
+<span class="sd">                   None, meaning use the existing number of decimal digits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">int_nb</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_intDigitCount</span> <span class="o">=</span> <span class="n">int_nb</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dec_nb</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_decDigitCount</span> <span class="o">=</span> <span class="n">dec_nb</span>
+
+        <span class="c1"># make sure that the current value can be displayed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_intDigitCount</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_intDigitCount</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digitCount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intDigitCount</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decDigitCount</span>
+        <span class="n">total_chars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_digitCount</span>
+        <span class="n">total_chars</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># for sign</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decDigitCount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">total_chars</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># for dot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valueFormat</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%%</span><span class="s1">+0</span><span class="si">%d</span><span class="s1">.</span><span class="si">%d</span><span class="s1">f&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">total_chars</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decDigitCount</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setMinMax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_getMinPossibleValue</span><span class="p">(),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_getMaxPossibleValue</span><span class="p">())</span>
+        <span class="c1"># we call setValue to update the self._value_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_buildValueStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_buildValueStr(self, v) -&gt; str</span>
+
+<span class="sd">        Builds a string representation of the given value according to the</span>
+<span class="sd">        number of digits this widget can currently represent</span>
+
+<span class="sd">        @param[in] v (float) the value to be translated</span>
+
+<span class="sd">        @return (str) a proper string representation of the given value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_valueFormat</span> <span class="o">%</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valueFormat</span> <span class="o">%</span> <span class="n">v</span>
+            <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">):</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_str</span> <span class="o">=</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">_updateDigits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_updateDigits(self) -&gt; None</span>
+
+<span class="sd">        Updates this widget contents (sub-widgets) according to the current</span>
+<span class="sd">        widget configuration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateValue</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_updateValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trigValueChanged</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">trigValueEdited</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_updateValue(self, trigValueChanged=True, trigValueEdited=True) -&gt; None</span>
+
+<span class="sd">        Updates this widget displayed value and potentially send signal(s)</span>
+
+<span class="sd">        @param[in] trigValueChanged (bool) (optional, default is True) wheather or</span>
+<span class="sd">                   not to send signal &#39;valueChanged(double)&#39;</span>
+<span class="sd">        @param[in] trigValueEdited (bool) (optional, default is True) wheather or</span>
+<span class="sd">                   not to send signal &#39;valueEdit(double)&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span><span class="p">,</span> <span class="n">v_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueStr</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_str</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span><span class="p">):</span>
+            <span class="c1"># do auto adjust</span>
+            <span class="k">if</span> <span class="s1">&#39;.&#39;</span> <span class="ow">in</span> <span class="n">v_str</span><span class="p">:</span>
+                <span class="n">dc</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">v_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dc</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_str</span><span class="p">),</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setDigits</span><span class="p">(</span><span class="o">*</span><span class="n">dc</span><span class="p">)</span>
+            <span class="n">v_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buildValueStr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">v_str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_digitLabels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">trigValueChanged</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">numberChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">trigValueEdited</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">numberEdited</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QWheelEdit.setRoundFunc"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setRoundFunc">[docs]</a>    <span class="k">def</span> <span class="nf">setRoundFunc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roundFunc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setRoundFunc(self, roundFunc) -&gt; None</span>
+
+<span class="sd">        Sets the rounding function to use when calling _setValue(). This allows you to</span>
+<span class="sd">        filter invalid user input</span>
+
+<span class="sd">        @param[in] roundFunc (callable) the rounding function to use</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_roundFunc</span> <span class="o">=</span> <span class="n">roundFunc</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getPreviousValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getPreviousValue">[docs]</a>    <span class="k">def</span> <span class="nf">getPreviousValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getPreviousValue(self) -&gt; float</span>
+
+<span class="sd">        Gives the previous value of this widget</span>
+
+<span class="sd">        @return (float) the previous value of this widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_previous_value</span></div>
+
+    <span class="k">def</span> <span class="nf">_setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_setValue(self, v) -&gt; None</span>
+
+<span class="sd">        Sets value of this widget. If the given value exceeds any limit, the</span>
+<span class="sd">        value is NOT set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_roundFunc</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_roundFunc</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxValue</span> <span class="ow">or</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minValue</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_previous_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buildValueStr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QWheelEdit.setWarning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setWarning">[docs]</a>    <span class="k">def</span> <span class="nf">setWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setWarning(self, msg) -&gt; None</span>
+
+<span class="sd">        Activates the warning style for this widget. This means a violet border</span>
+<span class="sd">        and a tooltip with the given message.</span>
+
+<span class="sd">        @param[in] msg (str) the message to be displayed as tooltip</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+            <span class="s1">&#39;QWheelEdit {border: 1px solid; border-radius: 4px; border-color: violet}&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.clearWarning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.clearWarning">[docs]</a>    <span class="k">def</span> <span class="nf">clearWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;clearWarning(self) -&gt; None</span>
+
+<span class="sd">        Clears the warning style. If not in warning mode, nothing is done.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+            <span class="s1">&#39;QWheelEdit {border: 1px solid; border-radius: 4px; border-color: rgba(0,0,0,0)}&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.buttonPressed"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.buttonPressed">[docs]</a>    <span class="k">def</span> <span class="nf">buttonPressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;buttonPressed(self, b) -&gt; None</span>
+
+<span class="sd">        Slot executed when an arrow button is pressed from the button group</span>
+
+<span class="sd">        @param[in] b (_ArrowButton) the button which was pressed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">()</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">_inc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateValue</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setDigitCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setDigitCount">[docs]</a>    <span class="k">def</span> <span class="nf">setDigitCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">int_nb</span><span class="p">,</span> <span class="n">dec_nb</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setDigitCount(self, int_nb, dec_nb) -&gt; None</span>
+
+<span class="sd">        Updates the displayed digits.</span>
+
+<span class="sd">        @param[in] int_nb(int) number of integer digits</span>
+<span class="sd">        @param[in] dec_nb(int) number of decimal digits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setDigits</span><span class="p">(</span><span class="n">int_nb</span><span class="o">=</span><span class="n">int_nb</span><span class="p">,</span> <span class="n">dec_nb</span><span class="o">=</span><span class="n">dec_nb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateDigits</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getDigitCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getDigitCount">[docs]</a>    <span class="k">def</span> <span class="nf">getDigitCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getDigitCount(self) -&gt; int</span>
+
+<span class="sd">        Gets the total number of digits this widget displays</span>
+
+<span class="sd">        @return (int) the total number of digits this widget displays</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_digitCount</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getIntDigitCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getIntDigitCount">[docs]</a>    <span class="k">def</span> <span class="nf">getIntDigitCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getIntDigitCount(self) -&gt; int</span>
+
+<span class="sd">        Gets the number of integer digits this widget displays</span>
+
+<span class="sd">        @return (int) the number of integer digits this widget displays</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intDigitCount</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setIntDigitCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setIntDigitCount">[docs]</a>    <span class="k">def</span> <span class="nf">setIntDigitCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setIntDigitCount(self, n) -&gt; None</span>
+
+<span class="sd">        Sets the number of integer digits this widget displays</span>
+
+<span class="sd">        @param[in] n (int) the number of integer digits to display</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setDigits</span><span class="p">(</span><span class="n">int_nb</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateDigits</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.resetIntDigitCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.resetIntDigitCount">[docs]</a>    <span class="k">def</span> <span class="nf">resetIntDigitCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;resetIntDigitCount(self) -&gt; None</span>
+
+<span class="sd">        Resets the number of integer digits this widget displays to DefaultIntDigitCount</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIntDigitCount</span><span class="p">(</span><span class="n">QWheelEdit</span><span class="o">.</span><span class="n">DefaultIntDigitCount</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getDecDigitCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getDecDigitCount">[docs]</a>    <span class="k">def</span> <span class="nf">getDecDigitCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getDecDigitCount(self) -&gt; int</span>
+
+<span class="sd">        Gets the number of decimal digits this widget displays</span>
+
+<span class="sd">        @return (int) the number of decimal digits this widget displays</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decDigitCount</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setDecDigitCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setDecDigitCount">[docs]</a>    <span class="k">def</span> <span class="nf">setDecDigitCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setDecDigitCount(self, n) -&gt; None</span>
+
+<span class="sd">        Sets the number of decimal digits this widget displays</span>
+
+<span class="sd">        @param[in] n (int) the number of decimal digits to display</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setDigits</span><span class="p">(</span><span class="n">dec_nb</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateDigits</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.resetDecDigitCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.resetDecDigitCount">[docs]</a>    <span class="k">def</span> <span class="nf">resetDecDigitCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;resetDecDigitCount(self) -&gt; None</span>
+
+<span class="sd">        Resets the number of decimal digits this widget displays to DefaultDecDigitCount</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDecDigitCount</span><span class="p">(</span><span class="n">QWheelEdit</span><span class="o">.</span><span class="n">DefaultDecDigitCount</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setValue(self, v) -&gt; None</span>
+
+<span class="sd">        Sets the value of this widget.</span>
+<span class="sd">        Send a &#39;valueChanged(double)&#39; Qt signal</span>
+
+<span class="sd">        @param[in] v (float/Quantity) the value to be set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Q_</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setValue</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateValue</span><span class="p">(</span><span class="n">trigValueEdited</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.resetValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.resetValue">[docs]</a>    <span class="k">def</span> <span class="nf">resetValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;resetValue(self) -&gt; None</span>
+
+<span class="sd">        Resets the value of this widget to 0.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getValue(self) -&gt; float</span>
+
+<span class="sd">        Gets the current value of this widget</span>
+
+<span class="sd">        @return (float) the value currently displayed by the widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getValueStr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getValueStr">[docs]</a>    <span class="k">def</span> <span class="nf">getValueStr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getValueStr(self) -&gt; str</span>
+
+<span class="sd">        Gets the current value string of this widget</span>
+
+<span class="sd">        @return (str) the value currently displayed by the widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_str</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getMinValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getMinValue">[docs]</a>    <span class="k">def</span> <span class="nf">getMinValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getMinValue(self) -&gt; float</span>
+
+<span class="sd">        Gets the minimum allowed value</span>
+
+<span class="sd">        @return (float) the minimum allowed value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minValue</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setMinValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setMinValue">[docs]</a>    <span class="k">def</span> <span class="nf">setMinValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setMinValue(self, v) -&gt; None</span>
+
+<span class="sd">        Sets the minimum allowed value for the widget</span>
+
+<span class="sd">        @param[in] v (float) the new minimum allowed value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minValue</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEditWidget</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_minValue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxValue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decDigitCount</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.resetMinValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.resetMinValue">[docs]</a>    <span class="k">def</span> <span class="nf">resetMinValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;resetMinValue(self) -&gt; None</span>
+
+<span class="sd">        Resets the minimum allowed value to the minimum possible according to</span>
+<span class="sd">        the current total number of digits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_getMinPossibleValue</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getMaxValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getMaxValue">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getMaxValue(self) -&gt; float</span>
+
+<span class="sd">        Gets the maximum allowed value</span>
+
+<span class="sd">        @return (float) the maximum allowed value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxValue</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setMaxValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setMaxValue">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setMaxValue(self, v) -&gt; None</span>
+
+<span class="sd">        Sets the maximum allowed value for the widget</span>
+
+<span class="sd">        @param[in] v (float) the new maximum allowed value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maxValue</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEditWidget</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_minValue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxValue</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decDigitCount</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.resetMaxValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.resetMaxValue">[docs]</a>    <span class="k">def</span> <span class="nf">resetMaxValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;resetMaxValue(self) -&gt; None</span>
+
+<span class="sd">        Resets the maximum allowed value to the maximum possible according to</span>
+<span class="sd">        the current total number of digits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaxValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_getMaxPossibleValue</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getAutoRepeat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getAutoRepeat">[docs]</a>    <span class="k">def</span> <span class="nf">getAutoRepeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">autoRepeat</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setAutoRepeat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setAutoRepeat">[docs]</a>    <span class="k">def</span> <span class="nf">setAutoRepeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">():</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">setAutoRepeat</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">():</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">setAutoRepeat</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.resetAutoRepeat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.resetAutoRepeat">[docs]</a>    <span class="k">def</span> <span class="nf">resetAutoRepeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAutoRepeat</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getAutoRepeatDelay"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getAutoRepeatDelay">[docs]</a>    <span class="k">def</span> <span class="nf">getAutoRepeatDelay</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">autoRepeatDelay</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setAutoRepeatDelay"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setAutoRepeatDelay">[docs]</a>    <span class="k">def</span> <span class="nf">setAutoRepeatDelay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">milisecs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">():</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">setAutoRepeatDelay</span><span class="p">(</span><span class="n">milisecs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">():</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">setAutoRepeatDelay</span><span class="p">(</span><span class="n">milisecs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getAutoRepeatInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getAutoRepeatInterval">[docs]</a>    <span class="k">def</span> <span class="nf">getAutoRepeatInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">autoRepeatInterval</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setAutoRepeatInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setAutoRepeatInterval">[docs]</a>    <span class="k">def</span> <span class="nf">setAutoRepeatInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">milisecs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">():</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">setAutoRepeatInterval</span><span class="p">(</span><span class="n">milisecs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_downButtons</span><span class="o">.</span><span class="n">buttons</span><span class="p">():</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">setAutoRepeatInterval</span><span class="p">(</span><span class="n">milisecs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getEditWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getEditWidget">[docs]</a>    <span class="k">def</span> <span class="nf">getEditWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;getEditWidget(self) -&gt; QWidget</span>
+
+<span class="sd">        Gets the widget object used when the user manually sets the value</span>
+
+<span class="sd">        @return (QWidget) the widget used for editing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.editingFinished"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.editingFinished">[docs]</a>    <span class="k">def</span> <span class="nf">editingFinished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;editingFinished(self) -&gt; None</span>
+
+<span class="sd">        Slot called when the user finishes editing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEditWidget</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ed</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setValue</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateValue</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.showEditWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.showEditWidget">[docs]</a>    <span class="k">def</span> <span class="nf">showEditWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;showEditWidget(self) -&gt; None</span>
+
+<span class="sd">        Forces the edition widget to be displayed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ed</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEditWidget</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">cellRect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">topLeft</span><span class="p">(),</span> <span class="n">l</span><span class="o">.</span><span class="n">cellRect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span>
+                                                               <span class="n">l</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">bottomRight</span><span class="p">())</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setMaxLength</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDigitCount</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getValueStr</span><span class="p">())</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">selectAll</span><span class="p">()</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.hideEditWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.hideEditWidget">[docs]</a>    <span class="k">def</span> <span class="nf">hideEditWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;hideEditWidget(self) -&gt; None</span>
+
+<span class="sd">        Forces the edition widget to be hidden</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEditWidget</span><span class="p">()</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.wheelEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.wheelEvent">[docs]</a>    <span class="k">def</span> <span class="nf">wheelEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="n">numDegrees</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">delta</span><span class="p">()</span> <span class="o">/</span> <span class="mi">8</span>
+        <span class="n">numSteps</span> <span class="o">=</span> <span class="n">numDegrees</span> <span class="o">/</span> <span class="mi">15</span>
+        <span class="c1">#w = Qt.QApplication.focusWidget()</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">focusWidget</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">_DigitLabel</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">wheelEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">numSteps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">inc</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">_upButton</span><span class="o">.</span><span class="n">_inc</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">inc</span> <span class="o">=</span> <span class="o">-</span><span class="n">w</span><span class="o">.</span><span class="n">_downButton</span><span class="o">.</span><span class="n">_inc</span>
+        <span class="n">numSteps</span> <span class="o">*=</span> <span class="n">inc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">()</span> <span class="o">+</span> <span class="n">numSteps</span><span class="p">)</span>
+        <span class="n">evt</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.mouseDoubleClickEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.mouseDoubleClickEvent">[docs]</a>    <span class="k">def</span> <span class="nf">mouseDoubleClickEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mouse_event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;mouseDoubleClickEvent(self, mouse_event)</span>
+
+<span class="sd">        Executed when user presses double click. This widget shows the edition</span>
+<span class="sd">        widget when this happens</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showEditWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.keyPressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;keyPressEvent(self, key_event) -&gt; None</span>
+
+<span class="sd">        Exectuted when the user presses a key.</span>
+<span class="sd">        F2 enters/leaves edition mode. ESC leaves edition mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">key_event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_F2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hideEditWidget</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">showEditWidget</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hideEditWidget</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Return</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Enter</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hideEditWidget</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_editing</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+        <span class="c1"># TODO Decide when to emit editingFinished for completeness</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.getShowArrowButtons"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.getShowArrowButtons">[docs]</a>    <span class="k">def</span> <span class="nf">getShowArrowButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showArrowButtons</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.setShowArrowButtons"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.setShowArrowButtons">[docs]</a>    <span class="k">def</span> <span class="nf">setShowArrowButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yesno</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showArrowButtons</span> <span class="o">=</span> <span class="n">yesno</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateDigits</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QWheelEdit.resetShowArrowButtons"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_QWheelEdit.html#taurus.qt.qtgui.input.QWheelEdit.resetShowArrowButtons">[docs]</a>    <span class="k">def</span> <span class="nf">resetShowArrowButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setShowArrowButtons</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT properties</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="n">showArrowButtons</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getShowArrowButtons</span><span class="p">,</span>
+                                       <span class="n">setShowArrowButtons</span><span class="p">,</span>
+                                       <span class="n">resetShowArrowButtons</span><span class="p">)</span>
+
+    <span class="n">integerDigits</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getIntDigitCount</span><span class="p">,</span>
+                                    <span class="n">setIntDigitCount</span><span class="p">,</span> <span class="n">resetIntDigitCount</span><span class="p">)</span>
+
+    <span class="n">decimalDigits</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getDecDigitCount</span><span class="p">,</span>
+                                    <span class="n">setDecDigitCount</span><span class="p">,</span> <span class="n">resetDecDigitCount</span><span class="p">)</span>
+
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getValue</span><span class="p">,</span>
+                            <span class="n">setValue</span><span class="p">,</span> <span class="n">resetValue</span><span class="p">)</span>
+
+    <span class="n">minValue</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getMinValue</span><span class="p">,</span>
+                               <span class="n">setMinValue</span><span class="p">,</span> <span class="n">resetMinValue</span><span class="p">)</span>
+
+    <span class="n">maxValue</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getMaxValue</span><span class="p">,</span>
+                               <span class="n">setMaxValue</span><span class="p">,</span> <span class="n">resetMaxValue</span><span class="p">)</span>
+
+    <span class="n">autoRepeat</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getAutoRepeat</span><span class="p">,</span>
+                                 <span class="n">setAutoRepeat</span><span class="p">,</span> <span class="n">resetAutoRepeat</span><span class="p">)</span>
+
+    <span class="n">autoRepeatDelay</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getAutoRepeatDelay</span><span class="p">,</span>
+                                      <span class="n">setAutoRepeatDelay</span><span class="p">)</span>
+
+    <span class="n">autoRepeatInterval</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getAutoRepeatInterval</span><span class="p">,</span>
+                                         <span class="n">setAutoRepeatInterval</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">arrowWidget</span>
+
+    <span class="k">def</span> <span class="nf">resetAll</span><span class="p">():</span>
+        <span class="n">arrowWidget</span><span class="o">.</span><span class="n">resetIntDigitCount</span><span class="p">()</span>
+        <span class="n">arrowWidget</span><span class="o">.</span><span class="n">resetDecDigitCount</span><span class="p">()</span>
+        <span class="n">arrowWidget</span><span class="o">.</span><span class="n">resetMinValue</span><span class="p">()</span>
+        <span class="n">arrowWidget</span><span class="o">.</span><span class="n">resetMaxValue</span><span class="p">()</span>
+        <span class="n">arrowWidget</span><span class="o">.</span><span class="n">resetValue</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setNAN</span><span class="p">():</span>
+        <span class="n">arrowWidget</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">setNone</span><span class="p">():</span>
+        <span class="n">arrowWidget</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
+    <span class="n">button_layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+    <span class="n">arrowWidget</span> <span class="o">=</span> <span class="n">QWheelEdit</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
+    <span class="n">isb</span><span class="p">,</span> <span class="n">dsb</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">(</span><span class="n">panel</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
+    <span class="n">minv</span><span class="p">,</span> <span class="n">maxv</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleSpinBox</span><span class="p">(</span><span class="n">panel</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleSpinBox</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
+    <span class="n">resetbutton</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Reset&quot;</span><span class="p">,</span> <span class="n">panel</span><span class="p">)</span>
+    <span class="n">resetbutton</span><span class="o">.</span><span class="n">setDefault</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">nanbutton</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Set NAN&quot;</span><span class="p">,</span> <span class="n">panel</span><span class="p">)</span>
+    <span class="n">nonebutton</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Set None&quot;</span><span class="p">,</span> <span class="n">panel</span><span class="p">)</span>
+    <span class="n">showarrowbutton</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">panel</span><span class="p">)</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Value&quot;</span><span class="p">,</span> <span class="n">arrowWidget</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Integer digits:&quot;</span><span class="p">,</span> <span class="n">isb</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Decimal digits:&quot;</span><span class="p">,</span> <span class="n">dsb</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Minimum value:&quot;</span><span class="p">,</span> <span class="n">minv</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Maximum value:&quot;</span><span class="p">,</span> <span class="n">maxv</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Show arrows:&quot;</span><span class="p">,</span> <span class="n">showarrowbutton</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">button_layout</span><span class="p">)</span>
+    <span class="n">button_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">nanbutton</span><span class="p">)</span>
+    <span class="n">button_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">nonebutton</span><span class="p">)</span>
+    <span class="n">button_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">resetbutton</span><span class="p">)</span>
+    <span class="n">isb</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">getIntDigitCount</span><span class="p">())</span>
+    <span class="n">dsb</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">getDecDigitCount</span><span class="p">())</span>
+    <span class="n">minv</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+    <span class="n">maxv</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+    <span class="n">minv</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">getMinValue</span><span class="p">())</span>
+    <span class="n">maxv</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">getMaxValue</span><span class="p">())</span>
+    <span class="n">showarrowbutton</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">getShowArrowButtons</span><span class="p">())</span>
+    <span class="n">isb</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">setIntDigitCount</span><span class="p">)</span>
+    <span class="n">dsb</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">setDecDigitCount</span><span class="p">)</span>
+    <span class="n">minv</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">setMinValue</span><span class="p">)</span>
+    <span class="n">showarrowbutton</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">arrowWidget</span><span class="o">.</span><span class="n">setShowArrowButtons</span><span class="p">)</span>
+    <span class="n">nanbutton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">setNAN</span><span class="p">)</span>
+    <span class="n">nonebutton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">setNone</span><span class="p">)</span>
+    <span class="n">resetbutton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">resetAll</span><span class="p">)</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

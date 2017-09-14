@@ -1,0 +1,827 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.display.qsevensegment &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.display.qsevensegment</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.display.qsevensegment</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">qsevensegmentdisplay.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Q7SegDigit&#39;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="n">POLY</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPolygonF</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span>
+
+
+<div class="viewcode-block" id="Q7SegDigit"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit">[docs]</a><span class="k">class</span> <span class="nc">Q7SegDigit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A widget representing a single seven segment digit. The style can be</span>
+<span class="sd">    configured through the widget properties. For example, a typical LCD would</span>
+<span class="sd">    have the following style:</span>
+
+<span class="sd">        - bgColor 170, 170, 127</span>
+<span class="sd">        - ledOnPenColor 30,30,30</span>
+<span class="sd">        - ledOnBgColor 0,0,0</span>
+<span class="sd">        - ledOffPenColor 160, 160, 120</span>
+<span class="sd">        - ledOffbgColor 150, 150, 112</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Leds</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># 0</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 1</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># 2</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># 3</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 4</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># 5</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># 6</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 7</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># 8</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 9</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 10 &#39;nothing&#39;</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 11 -</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>  <span class="c1"># 12 a</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># 13 n</span>
+    <span class="p">)</span>
+
+<span class="c1">#    LedGeometries = (</span>
+<span class="c1">#        POLY([P(67, 60), P(283, 60), P(253, 90), P(97, 90), P(67, 60)]),</span>
+<span class="c1">#        POLY([P(60, 67), P(90, 97), P(90, 178), P(60, 193), P(60, 67)]),</span>
+<span class="c1">#        POLY([P(290, 67), P(260, 97), P(260, 178), P(290, 193), P(290, 67)]),</span>
+<span class="c1">#        POLY([P(67, 200), P(97, 185), P(253, 185), P(283, 200), P(253, 215), P(97, 215), P(67, 200)]),</span>
+<span class="c1">#        POLY([P(60, 207), P(90, 222), P(90, 303), P(60, 333), P(60, 207)]),</span>
+<span class="c1">#        POLY([P(290, 207), P(260, 222), P(260, 303), P(290, 333), P(290, 207)]),</span>
+<span class="c1">#        POLY([P(67, 340), P(283, 340), P(253, 310), P(97, 310), P(67, 340)]),</span>
+<span class="c1">#    )</span>
+
+    <span class="n">LedGeometriesWithFrame300x400</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">67</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">178</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">193</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">37</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">67</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">178</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">193</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">37</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">185</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">185</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span>
+            <span class="mi">263</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">215</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">215</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">200</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">207</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">222</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">333</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">363</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">207</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">207</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">222</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">333</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">363</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">207</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">370</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">370</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">340</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">340</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">370</span><span class="p">)]),</span>
+    <span class="p">)</span>
+
+    <span class="n">LedGeometriesWithoutFrame300x400</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">293</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">178</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">193</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">178</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">193</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">185</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">185</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span>
+            <span class="mi">293</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">215</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">215</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">200</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">207</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">222</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">363</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">393</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">207</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">207</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">222</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">363</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">393</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">207</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">293</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">370</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">370</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">400</span><span class="p">)]),</span>
+    <span class="p">)</span>
+
+    <span class="n">LedGeometriesWithFrame300x300</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">67</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">143</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">37</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">67</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">143</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">37</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">135</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">135</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span>
+            <span class="mi">263</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">165</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">165</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">150</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">157</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">172</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">233</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">263</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">157</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">157</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">172</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">233</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">263</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">157</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">270</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">270</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="mi">240</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">240</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">270</span><span class="p">)]),</span>
+    <span class="p">)</span>
+
+    <span class="n">LedGeometriesWithoutFrame300x300</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">293</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">143</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">143</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">135</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">135</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span>
+            <span class="mi">293</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">165</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">165</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">150</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">157</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">172</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">263</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">293</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">157</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">157</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">172</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">270</span><span class="p">,</span> <span class="mi">263</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">293</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">157</span><span class="p">)]),</span>
+        <span class="n">POLY</span><span class="p">([</span><span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">293</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">263</span><span class="p">,</span> <span class="mi">270</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mi">270</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">300</span><span class="p">)]),</span>
+    <span class="p">)</span>
+
+    <span class="n">DftLedOnPenColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">193</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+    <span class="n">DftLedOnBgColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span>
+
+    <span class="n">DftLedOffPenColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+    <span class="n">DftLedOffBgColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+    <span class="n">DftBgBrush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidPattern</span><span class="p">)</span>
+
+    <span class="n">DftLedPenWidth</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">DftValue</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="n">DftWidth</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">DftHeight</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">DftAspectRatio</span> <span class="o">=</span> <span class="n">DftWidth</span> <span class="o">/</span> <span class="n">DftHeight</span>
+    <span class="n">DftUseFrame</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedPenWidth</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedPenWidth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setValue</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftValue</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedOnPenColor</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedOnPenColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedOnBgColor</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedOnBgColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedOffPenColor</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedOffPenColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedOffBgColor</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedOffBgColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setBgBrush</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftBgBrush</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setAspectRatio</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftAspectRatio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setUseFrame</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftUseFrame</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updatePensAndBrushes</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Q7SegDigit.minimumSizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.minimumSizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">5.9</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># return Qt.QSize(Q7SegDigit.DftWidth, Q7SegDigit.DftHeight)</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_updatePensAndBrushes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ledOnPenColor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledPenWidth</span><span class="p">,</span>
+                      <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RoundCap</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RoundJoin</span><span class="p">)</span>
+        <span class="n">poff</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ledOffPenColor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledPenWidth</span><span class="p">,</span>
+                       <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RoundCap</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RoundJoin</span><span class="p">)</span>
+        <span class="n">bon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ledOnBgColor</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidPattern</span><span class="p">)</span>
+        <span class="n">boff</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ledOffBgColor</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidPattern</span><span class="p">)</span>
+        <span class="n">pens</span><span class="p">,</span> <span class="n">brushes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">nLeds</span> <span class="ow">in</span> <span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">Leds</span><span class="p">:</span>
+            <span class="n">nPens</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">nBrushes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">onoff</span> <span class="ow">in</span> <span class="n">nLeds</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">onoff</span><span class="p">:</span>
+                    <span class="n">pen</span><span class="p">,</span> <span class="n">brush</span> <span class="o">=</span> <span class="n">pon</span><span class="p">,</span> <span class="n">bon</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pen</span><span class="p">,</span> <span class="n">brush</span> <span class="o">=</span> <span class="n">poff</span><span class="p">,</span> <span class="n">boff</span>
+                <span class="n">nPens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+                <span class="n">nBrushes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span>
+            <span class="n">pens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nPens</span><span class="p">)</span>
+            <span class="n">brushes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nBrushes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pens</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_brushes</span> <span class="o">=</span> <span class="n">pens</span><span class="p">,</span> <span class="n">brushes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__valueStrToLedIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">11</span>
+        <span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">12</span>
+        <span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">13</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+<div class="viewcode-block" id="Q7SegDigit.paintEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.paintEvent">[docs]</a>    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="n">painter</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPainter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setWindow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftWidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftHeight</span><span class="p">)</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">()),</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+        <span class="n">aspect</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="n">h</span>
+        <span class="k">if</span> <span class="n">aspect</span> <span class="o">&gt;</span> <span class="mf">0.75</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">aspect</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="n">aspect</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_paintBorder</span><span class="p">(</span><span class="n">painter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_paintSegment</span><span class="p">(</span><span class="n">painter</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_paintBorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUseFrame</span><span class="p">():</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">,</span>
+                                   <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RoundCap</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RoundJoin</span><span class="p">))</span>
+            <span class="n">linGrad</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLinearGradient</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+            <span class="n">linGrad</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">darkGray</span><span class="p">)</span>
+            <span class="n">linGrad</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">)</span>
+            <span class="n">linGrad</span><span class="o">.</span><span class="n">setSpread</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGradient</span><span class="o">.</span><span class="n">ReflectSpread</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">linGrad</span><span class="p">)</span>
+            <span class="n">border2</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QRectF</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftWidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftHeight</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundRect</span><span class="p">(</span><span class="n">border2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getBgBrush</span><span class="p">())</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="mi">20</span>
+            <span class="n">border1</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QRectF</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftWidth</span> <span class="o">-</span>
+                                <span class="mi">2</span> <span class="o">*</span> <span class="n">dist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftHeight</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dist</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundRect</span><span class="p">(</span><span class="n">border1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getBgBrush</span><span class="p">())</span>
+            <span class="n">border1</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QRectF</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftWidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftHeight</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">border1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_paintSegment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valueStrToLedIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUseFrame</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftHeight</span> <span class="o">==</span> <span class="mi">300</span><span class="p">:</span>
+                <span class="n">geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LedGeometriesWithFrame300x300</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LedGeometriesWithFrame300x400</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftHeight</span> <span class="o">==</span> <span class="mi">300</span><span class="p">:</span>
+                <span class="n">geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LedGeometriesWithoutFrame300x300</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LedGeometriesWithoutFrame300x400</span>
+
+        <span class="n">pens</span><span class="p">,</span> <span class="n">brushes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pens</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_brushes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+            <span class="n">seg</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">()</span>
+            <span class="n">seg</span><span class="o">.</span><span class="n">addPolygon</span><span class="p">(</span><span class="n">geom</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pens</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">brushes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valueStrToLedIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+        <span class="n">leds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Leds</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="c1"># line 0</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
+        <span class="k">if</span> <span class="n">leds</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39; </span><span class="si">%c</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">c</span>
+
+        <span class="c1"># line 1</span>
+        <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span>
+        <span class="k">if</span> <span class="n">leds</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">c1</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span>
+        <span class="k">if</span> <span class="n">leds</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span>
+            <span class="n">c2</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span>
+        <span class="k">if</span> <span class="n">leds</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">c3</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%c%c%c</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+
+        <span class="c1"># line 2</span>
+        <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span>
+        <span class="k">if</span> <span class="n">leds</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span>
+            <span class="n">c1</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span>
+        <span class="k">if</span> <span class="n">leds</span><span class="p">[</span><span class="mi">6</span><span class="p">]:</span>
+            <span class="n">c2</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span>
+        <span class="k">if</span> <span class="n">leds</span><span class="p">[</span><span class="mi">5</span><span class="p">]:</span>
+            <span class="n">c3</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%c%c%c</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">_setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_setLedPenWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledPenWidth</span> <span class="o">=</span> <span class="n">w</span>
+
+    <span class="k">def</span> <span class="nf">_setLedOnPenColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">penColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledOnPenColor</span> <span class="o">=</span> <span class="n">penColor</span>
+
+    <span class="k">def</span> <span class="nf">_setLedOnBgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledOnBgColor</span> <span class="o">=</span> <span class="n">bgColor</span>
+
+    <span class="k">def</span> <span class="nf">_setLedOffPenColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">penColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledOffPenColor</span> <span class="o">=</span> <span class="n">penColor</span>
+
+    <span class="k">def</span> <span class="nf">_setLedOffBgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledOffBgColor</span> <span class="o">=</span> <span class="n">bgColor</span>
+
+    <span class="k">def</span> <span class="nf">_setAspectRatio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aspectRatio</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_aspectRatio</span> <span class="o">=</span> <span class="n">aspectRatio</span>
+
+    <span class="k">def</span> <span class="nf">_setBgBrush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgBrush</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bgBrush</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">):</span>
+            <span class="n">bgBrush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">bgBrush</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidPattern</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bgBrush</span> <span class="o">=</span> <span class="n">bgBrush</span>
+
+    <span class="k">def</span> <span class="nf">_setUseFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">useFrame</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_useFrame</span> <span class="o">=</span> <span class="n">useFrame</span>
+
+<div class="viewcode-block" id="Q7SegDigit.getLedOnPenColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getLedOnPenColor">[docs]</a>    <span class="k">def</span> <span class="nf">getLedOnPenColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledOnPenColor</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setLedOnPenColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setLedOnPenColor">[docs]</a>    <span class="k">def</span> <span class="nf">setLedOnPenColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">penColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedOnPenColor</span><span class="p">(</span><span class="n">penColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updatePensAndBrushes</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetLedOnPenColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetLedOnPenColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedOnPenColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLenOnPenColor</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedOnPenColor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.getLedOnBgColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getLedOnBgColor">[docs]</a>    <span class="k">def</span> <span class="nf">getLedOnBgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledOnBgColor</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setLedOnBgColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setLedOnBgColor">[docs]</a>    <span class="k">def</span> <span class="nf">setLedOnBgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedOnBgColor</span><span class="p">(</span><span class="n">bgColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updatePensAndBrushes</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetLedOnBgColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetLedOnBgColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedOnBgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLedOnBgColor</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedOnBgColor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.getLedOffPenColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getLedOffPenColor">[docs]</a>    <span class="k">def</span> <span class="nf">getLedOffPenColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledOffPenColor</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setLedOffPenColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setLedOffPenColor">[docs]</a>    <span class="k">def</span> <span class="nf">setLedOffPenColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">penColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedOffPenColor</span><span class="p">(</span><span class="n">penColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updatePensAndBrushes</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetLedOffPenColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetLedOffPenColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedOffPenColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLenOffPenColor</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedOffPenColor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.getLedOffBgColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getLedOffBgColor">[docs]</a>    <span class="k">def</span> <span class="nf">getLedOffBgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledOffBgColor</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setLedOffBgColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setLedOffBgColor">[docs]</a>    <span class="k">def</span> <span class="nf">setLedOffBgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedOffBgColor</span><span class="p">(</span><span class="n">bgColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updatePensAndBrushes</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetLedOffBgColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetLedOffBgColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedOffBgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLedOffBgColor</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLedOffBgColor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.getBgBrush"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getBgBrush">[docs]</a>    <span class="k">def</span> <span class="nf">getBgBrush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bgBrush</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setBgBrush"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setBgBrush">[docs]</a>    <span class="k">def</span> <span class="nf">setBgBrush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgBrush</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setBgBrush</span><span class="p">(</span><span class="n">bgBrush</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetBgBrush"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetBgBrush">[docs]</a>    <span class="k">def</span> <span class="nf">resetBgBrush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setBgBrush</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftBgBrush</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setValue</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetValue">[docs]</a>    <span class="k">def</span> <span class="nf">resetValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftValue</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setLedPenWidth"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setLedPenWidth">[docs]</a>    <span class="k">def</span> <span class="nf">setLedPenWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setLedPenWidth</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updatePensAndBrushes</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.getLedPenWidth"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getLedPenWidth">[docs]</a>    <span class="k">def</span> <span class="nf">getLedPenWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledPenWidth</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetLedPenWidth"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetLedPenWidth">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedPenWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLedPenWidth</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftLenPenWidth</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setAspectRatio"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setAspectRatio">[docs]</a>    <span class="k">def</span> <span class="nf">setAspectRatio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apectRatio</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setAspectRatio</span><span class="p">(</span><span class="n">apectRatio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.getAspectRatio"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getAspectRatio">[docs]</a>    <span class="k">def</span> <span class="nf">getAspectRatio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspectRatio</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetAspectRatio"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetAspectRatio">[docs]</a>    <span class="k">def</span> <span class="nf">resetAspectRatio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAspectRatio</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftAspectRatio</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.setUseFrame"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.setUseFrame">[docs]</a>    <span class="k">def</span> <span class="nf">setUseFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">useFrame</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setUseFrame</span><span class="p">(</span><span class="n">useFrame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.getUseFrame"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.getUseFrame">[docs]</a>    <span class="k">def</span> <span class="nf">getUseFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_useFrame</span></div>
+
+<div class="viewcode-block" id="Q7SegDigit.resetUseFrame"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_Q7SegDigit.html#taurus.qt.qtgui.display.Q7SegDigit.resetUseFrame">[docs]</a>    <span class="k">def</span> <span class="nf">resetUseFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setUseFrame</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="o">.</span><span class="n">DftUseFrame</span><span class="p">)</span></div>
+
+    <span class="c1">#: This property holds the led pen color when the led is light ON</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.getLedOnPenColor`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.setLedOnPenColor`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.resetLedOnPenColor`</span>
+    <span class="c1">#:</span>
+    <span class="n">ledOnPenColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QColor&quot;</span><span class="p">,</span> <span class="n">getLedOnPenColor</span><span class="p">,</span>
+                                    <span class="n">setLedOnPenColor</span><span class="p">,</span> <span class="n">resetLedOnPenColor</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the led background color when the led is light ON</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.getLedOnBgColor`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.setLedOnBgColor`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.resetLedOnBgColor`</span>
+    <span class="c1">#:</span>
+    <span class="n">ledOnBgColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QColor&quot;</span><span class="p">,</span> <span class="n">getLedOnBgColor</span><span class="p">,</span>
+                                   <span class="n">setLedOnBgColor</span><span class="p">,</span> <span class="n">resetLedOnBgColor</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the led pen color when the led is light OFF</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.getLedOffPenColor`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.setLedOffPenColor`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.resetLedOffPenColor`</span>
+    <span class="c1">#:</span>
+    <span class="n">ledOffPenColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QColor&quot;</span><span class="p">,</span> <span class="n">getLedOffPenColor</span><span class="p">,</span>
+                                     <span class="n">setLedOffPenColor</span><span class="p">,</span> <span class="n">resetLedOffPenColor</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the led background color when the led is light OFF</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.getLedOffBgColor`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.setLedOffBgColor`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.resetLedOffBgColor`</span>
+    <span class="c1">#:</span>
+    <span class="n">ledOffBgColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QColor&quot;</span><span class="p">,</span> <span class="n">getLedOffBgColor</span><span class="p">,</span>
+                                    <span class="n">setLedOffBgColor</span><span class="p">,</span> <span class="n">resetLedOffBgColor</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the background brush</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.getBgBrush`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.setBgBrush`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.resetBgBrush`</span>
+    <span class="c1">#:</span>
+    <span class="n">bgBrush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QBrush&quot;</span><span class="p">,</span> <span class="n">getBgBrush</span><span class="p">,</span> <span class="n">setBgBrush</span><span class="p">,</span> <span class="n">resetBgBrush</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the pen width</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.getLedPenWidth`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.setLedPenWidth`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.resetLedPenWidth`</span>
+    <span class="c1">#:</span>
+    <span class="n">ledPenWidth</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getLedPenWidth</span><span class="p">,</span>
+                                  <span class="n">setLedPenWidth</span><span class="p">,</span> <span class="n">resetLedPenWidth</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds wheater of not to draw a frame</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.getUseFrame`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.setUseFrame`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.resetUseFrame`</span>
+    <span class="c1">#:</span>
+    <span class="n">useFrame</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getUseFrame</span><span class="p">,</span> <span class="n">setUseFrame</span><span class="p">,</span> <span class="n">resetUseFrame</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the widget value</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.getValue`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.setValue`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.display.Q7SegDigit.resetValue`</span>
+    <span class="c1">#:</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getValue</span><span class="p">,</span> <span class="n">setValue</span><span class="p">,</span> <span class="n">resetValue</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">Q7SegDisplay</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qt_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qt_parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setMargin</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digits</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">Q7SegDigit</span><span class="p">()</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">setUseFrame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_digits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="p">()</span>
+        <span class="n">brush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+        <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Active</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Window</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__setBgBrush</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">digitWidget</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColorDialog</span><span class="o">.</span><span class="n">getColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">color</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+        <span class="n">digitWidget</span><span class="o">.</span><span class="n">setBgBrush</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__setLedOnPenColor</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">digitWidget</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColorDialog</span><span class="o">.</span><span class="n">getColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">color</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+        <span class="n">digitWidget</span><span class="o">.</span><span class="n">setLedOnPenColor</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__setLedOnBgColor</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">digitWidget</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColorDialog</span><span class="o">.</span><span class="n">getColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">color</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+        <span class="n">digitWidget</span><span class="o">.</span><span class="n">setLedOnBgColor</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__setLedOffPenColor</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">digitWidget</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColorDialog</span><span class="o">.</span><span class="n">getColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">color</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+        <span class="n">digitWidget</span><span class="o">.</span><span class="n">setLedOffPenColor</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__setLedOffBgColor</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">digitWidget</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColorDialog</span><span class="o">.</span><span class="n">getColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">color</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+        <span class="n">digitWidget</span><span class="o">.</span><span class="n">setLedOffBgColor</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main1</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
+    <span class="n">digitWidget</span> <span class="o">=</span> <span class="n">Q7SegDigit</span><span class="p">()</span>
+    <span class="n">digitWidget</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">digitWidget</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="p">())</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">Q7SegDigit</span><span class="p">())</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main2</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">dw</span> <span class="o">=</span> <span class="n">Q7SegDigit</span><span class="p">()</span>
+    <span class="n">dw</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">dw</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="n">dw</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main3</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">dw</span> <span class="o">=</span> <span class="n">Q7SegDisplay</span><span class="p">()</span>
+    <span class="c1"># dw.setValue(int(sys.argv[1]))</span>
+    <span class="n">dw</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">digitWidget</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
+    <span class="n">digitWidget</span> <span class="o">=</span> <span class="n">Q7SegDigit</span><span class="p">()</span>
+    <span class="n">digitWidget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color:red;&quot;</span><span class="p">)</span>
+    <span class="n">valueLineEdit</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="n">digitWidget</span><span class="o">.</span><span class="n">getValue</span><span class="p">())</span>
+    <span class="n">valueLineEdit</span><span class="o">.</span><span class="n">setMaxLength</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ledPenWidthWidget</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">()</span>
+    <span class="n">ledPenWidthWidget</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">ledPenWidthWidget</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">digitWidget</span><span class="o">.</span><span class="n">getLedPenWidth</span><span class="p">())</span>
+    <span class="n">bgBrushWidget</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Bg brush&quot;</span><span class="p">)</span>
+    <span class="n">LedOnPenColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;ON pen color&quot;</span><span class="p">)</span>
+    <span class="n">LedOnBgColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;ON bg color&quot;</span><span class="p">)</span>
+    <span class="n">LedOffPenColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;OFF pen color&quot;</span><span class="p">)</span>
+    <span class="n">LedOffBgColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;OFF bg color&quot;</span><span class="p">)</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Value&quot;</span><span class="p">,</span> <span class="n">digitWidget</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Digit&quot;</span><span class="p">,</span> <span class="n">valueLineEdit</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Pen width&quot;</span><span class="p">,</span> <span class="n">ledPenWidthWidget</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">bgBrushWidget</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">LedOnPenColor</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">LedOnBgColor</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">LedOffPenColor</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">LedOffBgColor</span><span class="p">)</span>
+    <span class="n">valueLineEdit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">digitWidget</span><span class="o">.</span><span class="n">setValue</span><span class="p">)</span>
+    <span class="n">ledPenWidthWidget</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">digitWidget</span><span class="o">.</span><span class="n">setLedPenWidth</span><span class="p">)</span>
+    <span class="n">bgBrushWidget</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">__setBgBrush</span><span class="p">)</span>
+    <span class="n">LedOnPenColor</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">__setLedOnPenColor</span><span class="p">)</span>
+    <span class="n">LedOnBgColor</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">__setLedOnBgColor</span><span class="p">)</span>
+    <span class="n">LedOffPenColor</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">__setLedOffPenColor</span><span class="p">)</span>
+    <span class="n">LedOffBgColor</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">__setLedOffBgColor</span><span class="p">)</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main3</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

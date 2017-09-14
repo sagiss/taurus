@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.tauruspollingtimer &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.tauruspollingtimer</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.tauruspollingtimer</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the polling class&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusPollingTimer&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">DebugIt</span>
+<span class="kn">from</span> <span class="nn">.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
+<span class="kn">from</span> <span class="nn">.util.timer</span> <span class="k">import</span> <span class="n">Timer</span>
+
+
+<div class="viewcode-block" id="TaurusPollingTimer"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer">[docs]</a><span class="k">class</span> <span class="nc">TaurusPollingTimer</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Polling timer manages a list of attributes that have to be polled in</span>
+<span class="sd">    the same period &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor</span>
+
+<span class="sd">           :param period: (int) polling period (miliseconds)</span>
+<span class="sd">           :param parent: (Logger) parent object (default is None)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;TaurusPollingTimer[</span><span class="si">%d</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="n">period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="n">period</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pollAttributes</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaurusPollingTimer.start"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Starts the polling timer &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusPollingTimer.stop"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Stop the polling timer&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusPollingTimer.containsAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.containsAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">containsAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determines if the polling timer already contains this attribute</span>
+
+<span class="sd">           :param attribute: (taurus.core.taurusattribute.TaurusAttribute) the attribute</span>
+
+<span class="sd">           :return: (bool) True if the attribute is registered for polling or</span>
+<span class="sd">                    False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dev</span><span class="p">,</span> <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">(),</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">attr_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">attr_dict</span> <span class="ow">and</span> <span class="n">attr_dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusPollingTimer.getAttributeCount"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.getAttributeCount">[docs]</a>    <span class="k">def</span> <span class="nf">getAttributeCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the number of attributes registered for polling</span>
+
+<span class="sd">           :return: (int) the number of attributes registered for polling</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span></div>
+
+<div class="viewcode-block" id="TaurusPollingTimer.addAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.addAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">addAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">auto_start</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Registers the attribute in this polling.</span>
+
+<span class="sd">           :param attribute: (taurus.core.taurusattribute.TaurusAttribute) the attribute to be added</span>
+<span class="sd">           :param auto_start: (bool) if True (default) it tells the polling timer</span>
+<span class="sd">                              that it should startup as soon as there is at least</span>
+<span class="sd">                              one attribute registered.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dev</span><span class="p">,</span> <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">(),</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="n">attr_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attr_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">caseSensitive</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_dict</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="p">:</span>
+            <span class="n">attr_dict</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attribute</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">auto_start</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">taurus</span>
+            <span class="n">taurus</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">addJob</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">poll</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusPollingTimer.removeAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.removeAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">removeAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unregisters the attribute from this polling. If the number of registered</span>
+<span class="sd">           attributes decreses to 0 the polling is stopped automatically in order</span>
+<span class="sd">           to save resources.</span>
+
+<span class="sd">           :param attribute: (taurus.core.taurusattribute.TaurusAttribute) the attribute to be added</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dev</span><span class="p">,</span> <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">(),</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="n">attr_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attr_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">attr_dict</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">attr_dict</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_pollAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Polls the registered attributes. This method is called by the timer</span>
+<span class="sd">           when it is time to poll. Do not call this method directly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">req_ids</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">dev</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">req_id</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">asynch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">req_ids</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">req_id</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;poll_asynch error&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Details:&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">dev</span><span class="p">,</span> <span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">req_id</span><span class="p">)</span> <span class="ow">in</span> <span class="n">req_ids</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dev</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">req_id</span><span class="o">=</span><span class="n">req_id</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;poll_reply error&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

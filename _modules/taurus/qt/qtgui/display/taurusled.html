@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.display.taurusled &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.display.taurusled</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.display.taurusled</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a set of basic Taurus widgets based on QLed&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusLed&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">DataFormat</span><span class="p">,</span> <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">DataType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="k">import</span> <span class="n">DevState</span>
+
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">qled</span> <span class="k">import</span> <span class="n">QLed</span>
+
+<span class="n">_QT_PLUGIN_INFO</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.display&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Display&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s2">&quot;designer:ledgreen.png&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">_TaurusLedController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="c1">#            key     status,     color, inTrouble</span>
+    <span class="n">LedMap</span> <span class="o">=</span> <span class="p">{</span><span class="kc">True</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>    <span class="s2">&quot;green&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="kc">False</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span>    <span class="s2">&quot;black&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="kc">None</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span>    <span class="s2">&quot;black&quot;</span><span class="p">,</span>     <span class="kc">True</span><span class="p">)}</span>
+
+    <span class="n">LedQualityMap</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">AttrQuality</span><span class="o">.</span><span class="n">ATTR_ALARM</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>   <span class="s2">&quot;orange&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+        <span class="n">AttrQuality</span><span class="o">.</span><span class="n">ATTR_CHANGING</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>     <span class="s2">&quot;blue&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+        <span class="n">AttrQuality</span><span class="o">.</span><span class="n">ATTR_INVALID</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>      <span class="s2">&quot;red&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+        <span class="n">AttrQuality</span><span class="o">.</span><span class="n">ATTR_VALID</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>    <span class="s2">&quot;green&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+        <span class="n">AttrQuality</span><span class="o">.</span><span class="n">ATTR_WARNING</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>   <span class="s2">&quot;orange&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+        <span class="kc">None</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span>    <span class="s2">&quot;black&quot;</span><span class="p">,</span>     <span class="kc">True</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">modelObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">widget</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span><span class="p">()</span>
+        <span class="n">fgRole</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">fgRole</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">fgRole</span> <span class="o">==</span> <span class="s1">&#39;rvalue&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">rvalue</span>
+        <span class="k">elif</span> <span class="n">fgRole</span> <span class="o">==</span> <span class="s1">&#39;wvalue&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">wvalue</span>
+        <span class="k">elif</span> <span class="n">fgRole</span> <span class="o">==</span> <span class="s1">&#39;quality&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">quality</span>
+
+        <span class="c1"># handle 1D and 2D values</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_0D</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelIndexValue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">usePreferedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateDisplay</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateToolTip</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_updateDisplay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">ledMap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LedMap</span>
+        <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">fgRole</span> <span class="o">==</span> <span class="s1">&#39;quality&#39;</span><span class="p">:</span>
+            <span class="n">ledMap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LedQualityMap</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">trouble</span> <span class="o">=</span> <span class="n">ledMap</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">trouble</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">usePreferedColor</span><span class="p">(</span><span class="n">widget</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">onColor</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">offColor</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">ledStatus</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">ledColor</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="k">if</span> <span class="n">trouble</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">bg_brush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BDiagPattern</span><span class="p">)</span>
+            <span class="n">palette</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span>
+            <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Window</span><span class="p">,</span> <span class="n">bg_brush</span><span class="p">)</span>
+            <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span> <span class="n">bg_brush</span><span class="p">)</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_updateToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">getFormatedToolTip</span><span class="p">())</span>
+
+
+<span class="k">class</span> <span class="nc">_TaurusLedControllerBool</span><span class="p">(</span><span class="n">_TaurusLedController</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">usePreferedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="c1"># use prefered widget color if representing the boolean read or write</span>
+        <span class="c1"># value. If representing the quality, use the quality map</span>
+        <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">fgRole</span> <span class="o">!=</span> <span class="s1">&#39;quality&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">_TaurusLedControllerState</span><span class="p">(</span><span class="n">_TaurusLedController</span><span class="p">):</span>
+
+    <span class="c1">#                key      status,       color, inTrouble</span>
+    <span class="n">LedMap</span> <span class="o">=</span> <span class="p">{</span><span class="n">DevState</span><span class="o">.</span><span class="n">ON</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>    <span class="s2">&quot;green&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">OFF</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span>    <span class="s2">&quot;black&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">CLOSE</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>    <span class="s2">&quot;white&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">OPEN</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>    <span class="s2">&quot;green&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">INSERT</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>    <span class="s2">&quot;green&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">EXTRACT</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>    <span class="s2">&quot;green&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">MOVING</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>     <span class="s2">&quot;blue&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">STANDBY</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>   <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">FAULT</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>      <span class="s2">&quot;red&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">INIT</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>   <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">RUNNING</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>     <span class="s2">&quot;blue&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">ALARM</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>   <span class="s2">&quot;orange&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">DISABLE</span><span class="p">:</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span>  <span class="s2">&quot;magenta&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="n">DevState</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span>    <span class="s2">&quot;black&quot;</span><span class="p">,</span>    <span class="kc">False</span><span class="p">),</span>
+              <span class="kc">None</span><span class="p">:</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span>    <span class="s2">&quot;black&quot;</span><span class="p">,</span>     <span class="kc">True</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">usePreferedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="c1"># never use prefered widget color. Use always the map</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">class</span> <span class="nc">_TaurusLedControllerDesignMode</span><span class="p">(</span><span class="n">_TaurusLedController</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">_updateDisplay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">ledStatus</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">ledStatus</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">ledColor</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">onColor</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">ledColor</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">offColor</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_updateToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Design mode TaurusLed&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TaurusLed"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed">[docs]</a><span class="k">class</span> <span class="nc">TaurusLed</span><span class="p">(</span><span class="n">QLed</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A widget designed to represent with a LED image the state of a device,</span>
+<span class="sd">    the value of a boolean attribute or the quality of an attribute.&quot;&quot;&quot;</span>
+
+    <span class="n">DefaultModelIndex</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">DefaultFgRole</span> <span class="o">=</span> <span class="s1">&#39;rvalue&#39;</span>
+    <span class="n">DefaultOnColor</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
+    <span class="n">DefaultOffColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
+
+    <span class="n">_deprecatedRoles</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;rvalue&#39;</span><span class="p">,</span> <span class="n">w_value</span><span class="o">=</span><span class="s1">&#39;wvalue&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span> <span class="o">=</span> <span class="n">designMode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultModelIndex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndexStr</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fgRole</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultFgRole</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_onColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultOnColor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_offColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultOffColor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controller</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">QLed</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="c1"># if we are in design mode there will be no events so we force the</span>
+        <span class="c1"># creation of a controller object</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_calculate_controller_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+
+        <span class="n">klass</span> <span class="o">=</span> <span class="n">_TaurusLedController</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span><span class="p">:</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="n">_TaurusLedControllerDesignMode</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="n">_TaurusLedController</span>
+        <span class="k">elif</span> <span class="n">model</span><span class="o">.</span><span class="n">isBoolean</span><span class="p">():</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="n">_TaurusLedControllerBool</span>
+        <span class="k">elif</span> <span class="n">model</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">DevState</span><span class="p">:</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="n">_TaurusLedControllerState</span>
+        <span class="k">return</span> <span class="n">klass</span>
+
+<div class="viewcode-block" id="TaurusLed.controller"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.controller">[docs]</a>    <span class="k">def</span> <span class="nf">controller</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ctrl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controller</span>
+        <span class="c1"># if there is a controller object and it is not the base controller...</span>
+        <span class="k">if</span> <span class="n">ctrl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ctrl</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">_TaurusLedController</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ctrl</span>
+
+        <span class="c1"># if there is a controller object and it is still the same class...</span>
+        <span class="n">ctrl_klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_controller_class</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ctrl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ctrl</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">ctrl_klass</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ctrl</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controller</span> <span class="o">=</span> <span class="n">ctrl</span> <span class="o">=</span> <span class="n">ctrl_klass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ctrl</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget overwriting</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusLed.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">()</span><span class="o">.</span><span class="n">handleEvent</span><span class="p">(</span><span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLed.isReadOnly"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TaurusLed.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="c1"># force to build another controller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controller</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT property definition</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusLed.getFgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.getFgRole">[docs]</a>    <span class="k">def</span> <span class="nf">getFgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fgRole</span></div>
+
+<div class="viewcode-block" id="TaurusLed.setFgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.setFgRole">[docs]</a>    <span class="k">def</span> <span class="nf">setFgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fgRole</span><span class="p">):</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deprecatedRoles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fgRole</span><span class="p">,</span> <span class="n">fgRole</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fgRole</span> <span class="o">!=</span> <span class="n">role</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">,</span> <span class="n">dep</span><span class="o">=</span><span class="s1">&#39;setFgRole(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">fgRole</span><span class="p">,</span>
+                            <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;setFgRole(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">role</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fgRole</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">role</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusLed.resetFgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.resetFgRole">[docs]</a>    <span class="k">def</span> <span class="nf">resetFgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFgRole</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultFgRole</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLed.getOnColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.getOnColor">[docs]</a>    <span class="k">def</span> <span class="nf">getOnColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the preferred led on color</span>
+<span class="sd">        :return: led on color</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_onColor</span></div>
+
+<div class="viewcode-block" id="TaurusLed.setOnColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.setOnColor">[docs]</a>    <span class="k">def</span> <span class="nf">setOnColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the preferred led on color</span>
+<span class="sd">        :param status: the new on color</span>
+<span class="sd">        :type  status: str&quot;&quot;&quot;</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isLedColorValid</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Invalid color &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">color</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_onColor</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusLed.resetOnColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.resetOnColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetOnColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets the preferred led on color&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setOnColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultOnColor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLed.getOffColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.getOffColor">[docs]</a>    <span class="k">def</span> <span class="nf">getOffColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the preferred led off color</span>
+<span class="sd">        :return: led off color</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offColor</span></div>
+
+<div class="viewcode-block" id="TaurusLed.setOffColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.setOffColor">[docs]</a>    <span class="k">def</span> <span class="nf">setOffColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the preferred led off color</span>
+<span class="sd">        :param status: the new off color</span>
+<span class="sd">        :type  status: str&quot;&quot;&quot;</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isLedColorValid</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Invalid color &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">color</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_offColor</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusLed.resetOffColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.resetOffColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetOffColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets the preferred led color&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setOffColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultOffColor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLed.getModelIndexValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.getModelIndexValue">[docs]</a>    <span class="k">def</span> <span class="nf">getModelIndexValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndex</span></div>
+
+<div class="viewcode-block" id="TaurusLed.getModelIndex"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.getModelIndex">[docs]</a>    <span class="k">def</span> <span class="nf">getModelIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndexStr</span></div>
+
+<div class="viewcode-block" id="TaurusLed.setModelIndex"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.setModelIndex">[docs]</a>    <span class="k">def</span> <span class="nf">setModelIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelIndex</span><span class="p">):</span>
+        <span class="n">mi</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">modelIndex</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mi</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndex</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mi_value</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mi</span><span class="p">))</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">mi_value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+                <span class="n">mi_value</span> <span class="o">=</span> <span class="n">mi_value</span><span class="p">,</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">operator</span><span class="o">.</span><span class="n">isSequenceType</span><span class="p">(</span><span class="n">mi_value</span><span class="p">):</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndex</span> <span class="o">=</span> <span class="n">mi_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndexStr</span> <span class="o">=</span> <span class="n">mi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusLed.resetModelIndex"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.resetModelIndex">[docs]</a>    <span class="k">def</span> <span class="nf">resetModelIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setModelIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultModelIndex</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusLed.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLed.html#taurus.qt.qtgui.compact.TaurusLed.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_QT_PLUGIN_INFO</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span></div>
+
+    <span class="c1">#: This property holds the unique URI string representing the model name</span>
+    <span class="c1">#: with which this widget will get its data from. The convention used for</span>
+    <span class="c1">#: the string can be found :ref:`here &lt;model-concept&gt;`.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: In case the property :attr:`useParentModel` is set to True, the model</span>
+    <span class="c1">#: text must start with a &#39;/&#39; followed by the attribute name.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.getModel`</span>
+    <span class="c1">#:     * :meth:`TaurusLabel.setModel`</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.resetModel`</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: .. seealso:: :ref:`model-concept`</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span> <span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds whether or not this widget should search in the</span>
+    <span class="c1">#: widget hierarchy for a model prefix in a parent widget.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.getUseParentModel`</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.setUseParentModel`</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.resetUseParentModel`</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: .. seealso:: :ref:`model-concept`</span>
+    <span class="n">useParentModel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the index inside the model value that should be</span>
+    <span class="c1">#: displayed</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`TaurusLed.getModelIndex`</span>
+    <span class="c1">#:     * :meth:`TaurusLed.setModelIndex`</span>
+    <span class="c1">#:     * :meth:`TaurusLed.resetModelIndex`</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: .. seealso:: :ref:`model-concept`</span>
+    <span class="n">modelIndex</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getModelIndex</span><span class="p">,</span> <span class="n">setModelIndex</span><span class="p">,</span>
+                                 <span class="n">resetModelIndex</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the foreground role.</span>
+    <span class="c1">#: Valid values are:</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     #. &#39;value&#39; - the value is used</span>
+    <span class="c1">#:     #. &#39;w_value&#39; - the write value is used</span>
+    <span class="c1">#:     #. &#39;quality&#39; - the quality is used</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`TaurusLed.getFgRole`</span>
+    <span class="c1">#:     * :meth:`TaurusLed.setFgRole`</span>
+    <span class="c1">#:     * :meth:`TaurusLed.resetFgRole`</span>
+    <span class="n">fgRole</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getFgRole</span><span class="p">,</span> <span class="n">setFgRole</span><span class="p">,</span>
+                             <span class="n">resetFgRole</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;foreground role&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the preferred led color</span>
+    <span class="c1">#: This value is used for the cases where the model value does not contain</span>
+    <span class="c1">#: enough information to distinguish between different On colors.</span>
+    <span class="c1">#: For example, a bool attribute, when it is False it is displayed with the</span>
+    <span class="c1">#: off led but when it is true it may be displayed On in any color. The</span>
+    <span class="c1">#: prefered color would be used in this case.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`TaurusLed.getOnColor`</span>
+    <span class="c1">#:     * :meth:`TaurusLed.setOnColor`</span>
+    <span class="c1">#:     * :meth:`TaurusLed.resetOnColor`</span>
+    <span class="n">onColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getOnColor</span><span class="p">,</span> <span class="n">setOnColor</span><span class="p">,</span> <span class="n">resetOnColor</span><span class="p">,</span>
+                              <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;preferred led On color&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the preferred led color</span>
+    <span class="c1">#: This value is used for the cases where the model value does not contain</span>
+    <span class="c1">#: enough information to distinguish between different Off colors.</span>
+    <span class="c1">#: For example, a bool attribute, when it is False it is displayed with the</span>
+    <span class="c1">#: off led but when it is true it may be displayed On in any color. The</span>
+    <span class="c1">#: prefered color would be used in this case.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`TaurusLed.getOffColor`</span>
+    <span class="c1">#:     * :meth:`TaurusLed.setOffColor`</span>
+    <span class="c1">#:     * :meth:`TaurusLed.resetOffColor`</span>
+    <span class="n">offColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getOffColor</span><span class="p">,</span> <span class="n">setOffColor</span><span class="p">,</span> <span class="n">resetOffColor</span><span class="p">,</span>
+                               <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;preferred led Off color&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
+    <span class="s2">&quot;Led&quot;</span>
+    <span class="kn">import</span> <span class="nn">demo.taurusleddemo</span>
+    <span class="k">return</span> <span class="n">demo</span><span class="o">.</span><span class="n">taurusleddemo</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+    <span class="n">Application</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">usage</span> <span class="o">=</span> <span class="s2">&quot;%prog [options] &lt;full_attribute_name(s)&gt;&quot;</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+                          <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus led demo&quot;</span><span class="p">,</span> <span class="n">app_version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                          <span class="n">org_domain</span><span class="o">=</span><span class="s2">&quot;Taurus&quot;</span><span class="p">,</span> <span class="n">org_name</span><span class="o">=</span><span class="s2">&quot;Tango community&quot;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">demo</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+        <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+            <span class="n">led</span> <span class="o">=</span> <span class="n">TaurusLed</span><span class="p">()</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">led</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">w</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

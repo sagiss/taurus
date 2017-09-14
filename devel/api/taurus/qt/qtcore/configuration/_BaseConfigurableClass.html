@@ -1,0 +1,644 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BaseConfigurableClass &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtcore.configuration" href="../configuration.html"/>
+        <link rel="next" title="configurableProperty" href="_configurableProperty.html"/>
+        <link rel="prev" title="taurus.qt.qtcore.configuration" href="../configuration.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtcore.html"><code class="docutils literal"><span class="pre">taurus.qt.qtcore</span></code></a> &raquo;</li>
+      
+          <li><a href="../configuration.html"><code class="docutils literal"><span class="pre">taurus.qt.qtcore.configuration</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">BaseConfigurableClass</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="baseconfigurableclass">
+<h1><a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass" title="taurus.qt.qtcore.configuration.BaseConfigurableClass"><code class="xref py py-class docutils literal"><span class="pre">BaseConfigurableClass</span></code></a><a class="headerlink" href="#baseconfigurableclass" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-e776c3219a80391111be0ff572bcd5eb38292b90.png" alt="Inheritance diagram of BaseConfigurableClass" usemap="#inheritancef41db5ca11" class="inheritance"/>
+<map id="inheritancef41db5ca11" name="inheritancef41db5ca11">
+<area shape="rect" id="node1" title="A base class defining the API for configurable objects." alt="" coords="5,5,173,53"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass">
+<em class="property">class </em><code class="descname">BaseConfigurableClass</code><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base class defining the API for configurable objects.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">One implicit requisite is that a configurable object must also provide a
+<cite>meth:`objectName</cite> method which returns the object name. This is typically
+fulfilled by inheriting from QObject.</p>
+</div>
+<p>Using objects that inherit from <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass" title="taurus.qt.qtcore.configuration.BaseConfigurableClass"><code class="xref py py-class docutils literal"><span class="pre">BaseConfigurableClass</span></code></a> automates
+saving and restoring of application settings and also enables the use of
+perspectives in Taurus GUIs.</p>
+<p>The basic idea is that each object/widget in your application is responsible
+for providing a dictionary containing information on its properties (see
+<a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig"><code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code></a>). The same object/widget is also responsible for
+restoring such properties when provided with a configuration dictionary (see
+<a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig"><code class="xref py py-meth docutils literal"><span class="pre">applyConfig()</span></code></a>).</p>
+<p>For a certain property to be saved/restored it is usually enough to
+<em>register</em> it using <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigProperty()</span></code></a>. When the objects are
+structured in a hierarchical way (e.g. as the widgets in a Qt application),
+the parent widget can (should) delegate the save/restore of its children to
+the children themselves. This delegation is done by registering the children
+using <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigDelegate()</span></code></a>.</p>
+<p>Consider the following example: I am creating a groupbox container which
+contains a <code class="xref py py-class docutils literal"><span class="pre">TaurusForm</span></code> and I want to save/restore the state of the
+checkbox and the properties of the form:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#The class looks like this:</span>
+<span class="k">class</span> <span class="nc">MyBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">,</span> <span class="n">BaseConfigurableClass</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span> <span class="o">=</span> <span class="n">TaurusForm</span><span class="p">()</span>
+        <span class="o">...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isChecked</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setChecked</span><span class="p">,</span> <span class="s1">&#39;checked&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="p">)</span>   <span class="c1">#the TaurusForm already handles its own configuration!</span>
+        <span class="o">...</span>
+
+<span class="c1">#and we can retrieve the configuration doing:</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">MyBox</span><span class="p">()</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1">#checked is a registered property of MyBox class</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1">#modifiableByUser is a registered property of a TaurusForm</span>
+<span class="n">cfg</span> <span class="o">=</span> <span class="n">b1</span><span class="o">.</span><span class="n">createConfig</span><span class="p">()</span>  <span class="c1">#we get the configuration as a dictionary</span>
+<span class="o">...</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">MyBox</span><span class="p">()</span>
+<span class="n">b2</span><span class="o">.</span><span class="n">applyConfig</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>  <span class="c1">#now b2 has the same configuration as b1 when cfg was created</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig"><code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code></a> and <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig"><code class="xref py py-meth docutils literal"><span class="pre">applyConfig()</span></code></a> methods use a dictionary for
+passing the configuration, but <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass" title="taurus.qt.qtcore.configuration.BaseConfigurableClass"><code class="xref py py-class docutils literal"><span class="pre">BaseConfigurableClass</span></code></a> also provides
+some other convenience methods for working with files
+(<a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.saveConfigFile" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.saveConfigFile"><code class="xref py py-meth docutils literal"><span class="pre">saveConfigFile()</span></code></a> and <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile"><code class="xref py py-meth docutils literal"><span class="pre">loadConfigFile()</span></code></a>) or as QByteArrays
+(<a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createQConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.createQConfig"><code class="xref py py-meth docutils literal"><span class="pre">createQConfig()</span></code></a> and <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.applyQConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.applyQConfig"><code class="xref py py-meth docutils literal"><span class="pre">applyQConfig()</span></code></a>)</p>
+<p>Finally, we recommend to use <code class="xref py py-class docutils literal"><span class="pre">TaurusMainWindow</span></code> for all Taurus GUIs
+since it automates all the steps for <em>saving properties when closing</em> and
+<em>restoring the settings on startup</em>. It also provides a mechanism for
+implementing &#8220;perspectives&#8221; in your application.</p>
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig">
+<code class="descname">applyConfig</code><span class="sig-paren">(</span><em>configdict</em>, <em>depth=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.applyConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>applies the settings stored in a configdict to the current object.</p>
+<p>In most usual situations, using <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigProperty()</span></code></a> and
+<a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigDelegate()</span></code></a>, should be enough to cover all needs using
+this method, although it can be reimplemented in children classes to support
+very specific configurations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>configdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; </li>
+<li><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; If depth = 0, applyConfig will only be called
+for this object, and not for any other object registered
+via <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigurableItem" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigurableItem"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigurableItem()</span></code></a>. If depth &gt; 0,
+applyConfig will be called recursively as many times as
+the depth value. If depth &lt; 0 (default, see note), no
+limit is imposed to recursion (i.e., it will recurse for
+as deep as there are registered items).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the default recursion depth can be tweaked in derived classes
+by changing the class property <cite>defaultConfigRecursionDepth</cite></p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig"><code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.applyQConfig">
+<code class="descname">applyQConfig</code><span class="sig-paren">(</span><em>qstate</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.applyQConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.applyQConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>restores the configuration from a qstate generated by <code class="xref py py-meth docutils literal"><span class="pre">getQState()</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>qstate</strong> (<code class="xref py py-class docutils literal"><span class="pre">QByteArray</span></code>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createQConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.createQConfig"><code class="xref py py-meth docutils literal"><span class="pre">createQConfig()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.checkConfigVersion">
+<code class="descname">checkConfigVersion</code><span class="sig-paren">(</span><em>configdict</em>, <em>showDialog=False</em>, <em>supportedVersions=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.checkConfigVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.checkConfigVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the version of configdict is supported. By default, the
+BaseConfigurableClass objects have [&#8220;__UNVERSIONED__&#8221;] as their list of supported
+versions, so unversioned config dicts will be accepted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>configdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; configuration dictionary to check</li>
+<li><strong>showDialog</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether to show a QtWarning dialog if check
+failed (false by default)</li>
+<li><strong>supportedVersions</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt; or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; supported version
+numbers, if None given, the versions supported
+by this widget will be used (i.e., those
+defined in self._supportedConfigVersions)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns True if the configdict is of the right version</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig">
+<code class="descname">createConfig</code><span class="sig-paren">(</span><em>allowUnpickable=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.createConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing configuration information about the
+current state of the object.</p>
+<p>In most usual situations, using <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigProperty()</span></code></a> and
+<a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigDelegate()</span></code></a>, should be enough to cover all needs using
+this method, although it can be reimplemented in children classes to support
+very specific configurations.</p>
+<p>By default, meth:<cite>createQConfig</cite> and meth:<cite>saveConfigFile</cite> call to this
+method for obtaining the data.</p>
+<p>Hint: The following code allows you to serialize the configuration
+dictionary as a string (which you can store as a QSetting, or as a Tango
+Attribute, provided that allowUnpickable==False):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">createConfig</span><span class="p">())</span>  <span class="c1">#s is a string that can be stored</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>alllowUnpickable</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if False the returned dict is
+guaranteed to be a pickable object. This is
+the default and preferred option because it
+allows the serialization as a string that can
+be directly stored in a QSetting. If True, this
+limitation is not enforced, which allows to
+use more complex objects as values (but limits
+its persistence).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">configurations (which can be loaded with <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig"><code class="xref py py-meth docutils literal"><span class="pre">applyConfig()</span></code></a>).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.createQConfig">
+<code class="descname">createQConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.createQConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createQConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the current configuration status encoded as a QByteArray. This
+state can therefore be easily stored using QSettings</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">QByteArray</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(in the current implementation this is just a
+pickled configdict encoded as a QByteArray</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">restoreQConfig()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.defaultConfigRecursionDepth">
+<code class="descname">defaultConfigRecursionDepth</code><em class="property"> = -1</em><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.defaultConfigRecursionDepth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.getConfigurableItemNames">
+<code class="descname">getConfigurableItemNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.getConfigurableItemNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.getConfigurableItemNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns an ordered list of the names of currently registered
+configuration items (delegates and properties)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<code class="xref py py-class docutils literal"><span class="pre">unicode</span></code>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.isTaurusConfig">
+<em class="property">static </em><code class="descname">isTaurusConfig</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.isTaurusConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.isTaurusConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given argument has the structure of a configdict</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; object to test</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if it is a configdict, False otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile">
+<code class="descname">loadConfigFile</code><span class="sig-paren">(</span><em>ifile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.loadConfigFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a file stored by <code class="xref py py-meth docutils literal"><span class="pre">saveConfig()</span></code> and applies the settings</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ifile</strong> (<code class="xref py py-class docutils literal"><span class="pre">file</span></code> or <code class="xref py py-class docutils literal"><span class="pre">string</span></code>) &#8211; file or filename from where to read the configuration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">file name used</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate">
+<code class="descname">registerConfigDelegate</code><span class="sig-paren">(</span><em>delegate</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.registerConfigDelegate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers the given object as a delegate for configuration.
+Delegates are typically other objects inheriting from BaseConfigurableClass
+(or at least they must provide the following methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>createConfig</cite> (as provided by, e.g., BaseConfigurableClass)</li>
+<li><cite>applyConfig</cite> (as provided by, e.g., BaseConfigurableClass)</li>
+<li><cite>objectName</cite> (as provided by, e.g., QObject)</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>delegate</strong> (<a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass" title="taurus.qt.qtcore.configuration.BaseConfigurableClass"><code class="xref py py-class docutils literal"><span class="pre">BaseConfigurableClass</span></code></a>) &#8211; The delegate object to be registered.</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name to be used as a key for this item in the configuration
+dictionary. If None given, the object name is used by default.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the registration order will be used when restoring configurations</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.unregisterConfigurableItem" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.unregisterConfigurableItem"><code class="xref py py-meth docutils literal"><span class="pre">unregisterConfigurableItem()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigProperty()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig"><code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty">
+<code class="descname">registerConfigProperty</code><span class="sig-paren">(</span><em>fget</em>, <em>fset</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.registerConfigProperty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a certain property to be included in the config dictionary.</p>
+<p>In this context a &#8220;property&#8221; is some named value that can be obtained
+via a getter method and can be set via a setter method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fget</strong> (<code class="xref py py-class docutils literal"><span class="pre">method</span></code> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; method (or name of a method) that gets no
+arguments and returns the value of a property.</li>
+<li><strong>fset</strong> (<code class="xref py py-class docutils literal"><span class="pre">method</span></code> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; method (or name of a method) that gets as
+an argument the value of a property, and sets it</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name to be used as a key for this property in the configuration
+dictionary</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the registration order will be used when restoring configurations</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.unregisterConfigurableItem" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.unregisterConfigurableItem"><code class="xref py py-meth docutils literal"><span class="pre">unregisterConfigurableItem()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigDelegate()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig"><code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigurableItem">
+<code class="descname">registerConfigurableItem</code><span class="sig-paren">(</span><em>item</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.registerConfigurableItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigurableItem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.resetConfigurableItems">
+<code class="descname">resetConfigurableItems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.resetConfigurableItems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.resetConfigurableItems" title="Permalink to this definition">¶</a></dt>
+<dd><p>clears the record of configurable items depending of this object</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigurableItem" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigurableItem"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigurableItem()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.saveConfigFile">
+<code class="descname">saveConfigFile</code><span class="sig-paren">(</span><em>ofile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.saveConfigFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.saveConfigFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the current configuration on a file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ofile</strong> (<code class="xref py py-class docutils literal"><span class="pre">file</span></code> or <code class="xref py py-class docutils literal"><span class="pre">string</span></code>) &#8211; file or filename to store the configuration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">file name used</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtcore.configuration.BaseConfigurableClass.unregisterConfigurableItem">
+<code class="descname">unregisterConfigurableItem</code><span class="sig-paren">(</span><em>item</em>, <em>raiseOnError=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/configuration/configuration.html#BaseConfigurableClass.unregisterConfigurableItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.unregisterConfigurableItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>unregisters the given item (either a delegate or a property) from the
+configurable items record. It raises an exception if the item is not
+registered</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>item</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The object that should be unregistered.
+Alternatively, the name under which the object was registered
+can be passed as a python string.</li>
+<li><strong>raiseOnError</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True (default), it raises a KeyError
+exception if item was not registered. If False, it
+just logs a debug message</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigProperty()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigDelegate()</span></code></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_configurableProperty.html" class="btn btn-neutral float-right" title="configurableProperty" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../configuration.html" class="btn btn-neutral" title="taurus.qt.qtcore.configuration" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

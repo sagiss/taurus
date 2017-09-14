@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusMessagePanel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtgui.panel" href="../panel.html"/>
+        <link rel="next" title="TaurusModelChooser" href="_TaurusModelChooser.html"/>
+        <link rel="prev" title="TaurusMessageErrorHandler" href="_TaurusMessageErrorHandler.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+      
+          <li><a href="../panel.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui.panel</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">TaurusMessagePanel</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusmessagepanel">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.panel.TaurusMessagePanel" title="taurus.qt.qtgui.panel.TaurusMessagePanel"><code class="xref py py-class docutils literal"><span class="pre">TaurusMessagePanel</span></code></a><a class="headerlink" href="#taurusmessagepanel" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-74cc22e2c756b5c674776479bd232f02159dead6.png" alt="Inheritance diagram of TaurusMessagePanel" usemap="#inheritancedbfc580e92" class="inheritance"/>
+<map id="inheritancedbfc580e92" name="inheritancedbfc580e92">
+<area shape="rect" id="node6" title="A panel intended to display a taurus error." alt="" coords="5,389,160,437"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel">
+<em class="property">class </em><code class="descname">TaurusMessagePanel</code><span class="sig-paren">(</span><em>err_type=None</em>, <em>err_value=None</em>, <em>err_traceback=None</em>, <em>parent=None</em>, <em>designMode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtGui.QWidget</span></code></p>
+<p>A panel intended to display a taurus error.
+Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;sys/tg_test/1&quot;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="n">dev</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="s2">&quot;throw_exception&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
+    <span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessagePanel</span><span class="p">()</span>
+    <span class="n">msgbox</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can show the error outside the exception handling code. If you do this,
+you should keep a record of the exception information as given by
+<a class="reference external" href="https://docs.python.org/dev/library/sys.html#sys.exc_info" title="(in Python v3.7)"><code class="xref py py-func docutils literal"><span class="pre">sys.exc_info()</span></code></a>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;sys/tg_test/1&quot;</span><span class="p">)</span>
+<span class="n">exc_info</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="n">dev</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="s2">&quot;throw_exception&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
+    <span class="n">exc_info</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">exc_info</span><span class="p">:</span>
+    <span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessagePanel</span><span class="p">(</span><span class="o">*</span><span class="n">exc_info</span><span class="p">)</span>
+    <span class="n">msgbox</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.ErrorHandlers">
+<code class="descname">ErrorHandlers</code><em class="property"> = {&lt;class 'PyTango.DevFailed'&gt;: &lt;class 'taurus.qt.qtgui.panel.taurusmessagepanel.TangoMessageErrorHandler'&gt;}</em><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.ErrorHandlers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.addButton">
+<code class="descname">addButton</code><span class="sig-paren">(</span><em>button</em>, <em>role=3</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.addButton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.addButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the given button with the given to the button box</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>button</strong> (<em>PyQt4.QtGui.QPushButton</em>) &#8211; the button to be added</li>
+<li><strong>role</strong> (<em>PyQt4.Qt.QDialogButtonBox.ButtonRole</em>) &#8211; button role</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.buttonBox">
+<code class="descname">buttonBox</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.buttonBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.buttonBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the button box from this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the button box from this panel</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">PyQt4.Qt.QDialogButtonBox</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.checkBox">
+<code class="descname">checkBox</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.checkBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.checkBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the check box from this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the check box from this panel</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">PyQt4.Qt.QCheckBox</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.checkBoxState">
+<code class="descname">checkBoxState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.checkBoxState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.checkBoxState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the check box state</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the check box state</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">PyQt4.Qt.CheckState</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.checkBoxText">
+<code class="descname">checkBoxText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.checkBoxText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.checkBoxText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the check box text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the check box text</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.findErrorHandler">
+<em class="property">classmethod </em><code class="descname">findErrorHandler</code><span class="sig-paren">(</span><em>klass</em>, <em>err_type</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.findErrorHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.findErrorHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the proper error handler class for the given error</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>err_type</strong> (<em>class object</em>) &#8211; error class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a message box error handler</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">TaurusMessageBoxErrorHandler class object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.getDetailedHtml">
+<code class="descname">getDetailedHtml</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.getDetailedHtml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.getDetailedHtml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current detailed HTML of this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the detailed HTML for this panel</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.getDetailedText">
+<code class="descname">getDetailedText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.getDetailedText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.getDetailedText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current detailed text of this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the detailed text for this panel</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.getError">
+<code class="descname">getError</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.getError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.getError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current exception information of this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the current exception information (same as type as returned by
+<a class="reference external" href="https://docs.python.org/dev/library/sys.html#sys.exc_info" title="(in Python v3.7)"><code class="xref py py-func docutils literal"><span class="pre">sys.exc_info()</span></code></a>)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple&lt;type, value, traceback&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.getOriginHtml">
+<code class="descname">getOriginHtml</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.getOriginHtml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.getOriginHtml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current origin HTML of this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the origin HTML for this panel</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.getOriginText">
+<code class="descname">getOriginText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.getOriginText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.getOriginText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current origin text of this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the origin text for this panel</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.getText">
+<code class="descname">getText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.getText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.getText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current text of this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the text for this panel</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.loadUi">
+<code class="descname">loadUi</code><span class="sig-paren">(</span><em>filename=None</em>, <em>path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.loadUi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.registerErrorHandler">
+<em class="property">classmethod </em><code class="descname">registerErrorHandler</code><span class="sig-paren">(</span><em>klass</em>, <em>err_type</em>, <em>err_handler</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.registerErrorHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.registerErrorHandler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.reportComboBox">
+<code class="descname">reportComboBox</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.reportComboBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.reportComboBox" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxState">
+<code class="descname">setCheckBoxState</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setCheckBoxState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the checkbox state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<em>PyQt4.Qt.CheckState</em>) &#8211; new checkbox state</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxText">
+<code class="descname">setCheckBoxText</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setCheckBoxText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the checkbox text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; new checkbox text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxVisible">
+<code class="descname">setCheckBoxVisible</code><span class="sig-paren">(</span><em>visible</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setCheckBoxVisible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxVisible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the checkbox visibility.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>visible</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; True makes checkbox visible, False hides it</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setDetailedHtml">
+<code class="descname">setDetailedHtml</code><span class="sig-paren">(</span><em>html</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setDetailedHtml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setDetailedHtml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the detailed HTML of the dialog</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>html</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; the new HTML text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setDetailedText">
+<code class="descname">setDetailedText</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setDetailedText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setDetailedText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the detailed text of the dialog</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; the new text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setError">
+<code class="descname">setError</code><span class="sig-paren">(</span><em>err_type=None</em>, <em>err_value=None</em>, <em>err_traceback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the exception object.
+Example usage:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;sys/tg_test/1&quot;</span><span class="p">)</span>
+<span class="n">exc_info</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessagePanel</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="n">dev</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="s2">&quot;throw_exception&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
+    <span class="n">exc_info</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">exc_info</span><span class="p">:</span>
+    <span class="n">msgbox</span><span class="o">.</span><span class="n">setError</span><span class="p">(</span><span class="o">*</span><span class="n">exc_info</span><span class="p">)</span>
+    <span class="n">msgbox</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>err_type</strong> &#8211; the exception type of the exception being handled
+(a class object)</li>
+<li><strong>err_value</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) &#8211; exception object</li>
+<li><strong>err_traceback</strong> (<em>TracebackType</em>) &#8211; a traceback object which encapsulates the call
+stack at the point where the exception originally
+occurred</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setIconPixmap">
+<code class="descname">setIconPixmap</code><span class="sig-paren">(</span><em>pixmap</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setIconPixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setIconPixmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the icon to the dialog</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pixmap</strong> (<em>PyQt4.Qt.QPixmap</em>) &#8211; the icon pixmap</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setOriginHtml">
+<code class="descname">setOriginHtml</code><span class="sig-paren">(</span><em>html</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setOriginHtml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setOriginHtml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the origin HTML of the dialog</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>html</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; the new HTML text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setOriginText">
+<code class="descname">setOriginText</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setOriginText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setOriginText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the origin text of the dialog</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; the new text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.setText">
+<code class="descname">setText</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusmessagepanel.html#TaurusMessagePanel.setText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.setText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text of this panel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; the new text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusMessagePanel.toggledDetails">
+<code class="descname">toggledDetails</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusMessagePanel.toggledDetails" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusModelChooser.html" class="btn btn-neutral float-right" title="TaurusModelChooser" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusMessageErrorHandler.html" class="btn btn-neutral" title="TaurusMessageErrorHandler" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,752 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.plot.arrayedit &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.plot.arrayedit</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.plot.arrayedit</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">arrayedit.py: Widget for editing a spectrum/array via control points</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Qwt5</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+<span class="kn">from</span> <span class="nn">curvesAppearanceChooserDlg</span> <span class="k">import</span> <span class="n">CurveAppearanceProperties</span>
+
+
+<span class="nd">@UILoadable</span>
+<span class="k">class</span> <span class="nc">ControllerBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="n">selected</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">corr</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setY</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s1">&#39;x=</span><span class="si">%6g</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">ctrlObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lCopyBT</span><span class="o">.</span><span class="n">ctrlObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rCopyBT</span><span class="o">.</span><span class="n">ctrlObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lScaleBT</span><span class="o">.</span><span class="n">ctrlObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rScaleBT</span><span class="o">.</span><span class="n">ctrlObj</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="c1"># reimplementing the focusInEvent method for the spinbox</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">focusInEvent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrSB_focusInEvent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">mousePressEvent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mousePressEvent</span>
+        <span class="c1">#self.connect(self.corrSB, Qt.SIGNAL(&#39;valueChanged(double)&#39;), self.enableScale)</span>
+
+    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">)</span>
+        <span class="c1"># print &#39;SELECTED&#39;, self</span>
+        <span class="c1">#Qt.QDoubleSpinBox.focusInEvent(self.corrSB, event)</span>
+
+    <span class="k">def</span> <span class="nf">corrSB_focusInEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">)</span>
+        <span class="c1"># print &#39;GOT FOCUS&#39;, self</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleSpinBox</span><span class="o">.</span><span class="n">focusInEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">corrSB</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enableScale</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">enableScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">enable</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">value</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lScaleBT</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rScaleBT</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enable</span><span class="p">)</span>
+
+
+<span class="nd">@UILoadable</span>
+<span class="k">class</span> <span class="nc">EditCPointsDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+
+
+<span class="nd">@UILoadable</span>
+<span class="k">class</span> <span class="nc">AddCPointsDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+
+
+<span class="nd">@UILoadable</span>
+<div class="viewcode-block" id="ArrayEditor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor">[docs]</a><span class="k">class</span> <span class="nc">ArrayEditor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># construct the layout for controllers container</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlLayout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controllersContainer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlLayout</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlLayout</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># implement scroll bars for the controllers container</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollArea</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QScrollArea</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollArea</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controllersContainer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollArea</span><span class="o">.</span><span class="n">setVerticalScrollBarPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ScrollBarAlwaysOff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollArea</span><span class="o">.</span><span class="n">setWidgetResizable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cpointsGroupBox</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scrollArea</span><span class="p">)</span>
+
+        <span class="c1"># initialize data</span>
+        <span class="n">cpoints</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;double&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;double&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">cpoints</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">cpoints</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corr</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+        <span class="c1"># markers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">markerPos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker1</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotMarker</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker1</span><span class="o">.</span><span class="n">setSymbol</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Rect</span><span class="p">,</span>
+                                              <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoBrush</span><span class="p">),</span>
+                                              <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">green</span><span class="p">),</span>
+                                              <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker1</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker2</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotMarker</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker2</span><span class="o">.</span><span class="n">setSymbol</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Rect</span><span class="p">,</span>
+                                              <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoBrush</span><span class="p">),</span>
+                                              <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">green</span><span class="p">),</span>
+                                              <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker2</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="p">)</span>
+
+        <span class="c1"># cpointsPickers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointMovingIndex</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker1</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPicker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">canvas</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker1</span><span class="o">.</span><span class="n">setSelectionFlags</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPicker</span><span class="o">.</span><span class="n">PointSelection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker2</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPicker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">canvas</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker2</span><span class="o">.</span><span class="n">setSelectionFlags</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPicker</span><span class="o">.</span><span class="n">PointSelection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker1</span><span class="o">.</span><span class="n">widgetMousePressEvent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot1MousePressEvent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker1</span><span class="o">.</span><span class="n">widgetMouseReleaseEvent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot1MouseReleaseEvent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker2</span><span class="o">.</span><span class="n">widgetMousePressEvent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot2MousePressEvent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker2</span><span class="o">.</span><span class="n">widgetMouseReleaseEvent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot2MouseReleaseEvent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker1</span><span class="o">.</span><span class="n">widgetMouseDoubleClickEvent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot1MouseDoubleClickEvent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsPicker2</span><span class="o">.</span><span class="n">widgetMouseDoubleClickEvent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot2MouseDoubleClickEvent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_populatePlots</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetCorrection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selectedController</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span> <span class="o">=</span> <span class="n">AddCPointsDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Launch low-priority initializations (to speed up load time)</span>
+        <span class="c1"># Qt.QTimer.singleShot(0, &lt;method&gt;)</span>
+
+        <span class="c1"># connections</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addCPointsBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span><span class="o">.</span><span class="n">show</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span><span class="o">.</span><span class="n">editBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">showEditCPointsDialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span><span class="o">.</span><span class="n">cleanBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resetCorrection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span><span class="o">.</span><span class="n">addSingleCPointBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onAddSingleCPointBT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span><span class="o">.</span><span class="n">addRegEspCPointsBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onAddRegEspCPointsBT</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ArrayEditor.plot1MousePressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plot1MousePressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plot1MousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotMousePressEvent</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.plot2MousePressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plot2MousePressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plot2MousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotMousePressEvent</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.plotMousePressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plotMousePressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plotMousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">taurusplot</span><span class="p">):</span>
+        <span class="n">picked</span><span class="p">,</span> <span class="n">pickedCurveName</span><span class="p">,</span> <span class="n">pickedIndex</span> <span class="o">=</span> <span class="n">taurusplot</span><span class="o">.</span><span class="n">pickDataPoint</span><span class="p">(</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">(),</span> <span class="n">scope</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">showMarker</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">targetCurveNames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Control Points&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">picked</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">changeCPointSelection</span><span class="p">(</span><span class="n">picked</span><span class="o">.</span><span class="n">x</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">makeControllerVisible</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="n">pickedIndex</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cpointMovingIndex</span> <span class="o">=</span> <span class="n">pickedIndex</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_movingStartYPos</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">()</span>
+            <span class="n">taurusplot</span><span class="o">.</span><span class="n">canvas</span><span class="p">()</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SizeVerCursor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.plot1MouseReleaseEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plot1MouseReleaseEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plot1MouseReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotMouseReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.plot2MouseReleaseEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plot2MouseReleaseEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plot2MouseReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotMouseReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.plotMouseReleaseEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plotMouseReleaseEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plotMouseReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">taurusplot</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cpointMovingIndex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="c1"># if no cpoint was picked, do nothing on release</span>
+        <span class="c1"># no motion s performed if the y position is unchanged or if the mouse</span>
+        <span class="c1"># release is out of the canvas</span>
+        <span class="n">validMotion</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_movingStartYPos</span> <span class="o">!=</span> <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">()</span><span class="o">.</span><span class="n">y</span><span class="p">()</span>
+                       <span class="p">)</span> <span class="ow">and</span> <span class="n">taurusplot</span><span class="o">.</span><span class="n">canvas</span><span class="p">()</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">validMotion</span><span class="p">:</span>
+            <span class="c1"># calculate the new correction</span>
+            <span class="n">newCorr</span> <span class="o">=</span> <span class="n">taurusplot</span><span class="o">.</span><span class="n">invTransform</span><span class="p">(</span>
+                <span class="n">taurusplot</span><span class="o">.</span><span class="n">getCurve</span><span class="p">(</span><span class="s1">&#39;Control Points&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">yAxis</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">taurusplot</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="p">:</span>
+                <span class="n">newCorr</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_cpointMovingIndex</span><span class="p">]</span>
+            <span class="c1"># apply new correction</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_cpointMovingIndex</span><span class="p">]</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">newCorr</span><span class="p">)</span>
+        <span class="c1"># reset the moving state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointMovingIndex</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">taurusplot</span><span class="o">.</span><span class="n">canvas</span><span class="p">()</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CrossCursor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.plot1MouseDoubleClickEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plot1MouseDoubleClickEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plot1MouseDoubleClickEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotMouseDoubleClickEvent</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.plot2MouseDoubleClickEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plot2MouseDoubleClickEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plot2MouseDoubleClickEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotMouseDoubleClickEvent</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.plotMouseDoubleClickEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.plotMouseDoubleClickEvent">[docs]</a>    <span class="k">def</span> <span class="nf">plotMouseDoubleClickEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">taurusplot</span><span class="p">):</span>
+        <span class="n">picked</span><span class="p">,</span> <span class="n">pickedCurveName</span><span class="p">,</span> <span class="n">pickedIndex</span> <span class="o">=</span> <span class="n">taurusplot</span><span class="o">.</span><span class="n">pickDataPoint</span><span class="p">(</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">(),</span> <span class="n">scope</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">showMarker</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">targetCurveNames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Control Points&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">picked</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="c1"># we dont want to create a control point too close of an existing one</span>
+        <span class="n">xp</span> <span class="o">=</span> <span class="n">taurusplot</span><span class="o">.</span><span class="n">invTransform</span><span class="p">(</span><span class="n">taurusplot</span><span class="o">.</span><span class="n">getCurve</span><span class="p">(</span>
+            <span class="s1">&#39;Control Points&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">xAxis</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">xp</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">xp</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span>  <span class="c1"># we dont want to create control points out of the curve range</span>
+        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Create Control Point?&#39;</span><span class="p">,</span> <span class="s1">&#39;Insert a new control point at x=</span><span class="si">%g</span><span class="s1">?&#39;</span> <span class="o">%</span> <span class="n">xp</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">insertController</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">changeCPointSelection</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span>
+            <span class="c1"># singleshot is used as a hack to get out of the eventhandler</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">makeControllerVisible</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.makeControllerVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.makeControllerVisible">[docs]</a>    <span class="k">def</span> <span class="nf">makeControllerVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctrl</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ctrl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ctrl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectedController</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollArea</span><span class="o">.</span><span class="n">ensureWidgetVisible</span><span class="p">(</span><span class="n">ctrl</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.connectToController"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.connectToController">[docs]</a>    <span class="k">def</span> <span class="nf">connectToController</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctrl</span><span class="p">):</span>
+        <span class="n">ctrl</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changeCPointSelection</span><span class="p">)</span>
+        <span class="n">ctrl</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onCorrSBChanged</span><span class="p">)</span>
+        <span class="n">ctrl</span><span class="o">.</span><span class="n">lCopyBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onLCopy</span><span class="p">)</span>
+        <span class="n">ctrl</span><span class="o">.</span><span class="n">rCopyBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onRCopy</span><span class="p">)</span>
+        <span class="n">ctrl</span><span class="o">.</span><span class="n">lScaleBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onLScale</span><span class="p">)</span>
+        <span class="n">ctrl</span><span class="o">.</span><span class="n">rScaleBT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onRScale</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.onAddSingleCPointBT"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.onAddSingleCPointBT">[docs]</a>    <span class="k">def</span> <span class="nf">onAddSingleCPointBT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span><span class="o">.</span><span class="n">singleCPointXSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insertController</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.onAddRegEspCPointsBT"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.onAddRegEspCPointsBT">[docs]</a>    <span class="k">def</span> <span class="nf">onAddRegEspCPointsBT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cpoints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span><span class="o">.</span><span class="n">regEspCPointsSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">cpoints</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">xp</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">insertController</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.showEditCPointsDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.showEditCPointsDialog">[docs]</a>    <span class="k">def</span> <span class="nf">showEditCPointsDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">EditCPointsDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">tableTW</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">corrp</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">)):</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">xp</span><span class="p">)))</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">corrp</span><span class="p">)))</span>
+
+        <span class="c1"># show dialog and update values if it is accepted</span>
+        <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+            <span class="c1"># delete previous controllers</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">:</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># and create them anew</span>
+            <span class="n">new_xp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">rowCount</span><span class="p">())</span>
+            <span class="n">new_corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">rowCount</span><span class="p">())</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                    <span class="n">new_xp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                    <span class="n">new_corrp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setCorrection</span><span class="p">(</span><span class="n">new_xp</span><span class="p">,</span> <span class="n">new_corrp</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Invalid data&#39;</span><span class="p">,</span> <span class="s1">&#39;Some values were not valid. Edition is ignored.&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_getInsertionIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xp</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">xp</span><span class="p">):</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">i</span>
+
+<div class="viewcode-block" id="ArrayEditor.insertControllers"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.insertControllers">[docs]</a>    <span class="k">def</span> <span class="nf">insertControllers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xplist</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">xp</span> <span class="ow">in</span> <span class="n">xplist</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">insertController</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.insertController"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.insertController">[docs]</a>    <span class="k">def</span> <span class="nf">insertController</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">xp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span>
+        <span class="c1"># updating data (not in the most efficient way, but at least is clean)</span>
+        <span class="n">old_xp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="p">(</span><span class="n">xp</span><span class="p">,),</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">index</span><span class="p">:]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="c1"># the new correction is obtained by interpolation from the neighbouring</span>
+        <span class="c1"># ones</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="n">old_xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">)</span>
+        <span class="c1"># creating the controller</span>
+        <span class="n">ctrl</span> <span class="o">=</span> <span class="n">ControllerBox</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xp</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span>
+                             <span class="n">index</span><span class="p">],</span> <span class="n">corr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlLayout</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">ctrl</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">ctrl</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectToController</span><span class="p">(</span><span class="n">ctrl</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePlots</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">index</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.delController"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.delController">[docs]</a>    <span class="k">def</span> <span class="nf">delController</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]))</span></div>
+
+    <span class="k">def</span> <span class="nf">_populatePlots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Curves appearance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_yAppearance</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="p">(</span>
+            <span class="n">sStyle</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">NoSymbol</span><span class="p">,</span>
+            <span class="n">lStyle</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">,</span>
+            <span class="n">lWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">lColor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+            <span class="n">cStyle</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">Lines</span><span class="p">,</span>
+            <span class="n">yAxis</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_correctedAppearance</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="p">(</span>
+            <span class="n">sStyle</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">NoSymbol</span><span class="p">,</span>
+            <span class="n">lStyle</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DashLine</span><span class="p">,</span>
+            <span class="n">lWidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">lColor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+            <span class="n">cStyle</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">Lines</span><span class="p">,</span>
+            <span class="n">yAxis</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsAppearance</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="p">(</span>
+            <span class="n">sStyle</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Rect</span><span class="p">,</span>
+            <span class="n">sSize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">sColor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+            <span class="n">sFill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">lStyle</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">,</span>
+            <span class="n">yAxis</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_corrAppearance</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="p">(</span>
+            <span class="n">sStyle</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">NoSymbol</span><span class="p">,</span>
+            <span class="n">lStyle</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">,</span>
+            <span class="n">lWidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">lColor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+            <span class="n">cStyle</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">Lines</span><span class="p">,</span>
+            <span class="n">yAxis</span><span class="o">=</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">attachRawData</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Master&#39;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">setCurveAppearanceProperties</span><span class="p">({</span><span class="s1">&#39;Master&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_yAppearance</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">attachRawData</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Control Points&#39;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">setCurveAppearanceProperties</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;Control Points&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsAppearance</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">attachRawData</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Corrected&#39;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">setCurveAppearanceProperties</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;Corrected&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_correctedAppearance</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">attachRawData</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Correction&#39;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">setCurveAppearanceProperties</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;Correction&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_corrAppearance</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">attachRawData</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Control Points&#39;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">setCurveAppearanceProperties</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;Control Points&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cpointsAppearance</span><span class="p">})</span>
+
+<div class="viewcode-block" id="ArrayEditor.updatePlots"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.updatePlots">[docs]</a>    <span class="k">def</span> <span class="nf">updatePlots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">getCurve</span><span class="p">(</span><span class="s1">&#39;Control Points&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">getCurve</span><span class="p">(</span><span class="s1">&#39;Corrected&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">getCurve</span><span class="p">(</span><span class="s1">&#39;Correction&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">getCurve</span><span class="p">(</span><span class="s1">&#39;Control Points&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">markerPos</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker1</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span>
+                              <span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker2</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">replot</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">replot</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.onLCopy"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.onLCopy">[docs]</a>    <span class="k">def</span> <span class="nf">onLCopy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">ctrlObj</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">_x</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">ctrl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[:</span><span class="n">index</span><span class="p">]:</span>
+            <span class="n">ctrl</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.onRCopy"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.onRCopy">[docs]</a>    <span class="k">def</span> <span class="nf">onRCopy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">ctrlObj</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">_x</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">ctrl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">ctrl</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.onLScale"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.onLScale">[docs]</a>    <span class="k">def</span> <span class="nf">onLScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">ctrlObj</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">_x</span><span class="p">)</span>
+        <span class="c1"># y=numpy.interp(self.xp, self.x, self.y) #values of the master at the</span>
+        <span class="c1"># control points</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Scaling Error&#39;</span><span class="p">,</span> <span class="s1">&#39;The master at this control point is zero-valued. This point cannot be used as reference for scaling&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.onRScale"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.onRScale">[docs]</a>    <span class="k">def</span> <span class="nf">onRScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">ctrlObj</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">_x</span><span class="p">)</span>
+        <span class="c1"># y=numpy.interp(self.xp, self.x, self.y) #values of the master at the</span>
+        <span class="c1"># control points</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Scaling Error&#39;</span><span class="p">,</span> <span class="s1">&#39;The master at this control point is zero-valued. This point cannot be used as reference for scaling&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.changeCPointSelection"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.changeCPointSelection">[docs]</a>    <span class="k">def</span> <span class="nf">changeCPointSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newpos</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="n">newpos</span><span class="p">)</span>
+        <span class="n">old_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">markerPos</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">markerPos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker1</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span>
+                              <span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker2</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">replot</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot2</span><span class="o">.</span><span class="n">replot</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="n">old_index</span><span class="p">]</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">corrSB</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;background:lightgreen&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selectedController</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.onCorrSBChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.onCorrSBChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onCorrSBChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;recalculates the position and value of the control points (self.xp and self.corrp)</span>
+<span class="sd">        as well as the correction curve (self.corr)&#39;&#39;&#39;</span>
+        <span class="n">ctrl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">ctrlObj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_getInsertionIndex</span><span class="p">(</span><span class="n">ctrl</span><span class="o">.</span><span class="n">_x</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="c1"># recalculate the correction curve</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corr</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePlots</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.setMaster"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.setMaster">[docs]</a>    <span class="k">def</span> <span class="nf">setMaster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">keepCP</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">keepCorr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># make sure that x,y are numpy arrays and that the values are sorted</span>
+        <span class="c1"># for x</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The master curve is not valid&#39;</span><span class="p">)</span>
+        <span class="n">sortedindexes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">sortedindexes</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">sortedindexes</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot1</span><span class="o">.</span><span class="n">getCurve</span><span class="p">(</span><span class="s1">&#39;Master&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">xp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">corrp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">keepCP</span><span class="p">:</span>
+                <span class="n">xp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span>
+            <span class="k">if</span> <span class="n">keepCorr</span><span class="p">:</span>
+                <span class="n">corrp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCorrection</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">corrp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addCPointsDialog</span><span class="o">.</span><span class="n">singleCPointXSB</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.getMaster"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.getMaster">[docs]</a>    <span class="k">def</span> <span class="nf">getMaster</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns x,m where x and m are numpy arrays representing the</span>
+<span class="sd">        abcissas and ordinates for the master, respectively&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.resetMaster"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.resetMaster">[docs]</a>    <span class="k">def</span> <span class="nf">resetMaster</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;double&#39;</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;double&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaster</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.getCorrected"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.getCorrected">[docs]</a>    <span class="k">def</span> <span class="nf">getCorrected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns x,c where x and c are numpy arrays representing the</span>
+<span class="sd">        abcissas and ordinates for the corrected curve, respectively&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.getCorrection"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.getCorrection">[docs]</a>    <span class="k">def</span> <span class="nf">getCorrection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns xp,cp where xp and cp are numpy arrays representing the</span>
+<span class="sd">        abcissas and ordinates for the correction points, respectively&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.setCorrection"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.setCorrection">[docs]</a>    <span class="k">def</span> <span class="nf">setCorrection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">corrp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets control points at the points specified by xp and with the</span>
+<span class="sd">        values specified by corrp. Example::</span>
+
+<span class="sd">            setCorrection([1,2,8,9], [0,0,0,0])</span>
+
+<span class="sd">        would set 4 control points with initial value 0 at x=1, 2, 8 and 9s</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># destroy previous controllers</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">xp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">xp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">corrp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="c1"># make sure that the extremes are there</span>
+        <span class="k">if</span> <span class="n">xp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">xp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">xp</span><span class="p">))</span>
+            <span class="n">corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(((</span><span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">corrp</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">xp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">xp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">xp</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],)))</span>
+            <span class="n">corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">corrp</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],)))</span>
+
+        <span class="c1"># now create everything</span>
+        <span class="c1"># make sure there are no repetitions and that it is sorted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span>
+        <span class="c1"># in case of repeated xp, take only one corrp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">corrp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">corrp</span><span class="p">)):</span>
+            <span class="n">ctrl</span> <span class="o">=</span> <span class="n">ControllerBox</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ctrlLayout</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ctrl</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_controllers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ctrl</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connectToController</span><span class="p">(</span><span class="n">ctrl</span><span class="p">)</span>
+        <span class="c1"># recalculate the correction curve</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corr</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePlots</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeCPointSelection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ArrayEditor.resetCorrection"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_ArrayEditor.html#taurus.qt.qtgui.plot.ArrayEditor.resetCorrection">[docs]</a>    <span class="k">def</span> <span class="nf">resetCorrection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCorrection</span><span class="p">()</span></div></div>
+        <span class="c1">#self.xp = numpy.linspace(self.x[0],self.x[-1], self.cpoints)</span>
+        <span class="c1">#self.corrp = numpy.zeros(self.cpoints)</span>
+        <span class="c1"># self._populateControllers()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">ArrayEditor</span><span class="p">()</span>
+    <span class="c1">#x = numpy.arange(100)-20</span>
+    <span class="c1">#y = -(x-50)**2+50**2</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">x</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">setMaster</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="c1"># form.setCorrection([1,30,70,90,100],[0,44,88,22,-100])</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="c1"># sys.exit(app.exec_())</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+    <span class="c1"># x,y=form.getCorrected()</span>
+    <span class="c1"># print &quot;CORRECTED:&quot;,x,y</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

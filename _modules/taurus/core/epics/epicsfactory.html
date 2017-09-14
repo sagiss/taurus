@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.epics.epicsfactory &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.epics.epicsfactory</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.epics.epicsfactory</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Epics module. See __init__.py for more detailed documentation</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;EpicsFactory&#39;</span><span class="p">]</span>
+
+
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">epics</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">debug</span>
+    <span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cannot import epics module. &#39;</span> <span class="o">+</span>
+          <span class="s1">&#39;Taurus will not support the &quot;epics&quot; scheme&#39;</span><span class="p">)</span>
+    <span class="k">raise</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusfactory</span> <span class="k">import</span> <span class="n">TaurusFactory</span>
+
+<span class="kn">from</span> <span class="nn">epicsattribute</span> <span class="k">import</span> <span class="n">EpicsAttribute</span>
+<span class="kn">from</span> <span class="nn">epicsdevice</span> <span class="k">import</span> <span class="n">EpicsDevice</span>
+<span class="kn">from</span> <span class="nn">epicsauthority</span> <span class="k">import</span> <span class="n">EpicsAuthority</span>
+
+
+<div class="viewcode-block" id="EpicsFactory"><a class="viewcode-back" href="../../../../devel/api/taurus/core/epics/_EpicsFactory.html#taurus.core.epics.EpicsFactory">[docs]</a><span class="k">class</span> <span class="nc">EpicsFactory</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">TaurusFactory</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Singleton class that provides Epics related objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">schemes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;ca&quot;</span><span class="p">,</span> <span class="s2">&quot;epics&quot;</span><span class="p">,)</span>
+    <span class="n">DEFAULT_DEVICE</span> <span class="o">=</span> <span class="s1">&#39;ca:&#39;</span>
+    <span class="n">DEFAULT_AUTHORITY</span> <span class="o">=</span> <span class="s1">&#39;ca://&#39;</span>
+    <span class="n">caseSensitive</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">elementTypesMap</span> <span class="o">=</span> <span class="p">{</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Authority</span><span class="p">:</span> <span class="n">EpicsAuthority</span><span class="p">,</span>
+                       <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">:</span> <span class="n">EpicsDevice</span><span class="p">,</span>
+                       <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span> <span class="n">EpicsAttribute</span>
+                       <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initialization. Nothing to be done here for now.&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="EpicsFactory.init"><a class="viewcode-back" href="../../../../devel/api/taurus/core/epics/_EpicsFactory.html#taurus.core.epics.EpicsFactory.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Singleton instance initialization.&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusFactory</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">EpicsAttribute</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cannot import epics module.&#39;</span>
+                       <span class="s1">&#39;Taurus will not support the &quot;epics&quot; scheme&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;&quot;epics&quot; module is not available&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epics_attrs</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epics_devs</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EpicsFactory.getAuthority"><a class="viewcode-back" href="../../../../devel/api/taurus/core/epics/_EpicsFactory.html#taurus.core.epics.EpicsFactory.getAuthority">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthority</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the Epics (ca) authority object.</span>
+
+<span class="sd">        :param name: (str) only a dummy authority (&quot;ca://&quot;) is supported</span>
+
+<span class="sd">        :return: (EpicsAuthority)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;ca://&#39;</span>
+
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthorityNameValidator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid ca authority name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_auth&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="n">EpicsAuthority</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_AUTHORITY</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span></div>
+
+<div class="viewcode-block" id="EpicsFactory.getDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/epics/_EpicsFactory.html#taurus.core.epics.EpicsFactory.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the EpicsDevice object.</span>
+
+<span class="sd">        :param dev_name: (str) only one dummy device (&quot;&quot;) is supported</span>
+
+<span class="sd">        :return: (EpicsDevice)</span>
+
+<span class="sd">        .. todo:: epics.Device may be wrapped as taurus device...</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">validator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDeviceNameValidator</span><span class="p">()</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid epics device name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dev_name</span><span class="p">)</span>
+        <span class="n">fullname</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epics_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if the full name is not there, create one</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">()</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">EpicsDevice</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epics_devs</span><span class="p">[</span><span class="n">fullname</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">d</span></div>
+
+<div class="viewcode-block" id="EpicsFactory.getAttribute"><a class="viewcode-back" href="../../../../devel/api/taurus/core/epics/_EpicsFactory.html#taurus.core.epics.EpicsFactory.getAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the object corresponding to the given attribute name. If the</span>
+<span class="sd">        corresponding attribute already exists, the existing instance is</span>
+<span class="sd">        returned. Otherwise a new instance is stored and returned. The</span>
+<span class="sd">        device associated to this attribute will also be created if necessary.</span>
+
+<span class="sd">        :param attr_name: (str) the attribute name string. See</span>
+<span class="sd">                          :mod:`taurus.core.epics` for valid attribute names</span>
+
+<span class="sd">        :return: (EpicsAttribute)</span>
+
+<span class="sd">        :raises: :TaurusException: if the given name is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">validator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttributeNameValidator</span><span class="p">()</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid epics attribute name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">attr_name</span><span class="p">)</span>
+        <span class="n">fullname</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epics_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if the full name is not there, create one</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">EpicsAttribute</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># note: no parent!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">epics_attrs</span><span class="p">[</span><span class="n">fullname</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="k">return</span> <span class="n">a</span></div>
+
+<div class="viewcode-block" id="EpicsFactory.getAuthorityNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/epics/_EpicsFactory.html#taurus.core.epics.EpicsFactory.getAuthorityNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthorityNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return EpicsAuthorityNameValidator&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">epicsvalidator</span>
+        <span class="k">return</span> <span class="n">epicsvalidator</span><span class="o">.</span><span class="n">EpicsAuthorityNameValidator</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EpicsFactory.getDeviceNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/epics/_EpicsFactory.html#taurus.core.epics.EpicsFactory.getDeviceNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return EpicsDeviceNameValidator&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">epicsvalidator</span>
+        <span class="k">return</span> <span class="n">epicsvalidator</span><span class="o">.</span><span class="n">EpicsDeviceNameValidator</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EpicsFactory.getAttributeNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/epics/_EpicsFactory.html#taurus.core.epics.EpicsFactory.getAttributeNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getAttributeNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return EpicsAttributeNameValidator&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">epicsvalidator</span>
+        <span class="k">return</span> <span class="n">epicsvalidator</span><span class="o">.</span><span class="n">EpicsAttributeNameValidator</span><span class="p">()</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

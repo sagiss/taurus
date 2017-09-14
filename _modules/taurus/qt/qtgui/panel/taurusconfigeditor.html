@@ -1,0 +1,713 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.panel.taurusconfigeditor &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.panel.taurusconfigeditor</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.panel.taurusconfigeditor</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">taurusconfigeditor.py:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QConfigEditor&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+
+<span class="k">class</span> <span class="nc">QConfigEditorModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A custom Model for QConfigEditor&#39;&#39;&#39;</span>
+
+    <span class="n">showError</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedPerspectives</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`Qt.QAbstractTableModel.setData`&#39;&#39;&#39;</span>
+
+        <span class="n">idx_data_str</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">value_str</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx_data_str</span> <span class="o">==</span> <span class="n">value_str</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1">#self.itemFromIndex(index).setData(value, role)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span><span class="p">(</span><span class="n">value_str</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showError</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s1">&#39;Wrong value!&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;The value you entered is wrong. The old value will be restored.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">role</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">loadFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iniFileName</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Loads file with setting, creates temporary settings file, where changes</span>
+<span class="sd">        made to configuration are saved.</span>
+
+<span class="sd">        :param iniFileName: (str)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">iniFileName</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="o">.</span><span class="n">IniFormat</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">([</span><span class="s1">&#39;Configuration key&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fillTopLevel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">deleteBranch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Deletes selected branch from the settings tree. Also updates the</span>
+<span class="sd">        temporary configuration file.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">tmpindex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_toDeleteIndex</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">tmpindex</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">removeBranch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">tmpindex</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">itemToMark</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
+            <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">itemToMark</span><span class="o">.</span><span class="n">index</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_toDeleteIndex</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="n">tmpindex</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">tmpindex</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveSettings</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">removeBranch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method called recursively by self.deleteBranch. In each step it takes</span>
+<span class="sd">        next key (from the path) until reaches element to be deleted. After the</span>
+<span class="sd">        element is deleted, returns updated dictionary.</span>
+
+<span class="sd">        :param dict: (dict) a taurus configuration dictionary. See</span>
+<span class="sd">                     :class:`BaseConfigurableClass`</span>
+<span class="sd">        :param path: (str) a semicolon-separated string containing the</span>
+<span class="sd">                     path of the branch in the tree</span>
+
+<span class="sd">        :returns:  (dict) the modified config dict</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="nb">dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">removeBranch</span><span class="p">(</span><span class="nb">dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="nb">dict</span>
+                <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">removeBranch</span><span class="p">(</span>
+                    <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">],</span> <span class="n">path</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="nb">dict</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">dict</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="nb">dict</span>
+                <span class="nb">dict</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">return</span> <span class="nb">dict</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="nb">dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">return</span> <span class="nb">dict</span>
+
+    <span class="k">def</span> <span class="nf">valueChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Modifies value in the temporary settings file and the model internal</span>
+<span class="sd">        dictionary. Invoked by :meth:`Qt.QAbstractTableModel.setData`, when user</span>
+<span class="sd">        make changes to the value in the settings tree.</span>
+
+<span class="sd">        :param value: (str) the new value (a string that will be python-evaluated)</span>
+<span class="sd">        :param index: (QModelIndex) index of the model</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">changedItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">changedItem</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">changeTreeValue</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itemToMark</span><span class="o">.</span><span class="n">index</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+                           <span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">value</span><span class="p">))))</span>
+        <span class="n">changedItem</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
+            <span class="s1">&#39;Value has been changed. Old value: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">changedItem</span><span class="o">.</span><span class="n">text</span><span class="p">())),</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">)</span>
+        <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;emblem-important&#39;</span><span class="p">)),</span>
+                           <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">)</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">itemToMark</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
+            <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">itemToMark</span><span class="o">.</span><span class="n">index</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveSettings</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">changeTreeValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cdict</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method called recursively by valueChanged. In each step it takes next</span>
+<span class="sd">        key (from the path) until reaches element to be modified. After the</span>
+<span class="sd">        element is modified, returns updated dictionary.</span>
+
+<span class="sd">        :param cdict: a configuration dictionary.  See :class:`BaseConfigurableClass`</span>
+<span class="sd">        :param path: (str) a semicolon-separated string containing the</span>
+<span class="sd">                     path of the branch in the tree</span>
+<span class="sd">        :param value: (str) the new value (a string that will be python-evaluated)</span>
+
+<span class="sd">        :returns:  (dict) the modified config dict</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cdict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">changeTreeValue</span><span class="p">(</span><span class="n">cdict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">cdict</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cdict</span><span class="p">[</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">cdict</span>
+
+    <span class="k">def</span> <span class="nf">fillTopLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Creates a dictionary containing Main Window and Perspectives settings.</span>
+<span class="sd">        This metod creates top nodes only (names of the perspectives, main</span>
+<span class="sd">        window) and invokes fillTaurusConfig. Returns complete dictionary.</span>
+
+<span class="sd">        :returns:  (dict) a configuration dictionary.  See :class:`BaseConfigurableClass`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># self.tree.clear()</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="s1">&#39;LAST&#39;</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># item.setSelectable(False)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">mainConfig</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">configdict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTaurusConfigFromSettings</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">configdict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mainConfig</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">configdict</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fillTaurusConfig</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">configdict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="s2">&quot;Perspectives&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectives</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">childGroups</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">perspectives</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="c1"># item.setSelectable(False)</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;Perspectives/&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">configdict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTaurusConfigFromSettings</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">configdict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mainConfig</span><span class="p">[</span><span class="s2">&quot;Perspectives/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">configdict</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fillTaurusConfig</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">configdict</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">mainConfig</span>
+
+    <span class="k">def</span> <span class="nf">fillTaurusConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">configdict</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Fills the non-top nodes of the dictionary recursively.</span>
+
+<span class="sd">        :param item: (Qt.QStandardItem) parent item</span>
+<span class="sd">        :param configdict: (dict) a configuration dictionary.  See :class:`BaseConfigurableClass`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">BaseConfigurableClass</span><span class="o">.</span><span class="n">isTaurusConfig</span><span class="p">(</span><span class="n">configdict</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="c1"># fill the registered keys</span>
+        <span class="n">registeredkeys</span> <span class="o">=</span> <span class="n">configdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">valuesdict</span> <span class="o">=</span> <span class="n">configdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;__itemConfigurations__&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">registeredkeys</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">valuesdict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">BaseConfigurableClass</span><span class="o">.</span><span class="n">isTaurusConfig</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+                <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;__itemConfigurations__;&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                <span class="c1"># recursive call to fill all nodes</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fillTaurusConfig</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">typeV</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+                <span class="n">valueV</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+                <span class="n">typeV</span><span class="o">.</span><span class="n">setForeground</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">setForeground</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
+
+                <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">([</span><span class="n">child</span><span class="p">,</span> <span class="n">typeV</span><span class="p">,</span> <span class="n">valueV</span><span class="p">])</span>
+
+                <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;__itemConfigurations__;&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">typeV</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+                <span class="n">child</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                <span class="n">typeV</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                <span class="n">valueV</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+
+        <span class="n">customkeys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">configdict</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">,</span> <span class="s1">&#39;__itemConfigurations__&#39;</span><span class="p">,</span> <span class="s1">&#39;ConfigVersion&#39;</span><span class="p">,</span> <span class="s1">&#39;__pickable__&#39;</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">customkeys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+            <span class="n">custom</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="s1">&#39;[custom]&#39;</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">custom</span><span class="p">)</span>
+            <span class="n">custom</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="c1"># custom.setSelectable(False)</span>
+            <span class="n">custom</span><span class="o">.</span><span class="n">setBackground</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">customkeys</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">configdict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+                <span class="c1"># item.appendRow(child)</span>
+
+                <span class="k">if</span> <span class="n">BaseConfigurableClass</span><span class="o">.</span><span class="n">isTaurusConfig</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                    <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+                    <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                    <span class="c1"># recursive call to fill all nodes</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fillTaurusConfig</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">typeV</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+                    <span class="n">valueV</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                    <span class="n">typeV</span><span class="o">.</span><span class="n">setForeground</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">setForeground</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">([</span><span class="n">child</span><span class="p">,</span> <span class="n">typeV</span><span class="p">,</span> <span class="n">valueV</span><span class="p">])</span>
+                    <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+                    <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+
+                    <span class="n">child</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="n">typeV</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="n">typeV</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                    <span class="n">valueV</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getTaurusConfigFromSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;TaurusConfig&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Loads and returns the configuration dictionary from the settings file</span>
+<span class="sd">        using pickle module.</span>
+
+<span class="sd">        :param key: (str)</span>
+
+<span class="sd">        :returns (dict)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">qstate</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">qstate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">qstate</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">qstate</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;problems loading TaurusConfig: </span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Error loading settings&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">reloadFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Reloads the file. Configuration tree is build again.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">saveFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Replaces original file with temporary file (where changes were being saved).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="k">return</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearChanges</span><span class="p">()</span>
+        <span class="c1"># self.reloadFile()</span>
+
+    <span class="k">def</span> <span class="nf">saveSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Saves the current state to the temporary file</span>
+
+<span class="sd">        :param group: (str) a prefix that will be added to the keys to be</span>
+<span class="sd">                       saved (no prefix by default)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+
+        <span class="c1"># store the config dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;TaurusConfig&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span><span class="p">[</span><span class="n">group</span><span class="p">]))))</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
+        <span class="c1">#self.info(&#39;MainWindow settings saved in &quot;%s&quot;&#39;%self._settings.fileName())</span>
+
+    <span class="k">def</span> <span class="nf">restoreOriginal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Replaces temporary file with the original file and builds again the</span>
+<span class="sd">        configuration tree.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="k">return</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reloadFile</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">clearChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Clears all changes in style of the modified elements in tree view.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span><span class="p">:</span>
+            <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">itemToMark</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
+                    <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Normal</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
+                <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">)</span>
+                <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">itemToMark</span><span class="o">.</span><span class="n">index</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="QConfigEditor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QConfigEditor.html#taurus.qt.qtgui.panel.QConfigEditor">[docs]</a><span class="k">class</span> <span class="nc">QConfigEditor</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A widget that shows a tree view of the contents of Taurus</span>
+<span class="sd">    configuration files saved by TaurusMainWindow and lets the user edit</span>
+<span class="sd">    the values of the configuration keys&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">QConfigEditorModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTreeView</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;Configuration key&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolBar</span><span class="p">(</span><span class="s2">&quot;QConfigViewer Main toolBar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;document-open&quot;</span><span class="p">),</span> <span class="s2">&quot;Open File&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loadFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;document-save&quot;</span><span class="p">),</span> <span class="s2">&quot;Save File&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;edit-undo&quot;</span><span class="p">),</span> <span class="s2">&quot;Reload from file&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">restoreOriginal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">setMenuBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;TaurusConfigEditor&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">showError</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_showError</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QConfigEditor.contextMenuEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QConfigEditor.html#taurus.qt.qtgui.panel.QConfigEditor.contextMenuEvent">[docs]</a>    <span class="k">def</span> <span class="nf">contextMenuEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplemented from :meth:`QWidget.contextMenuEvent`&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_toDeleteIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_toDeleteIndex</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_toDeleteIndex</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="ow">or</span> <span class="n">text</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;LAST&#39;</span><span class="p">,</span> <span class="s1">&#39;[custom]&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">text</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">perspectives</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">menu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;process-stop&#39;</span><span class="p">),</span>
+                       <span class="s2">&quot;Delete branch: &quot;</span> <span class="o">+</span> <span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">deleteBranch</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;help-browser&#39;</span><span class="p">),</span> <span class="s2">&quot;Help&quot;</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_showError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Opens a warning dialog with a given title and body.</span>
+
+<span class="sd">        :title: (str) title</span>
+<span class="sd">        :body: (str) body</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QConfigEditor.loadFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QConfigEditor.html#taurus.qt.qtgui.panel.QConfigEditor.loadFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iniFileName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Loads a configuration stored in a file and creates the tree.</span>
+
+<span class="sd">        :iniFileName: (str) Name of the file. If None is given the user is prompted for a file.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">iniFileName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">originalFile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDir</span><span class="o">.</span><span class="n">homePath</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">originalFile</span>
+            <span class="n">iniFileName</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Select a settings file&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s1">&#39;Ini Files (*.ini)&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">iniFileName</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">loadFile</span><span class="p">(</span><span class="n">iniFileName</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;TaurusConfigEditor - </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">originalFile</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="QConfigEditor.saveFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QConfigEditor.html#taurus.qt.qtgui.panel.QConfigEditor.saveFile">[docs]</a>    <span class="k">def</span> <span class="nf">saveFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Replaces original file with temporary file (where changes were being saved).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">saveFile</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QConfigEditor.restoreOriginal"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QConfigEditor.html#taurus.qt.qtgui.panel.QConfigEditor.restoreOriginal">[docs]</a>    <span class="k">def</span> <span class="nf">restoreOriginal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Replaces temporary file with the original file and builds again the</span>
+<span class="sd">        configuration tree.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">restoreOriginal</span><span class="p">()</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">argparse</span>
+    <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Release</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_usage</span><span class="p">(</span><span class="s2">&quot;%prog [options] [INIFILENAME]&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;taurus configuration editor&quot;</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+                            <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurusconfigeditor&quot;</span><span class="p">,</span>
+                            <span class="n">app_version</span><span class="o">=</span><span class="n">Release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">QConfigEditor</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">loadFile</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

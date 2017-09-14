@@ -1,0 +1,601 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.input.tauruscombobox &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.input.tauruscombobox</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.input.tauruscombobox</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a set of basic taurus widgets based on QCheckBox&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusAttrListComboBox&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusValueComboBox&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">TaurusEventType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">eventfilters</span>
+
+
+<div class="viewcode-block" id="TaurusValueComboBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox">[docs]</a><span class="k">class</span> <span class="nc">TaurusValueComboBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This widget shows a combobox that offers a limited choice of values that</span>
+<span class="sd">    can be set on an attribute.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_previousModelName</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lastValueByUser</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWritableWidget</span><span class="p">,</span>
+                          <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Helper methods</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="k">def</span> <span class="nf">_setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget overwriting</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusValueComboBox.preAttach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.preAttach">[docs]</a>    <span class="k">def</span> <span class="nf">preAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWritableWidget`&#39;&#39;&#39;</span>
+        <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">preAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeIndexValue</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applied</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.postDetach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.postDetach">[docs]</a>    <span class="k">def</span> <span class="nf">postDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWritableWidget`&#39;&#39;&#39;</span>
+        <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">postDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeIndexValue</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">applied</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="c1"># In new style-signal if a signal is disconnected without</span>
+            <span class="c1"># previously was connected it, it raises a TypeError</span>
+            <span class="k">pass</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWritableWidget overwriting / Pending operations</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusValueComboBox.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the value that the widget is displaying now, not the value</span>
+<span class="sd">        of the attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">type</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">new_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="nb">int</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="nb">float</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">String</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="nb">str</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Boolean</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="nb">bool</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_value</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value for the widget to display, not the value of the</span>
+<span class="sd">        attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWritableWidget`&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasPendingOperations</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;TaurusValueComboBox {color: blue; }&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;TaurusValueComboBox </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaurusValueComboBox</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># signals, gui events... things related to &quot;write&quot; in the end</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;currentIndexChanged&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusValueComboBox.writeIndexValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.writeIndexValue">[docs]</a>    <span class="k">def</span> <span class="nf">writeIndexValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot called to emit a valueChanged signal when the currentIndex is changed&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emitValueChanged</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAutoApply</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">applied</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.keyPressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;reimplemented to emit an &#39;applied()&#39; signal when Enter (or Return)</span>
+<span class="sd">        key is pressed&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Return</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Enter</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">applied</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusValueComboBox own interface</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusValueComboBox.setValueNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.setValueNames">[docs]</a>    <span class="k">def</span> <span class="nf">setValueNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Sets the correspondence between the values to be applied and their</span>
+<span class="sd">        associated text to show in the combobox.</span>
+
+<span class="sd">        :param names: (sequence&lt;tuple&gt;) A sequence of (name,value) tuples,</span>
+<span class="sd">                      where each attribute value gets a name for display</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addValueNames</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.addValueNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.addValueNames">[docs]</a>    <span class="k">def</span> <span class="nf">addValueNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Add new value-name associations to the combobox.</span>
+
+<span class="sd">        ... seealso: :meth:`setValueNames`</span>
+
+<span class="sd">        :param names: (sequence&lt;tuple&gt;) A sequence of (name,value) tuples,</span>
+<span class="sd">                      where each attribute value gets a name for display</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+            <span class="c1"># Ok, now we should see if the current value matches any</span>
+            <span class="c1"># of the newly added names. This is kinda a refresh:</span>
+            <span class="n">mv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelValueObj</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">mv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">mv</span><span class="o">.</span><span class="n">wvalue</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">emitValueChanged</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.getValueString"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.getValueString">[docs]</a>    <span class="k">def</span> <span class="nf">getValueString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;UNKNOWN(</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the corresponding name in the combobox out of a value</span>
+<span class="sd">        (or a default value if not found).</span>
+
+<span class="sd">        :param value: value to look up</span>
+<span class="sd">        :param default: (str) value in case it is not found. It accepts</span>
+<span class="sd">                        a &#39;%s&#39; placeholder which will be substituted with</span>
+<span class="sd">                        str(value). It defaults to &#39;UNKNOWN(%s)&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">default</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itemText</span><span class="p">(</span><span class="n">item</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.teachDisplayTranslationToWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.teachDisplayTranslationToWidget">[docs]</a>    <span class="k">def</span> <span class="nf">teachDisplayTranslationToWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;UNKNOWN(</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Makes a label object change the displayed text by the corresponding</span>
+<span class="sd">        value of the combobox. This is implemented for the general case</span>
+<span class="sd">        and may be not what you expect in some cases (as for example, it</span>
+<span class="sd">        fires a fake periodic event which may be problematic if these</span>
+<span class="sd">        are being filtered out).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># We reimplement label.displayValue so that instead of the normal</span>
+        <span class="c1"># value it displays the string it has associated in the combobox.</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">displayValue</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueString</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+
+        <span class="c1"># Simulate a first event. Otherwise the displayValue will be</span>
+        <span class="c1"># the default, not modified by us</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">,</span>
+                             <span class="n">model</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.setQModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.setQModel">[docs]</a>    <span class="k">def</span> <span class="nf">setQModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;access to :meth:`QCombobox.setModel`</span>
+
+<span class="sd">        .. seealso: :meth:`setModel`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplemented from :meth:`TaurusBaseWritableWidget.setModel` &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemModel</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Deprecation warning: use setQModel() if you want to set a Qt Item Model. The setModel() method is reserved for Taurus models&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emitValueChanged</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusValueComboBox.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWritableWidget`&#39;&#39;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.input&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:combobox.png&quot;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT properties</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+
+    <span class="n">useParentModel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span>
+
+    <span class="n">autoApply</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+                                <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getAutoApply</span><span class="p">,</span>
+                                <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">setAutoApply</span><span class="p">,</span>
+                                <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">resetAutoApply</span><span class="p">)</span>
+
+    <span class="n">forcedApply</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getForcedApply</span><span class="p">,</span>
+                                  <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">setForcedApply</span><span class="p">,</span>
+                                  <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">resetForcedApply</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TaurusAttrListComboBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusAttrListComboBox.html#taurus.qt.qtgui.input.TaurusAttrListComboBox">[docs]</a><span class="k">class</span> <span class="nc">TaurusAttrListComboBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Combobox whose items reflect the items read from a 1D attribute of dtype</span>
+<span class="sd">    str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insertEventFilter</span><span class="p">(</span><span class="n">eventfilters</span><span class="o">.</span><span class="n">IGNORE_CONFIG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSizeAdjustPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="o">.</span><span class="n">AdjustToContents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">defineStyle</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lastAttrList</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="TaurusAttrListComboBox.defineStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusAttrListComboBox.html#taurus.qt.qtgui.input.TaurusAttrListComboBox.defineStyle">[docs]</a>    <span class="k">def</span> <span class="nf">defineStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Defines the initial style for the widget &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget over writing</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusAttrListComboBox.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusAttrListComboBox.html#taurus.qt.qtgui.input.TaurusAttrListComboBox.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TaurusAttribute</span></div>
+
+<div class="viewcode-block" id="TaurusAttrListComboBox.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusAttrListComboBox.html#taurus.qt.qtgui.input.TaurusAttrListComboBox.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+            <span class="n">attrList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="n">evt_src</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">evt_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attrList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attrList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">evt_value</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span>
+            <span class="n">attrList</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attrList</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lastAttrList</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lastAttrList</span> <span class="o">=</span> <span class="n">attrList</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">attrList</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusAttrListComboBox.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusAttrListComboBox.html#taurus.qt.qtgui.input.TaurusAttrListComboBox.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusAttrListComboBox.setQModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusAttrListComboBox.html#taurus.qt.qtgui.input.TaurusAttrListComboBox.setQModel">[docs]</a>    <span class="k">def</span> <span class="nf">setQModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;access to :meth:`QAbstractItemView.setModel`</span>
+
+<span class="sd">        .. seealso: :meth:`setModel`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttrListComboBox.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusAttrListComboBox.html#taurus.qt.qtgui.input.TaurusAttrListComboBox.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemModel</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">((</span><span class="s2">&quot;Deprecation warning: use setQModel() if you&quot;</span> <span class="o">+</span>
+                          <span class="s2">&quot; want to set a Qt Item Model. The setModel()&quot;</span> <span class="o">+</span>
+                          <span class="s2">&quot; method is reserved for Taurus models&quot;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">setQModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusAttrListComboBox.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusAttrListComboBox.html#taurus.qt.qtgui.input.TaurusAttrListComboBox.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Input&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.input&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:combobox.png&quot;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT properties</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+
+    <span class="n">useParentModel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span></div>
+
+
+<span class="c1">#####################################################################</span>
+<span class="c1"># Testing</span>
+<span class="c1">#####################################################################</span>
+<span class="k">def</span> <span class="nf">_taurusAttrListTest</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;tests taurusAttrList. Model: an attribute containing a list of strings&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+    <span class="c1"># model = sys.argv[1]</span>
+    <span class="c1"># model = &quot;eval:[&#39;foo&#39;,&#39;bar&#39;]&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;sys/tg_test/1/string_spectrum&quot;</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusAttrListComboBox</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_taurusValueComboboxTest</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="sd">&quot;&quot;&quot;tests TaurusValueCombobox &quot;&quot;&quot;</span>
+    <span class="c1"># model = sys.argv[1]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;sys/tg_test/1/short_scalar&#39;</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;name0&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;name1&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;name2&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;name3&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusValueComboBox</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">addValueNames</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+    <span class="c1">#w.autoApply = True</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="c1"># main = _taurusValueComboboxTest #uncomment to test TaurusValueCombobox</span>
+    <span class="n">main</span> <span class="o">=</span> <span class="n">_taurusAttrListTest</span>  <span class="c1"># uncomment to testtaurusAttrList</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

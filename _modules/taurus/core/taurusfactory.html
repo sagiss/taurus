@@ -1,0 +1,630 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.taurusfactory &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.taurusfactory</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.taurusfactory</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  This module provides the :class:`TaurusFactory` base class that any valid</span>
+<span class="sd">  Factory in Taurus must inherit.</span>
+
+<span class="sd">  The Factory objects are the basic block for building and interacting with a</span>
+<span class="sd">  given scheme in Taurus. They provide Taurus model objects (TaurusAuthority,</span>
+<span class="sd">  TaurusDevice or TaurusAttribute) for a given taurus model name.</span>
+
+<span class="sd">  Taurus model naming is URI based (see &lt;https://tools.ietf.org/html/rfc3986&gt;)</span>
+
+<span class="sd">  All the standard components of an URI (scheme, authority, path, query and</span>
+<span class="sd">  fragment) may be part of a model name, and they are separated as follows:</span>
+
+<span class="sd">  &lt;scheme&gt;:&lt;authority&gt;&lt;path&gt;?&lt;query&gt;#&lt;fragment&gt;</span>
+
+
+<span class="sd">  The following are some points to consider when using and/or implementing</span>
+<span class="sd">  schemes based on this Abstract class:</span>
+
+<span class="sd">  - It is strongly recommended that the scheme component is always present</span>
+<span class="sd">  explicitly in the model name, although a default scheme can be defined in</span>
+<span class="sd">  :mod:`taurus.tauruscustomsettings` so that model names which do not explicit</span>
+<span class="sd">  the scheme can be auto-completed.</span>
+
+<span class="sd">  - The authority component (if present on a given name) must always begin by</span>
+<span class="sd">  a double slash (&#39;//&#39;). (see</span>
+<span class="sd">  &lt;https://tools.ietf.org/html/rfc3986#section-3.2&gt;)</span>
+
+<span class="sd">  - The path component, if present, must start by a single slash (&#39;/&#39;) (see</span>
+<span class="sd">  &lt;https://tools.ietf.org/html/rfc3986#section-3.3&gt;)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusFactory&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="k">import</span> <span class="n">WeakValueDictionary</span>
+<span class="kn">from</span> <span class="nn">taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">taurusauthority</span> <span class="k">import</span> <span class="n">TaurusAuthority</span>
+<span class="kn">from</span> <span class="nn">taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
+<span class="kn">from</span> <span class="nn">taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">taurusconfiguration</span> <span class="k">import</span> <span class="n">TaurusConfiguration</span><span class="p">,</span> <span class="n">TaurusConfigurationProxy</span>
+<span class="kn">from</span> <span class="nn">taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tauruspollingtimer</span> <span class="k">import</span> <span class="n">TaurusPollingTimer</span>
+
+
+<div class="viewcode-block" id="TaurusFactory"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The base class for valid Factories in Taurus.&quot;&quot;&quot;</span>
+
+    <span class="n">schemes</span> <span class="o">=</span> <span class="p">()</span>  <span class="c1"># reimplement in derived classes to declare supported schemes</span>
+    <span class="n">caseSensitive</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># reimplement if your scheme is case insensitive</span>
+
+    <span class="n">elementTypesMap</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># reimplement in derived classes to profit from</span>
+                            <span class="c1"># generic implementations of getAuthority,</span>
+                            <span class="c1"># getDevice, getAttribute, findObjectClass, etc.</span>
+                            <span class="c1"># see findObjectClass for more details</span>
+
+    <span class="n">DefaultPollingPeriod</span> <span class="o">=</span> <span class="mi">3000</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_polling_period</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultPollingPeriod</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span> <span class="o">=</span> <span class="n">WeakValueDictionary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_devs</span> <span class="o">=</span> <span class="n">WeakValueDictionary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_auths</span> <span class="o">=</span> <span class="n">WeakValueDictionary</span><span class="p">()</span>
+
+        <span class="kn">import</span> <span class="nn">taurusmanager</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getSerializationMode</span><span class="p">()</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for cleanUp at exit</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusFactory.cleanUp"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reimplement if you need to execute code on program execution exit.</span>
+<span class="sd">        Default implementation does nothing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for serialization</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusFactory.setSerializationMode"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.setSerializationMode">[docs]</a>    <span class="k">def</span> <span class="nf">setSerializationMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the serialization mode for the system.</span>
+
+<span class="sd">        :param mode: (TaurusSerializationMode) the new serialization mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">mode</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.getSerializationMode"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getSerializationMode">[docs]</a>    <span class="k">def</span> <span class="nf">getSerializationMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gives the serialization operation mode.</span>
+
+<span class="sd">        :return: (TaurusSerializationMode) the current serialization mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API to get objects. Generic implementation. You may want to reimplement</span>
+    <span class="c1"># it in your scheme factory</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusFactory.getAuthority"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getAuthority">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthority</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the model object corresponding to the given authority name.</span>
+<span class="sd">        If the corresponding authority already exists, the existing instance</span>
+<span class="sd">        is returned. Otherwise a new instance is stored and returned.</span>
+
+<span class="sd">        :param name: (str) authority name</span>
+
+<span class="sd">        :return: a taurus.core.taurusauthority.TaurusAuthority object</span>
+<span class="sd">        :raises: :TaurusException: if the given name is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthorityNameValidator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Invalid </span><span class="si">{scheme}</span><span class="s2"> authority name &#39;</span><span class="si">{name}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">scheme</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schemes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">fullname</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">auth</span>
+
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elementTypesMap</span><span class="p">[</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Authority</span><span class="p">]</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_auths</span><span class="p">[</span><span class="n">fullname</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="k">return</span> <span class="n">auth</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.getDevice"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the model object corresponding to the given device name.</span>
+<span class="sd">        If the corresponding device already exists, the existing instance</span>
+<span class="sd">        is returned. Otherwise a new instance is stored and returned.</span>
+
+<span class="sd">        :param name: (str) device name</span>
+
+<span class="sd">        :return: a taurus.core.taurusdevice.TaurusDevice object</span>
+<span class="sd">        :raises: :TaurusException: if the given name is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDeviceNameValidator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Invalid </span><span class="si">{scheme}</span><span class="s2"> device name &#39;</span><span class="si">{name}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">scheme</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schemes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">fullname</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dev</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># this works if the authority name is present in the dev full name</span>
+            <span class="c1"># (which in principle should always be the case)</span>
+            <span class="n">authname</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="n">fullname</span><span class="p">)[</span><span class="s1">&#39;authority&#39;</span><span class="p">]</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">(</span><span class="n">authname</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot get device parent from name &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">fullname</span><span class="p">)</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elementTypesMap</span><span class="p">[</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">]</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">fullname</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_devs</span><span class="p">[</span><span class="n">fullname</span><span class="p">]</span> <span class="o">=</span> <span class="n">dev</span>
+        <span class="k">return</span> <span class="n">dev</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.getAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Obtain the model object corresponding to the given attribute name.</span>
+<span class="sd">        If the corresponding attribute already exists, the existing instance</span>
+<span class="sd">        is returned. Otherwise a new instance is stored and returned.</span>
+
+<span class="sd">        :param name: (str) attribute name</span>
+
+<span class="sd">        :return: a taurus.core.taurusattribute.TaurusAttribute object</span>
+<span class="sd">        :raises: :TaurusException: if the given name is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttributeNameValidator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Invalid </span><span class="si">{scheme}</span><span class="s2"> attribute name &#39;</span><span class="si">{name}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">scheme</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schemes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">fullname</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">attr</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># this works only if the devname is present in the attr full name</span>
+            <span class="c1"># (not all schemes are constructed in this way)</span>
+            <span class="n">devname</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="n">fullname</span><span class="p">)[</span><span class="s1">&#39;devname&#39;</span><span class="p">]</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">devname</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot get attribute parent from name &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">fullname</span><span class="p">)</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elementTypesMap</span><span class="p">[</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">]</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">fullname</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">dev</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span><span class="p">[</span><span class="n">fullname</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span>
+        <span class="k">return</span> <span class="n">attr</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Methods that must be implemented by the specific Factory</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusFactory.getAuthorityNameValidator"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getAuthorityNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthorityNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;getAuthorityNameValidator cannot be called&quot;</span>
+                                  <span class="s2">&quot; for abstract TaurusFactory&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.getDeviceNameValidator"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getDeviceNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;getDeviceNameValidator cannot be called&quot;</span>
+                                  <span class="s2">&quot; for abstract TaurusFactory&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.getAttributeNameValidator"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getAttributeNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getAttributeNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;getAttributeNameValidator cannot be called&quot;</span>
+                                  <span class="s2">&quot; for abstract TaurusFactory&quot;</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Factory extension API</span>
+    <span class="c1"># Override the following methods if you need to provide special classes for</span>
+    <span class="c1"># special object types</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusFactory.registerAttributeClass"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.registerAttributeClass">[docs]</a>    <span class="k">def</span> <span class="nf">registerAttributeClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">attr_klass</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.unregisterAttributeClass"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.unregisterAttributeClass">[docs]</a>    <span class="k">def</span> <span class="nf">unregisterAttributeClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.registerDeviceClass"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.registerDeviceClass">[docs]</a>    <span class="k">def</span> <span class="nf">registerDeviceClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_klass_name</span><span class="p">,</span> <span class="n">dev_klass</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.unregisterDeviceClass"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.unregisterDeviceClass">[docs]</a>    <span class="k">def</span> <span class="nf">unregisterDeviceClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_klass_name</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Generic methods</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusFactory.supportsScheme"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.supportsScheme">[docs]</a>    <span class="k">def</span> <span class="nf">supportsScheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns whether the given scheme is supported by this factory</span>
+
+<span class="sd">        :param scheme: (str) the name of the schem to be checked</span>
+
+<span class="sd">        :return: (bool) True if the scheme is supported (False otherwise)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">scheme</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shemes</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.findObject"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.findObject">[docs]</a>    <span class="k">def</span> <span class="nf">findObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">absolute_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Must give an absolute name&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">absolute_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findObjectClass</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">absolute_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.getObject"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getObject">[docs]</a>    <span class="k">def</span> <span class="nf">getObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">t4_msg</span> <span class="o">=</span> <span class="s1">&#39;The TaurusConfiguration classes are deprecated in tep14&#39;</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">TaurusAuthority</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">TaurusDevice</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">TaurusAttribute</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># For backward compatibility</span>
+        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">TaurusConfiguration</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;TaurusConfiguration&#39;</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;TaurusAttribute&#39;</span><span class="p">,</span>
+                            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">,</span> <span class="n">dbg_msg</span><span class="o">=</span><span class="n">t4_msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">TaurusConfigurationProxy</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;TaurusConfigurationProxy&#39;</span><span class="p">,</span>
+                            <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;TaurusAttribute&#39;</span><span class="p">,</span>
+                            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">,</span> <span class="n">dbg_msg</span><span class="o">=</span><span class="n">t4_msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.changeDefaultPollingPeriod"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.changeDefaultPollingPeriod">[docs]</a>    <span class="k">def</span> <span class="nf">changeDefaultPollingPeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">period</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_polling_period</span> <span class="o">=</span> <span class="n">period</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.getDefaultPollingPeriod"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getDefaultPollingPeriod">[docs]</a>    <span class="k">def</span> <span class="nf">getDefaultPollingPeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_polling_period</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.isPollingEnabled"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.isPollingEnabled">[docs]</a>    <span class="k">def</span> <span class="nf">isPollingEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tells if the Taurus polling is enabled</span>
+
+<span class="sd">           :return: (bool) whether or not the polling is enabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.disablePolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.disablePolling">[docs]</a>    <span class="k">def</span> <span class="nf">disablePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disable the application tango polling&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.enablePolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.enablePolling">[docs]</a>    <span class="k">def</span> <span class="nf">enablePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Enable the application tango polling&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.addAttributeToPolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.addAttributeToPolling">[docs]</a>    <span class="k">def</span> <span class="nf">addAttributeToPolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">unsubscribe_evts</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Activates the polling (client side) for the given attribute with the</span>
+<span class="sd">           given period (seconds).</span>
+
+<span class="sd">           :param attribute: (taurus.core.tango.TangoAttribute) attribute name.</span>
+<span class="sd">           :param period: (float) polling period (in seconds)</span>
+<span class="sd">           :param unsubscribe_evts: (bool) whether or not to unsubscribe from events</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tmr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">TaurusPollingTimer</span><span class="p">(</span><span class="n">period</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="p">[</span><span class="n">period</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmr</span>
+        <span class="n">tmr</span><span class="o">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.removeAttributeFromPolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.removeAttributeFromPolling">[docs]</a>    <span class="k">def</span> <span class="nf">removeAttributeFromPolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deactivate the polling (client side) for the given attribute. If the</span>
+<span class="sd">           polling of the attribute was not previously enabled, nothing happens.</span>
+
+<span class="sd">           :param attribute: (str) attribute name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">timer</span><span class="o">.</span><span class="n">containsAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">):</span>
+                <span class="n">timer</span><span class="o">.</span><span class="n">removeAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">timer</span><span class="o">.</span><span class="n">getAttributeCount</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">period</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">p</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="p">[</span><span class="n">period</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">(schemes=</span><span class="si">{1}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schemes</span><span class="p">))</span>
+
+<div class="viewcode-block" id="TaurusFactory.getValidTypesForName"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getValidTypesForName">[docs]</a>    <span class="k">def</span> <span class="nf">getValidTypesForName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of all Taurus element types for which `name` is a valid</span>
+<span class="sd">        model name (while in many cases a name may only be valid for one</span>
+<span class="sd">        element type, this is not necessarily true in general)</span>
+
+<span class="sd">        In this base implementation, name is checked first for Attribute, then</span>
+<span class="sd">        for Device and finally for Authority, and the return value is sorted in</span>
+<span class="sd">        that same order.</span>
+
+<span class="sd">        If a given schema requires a different ordering, reimplement this method</span>
+
+<span class="sd">        :param name: (str) taurus model name</span>
+
+<span class="sd">        :return: (list&lt;TaurusElementType.element&gt;) where element can be one of:</span>
+<span class="sd">                 `Attribute`, `Device` or `Authority`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttributeNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="n">strict</span><span class="p">):</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDeviceNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="n">strict</span><span class="p">):</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthorityNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="n">strict</span><span class="p">):</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Authority</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusFactory.findObjectClass"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.findObjectClass">[docs]</a>    <span class="k">def</span> <span class="nf">findObjectClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">absolute_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtain the class object corresponding to the given name.</span>
+
+<span class="sd">        Note, this generic implementation expects that derived classes provide a</span>
+<span class="sd">        an attribute called elementTypesMap consisting in a dictionary whose</span>
+<span class="sd">        keys are TaurusElementTypes and whose values are the corresponding</span>
+<span class="sd">        specific object classes. e.g., the FooFactory should provide::</span>
+
+<span class="sd">          class FooFactory(TaurusFactory):</span>
+<span class="sd">              elementTypesMap = {TaurusElementType.Authority: FooAuthority,</span>
+<span class="sd">                                 TaurusElementType.Device: FooDevice,</span>
+<span class="sd">                                 TaurusElementType.Attribute: FooAttribute,</span>
+<span class="sd">                                 }</span>
+<span class="sd">              (...)</span>
+
+
+<span class="sd">        :param absolute_name: (str) the object absolute name string</span>
+
+<span class="sd">        :return: (taurus.core.taurusmodel.TaurusModel or None) a TaurusModel</span>
+<span class="sd">                 class derived type or None if the name is not valid</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">elementTypesMap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elementTypesMap</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;generic findObjectClass called but </span><span class="si">%s</span><span class="s1"> does &#39;</span> <span class="o">+</span>
+                   <span class="s1">&#39;not define elementTypesMap.&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValidTypesForName</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">):</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">elementTypesMap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="kc">None</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

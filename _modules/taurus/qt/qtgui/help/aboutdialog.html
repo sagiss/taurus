@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.help.aboutdialog &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.help.aboutdialog</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.help.aboutdialog</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">##############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module provides a simple dialog to display typical About</span>
+<span class="sd">&lt;application&gt; dialog. It will create a Dialog with the title being</span>
+<span class="sd">*Dialog + &lt;app name&gt;* and a default text combining the application</span>
+<span class="sd">name and version, organization name and domain.</span>
+
+<span class="sd">This behaviour can be changed by setting the dialog window title</span>
+<span class="sd">(:meth:`~AboutDialog.setWindowTitle`) and content</span>
+<span class="sd">(:meth:`~AboutDialog.setText`, :meth:`~AboutDialog.setHtml`)</span>
+
+<span class="sd">Example usage::</span>
+
+<span class="sd">    from taurus.external.qt import Qt</span>
+<span class="sd">    from taurus.qt.qtgui.help import AboutDialog</span>
+
+<span class="sd">    app = Qt.QApplication([])</span>
+<span class="sd">    app.setApplicationName(&quot;Example GUI&quot;)</span>
+<span class="sd">    app.setApplicationVersion(&quot;1.2.3&quot;)</span>
+<span class="sd">    app.setOrganizationName(&quot;Taurus&quot;)</span>
+<span class="sd">    app.setOrganizationDomain(&quot;http://www.taurus-scada.org/&quot;)</span>
+<span class="sd">    about_dialog = AboutDialog()</span>
+<span class="sd">    pixmap = Qt.QIcon.fromTheme(&quot;folder-open&quot;).pixmap(64, 64)</span>
+<span class="sd">    about_dialog.setPixmap(pixmap)</span>
+<span class="sd">    about_dialog.exec_()</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AboutDialog&quot;</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="nd">@UILoadable</span>
+<div class="viewcode-block" id="AboutDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog">[docs]</a><span class="k">class</span> <span class="nc">AboutDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple dialog to display typical About &lt;application&gt; dialog.</span>
+<span class="sd">    It will create a Dialog with the title being</span>
+<span class="sd">    *Dialog + &lt;app name&gt;* and a default text combining the application</span>
+<span class="sd">    name and version, organization name and domain.</span>
+
+<span class="sd">    This behaviour can be changed by setting the dialog window title</span>
+<span class="sd">    (:meth:`~AboutDialog.setWindowTitle`) and content</span>
+<span class="sd">    (:meth:`~AboutDialog.setText`, :meth:`~AboutDialog.setHtml`)</span>
+
+<span class="sd">    Example usage::</span>
+
+<span class="sd">        from taurus.external.qt import Qt</span>
+<span class="sd">        from taurus.qt.qtgui.help import AboutDialog</span>
+
+<span class="sd">        app = Qt.QApplication([])</span>
+<span class="sd">        app.setApplicationName(&quot;Example GUI&quot;)</span>
+<span class="sd">        app.setApplicationVersion(&quot;1.2.3&quot;)</span>
+<span class="sd">        app.setOrganizationName(&quot;Taurus&quot;)</span>
+<span class="sd">        app.setOrganizationDomain(&quot;http://www.taurus-scada.org/&quot;)</span>
+<span class="sd">        about_dialog = AboutDialog()</span>
+<span class="sd">        pixmap = Qt.QIcon.fromTheme(&quot;folder-open&quot;).pixmap(64, 64)</span>
+<span class="sd">        about_dialog.setPixmap(pixmap)</span>
+<span class="sd">        about_dialog.exec_()</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_Template</span> <span class="o">=</span> <span class="s2">&quot;&lt;html&gt;&lt;body&gt;&lt;p&gt;&lt;b&gt;</span><span class="si">{0}</span><span class="s2">&lt;/b&gt;&lt;/p&gt;&quot;</span> \
+                <span class="s2">&quot;&lt;p&gt;</span><span class="si">{1}</span><span class="s2">&lt;/p&gt;&lt;p&gt;</span><span class="si">{2}</span><span class="s2">&lt;/p&gt;&quot;</span> \
+                <span class="s2">&quot;&lt;p&gt;&lt;a href=</span><span class="se">\&quot;</span><span class="si">{3}</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="si">{2}</span><span class="s2">&lt;/a&gt;&lt;/p&gt;&quot;</span> \
+                <span class="s2">&quot;(c) Copyright </span><span class="si">{2}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_browser</span><span class="o">.</span><span class="n">setFrameStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">NoFrame</span><span class="p">)</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="p">()</span>
+        <span class="n">palette</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span>
+                         <span class="n">palette</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Background</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_browser</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logo_widget</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignHCenter</span> <span class="o">|</span>
+                                      <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">applicationName</span><span class="p">()</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">applicationVersion</span><span class="p">()</span>
+        <span class="n">org</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">organizationName</span><span class="p">()</span>
+        <span class="n">org_domain</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">organizationDomain</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;About &quot;</span> <span class="o">+</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">applicationName</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_Template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">org</span><span class="p">,</span>
+                                           <span class="n">org_domain</span><span class="p">))</span>
+
+<div class="viewcode-block" id="AboutDialog.setText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.setText">[docs]</a>    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the dialog text.</span>
+
+<span class="sd">        :param text: new text</span>
+<span class="sd">        :type text: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_browser</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AboutDialog.getHtml"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.getHtml">[docs]</a>    <span class="k">def</span> <span class="nf">getHtml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the current dialog HTML text.</span>
+
+<span class="sd">        :return: the current dialog HTML text.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_browser</span><span class="o">.</span><span class="n">toHtml</span><span class="p">()</span></div>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">Slot</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<div class="viewcode-block" id="AboutDialog.setHtml"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.setHtml">[docs]</a>    <span class="k">def</span> <span class="nf">setHtml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">html</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the dialog HTML text.</span>
+
+<span class="sd">        :param text: new HTML text</span>
+<span class="sd">        :type text: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_browser</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="n">html</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AboutDialog.resetHtml"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.resetHtml">[docs]</a>    <span class="k">def</span> <span class="nf">resetHtml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the dialog HTML to an empty HTML document</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="s2">&quot;&lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AboutDialog.getSource"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.getSource">[docs]</a>    <span class="k">def</span> <span class="nf">getSource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the current dialog document source.</span>
+
+<span class="sd">        :return: the current dialog document source.</span>
+<span class="sd">        :rtype: Qt.QUrl</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_browser</span><span class="o">.</span><span class="n">source</span><span class="p">()</span></div>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">Slot</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QUrl</span><span class="p">)</span>
+<div class="viewcode-block" id="AboutDialog.setSource"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.setSource">[docs]</a>    <span class="k">def</span> <span class="nf">setSource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the dialog document source.</span>
+
+<span class="sd">        :param text: new document source</span>
+<span class="sd">        :type text: Qt.QUrl</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_browser</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">source</span><span class="p">)</span></div>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">Slot</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">)</span>
+<div class="viewcode-block" id="AboutDialog.setPixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.setPixmap">[docs]</a>    <span class="k">def</span> <span class="nf">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the dialog pixmap</span>
+
+<span class="sd">        :param text: new pixmap</span>
+<span class="sd">        :type text: Qt.QPixmap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logo_widget</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AboutDialog.getPixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.getPixmap">[docs]</a>    <span class="k">def</span> <span class="nf">getPixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the current pixmap.</span>
+
+<span class="sd">        :return: the current dialog pixmap</span>
+<span class="sd">        :rtype: Qt.QPixmap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pixmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logo_widget</span><span class="o">.</span><span class="n">getPixmap</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">pixmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pixmap</span></div>
+
+<div class="viewcode-block" id="AboutDialog.resetPixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.resetPixmap">[docs]</a>    <span class="k">def</span> <span class="nf">resetPixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the dialog pixmap to a Null pixmap.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">())</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AboutDialog.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/help/_AboutDialog.html#taurus.qt.qtgui.help.AboutDialog.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Help&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;help&quot;</span><span class="p">),</span>
+                <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.help&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span></div>
+
+    <span class="c1">#: This property holds the current dialog pixmap</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`~AboutDialog.getPixmap`</span>
+    <span class="c1">#:     * :meth:`~AboutDialog.setPixmap`</span>
+    <span class="c1">#:     * :meth:`~AboutDialog.resetPixmap`</span>
+    <span class="c1">#:</span>
+    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Property</span><span class="p">(</span><span class="s2">&quot;QPixmap&quot;</span><span class="p">,</span> <span class="n">getPixmap</span><span class="p">,</span> <span class="n">setPixmap</span><span class="p">,</span> <span class="n">resetPixmap</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the current dialog HTML</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`~AboutDialog.getHtml`</span>
+    <span class="c1">#:     * :meth:`~AboutDialog.setHtml`</span>
+    <span class="c1">#:     * :meth:`~AboutDialog.resetHtml`</span>
+    <span class="c1">#:</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Property</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getHtml</span><span class="p">,</span> <span class="n">setHtml</span><span class="p">,</span> <span class="n">resetHtml</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the current dialog document source</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`~AboutDialog.getSource`</span>
+    <span class="c1">#:     * :meth:`~AboutDialog.setSource`</span>
+    <span class="c1">#:</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Property</span><span class="p">(</span><span class="s2">&quot;QUrl&quot;</span><span class="p">,</span> <span class="n">getSource</span><span class="p">,</span> <span class="n">setSource</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">setApplicationName</span><span class="p">(</span><span class="s2">&quot;Example GUI&quot;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">setApplicationVersion</span><span class="p">(</span><span class="s2">&quot;1.2.3&quot;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">setOrganizationName</span><span class="p">(</span><span class="s2">&quot;Taurus&quot;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">setOrganizationDomain</span><span class="p">(</span><span class="s2">&quot;http://www.taurus-scada.org/&quot;</span><span class="p">)</span>
+    <span class="n">about_dialog</span> <span class="o">=</span> <span class="n">AboutDialog</span><span class="p">()</span>
+<span class="c1">#    about_dialog.setText(txt)</span>
+    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;folder-open&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+    <span class="n">about_dialog</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+    <span class="n">about_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,751 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.plot.qwtdialog &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.plot.qwtdialog</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.plot.qwtdialog</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">qwtdialog.py: Dialogs for Taurusplot</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusPlotConfigDialog&quot;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Qwt5</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="c1"># class TaurusPlotConfigCapable:</span>
+<span class="c1">#    &quot;&quot;&quot;This class is aimed to act as an interface for class TaurusPlot. Every class that uses</span>
+<span class="c1">#    TaurusPlotConfigDialog class (as TaurusPlot does) should inherit TaurusPlotConfigCapable class</span>
+<span class="c1">#    and overwrite the methods defined below in order to avoid firing exceptions&quot;&quot;&quot;</span>
+<span class="c1">#    def __init__(self, parent = None):</span>
+<span class="c1">#        pass</span>
+<span class="c1">#</span>
+<span class="c1">#    def showConfigDialog(self):</span>
+<span class="c1">#        raise NotImplementedError, &quot;TaurusPlotConfigCapable: method showConfigDialog() not implemented in child class&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#    def setAxisScale(self,axis,min,max):</span>
+<span class="c1">#        raise NotImplementedError, &quot;TaurusPlotConfigCapable: method setAxisScale() not implemented in child class&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#    def setAxisAutoScale(self, axis=None):</span>
+<span class="c1">#        raise NotImplementedError, &quot;TaurusPlotConfigCapable: method setAxisAutoScale() not implemented in child class&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#    def setAxisScaleType(self, axis=None, scale=None):</span>
+<span class="c1">#        raise NotImplementedError, &quot;TaurusPlotConfigCapable: method setAxisScaleType() not implemented in child class&quot;</span>
+
+
+<span class="nd">@UILoadable</span><span class="p">(</span><span class="n">with_ui</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusPlotConfigDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog">[docs]</a><span class="k">class</span> <span class="nc">TaurusPlotConfigDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class is used to build and manage the plot configuration dialog. It</span>
+<span class="sd">    has been designed using the qt designer application, and then loaded to this</span>
+<span class="sd">    widget. Hence, if you need to modify the dialog, you can use the</span>
+<span class="sd">    TaurusPlotConfigDialog.ui file (under ui directory) to make it easier.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowFlags</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="c1"># if parent==None or not isinstance(parent, TaurusPlotConfigCapable):</span>
+        <span class="c1">#    raise NotImplementedError, &quot;Parent object doesn&#39;t implement TaurusPlotConfigCapable class&quot;</span>
+        <span class="c1"># call qt designer generated functions to initialize GUI</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+
+        <span class="c1"># insert the CurvesAppearanceWidget</span>
+        <span class="c1">#(@TODO:must be changed to be done directly in the ui, but I couldn&#39;t make the widget available to TaurusDesigner)</span>
+        <span class="kn">from</span> <span class="nn">curvesAppearanceChooserDlg</span> <span class="k">import</span> <span class="n">CurvesAppearanceChooser</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span> <span class="o">=</span> <span class="n">CurvesAppearanceChooser</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">curveAppearanceGB</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+        <span class="c1"># set the values for the CurvesAppearanceChooser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">setCurves</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getCurveAppearancePropertiesDict</span><span class="p">())</span>
+
+        <span class="c1"># insert valid values into mode combobox (linear or logarihtmic) and</span>
+        <span class="c1"># set selected one in combobox</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xModeComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Linear&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xModeComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Logarithmic&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1ModeComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Linear&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1ModeComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Logarithmic&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2ModeComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Linear&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2ModeComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Logarithmic&quot;</span><span class="p">)</span>
+
+        <span class="c1"># insert valid values into peaks combobox (max, min or both) and set</span>
+        <span class="c1"># selected one in combobox</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Both&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Max&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Min&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">insertItem</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Init X axis group</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xRangeCB</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xLabelRange</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXIsTime</span><span class="p">():</span>
+            <span class="c1"># adapt the X axis group for time-based measurements</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xRangeCB</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;1 m&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;1 h&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;1 d&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;1 w&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;30 d&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;1 y&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xGroupBox</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xLabelMin</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Start&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xLabelMax</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;End&quot;</span><span class="p">)</span>
+            <span class="n">timetooltip</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;It accepts both absolute data-times (e.g. &quot;25/10/1917 21:45:01&quot;) </span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span>\
+                <span class="sd">&quot;&quot;&quot;or relative ones with format &lt;+|-&gt;&lt;number&gt;&lt;s|m|h|d|w|y&gt; (e.g. &quot;-12h&quot;).\n&quot;&quot;&quot;</span>\
+                <span class="sd">&quot;&quot;&quot;The keyword &quot;now&quot; is also accepted.&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMin</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">timetooltip</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMax</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">timetooltip</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># The default settings are ok for non-time plots</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMin</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMax</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xRangeCB</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xRangeCB</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;100&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;1000&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;10000&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;100000&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;1000000&quot;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xDynScaleCheckBox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXDynScale</span><span class="p">())</span>
+        <span class="n">auto</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisAutoScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xAutoGroupBox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="ow">not</span> <span class="n">auto</span><span class="p">)</span>
+
+        <span class="c1"># this call already initialises the edit boxes of the X axis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setXDynScale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXDynScale</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xDynScaleCheckBox</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">isXDynScaleSupported</span><span class="p">())</span>
+
+        <span class="c1"># Init Y axes groups</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_populateYAxisScales</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1AutoGroupBox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span>
+            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisAutoScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2AutoGroupBox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span>
+            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisAutoScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span><span class="p">))</span>
+
+        <span class="c1"># set validators for Y min/max edits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1EditMin</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1EditMax</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2EditMin</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2EditMax</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="c1"># populate initial axis mode (linear or logarithmic) values from plot. Warning!: we&#39;re using</span>
+        <span class="c1"># qwt QwtPlot.axis enum type to relate our GUI combo name and qwt axis</span>
+        <span class="c1"># name (enum type).</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1ModeComboBox</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2ModeComboBox</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xModeComboBox</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+            <span class="n">scaleType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getAxisTransformationType</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">scaleType</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleTransformation</span><span class="o">.</span><span class="n">Linear</span><span class="p">:</span>
+                <span class="n">axes</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">scaleType</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleTransformation</span><span class="o">.</span><span class="n">Log10</span><span class="p">:</span>
+                <span class="n">axes</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="s2">&quot;TaurusPlotConfigDialog::__init__(): unexpected axis scale type (linear or logarihtmic expected)&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xModeComboBox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXIsTime</span><span class="p">())</span>
+
+        <span class="c1"># determine which axes are visible</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisEnabled</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xGroupBox</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># populate initial peaks from parent</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_showMaxPeaks</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_showMinPeaks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_showMaxPeaks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_showMinPeaks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># connect signals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Close</span><span class="p">)</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Apply</span><span class="p">)</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xAutoGroupBox</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggledAutoScale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1AutoGroupBox</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggledAutoScale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2AutoGroupBox</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggledAutoScale</span><span class="p">)</span>
+<span class="c1">#        self.connect(self.ui.xEditMin,  Qt.SIGNAL(&quot;returnPressed()&quot;),self.apply)</span>
+<span class="c1">#        self.connect(self.ui.xEditMax,  Qt.SIGNAL(&quot;returnPressed()&quot;),self.apply)</span>
+<span class="c1">#        self.connect(self.ui.y1EditMin, Qt.SIGNAL(&quot;returnPressed()&quot;),self.apply)</span>
+<span class="c1">#        self.connect(self.ui.y1EditMax, Qt.SIGNAL(&quot;returnPressed()&quot;),self.apply)</span>
+<span class="c1">#        self.connect(self.ui.y2EditMin, Qt.SIGNAL(&quot;returnPressed()&quot;),self.apply)</span>
+<span class="c1">#        self.connect(self.ui.y2EditMax, Qt.SIGNAL(&quot;returnPressed()&quot;),self.apply)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xModeComboBox</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modeComboChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xDynScaleCheckBox</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setXDynScale</span><span class="p">)</span>
+        <span class="c1">#self.connect(self.ui.xRangeCB, Qt.SIGNAL(&quot;currentIndexChanged(const QString&amp;)&quot;),self.apply)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1ModeComboBox</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modeComboChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2ModeComboBox</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modeComboChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">peaksComboBox</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peaksComboChanged</span><span class="p">)</span>
+        <span class="c1"># self.connect(self.curvesAppearanceChooser,</span>
+        <span class="c1"># Qt.SIGNAL(&quot;controlChanged&quot;),self.apply) #&quot;autoapply&quot; mode for *all*</span>
+        <span class="c1"># the curve appearance controls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">assignToY1BT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setCurvesYAxis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">assignToY2BT</span><span class="o">.</span><span class="n">clicked</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setCurvesYAxis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">bckgndBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changeBackgroundColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">changeTitlesBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onChangeTitles</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">CurveTitleEdited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onCurveTitleEdited</span><span class="p">)</span>
+
+        <span class="c1"># finally adjust size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjustSize</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_populateXAxisScales</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">xMin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisScaleDiv</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">()</span>
+        <span class="n">xMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisScaleDiv</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span><span class="o">.</span><span class="n">upperBound</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXIsTime</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMin</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                <span class="s1">&#39;%Y/%m/</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">xMin</span><span class="p">))))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMax</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                <span class="s1">&#39;%Y/%m/</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">xMax</span><span class="p">))))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMin</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">xMin</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMax</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">xMax</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_populateYAxisScales</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">axis</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1EditMin</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisScaleDiv</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">)</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">()))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1EditMax</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisScaleDiv</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">)</span><span class="o">.</span><span class="n">upperBound</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">axis</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2EditMin</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisScaleDiv</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span><span class="p">)</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">()))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2EditMax</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisScaleDiv</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span><span class="p">)</span><span class="o">.</span><span class="n">upperBound</span><span class="p">()))</span>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.deltatime2str"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.deltatime2str">[docs]</a>    <span class="k">def</span> <span class="nf">deltatime2str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">fuzzy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;converts a time diff in secs to a string.</span>
+<span class="sd">        If fuzzy=True it returns an approx time diff in s, min, hours or days&#39;&#39;&#39;</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fuzzy</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%g</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="n">dt</span>
+        <span class="k">if</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%3.3g</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="n">dt</span>
+        <span class="k">elif</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="mi">120</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%g</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="nb">round</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="mi">7200</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%g</span><span class="s2"> m&quot;</span> <span class="o">%</span> <span class="nb">round</span><span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="mi">172800</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%g</span><span class="s2"> h&quot;</span> <span class="o">%</span> <span class="nb">round</span><span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%g</span><span class="s2"> d&quot;</span> <span class="o">%</span> <span class="nb">round</span><span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="mi">86400</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.str2deltatime"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.str2deltatime">[docs]</a>    <span class="k">def</span> <span class="nf">str2deltatime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strtime</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Translates a time string to seconds</span>
+<span class="sd">        examples of valid relative times are: &quot;now&quot;, &quot;NOW&quot;, &quot;Now&quot;, &quot;-1d&quot;, &quot;3w&quot;, &quot;- 3.6e3 s&quot;,...</span>
+<span class="sd">        examples of non-valid relative times:, &quot;now + 2h&quot;, &quot;-5&quot;, &quot;3H&quot; (unit names are case-sensitive)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">strtime</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">strtime</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">timeunits</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">3600</span> <span class="o">*</span>
+                     <span class="mi">24</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">strtime</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;now&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">strtime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">timeunits</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">strtime</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">timeunits</span><span class="p">[</span><span class="n">strtime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="s1">&#39;[str2deltatime] No format could be applied to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;[str2deltatime] Non-supported unit &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.strtime2epoch"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.strtime2epoch">[docs]</a>    <span class="k">def</span> <span class="nf">strtime2epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strtime</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Translates a str into an epoch value. It accepts &quot;absolute&quot; time notation as well as</span>
+<span class="sd">        &quot;relative to current time notation&quot; (by expliciting a &quot;+&quot; or &quot;-&quot; prefix)</span>
+<span class="sd">        (see str2deltatime for relative time notation).</span>
+
+<span class="sd">        examples of valid absolute times: &quot;2008-3-25 14:21:59&quot;, &quot;25/03/08 14:21&quot;, &quot;03-25-2008&quot;,...</span>
+
+<span class="sd">        It returns None if strtime couldn&#39;t be interpreted</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">import</span> <span class="nn">time</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">strtime</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">strtime</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="c1"># try with relative time keywords</span>
+        <span class="k">if</span> <span class="n">strtime</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">]:</span>
+            <span class="n">reltime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">str2deltatime</span><span class="p">(</span><span class="n">strtime</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reltime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">reltime</span>
+
+        <span class="k">if</span> <span class="n">strtime</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;now&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># try with absolute time</span>
+        <span class="n">hour_fts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;%H:%M:%S&#39;</span><span class="p">,</span> <span class="s1">&#39;%H:%M&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>  <span class="c1"># ,&quot;%M&#39;&quot;,&#39;%S&quot;&#39;</span>
+        <span class="n">date_fts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;%y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y/%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;%y/%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">-%m-%Y&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y&#39;</span><span class="p">,</span> <span class="s1">&#39;%m-</span><span class="si">%d</span><span class="s1">-%Y&#39;</span><span class="p">,</span> <span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y&#39;</span><span class="p">]</span>
+
+        <span class="n">tfs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">date_fts</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hour_fts</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">h</span><span class="p">:</span>
+                    <span class="n">tfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">tf</span> <span class="ow">in</span> <span class="n">tfs</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># print &#39;trying &#39;,tf</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">strtime</span><span class="p">,</span> <span class="n">tf</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1970</span><span class="p">:</span>
+                    <span class="n">lt</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+                    <span class="c1">#    (2008,  9,    23,  15,  44,   24,    1,   267, 1)</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">lt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span>
+                         <span class="mi">4</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+                    <span class="k">break</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">if</span> <span class="n">t</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;No format could be applied to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.validate"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;validates the inputs in the dialog.</span>
+<span class="sd">        If validation is ok, it returns a tuple containing min/max values for each axis (None if they are autoscaled)</span>
+<span class="sd">        If validation failed, it returns False.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            the values of the max/min boxes are already validated thanks to their attached QDoubleValidators</span>
+<span class="sd">            (except for xMin/xMax in time Mode, but this case is handled by strtime2epoch)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">xMin</span> <span class="o">=</span> <span class="n">xMax</span> <span class="o">=</span> <span class="n">y1Min</span> <span class="o">=</span> <span class="n">y1Max</span> <span class="o">=</span> <span class="n">y2Min</span> <span class="o">=</span> <span class="n">y2Max</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Validating X axis values</span>
+        <span class="n">xMin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisScaleDiv</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">()</span>
+        <span class="n">xMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">axisScaleDiv</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span><span class="o">.</span><span class="n">upperBound</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xDynScaleCheckBox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXIsTime</span><span class="p">():</span>
+                <span class="n">rg</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">str2deltatime</span><span class="p">(</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xRangeCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())))</span>
+                <span class="n">ok1</span> <span class="o">=</span> <span class="p">(</span><span class="n">rg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">rg</span><span class="p">,</span> <span class="n">ok1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xRangeCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">()),</span> <span class="kc">True</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">rg</span><span class="p">,</span> <span class="n">ok1</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="n">xMin</span> <span class="o">=</span> <span class="n">xMax</span> <span class="o">-</span> <span class="n">rg</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ok1</span> <span class="ow">or</span> <span class="p">(</span><span class="n">xMin</span> <span class="o">&gt;=</span> <span class="n">xMax</span><span class="p">):</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Invalid parameters for X axis range&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xAutoGroupBox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXIsTime</span><span class="p">():</span>  <span class="c1"># time mode</span>
+                <span class="n">xMin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strtime2epoch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMin</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                <span class="n">xMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strtime2epoch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMax</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                <span class="n">ok1</span> <span class="o">=</span> <span class="p">(</span><span class="n">xMin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">ok2</span> <span class="o">=</span> <span class="p">(</span><span class="n">xMax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># XY mode</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">xMin</span><span class="p">,</span> <span class="n">ok1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMin</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span> <span class="kc">True</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">xMin</span><span class="p">,</span> <span class="n">ok1</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">False</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">xMax</span><span class="p">,</span> <span class="n">ok2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xEditMax</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span> <span class="kc">True</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">xMax</span><span class="p">,</span> <span class="n">ok2</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ok1</span> <span class="ow">and</span> <span class="n">ok2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">xMin</span> <span class="o">&gt;=</span> <span class="n">xMax</span><span class="p">):</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Invalid parameters for X axis&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;Min value must be strictly less than max value&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Validating Y1 axis values</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1AutoGroupBox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">y1Min</span><span class="p">,</span> <span class="n">ok1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1EditMin</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span> <span class="kc">True</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">y1Min</span><span class="p">,</span> <span class="n">ok1</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">y1Max</span><span class="p">,</span> <span class="n">ok2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y1EditMax</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span> <span class="kc">True</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">y1Max</span><span class="p">,</span> <span class="n">ok2</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">ok1</span> <span class="ow">and</span> <span class="n">ok2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">y1Min</span> <span class="o">&gt;=</span> <span class="n">y1Max</span><span class="p">):</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Invalid parameters for Y1 axis&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;Min value must be strictly less than max value&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Validating Y2 axis values</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2AutoGroupBox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">y2Min</span><span class="p">,</span> <span class="n">ok1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2EditMin</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span> <span class="kc">True</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">y2Min</span><span class="p">,</span> <span class="n">ok1</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">y2Max</span><span class="p">,</span> <span class="n">ok2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">y2EditMax</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span> <span class="kc">True</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">y2Max</span><span class="p">,</span> <span class="n">ok2</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ok1</span> <span class="ow">and</span> <span class="n">ok2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">y2Min</span> <span class="o">&gt;=</span> <span class="n">y2Max</span><span class="p">):</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Invalid parameters for Y2 axis&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;Min value must be strictly less than max value&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># if we reached this point, the input is valid</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">xMin</span><span class="p">,</span> <span class="n">xMax</span><span class="p">,</span> <span class="n">y1Min</span><span class="p">,</span> <span class="n">y1Max</span><span class="p">,</span> <span class="n">y2Min</span><span class="p">,</span> <span class="n">y2Max</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.apply"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This will apply the values set in the dialog. Note that some of them</span>
+<span class="sd">        are not necessary to be set, since they&#39;re already are set when changing the item selected&quot;&quot;&quot;</span>
+
+        <span class="c1"># Apply the changes from the curves Appearance widget (they are already</span>
+        <span class="c1"># validated).</span>
+        <span class="n">prop</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">onApply</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">onCurveAppearanceChanged</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+
+        <span class="c1"># validate the rest of the inputs</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">xMin</span><span class="p">,</span> <span class="n">xMax</span><span class="p">,</span> <span class="n">y1Min</span><span class="p">,</span> <span class="n">y1Max</span><span class="p">,</span> <span class="n">y2Min</span><span class="p">,</span> <span class="n">y2Max</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">,</span> <span class="n">xMin</span><span class="p">,</span> <span class="n">xMax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">,</span> <span class="n">y1Min</span><span class="p">,</span> <span class="n">y1Max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span><span class="p">,</span> <span class="n">y2Min</span><span class="p">,</span> <span class="n">y2Max</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_xMax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_xMin</span> <span class="o">=</span> <span class="n">xMax</span><span class="p">,</span> <span class="n">xMin</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.toggledAutoScale"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.toggledAutoScale">[docs]</a>    <span class="k">def</span> <span class="nf">toggledAutoScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toggled</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This will catch the group boxes check/uncheck event, and will enable autoscale in case</span>
+<span class="sd">        the event has been unchecking &#39;disable autoscale&#39;&quot;&quot;&quot;</span>
+        <span class="c1"># get and check who fired the signal</span>
+        <span class="n">groupBox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">groupBox</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">groupBox</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;TaurusPlotConfig::toggledAutoScale(): event is not recognized&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="c1"># set the axis autoscale in the corresponding axis</span>
+        <span class="k">if</span> <span class="n">groupBox</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;xAutoGroupBox&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">toggled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisAutoScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">groupBox</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;y1AutoGroupBox&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">toggled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisAutoScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">groupBox</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;y2AutoGroupBox&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">toggled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisAutoScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.modeComboChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.modeComboChanged">[docs]</a>    <span class="k">def</span> <span class="nf">modeComboChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemSelected</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This will catch the combo box selection change and will set the corresponding axis scale to</span>
+<span class="sd">        the value passed as parameter&quot;&quot;&quot;</span>
+        <span class="c1"># get and check who fired the signal</span>
+        <span class="n">comboBox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">comboBox</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">comboBox</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;TaurusPlotConfig::modeComboChanged(): event is not recognized&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># set the scale for the corresponding axis</span>
+            <span class="k">if</span> <span class="n">comboBox</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;xModeComboBox&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXIsTime</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisScaleType</span><span class="p">(</span>
+                        <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">,</span> <span class="n">itemSelected</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">comboBox</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;y1ModeComboBox&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisScaleType</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">,</span> <span class="n">itemSelected</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">comboBox</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;y2ModeComboBox&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setAxisScaleType</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span><span class="p">,</span> <span class="n">itemSelected</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="s2">&quot;TaurusPlotConfig::modeComboChanged() invalid axis: &quot;</span> <span class="o">+</span> <span class="n">comboBox</span><span class="o">.</span><span class="n">objectName</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.setXDynScale"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.setXDynScale">[docs]</a>    <span class="k">def</span> <span class="nf">setXDynScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">checked</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXIsTime</span><span class="p">():</span>
+                <span class="n">rg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deltatime2str</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXAxisRange</span><span class="p">(),</span> <span class="n">fuzzy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXAxisRange</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xRangeCB</span><span class="o">.</span><span class="n">setEditText</span><span class="p">(</span><span class="n">rg</span><span class="p">)</span>
+            <span class="c1"># disable autoscale for the X axis</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xAutoGroupBox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_populateXAxisScales</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setXDynScale</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.peaksComboChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.peaksComboChanged">[docs]</a>    <span class="k">def</span> <span class="nf">peaksComboChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemSelected</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This will catch the combo box selection change and will set the corresponding axis to</span>
+<span class="sd">        show peaks&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">itemSelected</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">maxPeak</span> <span class="o">=</span> <span class="n">minPeak</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">itemSelected</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">maxPeak</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">minPeak</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">itemSelected</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">maxPeak</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">minPeak</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">maxPeak</span> <span class="o">=</span> <span class="n">minPeak</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">showMaxPeaks</span><span class="p">(</span><span class="n">maxPeak</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">showMinPeaks</span><span class="p">(</span><span class="n">minPeak</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.showCalendar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.showCalendar">[docs]</a>    <span class="k">def</span> <span class="nf">showCalendar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qcalendar</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QCalendarWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qcalendar</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.setCurvesYAxis"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.setCurvesYAxis">[docs]</a>    <span class="k">def</span> <span class="nf">setCurvesYAxis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curvesNamesList</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; calls the parent&#39;s setCurvesYAxis method but it automatically determines the parameters if not given&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">curvesNamesList</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">curvesNamesList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">getSelectedCurveNames</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sender</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">assignToY1BT</span><span class="p">:</span>
+                <span class="n">axis</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span>
+            <span class="k">elif</span> <span class="n">sender</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">assignToY2BT</span><span class="p">:</span>
+                <span class="n">axis</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot determine axis from </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sender</span><span class="p">)</span>
+        <span class="c1"># call the parent&#39;s setCurvesYAxis()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setCurvesYAxis</span><span class="p">(</span><span class="n">curvesNamesList</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+        <span class="c1"># update the axis scale edits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_populateYAxisScales</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.changeBackgroundColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.changeBackgroundColor">[docs]</a>    <span class="k">def</span> <span class="nf">changeBackgroundColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Launches a dialog for choosing the parent&#39;s canvas background color&quot;&quot;&quot;</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColorDialog</span><span class="o">.</span><span class="n">getColor</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">canvasBackground</span><span class="p">(),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">setCanvasBackground</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">replot</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.onChangeTitles"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.onChangeTitles">[docs]</a>    <span class="k">def</span> <span class="nf">onChangeTitles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Calls The parent&#39;s changeCurvesTitlesDialog method, with the selected</span>
+<span class="sd">        curves list as the parameter</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">curveNamesList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">getSelectedCurveNames</span><span class="p">()</span>
+        <span class="n">newTitlesDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">changeCurvesTitlesDialog</span><span class="p">(</span>
+            <span class="n">curveNamesList</span><span class="o">=</span><span class="n">curveNamesList</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">updateTitles</span><span class="p">(</span><span class="n">newTitlesDict</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusPlotConfigDialog.onCurveTitleEdited"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.onCurveTitleEdited">[docs]</a>    <span class="k">def</span> <span class="nf">onCurveTitleEdited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">newTitle</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot used when a curve title is edited</span>
+
+<span class="sd">        :param name: (str) curve name</span>
+<span class="sd">        :param name: (QString) new title</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">newTitlesDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">setCurvesTitle</span><span class="p">(</span><span class="n">newTitle</span><span class="p">,</span> <span class="p">[</span><span class="n">name</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="o">.</span><span class="n">updateTitles</span><span class="p">(</span><span class="n">newTitlesDict</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

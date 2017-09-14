@@ -1,0 +1,934 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TangoAttribute &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="taurus.core.tango" href="../tango.html"/>
+        <link rel="next" title="TangoAttributeEventListener" href="_TangoAttributeEventListener.html"/>
+        <link rel="prev" title="TangoAttrValue" href="_TangoAttrValue.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../core.html"><code class="docutils literal"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+      
+          <li><a href="../tango.html"><code class="docutils literal"><span class="pre">taurus.core.tango</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">TangoAttribute</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../_sources/devel/api/taurus/core/tango/_TangoAttribute.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tangoattribute">
+<h1><a class="reference internal" href="#taurus.core.tango.TangoAttribute" title="taurus.core.tango.TangoAttribute"><code class="xref py py-class docutils literal"><span class="pre">TangoAttribute</span></code></a><a class="headerlink" href="#tangoattribute" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../_images/inheritance-ec9265d8a683640958784eeec9f543221d481f62.png" alt="Inheritance diagram of TangoAttribute" usemap="#inheritanceba9bdeed13" class="inheritance"/>
+<map id="inheritanceba9bdeed13" name="inheritanceba9bdeed13">
+<area shape="rect" id="node1" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="29,101,101,149"/>
+</map>
+<dl class="class">
+<dt id="taurus.core.tango.TangoAttribute">
+<em class="property">class </em><code class="descname">TangoAttribute</code><span class="sig-paren">(</span><em>name</em>, <em>parent</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusattribute.TaurusAttribute</span></code></p>
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.addListener">
+<code class="descname">addListener</code><span class="sig-paren">(</span><em>listener</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.addListener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.addListener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a TaurusListener object in the listeners list.
+If it is the first element and Polling is enabled starts the
+polling mechanism.
+If the listener is already registered nothing happens.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.alarms">
+<code class="descname">alarms</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.alarms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.calarms">
+<code class="descname">calarms</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.calarms" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getAlarms instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.cleanUp">
+<code class="descname">cleanUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.cleanUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.cleanUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.climits">
+<code class="descname">climits</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.climits" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getRange instead</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.cranges">
+<code class="descname">cranges</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.cranges" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getRange + getAlarms + getWarnings instead</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.cwarnings">
+<code class="descname">cwarnings</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.cwarnings" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getAlarms instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.decode">
+<code class="descname">decode</code><span class="sig-paren">(</span><em>attr_value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes a value that was received from PyTango into the expected
+representation</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.description">
+<code class="descname">description</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.dev_alias">
+<code class="descname">dev_alias</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.dev_alias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.displayValue">
+<code class="descname">displayValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.displayValue" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.encode">
+<code class="descname">encode</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.encode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates the given value into a tango compatible value according to
+the attribute data type.</p>
+<p>Raises <cite>pint.DimensionalityError</cite> if value is a Quantity and it
+cannot be expressed in the units of the attribute set in the DB</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.format">
+<code class="descname">format</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.format" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0.4: </span>Use format_spec or precision instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getAlarms">
+<code class="descname">getAlarms</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getAlarms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getAlarms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getAttributeInfoEx">
+<code class="descname">getAttributeInfoEx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getAttributeInfoEx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getAttributeInfoEx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getAttributeProxy">
+<code class="descname">getAttributeProxy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getAttributeProxy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getAttributeProxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method that creates and returns a PyTango.AttributeProxy
+object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getCAlarms">
+<code class="descname">getCAlarms</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getCAlarms" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getAlarms instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getCLimits">
+<code class="descname">getCLimits</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getCLimits" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getRange instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getCRanges">
+<code class="descname">getCRanges</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getCRanges" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getRange + getAlarms + getWarnings instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getCWarnings">
+<code class="descname">getCWarnings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getCWarnings" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getWarnings instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getConfig">
+<code class="descname">getConfig</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current configuration of the attribute.</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use self instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getDescription">
+<code class="descname">getDescription</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getDescription" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .description instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getDisplayUnit">
+<code class="descname">getDisplayUnit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getDisplayUnit" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .rvalue.units instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getDisplayValue">
+<code class="descname">getDisplayValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getDisplayValue" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getLabel instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getDisplayWriteValue">
+<code class="descname">getDisplayWriteValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getDisplayWriteValue" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getFormat">
+<code class="descname">getFormat</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getFormat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getLabel">
+<code class="descname">getLabel</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getLabel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getLimits">
+<code class="descname">getLimits</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getLimits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getLimits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMaxAlarm">
+<code class="descname">getMaxAlarm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMaxAlarm" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .alarms[1] instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMaxDim">
+<code class="descname">getMaxDim</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getMaxDim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMaxDim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMaxDimX">
+<code class="descname">getMaxDimX</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMaxDimX" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getMaxDim instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMaxDimY">
+<code class="descname">getMaxDimY</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMaxDimY" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getMaxDim instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMaxValue">
+<code class="descname">getMaxValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMaxValue" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getMaxRange instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMaxWarning">
+<code class="descname">getMaxWarning</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMaxWarning" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .warnings[1] instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMinAlarm">
+<code class="descname">getMinAlarm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMinAlarm" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .alarms[0] instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMinValue">
+<code class="descname">getMinValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMinValue" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getMinRange instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getMinWarning">
+<code class="descname">getMinWarning</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getMinWarning" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .warnings[0] instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getNewOperation">
+<code class="descname">getNewOperation</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getNewOperation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getNewOperation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getParam">
+<code class="descname">getParam</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get attributes of AttributeInfoEx (PyTango)</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use getAttributeInfoEx instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getRange">
+<code class="descname">getRange</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getRange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getRanges">
+<code class="descname">getRanges</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getRanges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getShape">
+<code class="descname">getShape</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getShape" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getStandardUnit">
+<code class="descname">getStandardUnit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getStandardUnit" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .rvalue.units instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getTangoWritable">
+<code class="descname">getTangoWritable</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getTangoWritable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getTangoWritable" title="Permalink to this definition">¶</a></dt>
+<dd><p>like TaurusAttribute.isWritable(), but it returns a
+PyTango.AttrWriteType instead of a bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getUnit">
+<code class="descname">getUnit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getUnit" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .rvalue.units instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getWarnings">
+<code class="descname">getWarnings</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.getWarnings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getWarnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.getWritable">
+<code class="descname">getWritable</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.getWritable" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use isWritable instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isBoolean">
+<code class="descname">isBoolean</code><span class="sig-paren">(</span><em>inc_array=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isBoolean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isBoolean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isFloat">
+<code class="descname">isFloat</code><span class="sig-paren">(</span><em>inc_array=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isFloat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isFloat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isImage">
+<code class="descname">isImage</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isImage" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use self.data_format instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isInformDeviceOfErrors">
+<code class="descname">isInformDeviceOfErrors</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isInformDeviceOfErrors" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isInteger">
+<code class="descname">isInteger</code><span class="sig-paren">(</span><em>inc_array=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isInteger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isInteger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isNumeric">
+<code class="descname">isNumeric</code><span class="sig-paren">(</span><em>inc_array=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isNumeric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isNumeric" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isReadOnly">
+<code class="descname">isReadOnly</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isReadOnly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isReadOnly" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isReadWrite">
+<code class="descname">isReadWrite</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isReadWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isReadWrite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isScalar">
+<code class="descname">isScalar</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isScalar" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use self.data_format instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isSpectrum">
+<code class="descname">isSpectrum</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isSpectrum" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use self.data_format instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isState">
+<code class="descname">isState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isUsingEvents">
+<code class="descname">isUsingEvents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isUsingEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isUsingEvents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.isWrite">
+<code class="descname">isWrite</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.isWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.isWrite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.label">
+<code class="descname">label</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.max_alarm">
+<code class="descname">max_alarm</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.max_alarm" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .alarms[1] instead</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.max_warning">
+<code class="descname">max_warning</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.max_warning" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .warnings[1] instead</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.min_alarm">
+<code class="descname">min_alarm</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.min_alarm" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .alarms[0] instead</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.min_warning">
+<code class="descname">min_warning</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.min_warning" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .warnings[0] instead</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_abs_change">
+<code class="descname">no_abs_change</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_abs_change" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_archive_abs_change">
+<code class="descname">no_archive_abs_change</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_archive_abs_change" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_archive_period">
+<code class="descname">no_archive_period</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_archive_period" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_archive_rel_change">
+<code class="descname">no_archive_rel_change</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_archive_rel_change" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_cfg_value">
+<code class="descname">no_cfg_value</code><em class="property"> = '-----'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_cfg_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_delta_t">
+<code class="descname">no_delta_t</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_delta_t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_delta_val">
+<code class="descname">no_delta_val</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_delta_val" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_description">
+<code class="descname">no_description</code><em class="property"> = 'No description'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_display_unit">
+<code class="descname">no_display_unit</code><em class="property"> = 'No display unit'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_display_unit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_max_alarm">
+<code class="descname">no_max_alarm</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_max_alarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_max_value">
+<code class="descname">no_max_value</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_max_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_max_warning">
+<code class="descname">no_max_warning</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_max_warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_min_alarm">
+<code class="descname">no_min_alarm</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_min_alarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_min_value">
+<code class="descname">no_min_value</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_min_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_min_warning">
+<code class="descname">no_min_warning</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_min_warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_rel_change">
+<code class="descname">no_rel_change</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_rel_change" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_standard_unit">
+<code class="descname">no_standard_unit</code><em class="property"> = 'No standard unit'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_standard_unit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.no_unit">
+<code class="descname">no_unit</code><em class="property"> = 'No unit'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.no_unit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.not_specified">
+<code class="descname">not_specified</code><em class="property"> = 'Not specified'</em><a class="headerlink" href="#taurus.core.tango.TangoAttribute.not_specified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.poll">
+<code class="descname">poll</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.poll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.poll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notify listeners when the attribute has been polled</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.push_event">
+<code class="descname">push_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.push_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.push_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method invoked by the PyTango layer when an event occurs.
+It propagates the event to listeners and delegates other tasks to
+specific handlers for different event types.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.range">
+<code class="descname">range</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current value of the attribute.
+if cache is set to True (default) or the attribute has events
+active then it will return the local cached value. Otherwise it will
+read the attribute value from the tango device.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.removeListener">
+<code class="descname">removeListener</code><span class="sig-paren">(</span><em>listener</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.removeListener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.removeListener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a TaurusListener from the listeners list. If polling enabled
+and it is the last element the stop the polling timer.
+If the listener is not registered nothing happens.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setAlarms">
+<code class="descname">setAlarms</code><span class="sig-paren">(</span><em>*limits</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.setAlarms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setAlarms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setConfigEx">
+<code class="descname">setConfigEx</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.setConfigEx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setConfigEx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setDescription">
+<code class="descname">setDescription</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setDescription" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .description instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setLabel">
+<code class="descname">setLabel</code><span class="sig-paren">(</span><em>lbl</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.setLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setLabel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setLimits">
+<code class="descname">setLimits</code><span class="sig-paren">(</span><em>low</em>, <em>high</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.setLimits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setLimits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setMaxAlarm">
+<code class="descname">setMaxAlarm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setMaxAlarm" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .alarms instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setMaxWarning">
+<code class="descname">setMaxWarning</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setMaxWarning" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .warnings instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setMinAlarm">
+<code class="descname">setMinAlarm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setMinAlarm" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .alarms instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setMinWarning">
+<code class="descname">setMinWarning</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setMinWarning" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .warnings instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setParam">
+<code class="descname">setParam</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set attributes of AttributeInfoEx (PyTango)</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use PyTango instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setRange">
+<code class="descname">setRange</code><span class="sig-paren">(</span><em>*limits</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.setRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setRange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.setWarnings">
+<code class="descname">setWarnings</code><span class="sig-paren">(</span><em>*limits</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.setWarnings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.setWarnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.unit">
+<code class="descname">unit</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.unit" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use .rvalue.units instead</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.tango.TangoAttribute.warnings">
+<code class="descname">warnings</code><a class="headerlink" href="#taurus.core.tango.TangoAttribute.warnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAttribute.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>value</em>, <em>with_read=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the value in the Tango Device Attribute</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TangoAttributeEventListener.html" class="btn btn-neutral float-right" title="TangoAttributeEventListener" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TangoAttrValue.html" class="btn btn-neutral" title="TangoAttrValue" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

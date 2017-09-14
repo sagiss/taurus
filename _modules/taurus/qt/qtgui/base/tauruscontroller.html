@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.base.tauruscontroller &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.base.tauruscontroller</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.base.tauruscontroller</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides the set of base class taurus controllers.&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseController&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusAttributeControllerHelper&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusScalarAttributeControllerHelper&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusConfigurationControllerHelper&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;updateLabelBackground&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">DataFormat</span><span class="p">,</span> <span class="n">TaurusEventType</span>
+
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">QT_DEVICE_STATE_PALETTE</span>
+
+
+<div class="viewcode-block" id="TaurusBaseController"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for all taurus controllers&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">updateAsPalette</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateAsPalette</span> <span class="o">=</span> <span class="n">updateAsPalette</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stateObj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_config_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_error_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setStyle</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_setStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="TaurusBaseController.usePalette"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.usePalette">[docs]</a>    <span class="k">def</span> <span class="nf">usePalette</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updateAsPalette</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.widget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.widget">[docs]</a>    <span class="k">def</span> <span class="nf">widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.modelObj"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.modelObj">[docs]</a>    <span class="k">def</span> <span class="nf">modelObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span></div>
+
+    <span class="n">attrObj</span> <span class="o">=</span> <span class="n">configObj</span> <span class="o">=</span> <span class="n">deviceObj</span> <span class="o">=</span> <span class="n">modelObj</span>
+
+<div class="viewcode-block" id="TaurusBaseController.valueObj"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.valueObj">[docs]</a>    <span class="k">def</span> <span class="nf">valueObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">modelObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">modelObj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">modelObj</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.value"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">valueObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueObj</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">valueObj</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.w_value"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.w_value">[docs]</a>    <span class="k">def</span> <span class="nf">w_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># TODO: adapt to tep14</span>
+        <span class="n">valueObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueObj</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">valueObj</span><span class="p">,</span> <span class="s2">&quot;w_value&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.quality"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.quality">[docs]</a>    <span class="k">def</span> <span class="nf">quality</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">valueObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueObj</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">valueObj</span><span class="p">,</span> <span class="s2">&quot;quality&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.state"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.state">[docs]</a>    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stateObj</span><span class="o">.</span><span class="n">state</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">evt_src</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span><span class="p">():</span>  <span class="c1"># update the &quot;_last&quot; values only if the event source is the model (it could be the background...)</span>
+            <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span> <span class="ow">or</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="n">evt_value</span>
+            <span class="k">elif</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span><span class="p">:</span>  <span class="c1"># TODO: adapt to tep14</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_config_value</span> <span class="o">=</span> <span class="n">evt_value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_error_value</span> <span class="o">=</span> <span class="n">evt_value</span>
+                <span class="c1"># In case of error, modify the last_value as well</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span><span class="p">()</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.eventReceived"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="c1"># should handle the state event here. Because this is invoked by a random</span>
+        <span class="c1"># thread, we pass it to the widget, which will forward to the proper</span>
+        <span class="c1"># thread</span>
+
+        <span class="c1">#@todo: sometimes we get this method called but self.widget() is None. Check why.</span>
+        <span class="c1">#       For the moment I just protect it by substituting the following line by the ones after it</span>
+        <span class="c1">#self.widget().eventReceived(evt_src, evt_type, evt_value)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">eventReceived</span><span class="p">(</span><span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseController.update"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateConnections</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateForeground</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateBackground</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateToolTip</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_needsStateConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_updateConnections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">stateObj</span><span class="p">,</span> <span class="n">newStateObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stateObj</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_needsStateConnection</span><span class="p">():</span>
+            <span class="n">newStateObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceObj</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">stateObj</span> <span class="o">!=</span> <span class="n">newStateObj</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stateObj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">stateObj</span><span class="o">.</span><span class="n">removeListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">newStateObj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">newStateObj</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stateObj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">stateObj</span><span class="o">.</span><span class="n">removeListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stateObj</span> <span class="o">=</span> <span class="n">newStateObj</span>
+
+    <span class="k">def</span> <span class="nf">_updateForeground</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_updateBackground</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_updateToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">getAutoTooltip</span><span class="p">():</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">getFormatedToolTip</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="TaurusAttributeControllerHelper"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusAttributeControllerHelper.html#taurus.qt.qtgui.base.TaurusAttributeControllerHelper">[docs]</a><span class="k">class</span> <span class="nc">TaurusAttributeControllerHelper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TaurusAttributeControllerHelper.configObj"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusAttributeControllerHelper.html#taurus.qt.qtgui.base.TaurusAttributeControllerHelper.configObj">[docs]</a>    <span class="k">def</span> <span class="nf">configObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrObj</span><span class="p">()</span>  <span class="c1"># they are the same object since tep14</span></div>
+        <span class="c1"># attrObj = self.attrObj()</span>
+        <span class="c1"># if attrObj is None: return None</span>
+        <span class="c1"># return attrObj.getConfig()</span>
+
+<div class="viewcode-block" id="TaurusAttributeControllerHelper.deviceObj"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusAttributeControllerHelper.html#taurus.qt.qtgui.base.TaurusAttributeControllerHelper.deviceObj">[docs]</a>    <span class="k">def</span> <span class="nf">deviceObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">attrObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attrObj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">attrObj</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusScalarAttributeControllerHelper"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusScalarAttributeControllerHelper.html#taurus.qt.qtgui.base.TaurusScalarAttributeControllerHelper">[docs]</a><span class="k">class</span> <span class="nc">TaurusScalarAttributeControllerHelper</span><span class="p">(</span><span class="n">TaurusAttributeControllerHelper</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TaurusScalarAttributeControllerHelper.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusScalarAttributeControllerHelper.html#taurus.qt.qtgui.base.TaurusScalarAttributeControllerHelper.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">valueObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueObj</span><span class="p">()</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">valueObj</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">valueObj</span><span class="o">.</span><span class="n">rvalue</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">()</span>
+
+        <span class="nb">format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrObj</span><span class="p">()</span><span class="o">.</span><span class="n">data_format</span>
+        <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_0D</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDisplayValue</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">valueObj</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">write</span><span class="p">)</span>
+
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelIndexValue</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDisplayValue</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">valueObj</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">write</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">valueObj</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">write</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">write</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">valueObj</span><span class="o">.</span><span class="n">wvalue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">valueObj</span><span class="o">.</span><span class="n">rvalue</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">displayValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaurusScalarAttributeControllerHelper.displayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusScalarAttributeControllerHelper.html#taurus.qt.qtgui.base.TaurusScalarAttributeControllerHelper.displayValue">[docs]</a>    <span class="k">def</span> <span class="nf">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isScalar</span><span class="p">():</span>
+                <span class="nb">format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFormat</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isNumeric</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFormat</span><span class="p">()</span>
+                    <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFormat</span><span class="p">()</span> <span class="o">%</span> <span class="n">value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ret</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">isSpectrum</span><span class="p">():</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># if cannot calculate value based on the format just return the</span>
+            <span class="c1"># value</span>
+            <span class="k">raise</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusConfigurationControllerHelper"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusConfigurationControllerHelper.html#taurus.qt.qtgui.base.TaurusConfigurationControllerHelper">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfigurationControllerHelper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1">#TODO: Check if this is  used. If so, rename to avoid &quot;Configuration&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="TaurusConfigurationControllerHelper.attrObj"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusConfigurationControllerHelper.html#taurus.qt.qtgui.base.TaurusConfigurationControllerHelper.attrObj">[docs]</a>    <span class="k">def</span> <span class="nf">attrObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">configObj</span><span class="p">()</span>  <span class="c1"># they are the same object since tep14</span></div>
+
+<div class="viewcode-block" id="TaurusConfigurationControllerHelper.deviceObj"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusConfigurationControllerHelper.html#taurus.qt.qtgui.base.TaurusConfigurationControllerHelper.deviceObj">[docs]</a>    <span class="k">def</span> <span class="nf">deviceObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">attrObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attrObj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">attrObj</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">configParam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">getModelFragmentName</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span>
+
+<div class="viewcode-block" id="TaurusConfigurationControllerHelper.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusConfigurationControllerHelper.html#taurus.qt.qtgui.base.TaurusConfigurationControllerHelper.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+        <span class="n">param</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configParam</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelFragmentObj</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">no_val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;no_&quot;</span> <span class="o">+</span> <span class="n">param</span><span class="p">)</span>  <span class="c1"># TODO: Tango-centric</span>
+                <span class="k">if</span> <span class="n">val</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">no_val</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">param</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+                <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrObj</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;label&gt;&#39;</span><span class="p">,</span> <span class="n">attr</span><span class="o">.</span><span class="n">label</span> <span class="ow">or</span> <span class="s1">&#39;---&#39;</span><span class="p">)</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;attr_name&gt;&#39;</span><span class="p">,</span> <span class="n">attr</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="s1">&#39;---&#39;</span><span class="p">)</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;attr_fullname&gt;&#39;</span><span class="p">,</span> <span class="n">attr</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="ow">or</span>
+                                      <span class="s1">&#39;---&#39;</span><span class="p">)</span>
+                <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceObj</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;dev_fullname&gt;&#39;</span><span class="p">,</span> <span class="n">dev</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="ow">or</span>
+                                      <span class="s1">&#39;---&#39;</span><span class="p">)</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;dev_alias&gt;&#39;</span><span class="p">,</span> <span class="n">dev</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span> <span class="ow">or</span>
+                                      <span class="s1">&#39;---&#39;</span><span class="p">)</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;dev_name&gt;&#39;</span><span class="p">,</span> <span class="n">dev</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">()</span> <span class="ow">or</span>
+                                      <span class="s1">&#39;---&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Invalid configuration parameter &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">param</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">val</span></div></div>
+
+
+<span class="n">StyleSheetTemplate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;border-style: outset; border-width: 2px; border-color: </span><span class="si">{0}</span><span class="s2">; </span><span class="si">{1}</span><span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_updatePaletteColors</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">bgBrush</span><span class="p">,</span> <span class="n">fgBrush</span><span class="p">,</span> <span class="n">frameBrush</span><span class="p">):</span>
+    <span class="n">qt_palette</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span>
+    <span class="n">qt_palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Window</span><span class="p">,</span> <span class="n">bgBrush</span><span class="p">)</span>
+    <span class="n">qt_palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span> <span class="n">bgBrush</span><span class="p">)</span>
+    <span class="n">qt_palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">WindowText</span><span class="p">,</span> <span class="n">fgBrush</span><span class="p">)</span>
+    <span class="n">qt_palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Light</span><span class="p">,</span> <span class="n">frameBrush</span><span class="p">)</span>
+    <span class="n">qt_palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Dark</span><span class="p">,</span> <span class="n">frameBrush</span><span class="p">)</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">qt_palette</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="updateLabelBackground"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base.html#taurus.qt.qtgui.base.updateLabelBackground">[docs]</a><span class="k">def</span> <span class="nf">updateLabelBackground</span><span class="p">(</span><span class="n">ctrl</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper method to setup background of taurus labels and lcds&quot;&quot;&quot;</span>
+    <span class="n">bgRole</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">bgRole</span>
+
+    <span class="k">if</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">usePalette</span><span class="p">():</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">bgRole</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">):</span>
+            <span class="n">transparentBrush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">transparent</span><span class="p">)</span>
+            <span class="n">frameBrush</span> <span class="o">=</span> <span class="n">transparentBrush</span>
+            <span class="n">bgBrush</span><span class="p">,</span> <span class="n">fgBrush</span> <span class="o">=</span> <span class="n">transparentBrush</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">frameBrush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+            <span class="n">bgItem</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span>
+            <span class="k">if</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;quality&#39;</span><span class="p">:</span>
+                <span class="n">palette</span> <span class="o">=</span> <span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span>
+                <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">quality</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span>
+                <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+                <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="n">bgBrush</span><span class="p">,</span> <span class="n">fgBrush</span> <span class="o">=</span> <span class="n">palette</span><span class="o">.</span><span class="n">qbrush</span><span class="p">(</span><span class="n">bgItem</span><span class="p">)</span>
+        <span class="n">_updatePaletteColors</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">bgBrush</span><span class="p">,</span> <span class="n">fgBrush</span><span class="p">,</span> <span class="n">frameBrush</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">bgRole</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">):</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="n">StyleSheetTemplate</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;rgba(0,0,0,0)&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bgItem</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span>
+            <span class="k">if</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;quality&#39;</span><span class="p">:</span>
+                <span class="n">palette</span> <span class="o">=</span> <span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span>
+                <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">quality</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span>
+                <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+                <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="n">color_ss</span> <span class="o">=</span> <span class="n">palette</span><span class="o">.</span><span class="n">qtStyleSheet</span><span class="p">(</span><span class="n">bgItem</span><span class="p">)</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="n">StyleSheetTemplate</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;rgba(255,255,255,128)&quot;</span><span class="p">,</span>  <span class="n">color_ss</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>  <span class="c1"># necessary in pyqt &lt;= 4.4</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

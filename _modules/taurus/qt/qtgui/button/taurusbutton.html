@@ -1,0 +1,919 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.button.taurusbutton &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.button.taurusbutton</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.button.taurusbutton</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a taurus QPushButton based widgets&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusLauncherButton&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusCommandButton&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusLockButton&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">PyTango</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">LockStatus</span><span class="p">,</span> <span class="n">TaurusLockInfo</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">eventfilters</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.dialog</span> <span class="k">import</span> <span class="n">ProtectTaurusMessageBox</span>
+
+
+<span class="k">class</span> <span class="nc">_ButtonDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="n">_widget</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">deleteWidgetOnClose</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowTitleHint</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previousWidgetConfig</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">oldWidget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">oldWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">oldWidget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="n">oldWidget</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">oldWidget</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="n">widget</span>
+
+    <span class="k">def</span> <span class="nf">widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span>
+
+    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">deleteWidgetOnClose</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">previousWidgetConfig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">createConfig</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">previousWidgetConfig</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TaurusLauncherButton"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton">[docs]</a><span class="k">class</span> <span class="nc">TaurusLauncherButton</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a button that launches a modeless dialog containing</span>
+<span class="sd">    a specified Taurus widget which gets the same model as the button.</span>
+<span class="sd">    The button does not use the model directly. Instead it passes it to the</span>
+<span class="sd">    associated widget.</span>
+
+<span class="sd">    Code examples::</span>
+
+<span class="sd">        # a button that launches a TaurusAttrForm when clicked</span>
+<span class="sd">        button =  TaurusLauncherButton(widget = TaurusAttrForm())</span>
+<span class="sd">        button.setModel(&#39;a/b/c&#39;) #a device name, which will be set at the TaurusAttrForm when clicking</span>
+
+<span class="sd">        # a button that launches a taurusLabel (whose model is an attribute: &#39;a/b/c/attrname&#39;)</span>
+<span class="sd">        button =  TaurusLauncherButton(widget = TaurusLabel())</span>
+<span class="sd">        button.setModel(&#39;a/b/c/attrname&#39;) # attr name, which will be set at the TaurusLabel when clicking</span>
+
+<span class="sd">        #same as the previous one, but using the parent model and putting a custom text and icon:</span>
+<span class="sd">        button =  TaurusLauncherButton(widget = TaurusLabel(), text=&#39;click me&#39;, icon=&#39;logos:taurus.png&#39;)</span>
+<span class="sd">        button.setUseParentModel(True)  #let&#39;s assume that the button&#39;s parent has a model of type &quot;/a/b/c&quot;</span>
+<span class="sd">        button.setModel(&#39;/attrname&#39;)</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">_widgetClassName</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">_args</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">_deleteWidgetOnClose</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_icon</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_text</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Constructor</span>
+
+<span class="sd">        :param parent: (Qt.QWidget or None) parent of this widget</span>
+<span class="sd">        :param designMode: (bool) flag for Qt designer</span>
+<span class="sd">        :param widget: (Qt.QWidget) a QWidget that will be shown when clicking</span>
+<span class="sd">                       in the button</span>
+<span class="sd">        :param icon: (Qt.QIcon) icon for the button</span>
+<span class="sd">        :param text: (str) the button text (if None passed, the widget&#39;s class name</span>
+<span class="sd">                     is used) &#39;&#39;&#39;</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span> <span class="o">=</span> <span class="n">_ButtonDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">icon</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_icon</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">icon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+            <span class="c1"># we cannot be sure on recreating the same widget again</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deleteWidgetOnClose</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_widgetClassName</span> <span class="o">=</span> <span class="n">widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onClicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDefault</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAutoDefault</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># no need to listen to change events!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insertEventFilter</span><span class="p">(</span><span class="n">eventfilters</span><span class="o">.</span><span class="n">IGNORE_CHANGE_AND_PERIODIC</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateText</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaurusLauncherButton.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`TaurusBaseComponent.getModelClass`. Note that in the case of</span>
+<span class="sd">        :class:`TaurusLauncherButton`, the class is completely dependent on the</span>
+<span class="sd">        widget&#39;s class&#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">getModelClass</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># return None  #@TODO: Uncommenting this avoids the exception when</span>
+            <span class="c1"># TaurusBaseWidget.getModelClass chokes with relative classes. But</span>
+            <span class="c1"># the thing should be solved at TaurusBaseWidget.getModelClass</span>
+            <span class="c1"># level</span>
+            <span class="k">return</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.setText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.setText">[docs]</a>    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Sets the text of the button. see :meth:`Qt.QPushButton.setText`&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.getWidgetClassName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.getWidgetClassName">[docs]</a>    <span class="k">def</span> <span class="nf">getWidgetClassName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widgetClassName</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.setWidgetClassName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.setWidgetClassName">[docs]</a>    <span class="k">def</span> <span class="nf">setWidgetClassName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widgetClassName</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">className</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateText</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.resetWidgetClassName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.resetWidgetClassName">[docs]</a>    <span class="k">def</span> <span class="nf">resetWidgetClassName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidgetClassName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">_widgetClassName</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.createWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.createWidget">[docs]</a>    <span class="k">def</span> <span class="nf">createWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">TaurusWidgetFactory</span>
+        <span class="n">klass</span> <span class="o">=</span> <span class="n">TaurusWidgetFactory</span><span class="p">()</span><span class="o">.</span><span class="n">getWidgetClass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widgetClassName</span><span class="p">)</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="n">klass</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">.</span><span class="n">previousWidgetConfig</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">applyConfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">.</span><span class="n">previousWidgetConfig</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s1">&#39;Cannot apply previous configuration to widget. Reason: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.widget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.widget">[docs]</a>    <span class="k">def</span> <span class="nf">widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.setWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.setWidget">[docs]</a>    <span class="k">def</span> <span class="nf">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets the widget that will be shown when clicking the button</span>
+
+<span class="sd">        :param widget: (Qt.QWidget)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateText</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.displayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.displayValue">[docs]</a>    <span class="k">def</span> <span class="nf">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`TaurusBaseComponent.displayValue`&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text</span>  <span class="c1"># make sure the text is not changed once set</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLauncherButton.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`TaurusBaseComponent.getDisplayValue`&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widgetClassName</span> <span class="ow">or</span> <span class="s1">&#39;---&#39;</span></div>
+
+    <span class="k">def</span> <span class="nf">_updateText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">())</span>
+
+<div class="viewcode-block" id="TaurusLauncherButton.onClicked"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.onClicked">[docs]</a>    <span class="k">def</span> <span class="nf">onClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Slot called when the button is clicked.</span>
+<span class="sd">        Note that the dialog will only be created once. Subsequent clicks on</span>
+<span class="sd">        the button will only raise the existing dialog&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">createWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">.</span><span class="n">deleteWidgetOnClose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deleteWidgetOnClose</span>
+        <span class="c1"># dialog.resize(400,300)</span>
+
+        <span class="c1"># It&#39;s always necessary to set the title since the model could have</span>
+        <span class="c1"># changed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">()))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">.</span><span class="n">raise_</span><span class="p">()</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusLauncherButton.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLauncherButton.html#taurus.qt.qtgui.button.TaurusLauncherButton.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Buttons&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s1">&#39;designer:pushbutton.png&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.button&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span></div>
+
+    <span class="c1">##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#</span>
+    <span class="c1">#                      Qt Properties                        #</span>
+    <span class="c1">##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#</span>
+    <span class="n">Model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+    <span class="n">UseParentModel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span>
+    <span class="n">widgetClassName</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span>
+        <span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getWidgetClassName</span><span class="p">,</span> <span class="n">setWidgetClassName</span><span class="p">,</span> <span class="n">resetWidgetClassName</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TaurusCommandButton"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton">[docs]</a><span class="k">class</span> <span class="nc">TaurusCommandButton</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a button that executes a tango command on its device.</span>
+
+<span class="sd">    Code examples::</span>
+
+<span class="sd">        # a button that executes the &quot;status&quot; command for the &#39;a/b/c&#39; device server</span>
+<span class="sd">        button =  TaurusCommandButton(command = &#39;Status&#39;, icon=&#39;logos:taurus.png&#39;)</span>
+<span class="sd">        button.setModel(&#39;a/b/c&#39;)</span>
+
+<span class="sd">        #  a button that executes the &quot;exec&quot; command for the &#39;a/b/c&#39; device server with one parameter</span>
+<span class="sd">        button =  TaurusCommandButton(command = &#39;Status&#39;, parameters=[&#39;2+2&#39;],icon=&#39;logos:taurus.png&#39;)</span>
+<span class="sd">        button.setModel(&#39;a/b/c&#39;)</span>
+
+<span class="sd">    .. seealso:: :class:`TaurusCommandsForm` provides a good example of use of</span>
+<span class="sd">                 TaurusCommandButton (including managing the return value) &#39;&#39;&#39;</span>
+
+    <span class="n">commandExecuted</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Constructor</span>
+
+<span class="sd">        :param parent: (Qt.QWidget or None) parent of this widget</span>
+<span class="sd">        :param designMode: (bool) flag for Qt designer</span>
+<span class="sd">        :param command: (str) the name of the command to be executed</span>
+<span class="sd">        :param parameters: (sequence&lt;str&gt;) the list of parameteres. Default value is None meaning no parameters</span>
+<span class="sd">        :param icon: (Qt.QIcon) icon for the button</span>
+<span class="sd">        :param text: (str) the button text (if None passed, `command` is used)</span>
+<span class="sd">        :param timeout: (float) the command timeout (in seconds)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">if</span> <span class="n">command</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="n">command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_customText</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">icon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCustomText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDefault</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAutoDefault</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onClicked</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusCommandButton.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`TaurusBaseComponent.displayValue`&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customText</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customText</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;---&#39;</span>
+        <span class="n">modelobj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">modelobj</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">modelobj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s1">&#39;---&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span></div>
+
+    <span class="nd">@ProtectTaurusMessageBox</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Unexpected error when executing command&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusCommandButton.onClicked"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.onClicked">[docs]</a>    <span class="k">def</span> <span class="nf">onClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_onClicked</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_onClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Slot called when the button is clicked. It executes the command with</span>
+<span class="sd">        parameters. It may issue a warning if the command is flagged as</span>
+<span class="sd">        dangerous. On successful execution, it returns the command result and it</span>
+<span class="sd">        emits a &quot;commandExecuted&quot; signal with the result as well.</span>
+
+<span class="sd">        :return: The result of the command. The type depends on the command. It</span>
+<span class="sd">                 may be None.</span>
+
+<span class="sd">        .. seealso:: :meth:`setCommand`, :meth:`setParameters`, :meth:`TaurusBaseComponent.isDangerous`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;launch command </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">modelobj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">modelobj</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">modelobj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Device </span><span class="si">%s</span><span class="s1"> does not implement command </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                         <span class="p">(</span><span class="n">modelobj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">))</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isDangerous</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">getForceDangerousOperations</span><span class="p">():</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Potentially dangerous action&quot;</span><span class="p">,</span>
+                                             <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">Proceed?&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDangerMessage</span><span class="p">(),</span>
+                                             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">,</span>
+                                             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="c1"># After all the checks, we can finally do the action</span>
+        <span class="n">orig_timeout</span> <span class="o">=</span> <span class="n">modelobj</span><span class="o">.</span><span class="n">get_timeout_millis</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">modelobj</span><span class="o">.</span><span class="n">set_timeout_millis</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">modelobj</span><span class="o">.</span><span class="n">command_inout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_castParameters</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">,</span> <span class="n">modelobj</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unexpected error when executing command </span><span class="si">%s</span><span class="s1"> of </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">,</span> <span class="n">modelobj</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+            <span class="k">raise</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">modelobj</span><span class="o">.</span><span class="n">set_timeout_millis</span><span class="p">(</span><span class="n">orig_timeout</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">commandExecuted</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">_castParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dev</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Internal method used to cast the command paramters to the appropriate</span>
+<span class="sd">        type required for the given command</span>
+
+<span class="sd">        :param parameters: (sequence) a sequence of parameters. If None is</span>
+<span class="sd">                           passed, the currently set parameters are used.</span>
+<span class="sd">        :param command: (str) the command name. If None is passed, the currently</span>
+<span class="sd">                        set command is used.</span>
+<span class="sd">        :param dev: (taurus.core.taurusdevice.TaurusDevice) the device on which the command is</span>
+<span class="sd">                    executed. If None is passed, the current model is used.</span>
+
+<span class="sd">        :return: (sequence or scalar) a sequence of parameters (or a scalar if only one parameter)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span>
+        <span class="k">if</span> <span class="n">command</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
+        <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">param_type</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">command_query</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="o">.</span><span class="n">in_type</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;Cannot get parameters info for command </span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">parameters</span>
+        <span class="k">if</span> <span class="n">param_type</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevVoid</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_int_type</span><span class="p">(</span><span class="n">param_type</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="n">cast_type</span> <span class="o">=</span> <span class="nb">int</span>
+        <span class="k">elif</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_float_type</span><span class="p">(</span><span class="n">param_type</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="n">cast_type</span> <span class="o">=</span> <span class="nb">float</span>
+        <span class="k">elif</span> <span class="n">param_type</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevVarStringArray</span> <span class="ow">or</span> <span class="n">param_type</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevString</span><span class="p">:</span>
+            <span class="n">cast_type</span> <span class="o">=</span> <span class="nb">str</span>
+        <span class="k">elif</span> <span class="n">param_type</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevVarBooleanArray</span> <span class="ow">or</span> <span class="n">param_type</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevBoolean</span><span class="p">:</span>
+            <span class="n">cast_type</span> <span class="o">=</span> <span class="nb">bool</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s1">&#39;Unsupported parameters type (</span><span class="si">%s</span><span class="s1">). Casting to &quot;str&quot;&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">param_type</span><span class="p">))</span>
+            <span class="n">cast_type</span> <span class="o">=</span> <span class="nb">str</span>
+        <span class="k">if</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_scalar_type</span><span class="p">(</span><span class="n">param_type</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cast_type</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">parameters</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">cast_type</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusCommandButton.setCommand"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.setCommand">[docs]</a>    <span class="k">def</span> <span class="nf">setCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commandName</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets the command to be executed when the button is clicked</span>
+
+<span class="sd">        :param commandName: (str or None) the command name</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">commandName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">commandName</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.getCommand"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.getCommand">[docs]</a>    <span class="k">def</span> <span class="nf">getCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the command name to be executed when the button is clicked</span>
+
+<span class="sd">        :return: (str or None) the command name</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.resetCommand"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.resetCommand">[docs]</a>    <span class="k">def</span> <span class="nf">resetCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;equivalent to self.setCommand(None)&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCommand</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.setParameters"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.setParameters">[docs]</a>    <span class="k">def</span> <span class="nf">setParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Sets the parameters to be used on command execution.</span>
+
+<span class="sd">        :param parameters: (sequence) a sequence of parameters. If the</span>
+<span class="sd">                           elements of the sequence are not of the right type</span>
+<span class="sd">                           required for the parameter, an automatic conversion</span>
+<span class="sd">                           will be attempted on execution time. As a special</span>
+<span class="sd">                           case, if parameters is a string not starting and</span>
+<span class="sd">                           ending in quote characters, it will be splitted on</span>
+<span class="sd">                           whitespace to obtain a sequence of parameters. If</span>
+<span class="sd">                           it is a string starting and ending with quotes, the</span>
+<span class="sd">                           quotes will be removed and the quoted text will not</span>
+<span class="sd">                           be splitted.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">)):</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">parameters</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="n">parameters</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.getParameters"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.getParameters">[docs]</a>    <span class="k">def</span> <span class="nf">getParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the parameters to be used on command execution</span>
+
+<span class="sd">        :param parameters: (sequence)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.resetParameters"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.resetParameters">[docs]</a>    <span class="k">def</span> <span class="nf">resetParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Equivalent to setParameters([])</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setParameters</span><span class="p">([])</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.setCustomText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.setCustomText">[docs]</a>    <span class="k">def</span> <span class="nf">setCustomText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customText</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Sets a custom text for the button (by default it is the command name)</span>
+
+<span class="sd">        :param customText: (str or None) the custom text. If None passed, it</span>
+<span class="sd">                           will use the command name</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_customText</span> <span class="o">=</span> <span class="n">customText</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.getCustomText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.getCustomText">[docs]</a>    <span class="k">def</span> <span class="nf">getCustomText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the custom text of the buttom, or None if no custom text is</span>
+<span class="sd">        used</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customText</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.resetCustomText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.resetCustomText">[docs]</a>    <span class="k">def</span> <span class="nf">resetCustomText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Equivalent to setCustomText(None)&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCustomText</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusCommandButton.setTimeout"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.setTimeout">[docs]</a>    <span class="k">def</span> <span class="nf">setTimeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Sets the number of seconds to wait for the result of the command.</span>
+
+<span class="sd">        .. seealso:: :meth:`PyTango.DeviceProxy.command_inout`</span>
+
+<span class="sd">        :param timeout: (float) the command timeout in seconds</span>
+<span class="sd">                        (timeout &lt;0 or timeout=None disables the timeout)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">timeout</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.getTimeout"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.getTimeout">[docs]</a>    <span class="k">def</span> <span class="nf">getTimeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns the number of seconds to wait for the result of the command</span>
+<span class="sd">        (or -1 if timeout is disabled)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusCommandButton.resetTimeout"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.resetTimeout">[docs]</a>    <span class="k">def</span> <span class="nf">resetTimeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Equivalent to setTimeout(None)&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTimeout</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusCommandButton.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusCommandButton.html#taurus.qt.qtgui.button.TaurusCommandButton.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Buttons&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s1">&#39;designer:pushbutton.png&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.button&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span></div>
+
+    <span class="c1">##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#</span>
+    <span class="c1">#                      Qt Properties                        #</span>
+    <span class="c1">##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#</span>
+
+    <span class="n">Model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+
+    <span class="n">UseParentModel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span>
+
+    <span class="n">Command</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getCommand</span><span class="p">,</span> <span class="n">setCommand</span><span class="p">,</span> <span class="n">resetCommand</span><span class="p">)</span>
+
+    <span class="n">Parameters</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span>
+        <span class="s2">&quot;QStringList&quot;</span><span class="p">,</span> <span class="n">getParameters</span><span class="p">,</span> <span class="n">setParameters</span><span class="p">,</span> <span class="n">resetParameters</span><span class="p">)</span>
+
+    <span class="n">DangerMessage</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getDangerMessage</span><span class="p">,</span>
+                                    <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setDangerMessage</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetDangerMessage</span><span class="p">)</span>
+
+    <span class="n">CustomText</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span>
+        <span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getCustomText</span><span class="p">,</span> <span class="n">setCustomText</span><span class="p">,</span> <span class="n">resetCustomText</span><span class="p">)</span>
+
+    <span class="n">Timeout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getTimeout</span><span class="p">,</span> <span class="n">setTimeout</span><span class="p">,</span> <span class="n">resetTimeout</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TaurusLockButton"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLockButton.html#taurus.qt.qtgui.button.TaurusLockButton">[docs]</a><span class="k">class</span> <span class="nc">TaurusLockButton</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+
+    <span class="n">_LOCK_MAP</span> <span class="o">=</span> <span class="p">{</span><span class="n">LockStatus</span><span class="o">.</span><span class="n">Unlocked</span><span class="p">:</span> <span class="s2">&quot;extra_icon:lock_unlocked.svg&quot;</span><span class="p">,</span>
+                 <span class="n">LockStatus</span><span class="o">.</span><span class="n">Locked</span><span class="p">:</span> <span class="s2">&quot;extra_icon:lock_locked_unpreviledged.svg&quot;</span><span class="p">,</span>
+                 <span class="n">LockStatus</span><span class="o">.</span><span class="n">LockedMaster</span><span class="p">:</span> <span class="s2">&quot;extra_icon:lock_locked.svg&quot;</span><span class="p">,</span>
+                 <span class="n">LockStatus</span><span class="o">.</span><span class="n">Unknown</span><span class="p">:</span> <span class="s2">&quot;extra_icon:lock_unknown.svg&quot;</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock_info</span> <span class="o">=</span> <span class="n">TaurusLockInfo</span><span class="p">()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_toggle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAutoTooltip</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insertEventFilter</span><span class="p">(</span><span class="n">eventfilters</span><span class="o">.</span><span class="n">IGNORE_ALL</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_button</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusLockButton.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLockButton.html#taurus.qt.qtgui.button.TaurusLockButton.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Buttons&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s1">&#39;designer:pushbutton.png&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.button&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="TaurusLockButton.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLockButton.html#taurus.qt.qtgui.button.TaurusLockButton.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusDevice</span></div>
+
+<div class="viewcode-block" id="TaurusLockButton.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLockButton.html#taurus.qt.qtgui.button.TaurusLockButton.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_button</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusLockButton.get_lock_info"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLockButton.html#taurus.qt.qtgui.button.TaurusLockButton.get_lock_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_lock_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lock_info</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">getLockInfo</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock_info</span></div>
+
+<div class="viewcode-block" id="TaurusLockButton.update_button"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLockButton.html#taurus.qt.qtgui.button.TaurusLockButton.update_button">[docs]</a>    <span class="k">def</span> <span class="nf">update_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lock_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">lock_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lock_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_lock_info</span><span class="p">()</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">lock_info</span><span class="o">.</span><span class="n">status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_LOCK_MAP</span><span class="p">[</span><span class="n">status</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="n">LockStatus</span><span class="o">.</span><span class="n">Locked</span><span class="p">,</span> <span class="n">LockStatus</span><span class="o">.</span><span class="n">LockedMaster</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">lock_info</span><span class="o">.</span><span class="n">status_msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">lock_info</span></div>
+
+    <span class="k">def</span> <span class="nf">_on_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">down</span><span class="p">):</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">down</span><span class="p">:</span>
+            <span class="n">dev</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_button</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaurusLockButton.on_toggle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/button/_TaurusLockButton.html#taurus.qt.qtgui.button.TaurusLockButton.on_toggle">[docs]</a>    <span class="k">def</span> <span class="nf">on_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">down</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_toggle</span><span class="p">(</span><span class="n">down</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">sys</span>
+            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.dialog</span> <span class="k">import</span> <span class="n">TaurusMessageBox</span>
+            <span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessageBox</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+            <span class="n">msgbox</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Error locking device&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_button</span><span class="p">()</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">LockStatus</span><span class="o">.</span><span class="n">Locked</span><span class="p">:</span>
+                <span class="n">msgbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lock_info</span><span class="o">.</span><span class="n">status_msg</span><span class="p">)</span>
+            <span class="n">msgbox</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span></div>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span> <span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">lockButtonMain</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+    <span class="n">Application</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">usage</span> <span class="o">=</span> <span class="s2">&quot;%prog [options] &lt;full_attribute_name(s)&gt;&quot;</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+                          <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus lock button demo&quot;</span><span class="p">,</span> <span class="n">app_version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                          <span class="n">org_domain</span><span class="o">=</span><span class="s2">&quot;Taurus&quot;</span><span class="p">,</span> <span class="n">org_name</span><span class="o">=</span><span class="s2">&quot;Tango community&quot;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">demo</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+        <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+            <span class="n">lock_button</span> <span class="o">=</span> <span class="n">TaurusLockButton</span><span class="p">()</span>
+            <span class="n">lock_button</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lock_button</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">w</span>
+
+
+<span class="k">def</span> <span class="nf">commandButtonMain</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">TaurusCommandButton</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;DevBoolean&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+                               <span class="mi">123</span><span class="p">],</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;launch: DevBoolean 123&#39;</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">setDangerMessage</span><span class="p">(</span>
+        <span class="s1">&#39;Booo scary command!!</span><span class="se">\n</span><span class="s1"> Maybe you should think twice!&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="n">a</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">commandExecuted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">launcherButtonMain</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+
+    <span class="c1"># Creating button giving the widget</span>
+    <span class="c1"># from taurus.qt.qtgui.plot import TaurusPlot</span>
+    <span class="c1"># w = TaurusPlot()</span>
+    <span class="c1"># form = TaurusLauncherButton(parent=None, designMode=False, widget=w,</span>
+    <span class="c1">#                             icon=&#39;logos:taurus.png&#39;), text=&#39;show&#39;)</span>
+
+    <span class="c1"># Creating button giving the widget class name</span>
+    <span class="c1"># form = TaurusLauncherButton(parent=None, designMode=False,</span>
+    <span class="c1">#                             widget=&#39;TaurusPlot&#39;, icon=&#39;logos:taurus.png&#39;,</span>
+    <span class="c1">#                             text=&#39;show&#39;)</span>
+
+    <span class="c1"># Creating button using a derived class with the name widget class</span>
+    <span class="c1"># hardcoded</span>
+    <span class="k">class</span> <span class="nc">MyButton</span><span class="p">(</span><span class="n">TaurusLauncherButton</span><span class="p">):</span>
+        <span class="n">_widgetClassName</span> <span class="o">=</span> <span class="s1">&#39;TaurusPlot&#39;</span>
+        <span class="n">_icon</span> <span class="o">=</span> <span class="s1">&#39;logos:taurus.png&#39;</span>
+        <span class="n">_text</span> <span class="o">=</span> <span class="s1">&#39;show&#39;</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">MyButton</span><span class="p">()</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1/wave&#39;</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">lockButtonMain</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;Lock button&#39;&#39;&#39;</span>
+    <span class="n">lock_button</span> <span class="o">=</span> <span class="n">TaurusLockButton</span><span class="p">()</span>
+    <span class="n">lock_button</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;sys/tg_test/1&quot;</span>
+    <span class="k">return</span> <span class="n">lock_button</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># lockButtonMain()</span>
+    <span class="n">launcherButtonMain</span><span class="p">()</span>
+    <span class="c1"># commandButtonMain()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

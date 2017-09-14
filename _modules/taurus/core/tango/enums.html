@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.tango.enums &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.tango.enums</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.tango.enums</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains all basic tango enumerations&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoObjectType&quot;</span><span class="p">,</span> <span class="s2">&quot;EVENT_TO_POLLING_EXCEPTIONS&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;FROM_TANGO_TO_NUMPY_TYPE&quot;</span><span class="p">,</span> <span class="s2">&quot;FROM_TANGO_TO_STR_TYPE&quot;</span><span class="p">,</span> <span class="s2">&quot;DevState&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">taurus.external.enum</span> <span class="k">import</span> <span class="n">IntEnum</span>
+
+<span class="n">TangoObjectType</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span><span class="s2">&quot;TangoObjectType&quot;</span><span class="p">,</span>
+                              <span class="p">[</span><span class="s2">&quot;Authority&quot;</span><span class="p">,</span> <span class="s2">&quot;Server&quot;</span><span class="p">,</span> <span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Device&quot;</span><span class="p">,</span>
+                               <span class="s2">&quot;Attribute&quot;</span><span class="p">,</span> <span class="s2">&quot;Property&quot;</span><span class="p">,</span> <span class="s2">&quot;Configuration&quot;</span><span class="p">,</span>
+                               <span class="s2">&quot;Object&quot;</span><span class="p">])</span>
+<span class="n">TangoObjectType</span><span class="o">.</span><span class="n">Database</span> <span class="o">=</span> <span class="n">TangoObjectType</span><span class="o">.</span><span class="n">Authority</span>  <span class="c1"># backwards compatibility</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">PyTango</span>
+
+<span class="c1"># The exception reasons that will force switching from events to polling</span>
+<span class="c1"># API_AttributePollingNotStarted - the attribute does not support events.</span>
+<span class="c1">#                                  Don&#39;t try to resubscribe.</span>
+<span class="c1"># API_DSFailedRegisteringEvent - same exception then the one above but higher</span>
+<span class="c1">#                                in the stack</span>
+<span class="c1"># API_NotificationServiceFailed - Problems in notifd, it was not able to</span>
+<span class="c1">#                                 register the event.</span>
+<span class="c1"># API_EventChannelNotExported - the notifd is not running</span>
+<span class="c1"># API_EventTimeout - after a successfull register the the device server</span>
+<span class="c1">#                    and/or notifd shuts down/crashes</span>
+<span class="c1"># API_CommandNotFound - Added on request from ESRF (Matias Guijarro). They have</span>
+<span class="c1">#                       a DS in java (doesn&#39;t have events) and the only way they</span>
+<span class="c1">#                       found to fix the event problem was to add this exception</span>
+<span class="c1">#                       type here. Maybe in future this will be solved in a better</span>
+<span class="c1">#                       way</span>
+<span class="c1"># API_BadConfigurationProperty - the device server is not running</span>
+<span class="n">EVENT_TO_POLLING_EXCEPTIONS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;API_AttributePollingNotStarted&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;API_DSFailedRegisteringEvent&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;API_NotificationServiceFailed&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;API_EventChannelNotExported&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;API_EventTimeout&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;API_EventPropertiesNotSet&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;API_CommandNotFound&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;API_PollObjNotFound&#39;</span><span class="p">,</span>
+                               <span class="p">)</span>
+<span class="c1">#                                   &#39;API_BadConfigurationProperty&#39;)</span>
+
+<span class="n">FROM_TANGO_TO_NUMPY_TYPE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevBoolean</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">bool8</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevUChar</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevShort</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">short</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevUShort</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ushort</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevLong</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevULong</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint32</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevLong64</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevULong64</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevString</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">str</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevDouble</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFloat</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">FROM_TANGO_TO_STR_TYPE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevBoolean</span><span class="p">:</span> <span class="s1">&#39;bool8&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevUChar</span><span class="p">:</span> <span class="s1">&#39;uint8&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevShort</span><span class="p">:</span> <span class="s1">&#39;short&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevUShort</span><span class="p">:</span> <span class="s1">&#39;ushort&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevLong</span><span class="p">:</span> <span class="s1">&#39;int32&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevULong</span><span class="p">:</span> <span class="s1">&#39;uint32&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevLong64</span><span class="p">:</span> <span class="s1">&#39;int64&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevULong64</span><span class="p">:</span> <span class="s1">&#39;uint64&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevString</span><span class="p">:</span> <span class="s1">&#39;str&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevDouble</span><span class="p">:</span> <span class="s1">&#39;float64&#39;</span><span class="p">,</span>
+    <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFloat</span><span class="p">:</span> <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="DevState"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_DevState.html#taurus.core.tango.DevState">[docs]</a><span class="k">class</span> <span class="nc">DevState</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This is the taurus.core.tango equivalent to PyTango.DevState.</span>
+<span class="sd">    It defines the same members and uses the same numerical values internally,</span>
+<span class="sd">    allowing equality comparisons with :class:`PyTango.DevState` (but not</span>
+<span class="sd">    identity checks!)::</span>
+
+<span class="sd">        from taurus.core.tango import DevState as D1</span>
+<span class="sd">        from PyTango import DevState as D2</span>
+
+<span class="sd">        D1.OPEN == D2.OPEN          # --&gt; True</span>
+<span class="sd">        D1.OPEN in (D2.ON, D2.OPEN) # --&gt; True</span>
+<span class="sd">        D1.OPEN == 3                # --&gt; True</span>
+<span class="sd">        D1.OPEN is 3                # --&gt; False</span>
+<span class="sd">        D1.OPEN is D2.OPEN          # --&gt; False</span>
+
+<span class="sd">     &quot;&quot;&quot;</span>
+    <span class="n">ON</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">OFF</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">CLOSE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">OPEN</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">INSERT</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">EXTRACT</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">MOVING</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">STANDBY</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">FAULT</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">INIT</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">RUNNING</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">ALARM</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">DISABLE</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">13</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

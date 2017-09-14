@@ -1,0 +1,460 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.panel.qdataexportdialog &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.panel.qdataexportdialog</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.panel.qdataexportdialog</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;DataExportDlg.py: A Qt dialog for showing and exporting x-y Ascii data from</span>
+<span class="sd">one or more curves&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QDataExportDialog&quot;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="nd">@UILoadable</span>
+<div class="viewcode-block" id="QDataExportDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog">[docs]</a><span class="k">class</span> <span class="nc">QDataExportDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This creates a Qt dialog for showing and exporting x-y Ascii data from one or more curves</span>
+<span class="sd">    The data sets are passed (by calling setDataSets() or at instantiation time) as a dictionary::</span>
+
+<span class="sd">        datadict={name:(x,y),...}</span>
+
+<span class="sd">    where name is the curve name and</span>
+<span class="sd">    x,y are iterable containers (e.g., lists, tuple, arrays...) of data to be exported</span>
+
+<span class="sd">    @TODO: It would be nice if the textedit scrolled to the start ***also for the first set loaded***&quot;&quot;&quot;</span>
+
+    <span class="c1"># constants</span>
+    <span class="n">allInSingleFile</span> <span class="o">=</span> <span class="s2">&quot;All sets in a single file (table like)&quot;</span>
+    <span class="n">allInMultipleFiles</span> <span class="o">=</span> <span class="s2">&quot;All set in multiple files&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datadict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sortedNames</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QDataExportDialog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xIsTime</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># connections</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exportBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exportData</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onDataSetCBChange</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDataSets</span><span class="p">(</span><span class="n">datadict</span><span class="p">,</span> <span class="n">sortedNames</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QDataExportDialog.setDataSets"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog.setDataSets">[docs]</a>    <span class="k">def</span> <span class="nf">setDataSets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datadict</span><span class="p">,</span> <span class="n">sortedNames</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Used to set the sets that are to be offered for exporting. It overwrites previous values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">datadict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">sortedNames</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sortedNames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sortedNames</span> <span class="o">=</span> <span class="n">sortedNames</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datatime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datadict</span> <span class="o">=</span> <span class="n">datadict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sortedNames</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">allInSingleFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">allInMultipleFiles</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="QDataExportDialog.exportData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog.exportData">[docs]</a>    <span class="k">def</span> <span class="nf">exportData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">allInMultipleFiles</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exportAllData</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exportCurrentData</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QDataExportDialog.exportCurrentData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog.exportCurrentData">[docs]</a>    <span class="k">def</span> <span class="nf">exportCurrentData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ofile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">AllowCloseAfter</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Exports data</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">        set: the curve name. If none is passed, it uses the one selected by dataSetCB</span>
+<span class="sd">        ofile: output file name or file handle. It will prompt if not provided</span>
+<span class="sd">        verbose: set this to False to disable information popups</span>
+<span class="sd">        AllowCloseAfter: set this to false if you want to ignore the checkbox in the dialog</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">set</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">set</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">ofile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">set</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">allInSingleFile</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;all.dat&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">#**lazy** sanitising of the set to *suggest* it as a filename</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;.dat&quot;</span>
+            <span class="n">ofile</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Export File Name&#39;</span><span class="p">,</span>
+                                                    <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;All Files (*)&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ofile</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ofile</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+                <span class="n">ofile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ofile</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">allInMultipleFiles</span><span class="p">:</span>
+                <span class="c1"># 1  file per curve</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;# DATASET= </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">set</span>
+                <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"># SNAPSHOT_TIME= </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">datatime</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="p">[</span><span class="nb">set</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xIsTime</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">):</span>
+                        <span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                        <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%r</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">):</span>
+                        <span class="n">text</span><span class="o">+=</span><span class="s2">&quot;</span><span class="si">%r</span><span class="se">\t</span><span class="si">%r</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">ofile</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">ofile</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                   <span class="s2">&quot;File saving failed&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;Failed to save file &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ofile</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                                   <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">ofile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Set saved to &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ofile</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Set exported&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span>
+                                       <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">AllowCloseAfter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">closeAfterCB</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span> <span class="c1">#closes the ExportData dialog with Accept state</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="QDataExportDialog.exportAllData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog.exportAllData">[docs]</a>    <span class="k">def</span> <span class="nf">exportAllData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Exports all sets using a common preffix and appending &#39;XXX.dat&#39;, where XXX is a number starting at 001</span>
+<span class="sd">        if preffix is not given, the user is prompted for a directory path&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">preffix</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">outputdir</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getExistingDirectory</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Export Directory&#39;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">())</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">outputdir</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">preffix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outputdir</span><span class="p">),</span> <span class="s2">&quot;set&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sortedNames</span><span class="p">):</span>
+            <span class="n">ofile</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s%03i</span><span class="s2">.dat&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">preffix</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">exportCurrentData</span><span class="p">(</span>
+                    <span class="nb">set</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">ofile</span><span class="o">=</span><span class="n">ofile</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">AllowCloseAfter</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># mend undesired side effect of updateText in the for loop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">allInMultipleFiles</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;All sets exported&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%i</span><span class="s2"> set(s) exported to:</span><span class="se">\n</span><span class="si">%s</span><span class="s2">XXX.dat&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="p">),</span> <span class="n">preffix</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">closeAfterCB</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>  <span class="c1"># closes the ExportData dialog with Accept state</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="QDataExportDialog.onDataSetCBChange"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog.onDataSetCBChange">[docs]</a>    <span class="k">def</span> <span class="nf">onDataSetCBChange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateText</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QDataExportDialog.updateText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog.updateText">[docs]</a>    <span class="k">def</span> <span class="nf">updateText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;update the text edit that shows the preview of the data&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">allInMultipleFiles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">allInSingleFile</span><span class="p">):</span>
+            <span class="c1"># check that all arrays have the same length and the same xdata and</span>
+            <span class="c1"># update header section</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;# DATASET= &quot;</span>
+            <span class="n">body</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">previous</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">curve_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sortedNames</span><span class="p">:</span>
+                <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="p">[</span><span class="n">curve_name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">previous</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">previous</span> <span class="o">=</span> <span class="n">xdata</span>
+                    <span class="n">header</span> <span class="o">+=</span> <span class="s1">&#39; &quot;abscissa&quot;&#39;</span>
+                <span class="k">elif</span> <span class="n">previous</span> <span class="o">!=</span> <span class="n">xdata</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">allInSingleFile</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                    <span class="s2">&quot;Unable to display&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;X axes of all sets in the plot must be &quot;</span> <span class="o">+</span>
+                                    <span class="s2">&quot;exactly the same for saving in a single &quot;</span> <span class="o">+</span>
+                                    <span class="s2">&quot;file!. Curves will be saved each one in &quot;</span> <span class="o">+</span>
+                                    <span class="s2">&quot;its own file&quot;</span><span class="p">,</span>
+                                    <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">findText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">allInMultipleFiles</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                        <span class="k">return</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">insertPlainText</span><span class="p">(</span><span class="s2">&quot;Unable to display because abscissas are different.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                    <span class="s2">&quot;Curves will be saved each one in its own file&quot;</span><span class="p">)</span>
+                        <span class="k">return</span>
+                <span class="n">header</span> <span class="o">+=</span> <span class="s1">&#39; , &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">curve_name</span>
+
+            <span class="n">header</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"># SNAPSHOT_TIME= </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">datatime</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+            <span class="c1"># if we reached this point x axes are equal, so fill the editor</span>
+            <span class="c1"># with the data</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">previous</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xIsTime</span><span class="p">():</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">body</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">body</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">x</span>
+                <span class="k">for</span> <span class="n">curve_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sortedNames</span><span class="p">:</span>
+                    <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="p">[</span><span class="n">curve_name</span><span class="p">]</span>
+                    <span class="n">body</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ydata</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">body</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="c1"># fill text editor</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">insertPlainText</span><span class="p">(</span><span class="n">header</span> <span class="o">+</span> <span class="n">body</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">moveCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">Start</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">allInMultipleFiles</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;# DATASET= &quot;</span><span class="si">%s</span><span class="s1">&quot;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">key</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;# SNAPSHOT_TIME= </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">datatime</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xIsTime</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">):</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%r</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">):</span>
+                    <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%r</span><span class="se">\t</span><span class="si">%r</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">insertPlainText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">moveCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">Start</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QDataExportDialog.setXIsTime"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog.setXIsTime">[docs]</a>    <span class="k">def</span> <span class="nf">setXIsTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xIsTime</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xIsTime</span> <span class="o">=</span> <span class="n">xIsTime</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateText</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QDataExportDialog.xIsTime"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDataExportDialog.html#taurus.qt.qtgui.panel.QDataExportDialog.xIsTime">[docs]</a>    <span class="k">def</span> <span class="nf">xIsTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xIsTime</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">QDataExportDialog</span><span class="p">()</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.util.validator &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.util.validator</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.util.validator</h1><div class="highlight"><pre>
+<span></span><span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PintValidator&quot;</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.pint</span> <span class="k">import</span> <span class="p">(</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">DimensionalityError</span><span class="p">,</span> <span class="n">UR</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PintValidator"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_PintValidator.html#taurus.qt.qtgui.util.PintValidator">[docs]</a><span class="k">class</span> <span class="nc">PintValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A QValidator for pint Quantities&quot;&quot;&quot;</span>
+    <span class="n">_top</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_bottom</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_implicit_units</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: (Quantity or None) maximum accepted or None if it is not</span>
+<span class="sd">                 enforced</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top</span>
+
+<div class="viewcode-block" id="PintValidator.setTop"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_PintValidator.html#taurus.qt.qtgui.util.PintValidator.setTop">[docs]</a>    <span class="k">def</span> <span class="nf">setTop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set maximum limit</span>
+
+<span class="sd">        :param top: (Quantity or None) maximum acceptable value or None if it is</span>
+<span class="sd">                    not to be enforced</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_top</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">top</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">units</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: (pint.Unit or None) base units or None if it should not</span>
+<span class="sd">                 be enforced</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_implicit_units</span>
+
+<div class="viewcode-block" id="PintValidator.setUnits"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_PintValidator.html#taurus.qt.qtgui.util.PintValidator.setUnits">[docs]</a>    <span class="k">def</span> <span class="nf">setUnits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set implicit units. They will be assumed when the text does not explicit</span>
+<span class="sd">        the unit. They will also be used for dimensionality coherence checks.</span>
+
+<span class="sd">        :param units: (pint.Unit or None). The implicit unit. If None, implicit</span>
+<span class="sd">                      dimension is &quot;unitless&quot; and no dimensionality checks</span>
+<span class="sd">                      will be performed (other than those inherent to range</span>
+<span class="sd">                      enforcement)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_implicit_units</span> <span class="o">=</span> <span class="n">units</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: (Quantity or None) minimum accepted or None if it is not</span>
+<span class="sd">                 enforced</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bottom</span>
+
+<div class="viewcode-block" id="PintValidator.setBottom"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_PintValidator.html#taurus.qt.qtgui.util.PintValidator.setBottom">[docs]</a>    <span class="k">def</span> <span class="nf">setBottom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bottom</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set minimum limit</span>
+
+<span class="sd">        :param bottom: (Quantity or None) minimum acceptable value or None if it</span>
+<span class="sd">                       is not to be enforced</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bottom</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">bottom</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reimplemented from :class:`QValidator` to validate if the input</span>
+<span class="sd">        string is a representation of a quantity within the set bottom and top</span>
+<span class="sd">        limits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_implicit_units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">unitless</span><span class="p">:</span>
+                <span class="c1"># &quot;cast&quot; to implicit units</span>
+                <span class="n">q</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+            <span class="c1"># check coherence with implicit units</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_implicit_units</span><span class="o">.</span><span class="n">dimensionality</span> <span class="o">!=</span> <span class="n">q</span><span class="o">.</span><span class="n">dimensionality</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">q</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">q</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
+        <span class="k">except</span> <span class="n">DimensionalityError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Acceptable</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
+
+    <span class="k">def</span> <span class="nf">_validate_oldQt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Old Qt (v4.4.) -compatible implementation of validate&quot;&quot;&quot;</span>
+        <span class="n">state</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span><span class="p">,</span> <span class="n">pos</span>
+
+    <span class="c1"># select the appropriate implementation of validate. See:</span>
+    <span class="c1"># https://www.mail-archive.com/pyqt@riverbankcomputing.com/msg26344.html</span>
+    <span class="n">validate</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">PYQT_QSTRING_API_1</span> <span class="ow">and</span> <span class="n">_validate_oldQt</span> <span class="ow">or</span> <span class="n">_validate</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

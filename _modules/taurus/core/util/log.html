@@ -1,0 +1,1273 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.util.log &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.util.log</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.util.log</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains a set of useful logging elements based on python&#39;s</span>
+<span class="sd">:mod:`logging` system.&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LogIt&quot;</span><span class="p">,</span> <span class="s2">&quot;TraceIt&quot;</span><span class="p">,</span> <span class="s2">&quot;DebugIt&quot;</span><span class="p">,</span> <span class="s2">&quot;InfoIt&quot;</span><span class="p">,</span> <span class="s2">&quot;WarnIt&quot;</span><span class="p">,</span> <span class="s2">&quot;ErrorIt&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;CriticalIt&quot;</span><span class="p">,</span> <span class="s2">&quot;MemoryLogHandler&quot;</span><span class="p">,</span> <span class="s2">&quot;LogExceptHook&quot;</span><span class="p">,</span> <span class="s2">&quot;Logger&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;LogFilter&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;_log&quot;</span><span class="p">,</span> <span class="s2">&quot;trace&quot;</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="s2">&quot;warning&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;fatal&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;critical&quot;</span><span class="p">,</span> <span class="s2">&quot;deprecated&quot;</span><span class="p">,</span> <span class="s2">&quot;deprecation_decorator&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;taurus4_deprecation&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging.handlers</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="kn">from</span> <span class="nn">object</span> <span class="k">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">wrap</span> <span class="k">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">excepthook</span> <span class="k">import</span> <span class="n">BaseExceptHook</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># TODO: substitute this ugly hack (below) by a more general mechanism</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+
+<span class="k">class</span> <span class="nc">_DeprecationCounter</span><span class="p">(</span><span class="n">defaultdict</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">defaultdict</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getTotal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+            <span class="n">c</span> <span class="o">+=</span> <span class="n">v</span>
+        <span class="k">return</span> <span class="n">c</span>
+
+    <span class="k">def</span> <span class="nf">pretty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+        <span class="n">sorted_items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">%d</span><span class="s1"> * &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sorted_items</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt; Deprecation Counts (</span><span class="si">%d</span><span class="s2">):</span><span class="se">\n</span><span class="si">%s</span><span class="s2"> &gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getTotal</span><span class="p">(),</span> <span class="n">ret</span><span class="p">)</span>
+
+<span class="n">_DEPRECATION_COUNT</span> <span class="o">=</span> <span class="n">_DeprecationCounter</span><span class="p">()</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="n">TRACE</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="n">TRACE</span><span class="p">,</span> <span class="s2">&quot;TRACE&quot;</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># _srcfile is used when walking the stack to check when we&#39;ve got the first</span>
+<span class="c1"># caller stack frame.</span>
+<span class="c1">#</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">):</span>  <span class="c1"># support for py2exe</span>
+    <span class="n">_srcfile</span> <span class="o">=</span> <span class="s2">&quot;logging</span><span class="si">%s</span><span class="s2">__init__</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="vm">__file__</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:])</span>
+<span class="k">elif</span> <span class="vm">__file__</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.pyc&#39;</span><span class="p">,</span> <span class="s1">&#39;.pyo&#39;</span><span class="p">]:</span>
+    <span class="n">_srcfile</span> <span class="o">=</span> <span class="vm">__file__</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.py&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">_srcfile</span> <span class="o">=</span> <span class="vm">__file__</span>
+<span class="n">_srcfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">_srcfile</span><span class="p">)</span>
+
+<span class="c1"># next bit filched from 1.5.2&#39;s inspect.py</span>
+
+
+<span class="k">def</span> <span class="nf">currentframe</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return the frame object for the caller&#39;s stack frame.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tb_frame</span><span class="o">.</span><span class="n">f_back</span>
+
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_getframe&#39;</span><span class="p">):</span>
+    <span class="n">currentframe</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># done filching</span>
+
+
+<div class="viewcode-block" id="LogIt"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LogIt.html#taurus.LogIt">[docs]</a><span class="k">class</span> <span class="nc">LogIt</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A function designed to be a decorator of any method of a Logger subclass.</span>
+<span class="sd">    The idea is to log the entrance and exit of any decorated method of a Logger</span>
+<span class="sd">    subclass.</span>
+<span class="sd">    Example::</span>
+
+<span class="sd">        from taurus.core.util.log import Logger, LogIt</span>
+
+<span class="sd">        class Example(Logger):</span>
+
+<span class="sd">            @LogIt(Logger.Debug)</span>
+<span class="sd">            def go(self):</span>
+<span class="sd">                print &quot;Hello world &quot;</span>
+
+<span class="sd">    This will generate two log messages of Debug level, one before the function</span>
+<span class="sd">    go is called and another when go finishes. Example output::</span>
+
+<span class="sd">        MainThread     DEBUG    2010-11-15 15:36:11,440 Example: -&gt; go</span>
+<span class="sd">        Hello world of mine</span>
+<span class="sd">        MainThread     DEBUG    2010-11-15 15:36:11,441 Example: &lt;- go</span>
+
+<span class="sd">    This decorator can receive two optional arguments **showargs** and **showret**</span>
+<span class="sd">    which are set to False by default. Enabling them will had verbose infomation</span>
+<span class="sd">    about the parameters and return value. The following example::</span>
+
+<span class="sd">        from taurus.core.uti.log import Logger, LogIt</span>
+
+<span class="sd">        class Example(Logger):</span>
+
+<span class="sd">            @LogIt(Logger.Debug, showargs=True, showret=True)</span>
+<span class="sd">            def go(self, msg):</span>
+<span class="sd">                msg = &quot;Hello world&quot;,msg</span>
+<span class="sd">                print msg</span>
+<span class="sd">                return msg</span>
+
+<span class="sd">    would generate an output like::</span>
+
+<span class="sd">        MainThread     DEBUG    2010-11-15 15:42:02,353 Example: -&gt; go(&#39;of mine&#39;,)</span>
+<span class="sd">        Hello world of mine</span>
+<span class="sd">        MainThread     DEBUG    2010-11-15 15:42:02,353 Example: &lt;- go = Hello world of mine</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        it may happen that in these examples that the output of the method</span>
+<span class="sd">        appears before or after the log messages. This is because log</span>
+<span class="sd">        messages are, by default, written to the *stardard error* while the print</span>
+<span class="sd">        message inside the go method outputs to the *standard ouput*. On many</span>
+<span class="sd">        systems these two targets are not synchronized.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">col_limit</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showargs</span> <span class="o">=</span> <span class="n">showargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showret</span> <span class="o">=</span> <span class="n">showret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_col_limit</span> <span class="o">=</span> <span class="n">col_limit</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">f_self</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">f_self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_level</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="n">has_log</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">f_self</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">)</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">func_name</span>
+            <span class="n">log_obj</span> <span class="o">=</span> <span class="n">f_self</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">has_log</span><span class="p">:</span>
+                <span class="n">log_obj</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f_self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="n">in_msg</span> <span class="o">=</span> <span class="s2">&quot;-&gt; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fname</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showargs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">in_msg</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">):</span>
+                    <span class="n">in_msg</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_col_limit</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_col_limit</span><span class="p">:</span>
+                <span class="n">in_msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> [...]&quot;</span> <span class="o">%</span> <span class="n">in_msg</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_col_limit</span> <span class="o">-</span> <span class="mi">6</span><span class="p">]</span>
+            <span class="n">log_obj</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_level</span><span class="p">,</span> <span class="n">in_msg</span><span class="p">)</span>
+            <span class="n">out_msg</span> <span class="o">=</span> <span class="s2">&quot;&lt;-&quot;</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">exc_info</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+                <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; (with </span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+                <span class="n">log_obj</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_level</span><span class="p">,</span> <span class="n">out_msg</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">exc_info</span><span class="p">)</span>
+                <span class="k">raise</span>
+            <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fname</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showret</span><span class="p">:</span>
+                <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_col_limit</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_col_limit</span><span class="p">:</span>
+                <span class="n">out_msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> [...]&quot;</span> <span class="o">%</span> <span class="n">out_msg</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_col_limit</span> <span class="o">-</span> <span class="mi">6</span><span class="p">]</span>
+            <span class="n">log_obj</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_level</span><span class="p">,</span> <span class="n">out_msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="TraceIt"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_TraceIt.html#taurus.TraceIt">[docs]</a><span class="k">class</span> <span class="nc">TraceIt</span><span class="p">(</span><span class="n">LogIt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specialization of LogIt for trace level messages.</span>
+<span class="sd">    Example::</span>
+
+<span class="sd">        from taurus.core.util.log import Logger, TraceIt</span>
+<span class="sd">        class Example(Logger):</span>
+
+<span class="sd">            @TraceIt()</span>
+<span class="sd">            def go(self):</span>
+<span class="sd">                print &quot;Hello world&quot;</span>
+
+<span class="sd">    .. seealso:: :class:`LogIt`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">LogIt</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">TRACE</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="n">showargs</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="n">showret</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DebugIt"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_DebugIt.html#taurus.DebugIt">[docs]</a><span class="k">class</span> <span class="nc">DebugIt</span><span class="p">(</span><span class="n">LogIt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specialization of LogIt for debug level messages.</span>
+<span class="sd">    Example::</span>
+
+<span class="sd">        from taurus.core.util.log import Logger, DebugIt</span>
+<span class="sd">        class Example(Logger):</span>
+
+<span class="sd">            @DebugIt()</span>
+<span class="sd">            def go(self):</span>
+<span class="sd">                print &quot;Hello world&quot;</span>
+
+<span class="sd">    .. seealso:: :class:`LogIt`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">LogIt</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                       <span class="n">showargs</span><span class="o">=</span><span class="n">showargs</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="n">showret</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="InfoIt"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_InfoIt.html#taurus.InfoIt">[docs]</a><span class="k">class</span> <span class="nc">InfoIt</span><span class="p">(</span><span class="n">LogIt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specialization of LogIt for info level messages.</span>
+<span class="sd">    Example::</span>
+
+<span class="sd">        from taurus.core.util.log import Logger, InfoIt</span>
+<span class="sd">        class Example(Logger):</span>
+
+<span class="sd">            @InfoIt()</span>
+<span class="sd">            def go(self):</span>
+<span class="sd">                print &quot;Hello world&quot;</span>
+
+<span class="sd">    .. seealso:: :class:`LogIt`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">LogIt</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+                       <span class="n">showargs</span><span class="o">=</span><span class="n">showargs</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="n">showret</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WarnIt"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_WarnIt.html#taurus.WarnIt">[docs]</a><span class="k">class</span> <span class="nc">WarnIt</span><span class="p">(</span><span class="n">LogIt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specialization of LogIt for warn level messages.</span>
+<span class="sd">    Example::</span>
+
+<span class="sd">        from taurus.core.util.log import Logger, WarnIt</span>
+<span class="sd">        class Example(Logger):</span>
+
+<span class="sd">            @WarnIt()</span>
+<span class="sd">            def go(self):</span>
+<span class="sd">                print &quot;Hello world&quot;</span>
+
+<span class="sd">    .. seealso:: :class:`LogIt`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">LogIt</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARN</span><span class="p">,</span>
+                       <span class="n">showargs</span><span class="o">=</span><span class="n">showargs</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="n">showret</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ErrorIt"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ErrorIt.html#taurus.ErrorIt">[docs]</a><span class="k">class</span> <span class="nc">ErrorIt</span><span class="p">(</span><span class="n">LogIt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specialization of LogIt for error level messages.</span>
+<span class="sd">    Example::</span>
+
+<span class="sd">        from taurus.core.util.log import Logger, ErrorIt</span>
+<span class="sd">        class Example(Logger):</span>
+
+<span class="sd">            @ErrorIt()</span>
+<span class="sd">            def go(self):</span>
+<span class="sd">                print &quot;Hello world&quot;</span>
+
+<span class="sd">    .. seealso:: :class:`LogIt`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">LogIt</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                       <span class="n">showargs</span><span class="o">=</span><span class="n">showargs</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="n">showret</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CriticalIt"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CriticalIt.html#taurus.CriticalIt">[docs]</a><span class="k">class</span> <span class="nc">CriticalIt</span><span class="p">(</span><span class="n">LogIt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specialization of LogIt for critical level messages.</span>
+<span class="sd">    Example::</span>
+
+<span class="sd">        from taurus.core.util.log import Logger, CriticalIt</span>
+<span class="sd">        class Example(Logger):</span>
+
+<span class="sd">            @CriticalIt()</span>
+<span class="sd">            def go(self):</span>
+<span class="sd">                print &quot;Hello world&quot;</span>
+
+<span class="sd">    .. seealso:: :class:`LogIt`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">LogIt</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
+                       <span class="n">showargs</span><span class="o">=</span><span class="n">showargs</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="n">showret</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">PrintIt</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A decorator similar to TraceIt, DebugIt,... etc but which does not</span>
+<span class="sd">    require the decorated class to inherit from Logger.</span>
+<span class="sd">    It just uses print statements instead of logging. It is here just to be</span>
+<span class="sd">    used as a replacement of those decorators if you cannot use them on a</span>
+<span class="sd">    non-logger class.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showargs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showret</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showargs</span> <span class="o">=</span> <span class="n">showargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showret</span> <span class="o">=</span> <span class="n">showret</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">func_name</span>
+            <span class="n">in_msg</span> <span class="o">=</span> <span class="s2">&quot;-&gt; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fname</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showargs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">in_msg</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">):</span>
+                    <span class="n">in_msg</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="nb">print</span>
+            <span class="nb">print</span> <span class="n">in_msg</span>
+            <span class="n">out_msg</span> <span class="o">=</span> <span class="s2">&quot;&lt;-&quot;</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; (with </span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+                <span class="nb">print</span> <span class="n">out_msg</span>
+                <span class="k">raise</span>
+            <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fname</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showret</span><span class="p">:</span>
+                <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="nb">print</span> <span class="n">out_msg</span>
+            <span class="nb">print</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<div class="viewcode-block" id="MemoryLogHandler"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_MemoryLogHandler.html#taurus.MemoryLogHandler">[docs]</a><span class="k">class</span> <span class="nc">MemoryLogHandler</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">BufferingHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An experimental log handler that stores temporary records in memory.</span>
+<span class="sd">       When flushed it passes the records to another handler&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">BufferingHandler</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="n">capacity</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handler_list_changed</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="MemoryLogHandler.shouldFlush"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_MemoryLogHandler.html#taurus.MemoryLogHandler.shouldFlush">[docs]</a>    <span class="k">def</span> <span class="nf">shouldFlush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determines if the given record should trigger the flush</span>
+
+<span class="sd">           :param record: (logging.LogRecord) a log record</span>
+<span class="sd">           :return: (bool) wheter or not the handler should be flushed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">)</span> <span class="ow">or</span> \
+            <span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span> <span class="o">&gt;=</span> <span class="n">Logger</span><span class="o">.</span><span class="n">getLogLevel</span><span class="p">())</span> <span class="ow">or</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handler_list_changed</span></div>
+
+<div class="viewcode-block" id="MemoryLogHandler.flush"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_MemoryLogHandler.html#taurus.MemoryLogHandler.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Flushes this handler&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="n">handler</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="MemoryLogHandler.close"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_MemoryLogHandler.html#taurus.MemoryLogHandler.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes this handler&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="p">[:]</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">BufferingHandler</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LogExceptHook"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LogExceptHook.html#taurus.LogExceptHook">[docs]</a><span class="k">class</span> <span class="nc">LogExceptHook</span><span class="p">(</span><span class="n">BaseExceptHook</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A callable class that acts as an excepthook that logs the exception in</span>
+<span class="sd">    the python logging system.</span>
+
+<span class="sd">    :param hook_to: callable excepthook that will be called at the end of</span>
+<span class="sd">                    this hook handling [default: None]</span>
+<span class="sd">    :type hook_to: callable</span>
+<span class="sd">    :param name: logger name [default: None meaning use class name]</span>
+<span class="sd">    :type name: str</span>
+<span class="sd">    :param level: log level [default: logging.ERROR]</span>
+<span class="sd">    :type level: int&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">):</span>
+        <span class="n">BaseExceptHook</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hook_to</span><span class="o">=</span><span class="n">hook_to</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogExceptHook.report"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LogExceptHook.html#taurus.LogExceptHook.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc_info</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="o">*</span><span class="n">exc_info</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_level</span><span class="p">,</span> <span class="s2">&quot;Unhandled exception:</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">_Logger</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">findCaller</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the stack frame of the caller so that we can note the source</span>
+<span class="sd">        file name, line number and function name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">currentframe</span><span class="p">()</span>
+        <span class="c1"># On some versions of IronPython, currentframe() returns None if</span>
+        <span class="c1"># IronPython isn&#39;t run with -X:Frames.</span>
+        <span class="k">if</span> <span class="n">f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">f_back</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="s2">&quot;(unknown file)&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;(unknown function)&quot;</span>
+        <span class="k">while</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;f_code&quot;</span><span class="p">):</span>
+            <span class="n">co</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">f_code</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">co</span><span class="o">.</span><span class="n">co_filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_srcfile</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">_srcfile</span><span class="p">):</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">f_back</span>
+                <span class="k">continue</span>
+            <span class="n">rv</span> <span class="o">=</span> <span class="p">(</span><span class="n">co</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">f_lineno</span><span class="p">,</span> <span class="n">co</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="k">return</span> <span class="n">rv</span>
+
+
+<div class="viewcode-block" id="Logger"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger">[docs]</a><span class="k">class</span> <span class="nc">Logger</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The taurus logger class. All taurus pertinent classes should inherit</span>
+<span class="sd">    directly or indirectly from this class if they need taurus logging</span>
+<span class="sd">    facilities.&quot;&quot;&quot;</span>
+
+    <span class="c1">#: Internal usage</span>
+    <span class="n">root_inited</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1">#: Internal usage</span>
+    <span class="n">root_init_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+    <span class="c1">#: Critical message level (constant)</span>
+    <span class="n">Critical</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span>
+
+    <span class="c1">#: Fatal message level (constant)</span>
+    <span class="n">Fatal</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FATAL</span>
+
+    <span class="c1">#: Error message level (constant)</span>
+    <span class="n">Error</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span>
+
+    <span class="c1">#: Warning message level (constant)</span>
+    <span class="ne">Warning</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
+
+    <span class="c1">#: Info message level (constant)</span>
+    <span class="n">Info</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+
+    <span class="c1">#: Debug message level (constant)</span>
+    <span class="n">Debug</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+
+    <span class="c1">#: Trace message level (constant)</span>
+    <span class="n">Trace</span> <span class="o">=</span> <span class="n">TRACE</span>
+
+    <span class="c1">#: Default log level (constant)</span>
+    <span class="n">DftLogLevel</span> <span class="o">=</span> <span class="n">Info</span>
+
+    <span class="c1">#: Default log message format (constant)</span>
+    <span class="n">DftLogMessageFormat</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(threadName)-14s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(name)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+
+    <span class="c1">#: Default log format (constant)</span>
+    <span class="n">DftLogFormat</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">DftLogMessageFormat</span><span class="p">)</span>
+
+    <span class="c1">#: Current global log level</span>
+    <span class="n">log_level</span> <span class="o">=</span> <span class="n">DftLogLevel</span>
+
+    <span class="c1">#: Default log message format</span>
+    <span class="n">log_format</span> <span class="o">=</span> <span class="n">DftLogFormat</span>
+
+    <span class="c1">#: the main stream handler</span>
+    <span class="n">stream_handler</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The Logger constructor</span>
+
+<span class="sd">        :param name: (str) the logger name (default is empty string)</span>
+<span class="sd">        :param parent: (Logger) the parent logger or None if no parent exists (default is None)</span>
+<span class="sd">        :param format: (str) the log message format or None to use the default log format (default is None)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Object</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">format</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_format</span> <span class="o">=</span> <span class="nb">format</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_full_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">log_full_name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_full_name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_full_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_handlers</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_parent</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_children</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_parent</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Logger.cleanUp"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The cleanUp. Default implementation does nothing</span>
+<span class="sd">           Overwrite when necessary&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.initRoot"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.initRoot">[docs]</a>    <span class="k">def</span> <span class="nf">initRoot</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Class method to initialize the root logger. Do **NOT** call this</span>
+<span class="sd">           method directly in your code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">root_inited</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_getLogger</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">root_init_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="n">root_logger</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_getLogger</span><span class="p">()</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">Trace</span><span class="p">,</span> <span class="s2">&quot;TRACE&quot;</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">__stderr__</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">stream_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">log_format</span><span class="p">)</span>
+            <span class="n">root_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">stream_handler</span><span class="p">)</span>
+
+            <span class="n">console_log_level</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TAURUSLOGLEVEL&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">console_log_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">console_log_level</span> <span class="o">=</span> <span class="n">console_log_level</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">console_log_level</span><span class="p">):</span>
+                    <span class="bp">cls</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">console_log_level</span><span class="p">)</span>
+            <span class="n">root_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">log_level</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">root_inited</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">root_init_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">root_logger</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.addRootLogHandler"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.addRootLogHandler">[docs]</a>    <span class="k">def</span> <span class="nf">addRootLogHandler</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a new handler to the root logger</span>
+
+<span class="sd">           :param h: (logging.Handler) the new log handler</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">h</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">getLogFormat</span><span class="p">())</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">h</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.removeRootLogHandler"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.removeRootLogHandler">[docs]</a>    <span class="k">def</span> <span class="nf">removeRootLogHandler</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes the given handler from the root logger</span>
+
+<span class="sd">           :param h: (logging.Handler) the handler to be removed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">h</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.enableLogOutput"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.enableLogOutput">[docs]</a>    <span class="k">def</span> <span class="nf">enableLogOutput</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Enables the :class:`logging.StreamHandler` which dumps log records,</span>
+<span class="sd">           by default, to the stderr.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">stream_handler</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.disableLogOutput"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.disableLogOutput">[docs]</a>    <span class="k">def</span> <span class="nf">disableLogOutput</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disables the :class:`logging.StreamHandler` which dumps log records,</span>
+<span class="sd">           by default, to the stderr.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">stream_handler</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.setLogLevel"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.setLogLevel">[docs]</a>    <span class="k">def</span> <span class="nf">setLogLevel</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sets the new log level (the root log level)</span>
+
+<span class="sd">           :param level: (int) the new log level</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.getLogLevel"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getLogLevel">[docs]</a>    <span class="k">def</span> <span class="nf">getLogLevel</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retuns the current log level (the root log level)</span>
+
+<span class="sd">           :return: (int) a number representing the log level</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">log_level</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.setLogFormat"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.setLogFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setLogFormat</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sets the new log message format</span>
+
+<span class="sd">           :param level: (str) the new log message format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">log_format</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span>
+        <span class="n">root_logger</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">root_logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">log_format</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.getLogFormat"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getLogFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getLogFormat</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retuns the current log message format (the root log format)</span>
+
+<span class="sd">           :return: (str) the log message format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">log_format</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.resetLogLevel"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.resetLogLevel">[docs]</a>    <span class="k">def</span> <span class="nf">resetLogLevel</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets the log level (the root log level)&quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">DftLogLevel</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.resetLogFormat"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.resetLogFormat">[docs]</a>    <span class="k">def</span> <span class="nf">resetLogFormat</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets the log message format (the root log format)&quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">setLogFormat</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">DftLogFormat</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.addLevelName"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.addLevelName">[docs]</a>    <span class="k">def</span> <span class="nf">addLevelName</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">level_no</span><span class="p">,</span> <span class="n">level_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Registers a new log level</span>
+
+<span class="sd">           :param level_no: (int) the level number</span>
+<span class="sd">           :param level_name: (str) the corresponding name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="n">level_no</span><span class="p">,</span> <span class="n">level_name</span><span class="p">)</span>
+        <span class="n">level_name</span> <span class="o">=</span> <span class="n">level_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">level_name</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">level_name</span><span class="p">,</span> <span class="n">level_no</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.getRootLog"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getRootLog">[docs]</a>    <span class="k">def</span> <span class="nf">getRootLog</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retuns the root logger</span>
+
+<span class="sd">           :return: (logging.Logger) the root logger</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">orig_logger_class</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLoggerClass</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">setLoggerClass</span><span class="p">(</span><span class="n">_Logger</span><span class="p">)</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">setLoggerClass</span><span class="p">(</span><span class="n">orig_logger_class</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Logger.getLogger"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getLogger">[docs]</a>    <span class="k">def</span> <span class="nf">getLogger</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">initRoot</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.getLogObj"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getLogObj">[docs]</a>    <span class="k">def</span> <span class="nf">getLogObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log object for this object</span>
+
+<span class="sd">           :return: (logging.Logger) the log object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span></div>
+
+<div class="viewcode-block" id="Logger.getParent"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getParent">[docs]</a>    <span class="k">def</span> <span class="nf">getParent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log parent for this object or None if no parent exists</span>
+
+<span class="sd">           :return: (logging.Logger or None) the log parent for this object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_parent</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Logger.getChildren"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getChildren">[docs]</a>    <span class="k">def</span> <span class="nf">getChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log children for this object</span>
+
+<span class="sd">           :return: (sequence&lt;logging.Logger) the list of log children</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ref</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_children</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">ref</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">child</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">children</span></div>
+
+<div class="viewcode-block" id="Logger.addChild"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.addChild">[docs]</a>    <span class="k">def</span> <span class="nf">addChild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a new logging child</span>
+
+<span class="sd">           :param child: (logging.Logger) the new child</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_children</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">child</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_children</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">child</span><span class="p">)]</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.addLogHandler"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.addLogHandler">[docs]</a>    <span class="k">def</span> <span class="nf">addLogHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Registers a new handler in this object&#39;s logger</span>
+
+<span class="sd">           :param handler: (logging.Handler) the new handler to be added</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.copyLogHandlers"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.copyLogHandlers">[docs]</a>    <span class="k">def</span> <span class="nf">copyLogHandlers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Copies the log handlers of other object to this object</span>
+
+<span class="sd">           :param other: (object) object which contains &#39;log_handlers&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">log_handlers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addLogHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.trace"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.trace">[docs]</a>    <span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record a trace message in this object&#39;s logger. Accepted *args* and</span>
+<span class="sd">           *kwargs* are the same as :meth:`logging.Logger.log`.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">           :param kw: list of keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Trace</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.traceback"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.traceback">[docs]</a>    <span class="k">def</span> <span class="nf">traceback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">Trace</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Log the usual traceback information, followed by a listing of all the</span>
+<span class="sd">           local variables in each frame.</span>
+
+<span class="sd">           :param level: (int) the log level assigned to the traceback record</span>
+<span class="sd">           :param extended: (bool) if True, the log record message will have multiple lines</span>
+
+<span class="sd">           :return: (str) The traceback string representation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">extended</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_trace</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="Logger.stack"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.stack">[docs]</a>    <span class="k">def</span> <span class="nf">stack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">Trace</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Log the usual stack information, followed by a listing of all the</span>
+<span class="sd">           local variables in each frame.</span>
+
+<span class="sd">           :param target: (int) the log level assigned to the record</span>
+
+<span class="sd">           :return: (str) The stack string representation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_stack</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+    <span class="k">def</span> <span class="nf">_format_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_stack</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">trace</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_format_stack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stack_func</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">):</span>
+        <span class="n">line_count</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="n">stack_func</span><span class="p">(</span><span class="n">line_count</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">frame_record</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="mi">60</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span>
+            <span class="n">frame</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">funcname</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">frame_record</span>
+            <span class="c1">#out += &#39;\n\t    depth = %d&#39; % frame[5]</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1"> filename = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1"> function = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">funcname</span>
+            <span class="k">if</span> <span class="n">lines</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;&lt;code could not be found&gt;&#39;</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">     line = [</span><span class="si">%d</span><span class="s1">]: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lines</span><span class="p">,</span> <span class="n">line_nb</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">line_nb</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">     line = [</span><span class="si">%d</span><span class="s1">]: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">  -&gt; line = [</span><span class="si">%d</span><span class="s1">]: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">     line = [</span><span class="si">%d</span><span class="s1">]: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">line_nb</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">  -&gt; line = [</span><span class="si">%d</span><span class="s1">]: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">frame</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">   locals = &#39;</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_locals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="si">%20s</span><span class="s1"> = &#39;</span> <span class="o">%</span> <span class="n">k</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">cut</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">v</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                        <span class="n">i</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                            <span class="n">i</span> <span class="o">=</span> <span class="mi">80</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">i</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+                            <span class="n">cut</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">80</span><span class="p">:</span>
+                            <span class="n">cut</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">out</span> <span class="o">+=</span> <span class="n">v</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">cut</span><span class="p">:</span>
+                            <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;[...]&#39;</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;&lt;could not find suitable string representation&gt;&#39;</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+<div class="viewcode-block" id="Logger.log"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record a log message in this object&#39;s logger. Accepted *args* and</span>
+<span class="sd">           *kwargs* are the same as :meth:`logging.Logger.log`.</span>
+
+<span class="sd">           :param level: (int) the record level</span>
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">           :param kw: list of keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.debug"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.debug">[docs]</a>    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record a debug message in this object&#39;s logger. Accepted *args* and</span>
+<span class="sd">           *kwargs* are the same as :meth:`logging.Logger.debug`.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">           :param kw: list of keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.info"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record an info message in this object&#39;s logger. Accepted *args* and</span>
+<span class="sd">           *kwargs* are the same as :meth:`logging.Logger.info`.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">           :param kw: list of keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.warning"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record a warning message in this object&#39;s logger. Accepted *args* and</span>
+<span class="sd">           *kwargs* are the same as :meth:`logging.Logger.warning`.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">           :param kw: list of keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.deprecated"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.deprecated">[docs]</a>    <span class="k">def</span> <span class="nf">deprecated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dbg_msg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">_callerinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record a deprecated warning message in this object&#39;s logger.</span>
+<span class="sd">           If message is not passed, a estandard deprecation message is</span>
+<span class="sd">           constructued using dep, alt, rel arguments.</span>
+<span class="sd">           Also, an extra debug message can be recorded, followed by traceback</span>
+<span class="sd">           info.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded (if None passed, it will</span>
+<span class="sd">                       be constructed using dep (and, optionally, alt and rel)</span>
+<span class="sd">           :param dep: (str) name of deprecated feature (in case msg is None)</span>
+<span class="sd">           :param alt: (str) name of alternative feature (in case msg is None)</span>
+<span class="sd">           :param rel: (str) name of release from which the feature was</span>
+<span class="sd">                       deprecated (in case msg is None)</span>
+<span class="sd">           :param dbg_msg: (str) msg for debug (or None to log only the warning)</span>
+<span class="sd">           :param _callerinfo: for internal use only. Do not use this argument.</span>
+<span class="sd">           :param kw: any additional keyword arguments, are passed to</span>
+<span class="sd">                     :meth:`logging.Logger.warning`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">msg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;deprecated takes either msg or dep argument&#39;</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is deprecated&#39;</span> <span class="o">%</span> <span class="n">dep</span>
+            <span class="k">if</span> <span class="n">rel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39; since </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">rel</span>
+            <span class="k">if</span> <span class="n">alt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39;. Use </span><span class="si">%s</span><span class="s1"> instead&#39;</span> <span class="o">%</span> <span class="n">alt</span>
+
+        <span class="c1"># count the number of calls (classified by msg)</span>
+        <span class="c1"># TODO: substitute this ugly hack (below) by a more general mechanism</span>
+        <span class="n">_DEPRECATION_COUNT</span><span class="p">[</span><span class="n">msg</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># limit the output to 1 deprecation message of each type</span>
+        <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+        <span class="n">_MAX_DEPRECATIONS_LOGGED</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span>
+                                           <span class="s1">&#39;_MAX_DEPRECATIONS_LOGGED&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_MAX_DEPRECATIONS_LOGGED</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">_MAX_DEPRECATIONS_LOGGED</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Warning</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_DEPRECATION_COUNT</span><span class="p">[</span><span class="n">msg</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">_MAX_DEPRECATIONS_LOGGED</span><span class="p">:</span>
+                <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">_callerinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_callerinfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">findCaller</span><span class="p">()</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_callerinfo</span>
+        <span class="n">depr_msg</span> <span class="o">=</span> <span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span><span class="p">(</span>
+            <span class="n">msg</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">depr_msg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dbg_msg</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">dbg_msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Logger.error"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record an error message in this object&#39;s logger. Accepted *args* and</span>
+<span class="sd">           *kwargs* are the same as :meth:`logging.Logger.error`.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">           :param kw: list of keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.fatal"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.fatal">[docs]</a>    <span class="k">def</span> <span class="nf">fatal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record a fatal message in this object&#39;s logger. Accepted *args* and</span>
+<span class="sd">           *kwargs* are the same as :meth:`logging.Logger.fatal`.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">           :param kw: list of keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.critical"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.critical">[docs]</a>    <span class="k">def</span> <span class="nf">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Record a critical message in this object&#39;s logger. Accepted *args* and</span>
+<span class="sd">           *kwargs* are the same as :meth:`logging.Logger.critical`.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">           :param kw: list of keyword arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.exception"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.exception">[docs]</a>    <span class="k">def</span> <span class="nf">exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Log a message with severity &#39;ERROR&#39; on the root logger, with</span>
+<span class="sd">           exception information.. Accepted *args* are the same as</span>
+<span class="sd">           :meth:`logging.Logger.exception`.</span>
+
+<span class="sd">           :param msg: (str) the message to be recorded</span>
+<span class="sd">           :param args: list of arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Logger.flushOutput"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.flushOutput">[docs]</a>    <span class="k">def</span> <span class="nf">flushOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Flushes the log output&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">syncLog</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Logger.syncLog"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.syncLog">[docs]</a>    <span class="k">def</span> <span class="nf">syncLog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Synchronises the log output&quot;&quot;&quot;</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">synced</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">logger</span><span class="o">.</span><span class="n">log_handlers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">synced</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">sync</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="s1">&#39;sync&#39;</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">sync</span><span class="p">()</span>
+                <span class="n">synced</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+            <span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Logger.getLogName"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getLogName">[docs]</a>    <span class="k">def</span> <span class="nf">getLogName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the log name for this object</span>
+
+<span class="sd">           :return: (str) the log name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_name</span></div>
+
+<div class="viewcode-block" id="Logger.getLogFullName"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.getLogFullName">[docs]</a>    <span class="k">def</span> <span class="nf">getLogFullName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the full log name for this object</span>
+
+<span class="sd">           :return: (str) the full log name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_full_name</span></div>
+
+<div class="viewcode-block" id="Logger.changeLogName"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtdesigner/taurusplugin/_Logger.html#taurus.Logger.changeLogName">[docs]</a>    <span class="k">def</span> <span class="nf">changeLogName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change the log name for this object.</span>
+
+<span class="sd">           :param name: (str) the new log name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_full_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">log_full_name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_full_name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_full_name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_handlers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getChildren</span><span class="p">():</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">changeLogName</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">log_name</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LogFilter"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LogFilter.html#taurus.LogFilter">[docs]</a><span class="k">class</span> <span class="nc">LogFilter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Filter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Experimental log filter&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">Filter</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogFilter.filter"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LogFilter.html#taurus.LogFilter.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_level</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ok</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">__getrootlogger</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Logger</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;TaurusRootLogger&quot;</span><span class="p">)</span>
+
+<span class="c1"># cannot export log because upper package taurus.core.util imports this &#39;log&#39;</span>
+<span class="c1"># module and it would itself be overwritten by this log function</span>
+
+
+<span class="k">def</span> <span class="nf">_log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">__getrootlogger</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="trace"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.trace">[docs]</a><span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_log</span><span class="p">(</span><span class="n">Logger</span><span class="o">.</span><span class="n">Trace</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="debug"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.debug">[docs]</a><span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">__getrootlogger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="info"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.info">[docs]</a><span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">__getrootlogger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="warning"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.warning">[docs]</a><span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">__getrootlogger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="error"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.error">[docs]</a><span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">__getrootlogger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="fatal"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.fatal">[docs]</a><span class="k">def</span> <span class="nf">fatal</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">__getrootlogger</span><span class="p">()</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="critical"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.critical">[docs]</a><span class="k">def</span> <span class="nf">critical</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">__getrootlogger</span><span class="p">()</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deprecated"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtgui/console.html#taurus.deprecated">[docs]</a><span class="k">def</span> <span class="nf">deprecated</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;_callerinfo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">__getrootlogger</span><span class="p">()</span><span class="o">.</span><span class="n">findCaller</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Logger</span><span class="p">(</span><span class="s2">&quot;TaurusRootLogger&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deprecation_decorator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.deprecation_decorator">[docs]</a><span class="k">def</span> <span class="nf">deprecation_decorator</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dbg_msg</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;decorator to mark methods as deprecated&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">deprecation_decorator</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="n">alt</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="n">rel</span><span class="p">,</span>
+                                 <span class="n">dbg_msg</span><span class="o">=</span><span class="n">dbg_msg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">new_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="n">alt</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="n">rel</span><span class="p">,</span> <span class="n">dbg_msg</span><span class="o">=</span><span class="n">dbg_msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">doc</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">.. deprecated:: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rel</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">alt</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">+=</span> <span class="s1">&#39;   Use </span><span class="si">%s</span><span class="s1"> instead</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">alt</span>
+
+    <span class="n">new_func</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="n">new_func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">doc</span>
+    <span class="n">new_func</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_func</span></div>
+
+
+<span class="n">taurus4_deprecation</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">deprecation_decorator</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Does this and that and also:</span>
+
+<span class="sd">        - baz</span>
+<span class="sd">        - zab</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span> <span class="n">foo</span><span class="o">.</span><span class="vm">__doc__</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

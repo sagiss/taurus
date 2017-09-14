@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.panel.qdoublelist &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.panel.qdoublelist</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.panel.qdoublelist</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">###########################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">qdoublelist.py: Provides a generic dialog containing two list which can move</span>
+<span class="sd">items from one to the other</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QDoubleListDlg&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="nd">@UILoadable</span><span class="p">(</span><span class="n">with_ui</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="QDoubleListDlg"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDoubleListDlg.html#taurus.qt.qtgui.panel.QDoubleListDlg">[docs]</a><span class="k">class</span> <span class="nc">QDoubleListDlg</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Generic dialog providing two lists. Items can be moved from one to the other</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#@todo: drag&amp;drop is disabled because Qt&lt;4.6 does not have QList.setDefaultDragAndDropMode()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">winTitle</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">mainLabel</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">label1</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">label2</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">list1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">list2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">list1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">list1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">list2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">list2</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">QDoubleListDlg</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">winTitle</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">winTitle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">mainLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">mainLabel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">group1</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">label1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">group2</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">label2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setList1</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setList2</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">to1BT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onTo1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">to2BT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onTo2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_moveItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fromlist</span><span class="p">,</span> <span class="n">tolist</span><span class="p">):</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="n">fromlist</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+            <span class="n">fromlist</span><span class="o">.</span><span class="n">takeItem</span><span class="p">(</span><span class="n">fromlist</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+            <span class="n">tolist</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QDoubleListDlg.setList1"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDoubleListDlg.html#taurus.qt.qtgui.panel.QDoubleListDlg.setList1">[docs]</a>    <span class="k">def</span> <span class="nf">setList1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list1</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets the items to be present in the first list</span>
+
+<span class="sd">        :param list2: (seq&lt;str&gt;) a sequence of strings</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list1</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list1</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QDoubleListDlg.setList2"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDoubleListDlg.html#taurus.qt.qtgui.panel.QDoubleListDlg.setList2">[docs]</a>    <span class="k">def</span> <span class="nf">setList2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list2</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets the items to be present in the second list</span>
+
+<span class="sd">        :param list2: (seq&lt;str&gt;) a sequence of strings</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list2</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list2</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QDoubleListDlg.onTo1"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDoubleListDlg.html#taurus.qt.qtgui.panel.QDoubleListDlg.onTo1">[docs]</a>    <span class="k">def</span> <span class="nf">onTo1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot to be called when the &quot;To1&quot; button is pressed&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moveItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QDoubleListDlg.onTo2"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDoubleListDlg.html#taurus.qt.qtgui.panel.QDoubleListDlg.onTo2">[docs]</a>    <span class="k">def</span> <span class="nf">onTo2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot to be called when the &quot;To2&quot; button is pressed&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moveItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QDoubleListDlg.getAll1"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDoubleListDlg.html#taurus.qt.qtgui.panel.QDoubleListDlg.getAll1">[docs]</a>    <span class="k">def</span> <span class="nf">getAll1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns a copy the items in the first list</span>
+
+<span class="sd">        :return: (list&lt;str&gt;)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list1</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">())</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list1</span><span class="o">.</span><span class="n">count</span><span class="p">())]</span></div>
+
+<div class="viewcode-block" id="QDoubleListDlg.getAll2"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_QDoubleListDlg.html#taurus.qt.qtgui.panel.QDoubleListDlg.getAll2">[docs]</a>    <span class="k">def</span> <span class="nf">getAll2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns a copy the items in the second list</span>
+
+<span class="sd">        :return: (list&lt;str&gt;)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list2</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">())</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list2</span><span class="o">.</span><span class="n">count</span><span class="p">())]</span></div></div>
+
+    <span class="c1"># note, for the moment we do not make it available in designer because it does not</span>
+    <span class="c1"># behave well as a widget (only as a dialog) (e.g., it closes if ESC is pressed</span>
+<span class="c1">#    @classmethod</span>
+<span class="c1">#    def getQtDesignerPluginInfo(cls):</span>
+<span class="c1">#        return {</span>
+<span class="c1">#            &#39;module&#39; : &#39;taurus.qt.qtgui.panel&#39;,</span>
+<span class="c1">#            &#39;group&#39; : &#39;Taurus Input&#39;,</span>
+<span class="c1">#            #&#39;icon&#39; : &quot;designer:ledred.png&quot;,</span>
+<span class="c1">#            &#39;container&#39; : False,</span>
+<span class="c1">#        }</span>
+<span class="c1">#------------------------------------------------------------------------------</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+    <span class="n">dlg</span> <span class="o">=</span> <span class="n">QDoubleListDlg</span><span class="p">(</span><span class="n">winTitle</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="n">mainLabel</span><span class="o">=</span><span class="s1">&#39;bla, bla&#39;</span><span class="p">,</span> <span class="n">label1</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">label2</span><span class="o">=</span><span class="s1">&#39;2&#39;</span><span class="p">,</span>
+                         <span class="n">list1</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;22&#39;</span><span class="p">],</span> <span class="n">list2</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;123&#39;</span><span class="p">,</span> <span class="s1">&#39;33&#39;</span><span class="p">])</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+    <span class="nb">print</span> <span class="s2">&quot;Result&quot;</span><span class="p">,</span> <span class="n">result</span>
+    <span class="nb">print</span> <span class="s2">&quot;list1&quot;</span><span class="p">,</span> <span class="n">dlg</span><span class="o">.</span><span class="n">getAll1</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="s2">&quot;list2&quot;</span><span class="p">,</span> <span class="n">dlg</span><span class="o">.</span><span class="n">getAll2</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

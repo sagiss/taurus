@@ -1,0 +1,961 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtcore.model.taurusdatabasemodel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtcore.model.taurusdatabasemodel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtcore.model.taurusdatabasemodel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides widgets that display the database in a tree format&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusTreeDevicePartItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeDeviceDomainItem&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusTreeDeviceFamilyItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeDeviceMemberItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeSimpleDeviceItem&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusTreeDeviceItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeAttributeItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeServerNameItem&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusTreeServerItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeDeviceClassItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDbBaseModel&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusDbSimpleDeviceModel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDbPlainDeviceModel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDbDeviceModel&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusDbSimpleDeviceAliasModel&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusDbPlainServerModel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDbServerModel&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusDbDeviceClassModel&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusDbBaseProxyModel&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusDbDeviceProxyModel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDbServerProxyModel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDbDeviceClassProxyModel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusDevState</span>
+<span class="kn">import</span> <span class="nn">taurus.qt.qtcore.mimetypes</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoInfo</span><span class="p">,</span> <span class="n">TangoDatabase</span>
+
+<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusBaseTreeItem</span><span class="p">,</span> <span class="n">TaurusBaseModel</span><span class="p">,</span> <span class="n">TaurusBaseProxyModel</span>
+
+<span class="n">ElemType</span> <span class="o">=</span> <span class="n">TaurusElementType</span>
+
+
+<span class="k">def</span> <span class="nf">getElementTypeIcon</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper to prevent loading qtgui when this module is imported&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getElementTypeIcon</span>
+    <span class="k">return</span> <span class="n">getElementTypeIcon</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">getElementTypeToolTip</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper to prevent loading qtgui when this module is imported&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getElementTypeToolTip</span>
+    <span class="k">return</span> <span class="n">getElementTypeToolTip</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">getElementTypeSize</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper to prevent loading qtgui when this module is imported&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getElementTypeSize</span>
+    <span class="k">return</span> <span class="n">getElementTypeSize</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">getDevStateIcon</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper to prevent loading qtgui when this module is imported&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getDevStateIcon</span>
+    <span class="k">return</span> <span class="n">getDevStateIcon</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">getDevStateToolTip</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper to prevent loading qtgui when this module is imported&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getDevStateToolTip</span>
+    <span class="k">return</span> <span class="n">getDevStateToolTip</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">TaurusTreeDbBaseItem</span><span class="p">(</span><span class="n">TaurusBaseTreeItem</span><span class="p">):</span>
+    <span class="n">DisplayFunc</span> <span class="o">=</span> <span class="n">TangoInfo</span><span class="o">.</span><span class="n">name</span>
+
+
+<div class="viewcode-block" id="TaurusTreeDevicePartItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDevicePartItem.html#taurus.qt.qtcore.model.TaurusTreeDevicePartItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeDevicePartItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a &#39;part&#39; (or totality) of a device name&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusTreeDevicePartItem.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDevicePartItem.html#taurus.qt.qtcore.model.TaurusTreeDevicePartItem.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDevicePartItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDevicePartItem.html#taurus.qt.qtcore.model.TaurusTreeDevicePartItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTreeDeviceDomainItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceDomainItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceDomainItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeDeviceDomainItem</span><span class="p">(</span><span class="n">TaurusTreeDevicePartItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a the domain part of a device name&quot;&quot;&quot;</span>
+
+    <span class="n">DisplayFunc</span> <span class="o">=</span> <span class="nb">str</span>
+
+<div class="viewcode-block" id="TaurusTreeDeviceDomainItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceDomainItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceDomainItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Domain</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTreeDeviceFamilyItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceFamilyItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceFamilyItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeDeviceFamilyItem</span><span class="p">(</span><span class="n">TaurusTreeDevicePartItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a the family part of a device name&quot;&quot;&quot;</span>
+
+    <span class="n">DisplayFunc</span> <span class="o">=</span> <span class="nb">str</span>
+
+<div class="viewcode-block" id="TaurusTreeDeviceFamilyItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceFamilyItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceFamilyItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Family</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTreeDeviceMemberItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceMemberItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceMemberItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeDeviceMemberItem</span><span class="p">(</span><span class="n">TaurusTreeDevicePartItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a the member part of a device name&quot;&quot;&quot;</span>
+
+    <span class="n">DisplayFunc</span> <span class="o">=</span> <span class="nb">str</span>
+
+<div class="viewcode-block" id="TaurusTreeDeviceMemberItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceMemberItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceMemberItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Member</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTreeSimpleDeviceItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeSimpleDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeSimpleDeviceItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeSimpleDeviceItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a device (without any child nodes)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusTreeSimpleDeviceItem.hasChildren"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeSimpleDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeSimpleDeviceItem.hasChildren">[docs]</a>    <span class="k">def</span> <span class="nf">hasChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TaurusTreeSimpleDeviceItem.childCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeSimpleDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeSimpleDeviceItem.childCount">[docs]</a>    <span class="k">def</span> <span class="nf">childCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="TaurusTreeSimpleDeviceItem.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeSimpleDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeSimpleDeviceItem.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span> <span class="ow">or</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceAlias</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">server</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">klass</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">host</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Domain</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">domain</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Family</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">family</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Member</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">member</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeSimpleDeviceItem.mimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeSimpleDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeSimpleDeviceItem.mimeData">[docs]</a>    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeSimpleDeviceItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeSimpleDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeSimpleDeviceItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTreeDeviceItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeDeviceItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a device&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusTreeDeviceItem.child"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceItem.child">[docs]</a>    <span class="k">def</span> <span class="nf">child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateChilds</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">TaurusTreeDeviceItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDeviceItem.hasChildren"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceItem.hasChildren">[docs]</a>    <span class="k">def</span> <span class="nf">hasChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">nb</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TaurusTreeDeviceItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">childCount</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">nb</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">state</span><span class="p">()</span> <span class="o">!=</span> <span class="n">TaurusDevState</span><span class="o">.</span><span class="n">Ready</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDeviceItem.childCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceItem.childCount">[docs]</a>    <span class="k">def</span> <span class="nf">childCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nb</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TaurusTreeDeviceItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">childCount</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">nb</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nb</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">state</span><span class="p">()</span> <span class="o">!=</span> <span class="n">TaurusDevState</span><span class="o">.</span><span class="n">Ready</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateChilds</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">TaurusTreeDeviceItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">childCount</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDeviceItem.updateChilds"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceItem.updateChilds">[docs]</a>    <span class="k">def</span> <span class="nf">updateChilds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_childItems</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">attributes</span><span class="p">():</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">TaurusTreeAttributeItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDeviceItem.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceItem.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span> <span class="ow">or</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceAlias</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">server</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">klass</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">host</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Domain</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">domain</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Family</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">family</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Member</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">member</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDeviceItem.mimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceItem.mimeData">[docs]</a>    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span><span class="o">.</span><span class="n">fullName</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDeviceItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTreeAttributeItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeAttributeItem.html#taurus.qt.qtcore.model.TaurusTreeAttributeItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeAttributeItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent an attribute&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusTreeAttributeItem.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeAttributeItem.html#taurus.qt.qtcore.model.TaurusTreeAttributeItem.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Attribute</span> <span class="ow">or</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
+            <span class="n">data_info</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">data_info</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data_info</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">):</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="n">data_info</span><span class="o">.</span><span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;&#39; (&quot;</span> <span class="o">+</span> <span class="n">ret</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+            <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusTreeAttributeItem.toolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeAttributeItem.html#taurus.qt.qtcore.model.TaurusTreeAttributeItem.toolTip">[docs]</a>    <span class="k">def</span> <span class="nf">toolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TaurusTreeDbBaseItem</span><span class="o">.</span><span class="n">toolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
+        <span class="n">di</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">di</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;&lt;TABLE border=&quot;0&quot; cellpadding=&quot;1&quot; cellspacing=&quot;0&quot;&gt;&#39;</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="n">di</span><span class="o">.</span><span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;&#39; (&quot;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">di</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;lt;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;gt;&quot;</span><span class="p">),</span>
+            <span class="n">unit</span><span class="o">=</span><span class="n">di</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
+            <span class="n">limits</span><span class="o">=</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">di</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span> <span class="n">di</span><span class="o">.</span><span class="n">max_value</span><span class="p">),</span>
+            <span class="n">alarms</span><span class="o">=</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">di</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_alarm</span><span class="p">,</span> <span class="n">di</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_alarm</span><span class="p">),</span>
+            <span class="n">warnings</span><span class="o">=</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">di</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_warning</span><span class="p">,</span> <span class="n">di</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_warning</span><span class="p">),)</span>
+
+        <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;&lt;TR&gt;&lt;TD WIDTH=&quot;80&quot; ALIGN=&quot;RIGHT&quot; VALIGN=&quot;MIDDLE&quot;&gt;&lt;B&gt;</span><span class="si">%s</span><span class="s1">:&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;</span><span class="si">%s</span><span class="s1">&lt;/TD&gt;&lt;/TR&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="nb">id</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/TABLE&gt;&#39;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusTreeAttributeItem.mimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeAttributeItem.html#taurus.qt.qtcore.model.TaurusTreeAttributeItem.mimeData">[docs]</a>    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span><span class="o">.</span><span class="n">fullName</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeAttributeItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeAttributeItem.html#taurus.qt.qtcore.model.TaurusTreeAttributeItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Attribute</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTreeServerNameItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeServerNameItem.html#taurus.qt.qtcore.model.TaurusTreeServerNameItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeServerNameItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent the server name part of a server&quot;&quot;&quot;</span>
+
+    <span class="n">DisplayFunc</span> <span class="o">=</span> <span class="nb">str</span>
+
+<div class="viewcode-block" id="TaurusTreeServerNameItem.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeServerNameItem.html#taurus.qt.qtcore.model.TaurusTreeServerNameItem.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerName</span> <span class="ow">or</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span></div>
+
+<div class="viewcode-block" id="TaurusTreeServerNameItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeServerNameItem.html#taurus.qt.qtcore.model.TaurusTreeServerNameItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerName</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTreeServerItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeServerItem.html#taurus.qt.qtcore.model.TaurusTreeServerItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeServerItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a server&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusTreeServerItem.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeServerItem.html#taurus.qt.qtcore.model.TaurusTreeServerItem.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span> <span class="ow">or</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerName</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">serverName</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerInstance</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">serverInstance</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">host</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeServerItem.mimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeServerItem.html#taurus.qt.qtcore.model.TaurusTreeServerItem.mimeData">[docs]</a>    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span><span class="o">.</span><span class="n">fullName</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeServerItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeServerItem.html#taurus.qt.qtcore.model.TaurusTreeServerItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">TaurusTreeFullServerItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a server&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span> <span class="ow">or</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">fullName</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerName</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">serverName</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerInstance</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">fullName</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">host</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span><span class="o">.</span><span class="n">fullName</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span>
+
+
+<div class="viewcode-block" id="TaurusTreeDeviceClassItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceClassItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceClassItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeDeviceClassItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A node designed to represent a device class&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusTreeDeviceClassItem.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceClassItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceClassItem.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Name</span> <span class="ow">or</span> <span class="n">role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="o">.</span><span class="n">name</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDeviceClassItem.mimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceClassItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceClassItem.mimeData">[docs]</a>    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span><span class="o">.</span><span class="n">fullName</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTreeDeviceClassItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDeviceClassItem.html#taurus.qt.qtcore.model.TaurusTreeDeviceClassItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbBaseModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbBaseModel</span><span class="p">(</span><span class="n">TaurusBaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The base class for all Taurus database Qt models.</span>
+<span class="sd">    By default, this model represents a plain device perspective of the underlying</span>
+<span class="sd">    database.&quot;&quot;&quot;</span>
+
+    <span class="n">ColumnNames</span> <span class="o">=</span> <span class="s2">&quot;Device&quot;</span><span class="p">,</span> <span class="s2">&quot;Alias&quot;</span><span class="p">,</span> <span class="s2">&quot;Server&quot;</span><span class="p">,</span> <span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Alive&quot;</span><span class="p">,</span> <span class="s2">&quot;Host&quot;</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">),</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceAlias</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.createNewRootItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.createNewRootItem">[docs]</a>    <span class="k">def</span> <span class="nf">createNewRootItem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusTreeDbBaseItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ColumnNames</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.refresh"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">refresh_source</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataSource</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">refresh_source</span> <span class="ow">and</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">refreshCache</span><span class="p">()</span>
+        <span class="n">TaurusBaseModel</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">refresh_source</span><span class="o">=</span><span class="n">refresh_source</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.roleIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.roleIcon">[docs]</a>    <span class="k">def</span> <span class="nf">roleIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taurus_role</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">getElementTypeIcon</span><span class="p">(</span><span class="n">taurus_role</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.columnIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.columnIcon">[docs]</a>    <span class="k">def</span> <span class="nf">columnIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roleIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.roleToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.roleToolTip">[docs]</a>    <span class="k">def</span> <span class="nf">roleToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taurus_role</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">getElementTypeToolTip</span><span class="p">(</span><span class="n">taurus_role</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.columnToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.columnToolTip">[docs]</a>    <span class="k">def</span> <span class="nf">columnToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roleToolTip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.roleSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.roleSize">[docs]</a>    <span class="k">def</span> <span class="nf">roleSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taurus_role</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">getElementTypeSize</span><span class="p">(</span><span class="n">taurus_role</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.columnSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.columnSize">[docs]</a>    <span class="k">def</span> <span class="nf">columnSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="n">taurus_role</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roleSize</span><span class="p">(</span><span class="n">taurus_role</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.mimeTypes"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.mimeTypes">[docs]</a>    <span class="k">def</span> <span class="nf">mimeTypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;text/plain&quot;</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.mimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.mimeData">[docs]</a>    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMimeData</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="c1">#item = index.internalPointer()</span>
+            <span class="c1">#data = item.mimeData(index)</span>
+            <span class="c1">#stream &lt;&lt; item.mimeData(index)</span>
+            <span class="n">tree_item</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+            <span class="n">mime_data_item</span> <span class="o">=</span> <span class="n">tree_item</span><span class="o">.</span><span class="n">mimeData</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mime_data_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mime_data_item</span><span class="p">)</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
+            <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
+                <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.pyData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.pyData">[docs]</a>    <span class="k">def</span> <span class="nf">pyData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">item</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span>
+        <span class="n">taurus_role</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">taurus_role</span> <span class="o">!=</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roleIcon</span><span class="p">(</span><span class="n">taurus_role</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">taurus_role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">getDevStateIcon</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">toolTip</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">taurus_role</span> <span class="o">==</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">:</span>
+                        <span class="n">ret</span> <span class="o">=</span> <span class="n">getDevStateToolTip</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roleToolTip</span><span class="p">(</span><span class="n">taurus_role</span><span class="p">)</span>
+        <span class="c1"># elif role == Qt.Qt.SizeHintRole:</span>
+        <span class="c1">#    ret = self.columnSize(column)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftFont</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusDbBaseModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+        <span class="n">devices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
+
+        <span class="n">rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="k">for</span> <span class="n">dev_name</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">getDeviceNames</span><span class="p">():</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">devices</span><span class="p">[</span><span class="n">dev_name</span><span class="p">]</span>
+            <span class="n">devItem</span> <span class="o">=</span> <span class="n">TaurusTreeSimpleDeviceItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rootItem</span><span class="p">)</span>
+            <span class="n">rootItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">devItem</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbSimpleDeviceModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbSimpleDeviceModel.html#taurus.qt.qtcore.model.TaurusDbSimpleDeviceModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbSimpleDeviceModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt model that structures device elements in 1 level tree with</span>
+<span class="sd">    device name as node leafs. This model contains only 1 column.&quot;&quot;&quot;</span>
+
+    <span class="n">ColumnNames</span> <span class="o">=</span> <span class="s2">&quot;Device&quot;</span><span class="p">,</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span><span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">),</span></div>
+
+
+<div class="viewcode-block" id="TaurusDbSimpleDeviceAliasModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbSimpleDeviceAliasModel.html#taurus.qt.qtcore.model.TaurusDbSimpleDeviceAliasModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbSimpleDeviceAliasModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt model that structures device elements in 1 level tree with</span>
+<span class="sd">    device alias as node leafs. This model contains only 1 column.&quot;&quot;&quot;</span>
+
+    <span class="n">ColumnNames</span> <span class="o">=</span> <span class="s2">&quot;Alias&quot;</span><span class="p">,</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span><span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceAlias</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceAlias</span><span class="p">),</span>
+
+<div class="viewcode-block" id="TaurusDbSimpleDeviceAliasModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbSimpleDeviceAliasModel.html#taurus.qt.qtcore.model.TaurusDbSimpleDeviceAliasModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+        <span class="n">devices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
+
+        <span class="n">rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="k">for</span> <span class="n">dev_name</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">getDeviceNames</span><span class="p">():</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">devices</span><span class="p">[</span><span class="n">dev_name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">dev</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">devItem</span> <span class="o">=</span> <span class="n">TaurusTreeSimpleDeviceItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rootItem</span><span class="p">)</span>
+                <span class="n">rootItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">devItem</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbPlainDeviceModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbPlainDeviceModel.html#taurus.qt.qtcore.model.TaurusDbPlainDeviceModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbPlainDeviceModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt model that structures device elements in 1 level tree. Device</span>
+<span class="sd">    nodes will have attribute child nodes if the device is running.&quot;&quot;&quot;</span>
+
+    <span class="n">ColumnNames</span> <span class="o">=</span> <span class="s2">&quot;Device&quot;</span><span class="p">,</span> <span class="s2">&quot;Alias&quot;</span><span class="p">,</span> <span class="s2">&quot;Server&quot;</span><span class="p">,</span> <span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Alive&quot;</span><span class="p">,</span> <span class="s2">&quot;Host&quot;</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span><span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">,</span>
+                   <span class="n">ElemType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">),</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceAlias</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span>
+
+<div class="viewcode-block" id="TaurusDbPlainDeviceModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbPlainDeviceModel.html#taurus.qt.qtcore.model.TaurusDbPlainDeviceModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+        <span class="n">devices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
+
+        <span class="n">rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="k">for</span> <span class="n">dev_name</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">getDeviceNames</span><span class="p">():</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">devices</span><span class="p">[</span><span class="n">dev_name</span><span class="p">]</span>
+            <span class="n">devItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rootItem</span><span class="p">)</span>
+            <span class="n">rootItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">devItem</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbDeviceModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceModel.html#taurus.qt.qtcore.model.TaurusDbDeviceModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbDeviceModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt model that structures device elements is a 3 level tree organized</span>
+<span class="sd">       as:</span>
+
+<span class="sd">           - &lt;domain&gt;</span>
+<span class="sd">           - &lt;family&gt;</span>
+<span class="sd">           - &lt;member&gt;&quot;&quot;&quot;</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span><span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Domain</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Family</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Member</span><span class="p">,</span>
+                   <span class="n">ElemType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">),</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceAlias</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span>
+
+<div class="viewcode-block" id="TaurusDbDeviceModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceModel.html#taurus.qt.qtcore.model.TaurusDbDeviceModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">deviceTree</span><span class="p">()</span>
+
+        <span class="n">rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">families</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">domain</span><span class="p">]</span>
+            <span class="n">domainItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceDomainItem</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">rootItem</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">family</span> <span class="ow">in</span> <span class="n">families</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">members</span> <span class="o">=</span> <span class="n">families</span><span class="p">[</span><span class="n">family</span><span class="p">]</span>
+                <span class="n">familyItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceFamilyItem</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="n">family</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">domainItem</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">members</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">dev</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="n">member</span><span class="p">]</span>
+                    <span class="n">memberItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceItem</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">familyItem</span><span class="p">)</span>
+                    <span class="n">familyItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">memberItem</span><span class="p">)</span>
+                <span class="n">domainItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">familyItem</span><span class="p">)</span>
+            <span class="n">rootItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">domainItem</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbPlainServerModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbPlainServerModel.html#taurus.qt.qtcore.model.TaurusDbPlainServerModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbPlainServerModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">):</span>
+    <span class="n">ColumnNames</span> <span class="o">=</span> <span class="s2">&quot;Server&quot;</span><span class="p">,</span> <span class="s2">&quot;Alive&quot;</span><span class="p">,</span> <span class="s2">&quot;Host&quot;</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span><span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span><span class="p">,</span>
+                   <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerInstance</span><span class="p">),</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span>
+
+<div class="viewcode-block" id="TaurusDbPlainServerModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbPlainServerModel.html#taurus.qt.qtcore.model.TaurusDbPlainServerModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+
+        <span class="n">servers</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">servers</span><span class="p">()</span>
+        <span class="n">rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+
+        <span class="k">for</span> <span class="n">server_name</span><span class="p">,</span> <span class="n">server</span> <span class="ow">in</span> <span class="n">servers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">serverInstanceItem</span> <span class="o">=</span> <span class="n">TaurusTreeFullServerItem</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">rootItem</span><span class="p">)</span>
+            <span class="n">rootItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">serverInstanceItem</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbServerModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbServerModel.html#taurus.qt.qtcore.model.TaurusDbServerModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbServerModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt model that structures server elements in a tree organized</span>
+<span class="sd">    as:</span>
+
+<span class="sd">        - &lt;Server name&gt;</span>
+<span class="sd">        - &lt;Server instance&gt;</span>
+<span class="sd">        - &lt;Class&gt;</span>
+<span class="sd">        - &lt;Device&gt;</span>
+<span class="sd">        - &lt;Attribute&gt;&quot;&quot;&quot;</span>
+
+    <span class="n">ColumnNames</span> <span class="o">=</span> <span class="s2">&quot;Server&quot;</span><span class="p">,</span> <span class="s2">&quot;Alive&quot;</span><span class="p">,</span> <span class="s2">&quot;Host&quot;</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span><span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerName</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerInstance</span><span class="p">,</span>
+                   <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">),</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span>
+
+<div class="viewcode-block" id="TaurusDbServerModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbServerModel.html#taurus.qt.qtcore.model.TaurusDbServerModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+
+        <span class="n">servers</span><span class="p">,</span> <span class="n">klasses</span><span class="p">,</span> <span class="n">devices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">servers</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">klasses</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
+        <span class="n">rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="n">server_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">server_names</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">getServerNames</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">server_name</span> <span class="ow">in</span> <span class="n">server_names</span><span class="p">:</span>
+            <span class="n">server</span> <span class="o">=</span> <span class="n">servers</span><span class="p">[</span><span class="n">server_name</span><span class="p">]</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">serverName</span><span class="p">(),</span> <span class="n">server</span><span class="o">.</span><span class="n">serverInstance</span><span class="p">()</span>
+
+            <span class="n">serverNameItem</span> <span class="o">=</span> <span class="n">server_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">serverNameItem</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">serverNameItem</span> <span class="o">=</span> <span class="n">TaurusTreeServerNameItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rootItem</span><span class="p">)</span>
+                <span class="n">rootItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">serverNameItem</span><span class="p">)</span>
+                <span class="n">server_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">serverNameItem</span>
+                <span class="c1"># rootItem.appendChild(serverNameItem)</span>
+
+            <span class="n">serverInstanceItem</span> <span class="o">=</span> <span class="n">TaurusTreeServerItem</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">serverNameItem</span><span class="p">)</span>
+            <span class="n">serverNameItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">serverInstanceItem</span><span class="p">)</span>
+
+            <span class="n">klass_names</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">getClassNames</span><span class="p">()</span>
+            <span class="n">device_names</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">getDeviceNames</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">klass_name</span> <span class="ow">in</span> <span class="n">klass_names</span><span class="p">:</span>
+                <span class="n">klass</span> <span class="o">=</span> <span class="n">klasses</span><span class="p">[</span><span class="n">klass_name</span><span class="p">]</span>
+                <span class="n">klassItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceClassItem</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="n">klass</span><span class="p">,</span> <span class="n">serverInstanceItem</span><span class="p">)</span>
+                <span class="n">serverInstanceItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">klassItem</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">dev_name</span> <span class="ow">in</span> <span class="n">device_names</span><span class="p">:</span>
+                    <span class="n">dev</span> <span class="o">=</span> <span class="n">devices</span><span class="p">[</span><span class="n">dev_name</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">dev</span><span class="o">.</span><span class="n">klass</span><span class="p">()</span> <span class="o">==</span> <span class="n">klass</span><span class="p">:</span>
+                        <span class="n">devItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="n">klassItem</span><span class="p">)</span>
+                        <span class="n">klassItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">devItem</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbDeviceClassModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceClassModel.html#taurus.qt.qtcore.model.TaurusDbDeviceClassModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbDeviceClassModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt model that structures class elements in a tree organized as:</span>
+
+<span class="sd">       * &lt;Class&gt;</span>
+<span class="sd">           * &lt;Device&gt;</span>
+<span class="sd">               * &lt;Attribute&gt;&quot;&quot;&quot;</span>
+    <span class="n">ColumnNames</span> <span class="o">=</span> <span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Alive&quot;</span><span class="p">,</span> <span class="s2">&quot;Host&quot;</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span><span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">,</span>
+                   <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">),</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span><span class="p">,</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span>
+
+<div class="viewcode-block" id="TaurusDbDeviceClassModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceClassModel.html#taurus.qt.qtcore.model.TaurusDbDeviceClassModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+
+        <span class="n">rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="n">klasses</span><span class="p">,</span> <span class="n">devices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">klasses</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
+        <span class="n">dev_nb</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">klass_name</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">getClassNames</span><span class="p">():</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="n">klasses</span><span class="p">[</span><span class="n">klass_name</span><span class="p">]</span>
+            <span class="n">klassItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceClassItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">klass</span><span class="p">,</span> <span class="n">rootItem</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dev_name</span> <span class="ow">in</span> <span class="n">klass</span><span class="o">.</span><span class="n">getDeviceNames</span><span class="p">():</span>
+                <span class="n">dev_nb</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">dev</span> <span class="o">=</span> <span class="n">devices</span><span class="p">[</span><span class="n">dev_name</span><span class="p">]</span>
+                <span class="n">devItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="n">klassItem</span><span class="p">)</span>
+                <span class="n">klassItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">devItem</span><span class="p">)</span>
+            <span class="n">rootItem</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">klassItem</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbBaseProxyModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseProxyModel.html#taurus.qt.qtcore.model.TaurusDbBaseProxyModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbBaseProxyModel</span><span class="p">(</span><span class="n">TaurusBaseProxyModel</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TaurusDbDeviceProxyModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceProxyModel.html#taurus.qt.qtcore.model.TaurusDbDeviceProxyModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbDeviceProxyModel</span><span class="p">(</span><span class="n">TaurusDbBaseProxyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt filter &amp; sort model for model for the taurus models:</span>
+<span class="sd">           - TaurusDbBaseModel</span>
+<span class="sd">           - TaurusDbDeviceModel</span>
+<span class="sd">           - TaurusDbSimpleDeviceModel</span>
+<span class="sd">           - TaurusDbPlainDeviceModel&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusDbDeviceProxyModel.filterAcceptsRow"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceProxyModel.html#taurus.qt.qtcore.model.TaurusDbDeviceProxyModel.filterAcceptsRow">[docs]</a>    <span class="k">def</span> <span class="nf">filterAcceptsRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sourceRow</span><span class="p">,</span> <span class="n">sourceParent</span><span class="p">):</span>
+        <span class="n">sourceModel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">sourceModel</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sourceRow</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sourceParent</span><span class="p">)</span>
+        <span class="n">treeItem</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="n">regexp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterRegExp</span><span class="p">()</span>
+
+        <span class="c1"># if domain node, check if it will potentially have any children</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeDeviceDomainItem</span><span class="p">):</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="n">treeItem</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+            <span class="n">devices</span> <span class="o">=</span> <span class="n">sourceModel</span><span class="o">.</span><span class="n">getDomainDevices</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceMatches</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">regexp</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># if family node, check if it will potentially have any children</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeDeviceFamilyItem</span><span class="p">):</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="n">treeItem</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+            <span class="n">family</span> <span class="o">=</span> <span class="n">treeItem</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+            <span class="n">devices</span> <span class="o">=</span> <span class="n">sourceModel</span><span class="o">.</span><span class="n">getFamilyDevices</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceMatches</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">regexp</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeDeviceItem</span><span class="p">)</span> <span class="ow">or</span> \
+           <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeSimpleDeviceItem</span><span class="p">)</span> <span class="ow">or</span> \
+           <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeDeviceMemberItem</span><span class="p">):</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="n">treeItem</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceMatches</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">regexp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TaurusDbDeviceProxyModel.deviceMatches"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceProxyModel.html#taurus.qt.qtcore.model.TaurusDbDeviceProxyModel.deviceMatches">[docs]</a>    <span class="k">def</span> <span class="nf">deviceMatches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">regexp</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+
+        <span class="c1"># if Qt.QString(name).contains(regexp):</span>
+        <span class="k">if</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># return Qt.QString(name).contains(regexp)</span>
+        <span class="k">return</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbServerProxyModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbServerProxyModel.html#taurus.qt.qtcore.model.TaurusDbServerProxyModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbServerProxyModel</span><span class="p">(</span><span class="n">TaurusDbBaseProxyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt filter &amp; sort model for the TaurusDbServerModel&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusDbServerProxyModel.filterAcceptsRow"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbServerProxyModel.html#taurus.qt.qtcore.model.TaurusDbServerProxyModel.filterAcceptsRow">[docs]</a>    <span class="k">def</span> <span class="nf">filterAcceptsRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sourceRow</span><span class="p">,</span> <span class="n">sourceParent</span><span class="p">):</span>
+        <span class="n">sourceModel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">sourceModel</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sourceRow</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sourceParent</span><span class="p">)</span>
+        <span class="n">treeItem</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="n">regexp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterRegExp</span><span class="p">()</span>
+
+        <span class="c1"># if server name node, check if it will potentially have any children</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeServerNameItem</span><span class="p">):</span>
+            <span class="n">serverName</span> <span class="o">=</span> <span class="n">treeItem</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+            <span class="n">serverInstances</span> <span class="o">=</span> <span class="n">sourceModel</span><span class="o">.</span><span class="n">getServerNameInstances</span><span class="p">(</span><span class="n">serverName</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">serverInstance</span> <span class="ow">in</span> <span class="n">serverInstances</span><span class="p">:</span>
+                <span class="c1"># if Qt.QString(serverInstance.name()).contains(regexp):</span>
+                <span class="k">if</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">serverInstance</span><span class="o">.</span><span class="n">name</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeServerItem</span><span class="p">):</span>
+            <span class="c1"># return treeItem.qdisplay().contains(regexp)</span>
+            <span class="k">return</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">treeItem</span><span class="o">.</span><span class="n">qdisplay</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDbDeviceClassProxyModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceClassProxyModel.html#taurus.qt.qtcore.model.TaurusDbDeviceClassProxyModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbDeviceClassProxyModel</span><span class="p">(</span><span class="n">TaurusDbBaseProxyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt filter &amp; sort model for the TaurusDbDeviceClassModel&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusDbDeviceClassProxyModel.filterAcceptsRow"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceClassProxyModel.html#taurus.qt.qtcore.model.TaurusDbDeviceClassProxyModel.filterAcceptsRow">[docs]</a>    <span class="k">def</span> <span class="nf">filterAcceptsRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sourceRow</span><span class="p">,</span> <span class="n">sourceParent</span><span class="p">):</span>
+        <span class="n">sourceModel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">sourceModel</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sourceRow</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sourceParent</span><span class="p">)</span>
+        <span class="n">treeItem</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeDeviceClassItem</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="n">regexp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterRegExp</span><span class="p">()</span>
+
+        <span class="c1"># return treeItem.qdisplay().contains(regexp)</span>
+        <span class="k">return</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">treeItem</span><span class="o">.</span><span class="n">qdisplay</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.panel.taurusconfigurationpanel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.panel.taurusconfigurationpanel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.panel.taurusconfigurationpanel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a set of basic taurus widgets based on QLineEdit&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusConfigurationPanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoConfigLineEdit&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusConfigLineEdit&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">getWidgetsOfType</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWritableWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusoperation</span> <span class="k">import</span> <span class="n">WriteAttrOperation</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">taurus4_deprecation</span>
+
+
+<div class="viewcode-block" id="TangoConfigLineEdit"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit">[docs]</a><span class="k">class</span> <span class="nc">TangoConfigLineEdit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qt_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">,</span> <span class="n">qt_parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWritableWidget</span><span class="p">,</span>
+                          <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notifyValueChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editingFinished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onEditingFinished</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_onEditingFinished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_autoApply</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notifyValueChanged</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusAttribute</span></div>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.postAttach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.postAttach">[docs]</a>    <span class="k">def</span> <span class="nf">postAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isAttached</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAttrInfoExMember</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.updatePendingOperations"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.updatePendingOperations">[docs]</a>    <span class="k">def</span> <span class="nf">updatePendingOperations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">wigdet_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">areStrValuesEqual</span><span class="p">(</span><span class="n">model_value</span><span class="p">,</span> <span class="n">wigdet_value</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_operations</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">operation</span> <span class="o">=</span> <span class="n">WriteAttrOperation</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">wigdet_value</span><span class="p">,</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">getOperationCallbacks</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_operations</span> <span class="o">=</span> <span class="p">[</span><span class="n">operation</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_operations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">v_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">v_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">v_str</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_getAttrInfoExMember</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="n">attrInfoEx</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">getAttributeInfoEx</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;_alarm&#39;</span> <span class="ow">in</span> <span class="n">member</span> <span class="ow">or</span> <span class="s1">&#39;_warning&#39;</span> <span class="ow">in</span> <span class="n">member</span><span class="p">:</span>
+            <span class="n">alarms</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">attrInfoEx</span><span class="p">,</span> <span class="s1">&#39;alarms&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">alarms</span><span class="p">,</span> <span class="n">member</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">attrInfoEx</span><span class="p">,</span> <span class="n">member</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_setAttrInfoExMember</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="n">attrInfoEx</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">getAttributeInfoEx</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;_alarm&#39;</span> <span class="ow">in</span> <span class="n">member</span> <span class="ow">or</span> <span class="s1">&#39;_warning&#39;</span> <span class="ow">in</span> <span class="n">member</span><span class="p">:</span>
+            <span class="n">alarms</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">attrInfoEx</span><span class="p">,</span> <span class="s1">&#39;alarms&#39;</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">alarms</span><span class="p">,</span> <span class="n">member</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">attrInfoEx</span><span class="p">,</span> <span class="n">member</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">model_obj</span><span class="o">.</span><span class="n">setConfigEx</span><span class="p">(</span><span class="n">attrInfoEx</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAttrInfoExMember</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.notifyValueChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.notifyValueChanged">[docs]</a>    <span class="k">def</span> <span class="nf">notifyValueChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">())</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">()):</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;TangoConfigLineEdit {color: </span><span class="si">%s</span><span class="s1">; font-weight: </span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span>\
+                    <span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;TangoConfigLineEdit {color: </span><span class="si">%s</span><span class="s1">; font-weight: </span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span>\
+                    <span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;normal&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">style</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.writeValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.writeValue">[docs]</a>    <span class="k">def</span> <span class="nf">writeValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setAttrInfoExMember</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;TangoConfigLineEdit {color: </span><span class="si">%s</span><span class="s1">; font-weight: </span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span>\
+                <span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;normal&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">style</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TangoConfigLineEdit.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notifyValueChanged</span><span class="p">()</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TangoConfigLineEdit.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoConfigLineEdit.html#taurus.qt.qtgui.panel.TangoConfigLineEdit.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.input&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:lineedit.png&quot;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT properties</span>
+<span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+
+    <span class="n">autoApply</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getAutoApply</span><span class="p">,</span>
+                                <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">setAutoApply</span><span class="p">,</span>
+                                <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">resetAutoApply</span><span class="p">)</span>
+
+    <span class="n">forcedApply</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getForcedApply</span><span class="p">,</span>
+                                  <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">setForcedApply</span><span class="p">,</span>
+                                  <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">resetForcedApply</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TaurusConfigLineEdit"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusConfigLineEdit.html#taurus.qt.qtgui.panel.TaurusConfigLineEdit">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfigLineEdit</span><span class="p">(</span><span class="n">TangoConfigLineEdit</span><span class="p">):</span>
+
+    <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;TangoConfigLineEdit&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qt_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">TangoConfigLineEdit</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qt_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusConfigLineEdit.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusConfigLineEdit.html#taurus.qt.qtgui.panel.TaurusConfigLineEdit.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div></div>
+
+
+<span class="nd">@UILoadable</span><span class="p">(</span><span class="n">with_ui</span><span class="o">=</span><span class="s1">&#39;_ui&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusConfigurationPanel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusConfigurationPanel.html#taurus.qt.qtgui.panel.TaurusConfigurationPanel">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfigurationPanel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">pushButtonOk</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onOk</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">pushButtonApply</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onApply</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">pushButtonCancel</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onCancel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">pushButtonRestore</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onRestore</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_onOk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_onApply</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_onCancel</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_onApply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">widgets</span> <span class="o">=</span> <span class="n">getWidgetsOfType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">TangoConfigLineEdit</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">widgets</span><span class="p">:</span>
+            <span class="n">param</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">getValue</span><span class="p">()</span> <span class="o">!=</span> <span class="n">param</span><span class="p">:</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">writeValue</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_onCancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_onRestore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">widgets</span> <span class="o">=</span> <span class="n">getWidgetsOfType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">TangoConfigLineEdit</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">widgets</span><span class="p">:</span>
+            <span class="n">param</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">getValue</span><span class="p">()</span> <span class="o">!=</span> <span class="n">param</span><span class="p">:</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusConfigurationPanel.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusConfigurationPanel.html#taurus.qt.qtgui.panel.TaurusConfigurationPanel.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">fullNameLineEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">+=</span> <span class="s1">&#39;#&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">labelConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;label&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">unitConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;unit&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">displayUnitConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;display_unit&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">standardUnitConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;standard_unit&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">formatConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;format&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">descriptionConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;description&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">valueMinConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;min_value&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">valueMaxConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;max_value&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">alarmMinConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;min_alarm&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">alarmMaxConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;max_alarm&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">warningMinConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;min_warning&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">warningMaxConfig</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;max_warning&#39;</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">attr_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">w1</span> <span class="o">=</span> <span class="n">TaurusConfigurationPanel</span><span class="p">()</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">pushButtonOk</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">pushButtonCancel</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

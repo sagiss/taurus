@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.application.taurusapplication &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.application.taurusapplication</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.application.taurusapplication</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides the base</span>
+<span class="sd">:class:`taurus.qt.qtgui.application.TaurusApplication` class.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusApplication&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">optparse</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">LogExceptHook</span><span class="p">,</span> <span class="n">Logger</span>
+<span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+
+
+<span class="k">class</span> <span class="nc">STD</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
+
+    <span class="n">FlushWaterMark</span> <span class="o">=</span> <span class="mi">1000</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">pure_text</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The STD Logger constructor</span>
+
+<span class="sd">        :param name: (str) the logger name (default is empty string)</span>
+<span class="sd">        :param parent: (Logger) the parent logger or None if no parent exists</span>
+<span class="sd">                       (default is None)</span>
+<span class="sd">        :param format: (str) the log message format or None to use the default</span>
+<span class="sd">                       log format (default is None)</span>
+<span class="sd">        :param std: std to forward write</span>
+<span class="sd">        :param pure_text: if True, writes the &#39;message&#39; parameter of the log</span>
+<span class="sd">                          message in a separate line preserving the</span>
+<span class="sd">                          indentation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">propagate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">std</span>
+
+    <span class="k">def</span> <span class="nf">addLogHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;When called, set to use a private handler and DON&#39;T send messages</span>
+<span class="sd">        to parent loggers (basically will act as an independent logging system</span>
+<span class="sd">        by itself)</span>
+
+<span class="sd">        :param handler: new handler&quot;&quot;&quot;</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">addLogHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">propagate</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_handlers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">+=</span> <span class="n">msg</span>
+            <span class="c1"># while there is no new line, just accumulate the buffer</span>
+            <span class="n">msgl</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">msgl</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> \
+               <span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">or</span> <span class="n">msg</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span>
+                    <span class="n">msgl</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FlushWaterMark</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">std</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">buff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span>
+            <span class="k">if</span> <span class="n">buff</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="c1"># take the &#39;\n&#39; because the output is a list of strings, each to be</span>
+            <span class="c1"># interpreted as a separate line in the client</span>
+            <span class="k">if</span> <span class="n">buff</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">:</span>
+                <span class="n">buff</span> <span class="o">=</span> <span class="n">buff</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_handlers</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Logger</span><span class="o">.</span><span class="n">Console</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">buff</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">std</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="TaurusApplication"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication">[docs]</a><span class="k">class</span> <span class="nc">TaurusApplication</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A QApplication that additionally parses the command line looking</span>
+<span class="sd">    for taurus options. This is done using the</span>
+<span class="sd">    :mod:`taurus.core.util.argparse`.</span>
+<span class="sd">    To create a TaurusApplication object you should use the same parameters</span>
+<span class="sd">    as in QApplication.</span>
+
+<span class="sd">    The optional keyword parameters:</span>
+<span class="sd">        - app_name: (str) application name</span>
+<span class="sd">        - app_version: (str) application version</span>
+<span class="sd">        - org_name: (str) organization name</span>
+<span class="sd">        - org_domain: (str) organization domain</span>
+
+<span class="sd">    ...And at last the &#39;cmd_line_parser&#39; which should be an instance of</span>
+<span class="sd">    :class:`optparse.OptionParser`. Simple example::</span>
+
+<span class="sd">        import sys</span>
+<span class="sd">        import taurus.qt.qtgui.application</span>
+<span class="sd">        import taurus.qt.qtgui.display</span>
+
+<span class="sd">        app = taurus.qt.qtgui.application.TaurusApplication()</span>
+
+<span class="sd">        w = taurus.qt.qtgui.display.TaurusLabel()</span>
+<span class="sd">        w.model = &#39;sys/tg_test/1/double_scalar&#39;</span>
+<span class="sd">        w.show()</span>
+
+<span class="sd">        sys.exit(app.exec_())</span>
+
+<span class="sd">    A more complex example showing how to add options and a usage help::</span>
+
+<span class="sd">        import sys</span>
+<span class="sd">        import taurus.core.util.argparse</span>
+<span class="sd">        import taurus.qt.qtgui.application</span>
+<span class="sd">        import taurus.qt.qtgui.display</span>
+
+<span class="sd">        parser = taurus.core.util.argparse.get_taurus_parser()</span>
+<span class="sd">        parser.usage = &quot;%prog [options] &lt;model&gt;&quot;</span>
+<span class="sd">        parser.add_option(&quot;--hello&quot;)</span>
+
+<span class="sd">        app = taurus.qt.qtgui.application.TaurusApplication(cmd_line_parser=parser)</span>
+<span class="sd">        args = app.get_command_line_args()</span>
+<span class="sd">        if len(args) &lt; 1:</span>
+<span class="sd">            sys.stderr.write(&quot;Need to supply model attribute&quot;)</span>
+<span class="sd">            sys.exit(1)</span>
+
+<span class="sd">        w = taurus.qt.qtgui.display.TaurusLabel()</span>
+<span class="sd">        w.model = args[1]</span>
+<span class="sd">        w.show()</span>
+
+<span class="sd">        sys.exit(app.exec_())</span>
+
+<span class="sd">    For more details on taurus command line parsing check</span>
+<span class="sd">    :mod:`taurus.core.util.argparse`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The constructor. Parameters are the same as QApplication plus a</span>
+<span class="sd">        keyword parameter: &#39;cmd_line_parser&#39; which should be an instance of</span>
+<span class="sd">        :class:`optparse.OptionParser`&quot;&quot;&quot;</span>
+
+        <span class="c1"># lock to safely get singleton elements (like IPython taurus</span>
+        <span class="c1"># console app)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;argv&#39;</span><span class="p">,</span> <span class="p">[]),</span>
+
+        <span class="n">parser</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">app_name</span><span class="p">,</span> <span class="n">app_version</span><span class="p">,</span> <span class="n">org_name</span><span class="p">,</span> <span class="n">org_domain</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s1">&#39;app_name&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">app_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;app_name&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;app_version&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">app_version</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;app_version&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;org_name&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">org_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;org_name&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;org_domain&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">org_domain</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;org_domain&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;cmd_line_parser&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cmd_line_parser&#39;</span><span class="p">)</span>
+
+        <span class="c1">#######################################################################</span>
+        <span class="c1"># Workaround for XInitThreads-related crash.</span>
+        <span class="c1"># Sometimes (e.g. running `taurusgui example01`) one gets the following:</span>
+        <span class="c1"># [xcb] Unknown request in queue while dequeuing</span>
+        <span class="c1"># [xcb] Most likely this is a multi-threaded client and XInitThreads has not been called</span>
+        <span class="c1"># [xcb] Aborting, sorry about that.</span>
+        <span class="c1">#</span>
+        <span class="c1"># According to http://stackoverflow.com/a/31967769 , it is fixed by:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AA_X11InitThreads</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>  <span class="c1"># Qt &lt; 4.8 does not define AA_X11InitThreads</span>
+        <span class="c1">######################################################################</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+        <span class="n">Logger</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_out</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_err</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">app_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setApplicationName</span><span class="p">(</span><span class="n">app_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">app_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setApplicationVersion</span><span class="p">(</span><span class="n">app_version</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">org_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setOrganizationName</span><span class="p">(</span><span class="n">org_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">org_domain</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setOrganizationDomain</span><span class="p">(</span><span class="n">org_domain</span><span class="p">)</span>
+
+        <span class="c1"># if the constructor was called without a parser or with a parser that</span>
+        <span class="c1"># doesn&#39;t contain version information and with an application</span>
+        <span class="c1"># name and/or version, then add the --version capability</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">app_version</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">app_version</span>
+            <span class="k">if</span> <span class="n">app_name</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">app_name</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">app_version</span>
+            <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="n">parser</span><span class="o">.</span><span class="n">_add_version_option</span><span class="p">()</span>
+
+        <span class="n">p</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> \
+            <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">init_taurus_args</span><span class="p">(</span>
+                <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_parser</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_options</span> <span class="o">=</span> <span class="n">opt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__registerQtLogger</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__registerExtensions</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__redirect_std</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__registerQtLogger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">taurus.qt.qtcore.util</span>
+        <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">initTaurusQtLogger</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__registerExtensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Registers taurus Qt extensions&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">sardana.taurus.qt.qtcore.tango.sardana</span>
+            <span class="n">sardana</span><span class="o">.</span><span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">tango</span><span class="o">.</span><span class="n">sardana</span><span class="o">.</span><span class="n">registerExtensions</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed to load sardana extensions&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">taurus.core.tango.img</span>
+            <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">tango</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">registerExtensions</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed to load image extensions&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__redirect_std</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Internal method to redirect stdout and stderr to log messages&quot;&quot;&quot;</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="n">Logger</span><span class="o">.</span><span class="n">Critical</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;CONSOLE&#39;</span><span class="p">)</span>
+        <span class="c1"># only redirect if display hook has not been set (IPython does it)</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">displayhook</span> <span class="o">==</span> <span class="n">sys</span><span class="o">.</span><span class="n">__displayhook__</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_out</span> <span class="o">=</span> <span class="n">STD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;OUT&quot;</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_err</span> <span class="o">=</span> <span class="n">STD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ERR&quot;</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_err</span>
+
+    <span class="k">def</span> <span class="nf">__buildLogFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/tmp&#39;</span><span class="p">)</span>
+        <span class="n">appName</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">applicationName</span><span class="p">())</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">appName</span><span class="p">:</span>
+            <span class="n">appName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dirName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">appName</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dirName</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirName</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">appName</span> <span class="o">+</span> <span class="s1">&#39;.log&#39;</span>
+        <span class="n">fileName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirName</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fileName</span>
+
+<div class="viewcode-block" id="TaurusApplication.get_command_line_parser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.get_command_line_parser">[docs]</a>    <span class="k">def</span> <span class="nf">get_command_line_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the :class:`optparse.OptionParser` used to parse the</span>
+<span class="sd">        command line parameters.</span>
+
+<span class="sd">        :return: the parser used in the command line</span>
+<span class="sd">        :rtype: :class:`optparse.OptionParser`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_parser</span></div>
+
+<div class="viewcode-block" id="TaurusApplication.get_command_line_options"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.get_command_line_options">[docs]</a>    <span class="k">def</span> <span class="nf">get_command_line_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the :class:`optparse.Option` that resulted from parsing the</span>
+<span class="sd">        command line parameters.</span>
+
+<span class="sd">        :return: the command line options</span>
+<span class="sd">        :rtype: :class:`optparse.Option`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_options</span></div>
+
+<div class="viewcode-block" id="TaurusApplication.get_command_line_args"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.get_command_line_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_command_line_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the list of arguments that resulted from parsing the</span>
+<span class="sd">        command line parameters.</span>
+
+<span class="sd">        :return: the command line arguments</span>
+<span class="sd">        :rtype: list of strings&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_args</span></div>
+
+<div class="viewcode-block" id="TaurusApplication.setTaurusStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.setTaurusStyle">[docs]</a>    <span class="k">def</span> <span class="nf">setTaurusStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">styleName</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets taurus application style to the given style name</span>
+
+<span class="sd">        :param styleName: the new style name to be applied</span>
+<span class="sd">        :type styleName: str&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.style</span>
+        <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">setTaurusStyle</span><span class="p">(</span><span class="n">styleName</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusApplication.basicConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.basicConfig">[docs]</a>    <span class="k">def</span> <span class="nf">basicConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxBytes</span><span class="o">=</span><span class="mf">1E7</span><span class="p">,</span> <span class="n">backupCount</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                    <span class="n">with_gui_exc_handler</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+        <span class="c1"># prepare exception handler to report exceptions as error log messages</span>
+        <span class="c1"># and to taurus message box (if with_gui is set)</span>
+        <span class="n">hook_to</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">with_gui_exc_handler</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.dialog</span>
+            <span class="n">hook_to</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">TaurusExceptHookMessageBox</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">LogExceptHook</span><span class="p">(</span><span class="n">hook_to</span><span class="o">=</span><span class="n">hook_to</span><span class="p">)</span>
+
+        <span class="c1"># create a file log handler</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_file_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">log_file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buildLogFileName</span><span class="p">()</span>
+            <span class="n">f_h</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span><span class="n">log_file_name</span><span class="p">,</span>
+                                                       <span class="n">maxBytes</span><span class="o">=</span><span class="n">maxBytes</span><span class="p">,</span> <span class="n">backupCount</span><span class="o">=</span><span class="n">backupCount</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">addRootLogHandler</span><span class="p">(</span><span class="n">f_h</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_out</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stdout__</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_out</span><span class="o">.</span><span class="n">addLogHandler</span><span class="p">(</span><span class="n">f_h</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_err</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stderr__</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_err</span><span class="o">.</span><span class="n">addLogHandler</span><span class="p">(</span><span class="n">f_h</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Logs will be saved in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">log_file_name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; could not be created. Logs will not be stored&quot;</span><span class="p">,</span>
+                         <span class="n">log_file_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error description&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TaurusApplication.exec_"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.exec_">[docs]</a>    <span class="k">def</span> <span class="nf">exec_</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># TODO: substitute this ugly hack by some more general mechanism</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">_DEPRECATION_COUNT</span>
+        <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">info</span>
+        <span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*********************</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">_DEPRECATION_COUNT</span><span class="o">.</span><span class="n">pretty</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

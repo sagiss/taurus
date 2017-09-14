@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.util.argparse &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="taurus.core.util" href="../util.html"/>
+        <link rel="next" title="taurus.core.util.decorator" href="decorator.html"/>
+        <link rel="prev" title="taurus.core.util" href="../util.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../core.html"><code class="docutils literal"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+      
+          <li><a href="../util.html"><code class="docutils literal"><span class="pre">taurus.core.util</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">taurus.core.util.argparse</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../_sources/devel/api/taurus/core/util/argparse.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-taurus.core.util.argparse">
+<span id="taurus-core-util-argparse"></span><h1><a class="reference internal" href="#module-taurus.core.util.argparse" title="taurus.core.util.argparse"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.util.argparse</span></code></a><a class="headerlink" href="#module-taurus.core.util.argparse" title="Permalink to this headline">¶</a></h1>
+<p>Helper command line parser for taurus based on <a class="reference external" href="https://docs.python.org/dev/library/optparse.html#module-optparse" title="(in Python v3.7)"><code class="xref py py-mod docutils literal"><span class="pre">optparse</span></code></a>.
+Suppose you have an application file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="k">import</span> <span class="n">Qt</span>
+
+
+<span class="k">class</span> <span class="nc">GUI</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span> <span class="k">as</span> <span class="nn">argparse</span>
+
+    <span class="n">parser</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">init_taurus_args</span><span class="p">()</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">GUI</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The call to <a class="reference internal" href="#taurus.core.util.argparse.init_taurus_args" title="taurus.core.util.argparse.init_taurus_args"><code class="xref py py-func docutils literal"><span class="pre">taurus.core.util.argparse.init_taurus_args()</span></code></a> will initialize
+taurus environment based on the command line options given by the user.
+Currently, the known options are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">--help</span></code> prints the total number of available options</li>
+<li><code class="docutils literal"><span class="pre">--taurus-log-level</span></code> sets the taurus log level</li>
+<li><code class="docutils literal"><span class="pre">--tango-host</span></code> sets the default tango host</li>
+<li><code class="docutils literal"><span class="pre">--taurus-polling-period</span></code> sets the default taurus global polling period (milliseconds)</li>
+<li><code class="docutils literal"><span class="pre">--taurus-serialization-mode</span></code> sets the default taurus serialization mode</li>
+<li><code class="docutils literal"><span class="pre">--remote-console-port</span></code> enables remote debugging using the given port</li>
+</ol>
+</div></blockquote>
+<p>You can easily extend the taurus options with your application specific options.
+Suppose you want to add an option like <code class="docutils literal"><span class="pre">--model=&lt;model</span> <span class="pre">name&gt;</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span> <span class="k">as</span> <span class="nn">argparse</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">(</span><span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_usage</span><span class="p">(</span><span class="s2">&quot;%prog [options] &lt;special item&gt;&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;my own GUI application&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--model&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">init_taurus_args</span><span class="p">(</span><span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">GUI</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+<p class="rubric">Functions</p>
+<dl class="function">
+<dt id="taurus.core.util.argparse.get_taurus_parser">
+<code class="descname">get_taurus_parser</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/argparse/taurusargparse.html#get_taurus_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.argparse.get_taurus_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a> initialized with a
+<a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionGroup" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionGroup</span></code></a> containning some taurus options.
+If a parser is given as parameter then it uses this parser instead of
+creating a new one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a>) &#8211; an option parser or None (default) to create a new parser</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an option parser or the given parser if it is not None</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.argparse.init_taurus_args">
+<code class="descname">init_taurus_args</code><span class="sig-paren">(</span><em>parser=None</em>, <em>args=None</em>, <em>values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/argparse/taurusargparse.html#init_taurus_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.argparse.init_taurus_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the command line using <a class="reference internal" href="#taurus.core.util.argparse.parse_taurus_args" title="taurus.core.util.argparse.parse_taurus_args"><code class="xref py py-func docutils literal"><span class="pre">taurus.core.util.argparse.parse_taurus_args()</span></code></a>.</p>
+<p>After the command line is parsed, actions are taken on each recognized parameter.
+For example, the taurus log level and the default tango host are set accordingly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a>) &#8211; an option parser or None (default) to create a new parser</li>
+<li><strong>args</strong> (<em>seq&lt;str&gt;</em>) &#8211; the list of arguments to process (default is None meaning: sys.argv[1:])</li>
+<li><strong>values</strong> &#8211; a <code class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></code> object to store option arguments in
+(default is None meaning: a new instance of Values) - if you give an
+existing object, the option defaults will not be initialized on it</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of three elements: parser, options, args</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></code>, seq&lt;str&gt;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.argparse.parse_taurus_args">
+<code class="descname">parse_taurus_args</code><span class="sig-paren">(</span><em>parser=None</em>, <em>args=None</em>, <em>values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/argparse/taurusargparse.html#parse_taurus_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.argparse.parse_taurus_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the command line. If parser is not given, then a new parser
+is created. In any case, the parser is initialized using the
+<a class="reference internal" href="#taurus.core.util.argparse.get_taurus_parser" title="taurus.core.util.argparse.get_taurus_parser"><code class="xref py py-func docutils literal"><span class="pre">taurus.core.util.argparse.get_taurus_parser()</span></code></a>.
+args and values are the optional parameters that will be given when
+executing <code class="xref py py-meth docutils literal"><span class="pre">optparse.OptionParser.parse_args()</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a>) &#8211; an option parser or None (default) to create a new parser</li>
+<li><strong>args</strong> (<em>seq&lt;str&gt;</em>) &#8211; the list of arguments to process (default is None meaning: sys.argv[1:])</li>
+<li><strong>values</strong> &#8211; a <code class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></code> object to store option arguments in
+(default is None meaning: a new instance of Values) - if you give an
+existing object, the option defaults will not be initialized on it</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of three elements: parser, options, args</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></code>, seq&lt;str&gt;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.argparse.split_taurus_args">
+<code class="descname">split_taurus_args</code><span class="sig-paren">(</span><em>parser</em>, <em>args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/argparse/taurusargparse.html#split_taurus_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.argparse.split_taurus_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits arguments into valid parser arguments and non valid parser
+arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a>) &#8211; an option parser</li>
+<li><strong>args</strong> (<em>seq&lt;str&gt;</em>) &#8211; the list of arguments to process
+(default is None meaning: sys.argv)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple of two elements: parser args, non parser args</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">seq&lt;seq&lt;str&gt;, seq&lt;str&gt;&gt;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="decorator.html" class="btn btn-neutral float-right" title="taurus.core.util.decorator" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../util.html" class="btn btn-neutral" title="taurus.core.util" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

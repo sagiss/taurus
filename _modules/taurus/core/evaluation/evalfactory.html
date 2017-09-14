@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.evaluation.evalfactory &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.evaluation.evalfactory</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.evaluation.evalfactory</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">evaluation module. See __init__.py for more detailed documentation</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;EvaluationFactory&#39;</span><span class="p">]</span>
+
+
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">evalattribute</span> <span class="k">import</span> <span class="n">EvaluationAttribute</span>
+<span class="kn">from</span> <span class="nn">evalauthority</span> <span class="k">import</span> <span class="n">EvaluationAuthority</span>
+<span class="kn">from</span> <span class="nn">evaldevice</span> <span class="k">import</span> <span class="n">EvaluationDevice</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span><span class="p">,</span> <span class="n">DoubleRegistration</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusfactory</span> <span class="k">import</span> <span class="n">TaurusFactory</span>
+
+
+<div class="viewcode-block" id="EvaluationFactory"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory">[docs]</a><span class="k">class</span> <span class="nc">EvaluationFactory</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">TaurusFactory</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Singleton class that provides Evaluation related objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">elementTypesMap</span> <span class="o">=</span> <span class="p">{</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Authority</span><span class="p">:</span> <span class="n">EvaluationAuthority</span><span class="p">,</span>
+                       <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">:</span> <span class="n">EvaluationDevice</span><span class="p">,</span>
+                       <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span> <span class="n">EvaluationAttribute</span>
+                       <span class="p">}</span>
+    <span class="n">schemes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;eval&quot;</span><span class="p">,</span> <span class="s2">&quot;evaluation&quot;</span><span class="p">)</span>
+    <span class="n">DEFAULT_DEVICE</span> <span class="o">=</span> <span class="s1">&#39;@DefaultEvaluator&#39;</span>
+    <span class="n">DEFAULT_AUTHORITY</span> <span class="o">=</span> <span class="s1">&#39;//localhost&#39;</span>
+    <span class="n">DEFAULT_DATABASE</span> <span class="o">=</span> <span class="s1">&#39;_DefaultEvalDB&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initialization. Nothing to be done here for now.&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="EvaluationFactory.init"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Singleton instance initialization.&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusFactory</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_attrs</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_devs</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_configs</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;eval&#39;</span></div>
+
+<div class="viewcode-block" id="EvaluationFactory.findObjectClass"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.findObjectClass">[docs]</a>    <span class="k">def</span> <span class="nf">findObjectClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">absolute_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Operation models are always OperationAttributes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">EvaluationDevice</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">EvaluationDevice</span>
+        <span class="k">elif</span> <span class="n">EvaluationAttribute</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">EvaluationAttribute</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Not able to find Object class for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">absolute_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="EvaluationFactory.getAuthority"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getAuthority">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthority</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the EvaluationDatabase object.</span>
+
+<span class="sd">        :param db_name: (str) this is ignored because only one database is supported</span>
+
+<span class="sd">        :return: (EvaluationDatabase)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;eval://localhost&#39;</span>
+
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthorityNameValidator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid Evaluation authority name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_auth&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="n">EvaluationAuthority</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_AUTHORITY</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span></div>
+
+<div class="viewcode-block" id="EvaluationFactory.getDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the object corresponding to the given device name. If the</span>
+<span class="sd">        corresponding device already exists, the existing instance is returned.</span>
+<span class="sd">        Otherwise a new instance is stored and returned.</span>
+
+<span class="sd">        :param dev_name: (str) the device name string. See</span>
+<span class="sd">                         :mod:`taurus.core.evaluation` for valid device names</span>
+
+<span class="sd">        :return: (EvaluationDevice)</span>
+
+<span class="sd">        @throws TaurusException if the given name is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># try to see if the given name is already a known full_name</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># find the full_name and see if we already know it</span>
+            <span class="n">validator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDeviceNameValidator</span><span class="p">()</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid evaluator device name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                      <span class="n">dev_name</span><span class="p">)</span>
+            <span class="n">fullname</span><span class="p">,</span> <span class="n">normalname</span><span class="p">,</span> <span class="n">devname</span> <span class="o">=</span> <span class="n">names</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="c1"># if we do not know it, create the dev and store it in cache</span>
+            <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+                <span class="n">groups</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+                <span class="n">DevClass</span> <span class="o">=</span> <span class="n">EvaluationDevice</span>
+                <span class="n">_safedict</span> <span class="o">=</span> <span class="p">{}</span>
+
+                <span class="k">if</span> <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;_evaldotname&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">modulename</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_evalmodname&#39;</span><span class="p">)</span>
+                    <span class="n">classname</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_evalclassname&#39;</span><span class="p">)</span>
+                    <span class="n">classargs</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_evalclassparenths&#39;</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="kn">import</span> <span class="nn">importlib</span>
+                        <span class="n">m</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">modulename</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Problem importing &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">modulename</span><span class="p">)</span>
+                        <span class="k">raise</span>
+                    <span class="k">if</span> <span class="n">classname</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                        <span class="c1"># Add symbols from the module</span>
+                        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+                            <span class="n">_safedict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">klass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">classname</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">classargs</span><span class="p">:</span>
+                            <span class="c1"># Instantiate and add the instance to the safe dict</span>
+                            <span class="kn">from</span> <span class="nn">taurus.core.util.parse_args</span> <span class="k">import</span> <span class="n">parse_args</span>
+                            <span class="n">a</span><span class="p">,</span> <span class="n">kw</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">(</span><span class="n">classargs</span><span class="p">,</span> <span class="n">strip_pars</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                            <span class="n">instancename</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_evalinstname&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;self&quot;</span>
+                            <span class="n">instance</span> <span class="o">=</span> <span class="n">klass</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                            <span class="n">_safedict</span><span class="p">[</span><span class="n">instancename</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c1"># Use given class instead of EvaluationDevice</span>
+                            <span class="n">DevClass</span> <span class="o">=</span> <span class="n">klass</span>
+
+                <span class="c1"># Get authority (creating if necessary)</span>
+                <span class="n">auth_name</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;authority&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_AUTHORITY</span>
+                <span class="n">authority</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">(</span><span class="n">auth_name</span><span class="p">)</span>
+                <span class="c1"># Create Device (and store it in cache via self._storeDev)</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">DevClass</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">authority</span><span class="p">,</span>
+                             <span class="n">storeCallback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_storeDev</span><span class="p">)</span>
+
+                <span class="n">d</span><span class="o">.</span><span class="n">addSafe</span><span class="p">(</span><span class="n">_safedict</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span></div>
+
+<div class="viewcode-block" id="EvaluationFactory.getAttribute"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the object corresponding to the given attribute name. If the</span>
+<span class="sd">        corresponding attribute already exists, the existing instance is</span>
+<span class="sd">        returned. Otherwise a new instance is stored and returned. The evaluator</span>
+<span class="sd">        device associated to this attribute will also be created if necessary.</span>
+
+<span class="sd">        :param attr_name: (str) the attribute name string. See</span>
+<span class="sd">                          :mod:`taurus.core.evaluation` for valid attribute</span>
+<span class="sd">                          names</span>
+
+<span class="sd">        Any aditional keyword arguments will be passed directly to the</span>
+<span class="sd">        constructor of `:class:EvaluationAttribute`</span>
+
+<span class="sd">        :return: (EvaluationAttribute)</span>
+
+<span class="sd">        @throws TaurusException if the given name is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">attr_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># first try with the given name</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if not, try with the full name</span>
+            <span class="n">validator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttributeNameValidator</span><span class="p">()</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span>
+                    <span class="s2">&quot;Invalid evaluation attribute name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">attr_name</span><span class="p">)</span>
+            <span class="n">fullname</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if the full name is not there, create one</span>
+                <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">validator</span><span class="o">.</span><span class="n">getDeviceName</span><span class="p">(</span><span class="n">attr_name</span><span class="p">))</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;storeCallback&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storeAttr</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;pollingPeriod&#39;</span><span class="p">):</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pollingPeriod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDefaultPollingPeriod</span><span class="p">()</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">EvaluationAttribute</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">a</span></div>
+
+    <span class="k">def</span> <span class="nf">_storeDev</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exists</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">exists</span> <span class="o">==</span> <span class="n">dev</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">DoubleRegistration</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before with a different object!&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">DoubleRegistration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_devs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dev</span>
+
+    <span class="k">def</span> <span class="nf">_storeAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exists</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">exists</span> <span class="o">==</span> <span class="n">attr</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">DoubleRegistration</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before with a different object!&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">DoubleRegistration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_attrs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span>
+
+    <span class="k">def</span> <span class="nf">_storeConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="c1">#name = config.getFullName()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">fullname</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_configs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exists</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">exists</span> <span class="o">==</span> <span class="n">config</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">DoubleRegistration</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before with a different object!&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">DoubleRegistration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span>
+
+<div class="viewcode-block" id="EvaluationFactory.getAuthorityNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getAuthorityNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthorityNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return EvaluationAuthorityNameValidator&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">evalvalidator</span>
+        <span class="k">return</span> <span class="n">evalvalidator</span><span class="o">.</span><span class="n">EvaluationAuthorityNameValidator</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EvaluationFactory.getDeviceNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getDeviceNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return EvaluationDeviceNameValidator&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">evalvalidator</span>
+        <span class="k">return</span> <span class="n">evalvalidator</span><span class="o">.</span><span class="n">EvaluationDeviceNameValidator</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EvaluationFactory.getAttributeNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getAttributeNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getAttributeNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return EvaluationAttributeNameValidator&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">evalvalidator</span>
+        <span class="k">return</span> <span class="n">evalvalidator</span><span class="o">.</span><span class="n">EvaluationAttributeNameValidator</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

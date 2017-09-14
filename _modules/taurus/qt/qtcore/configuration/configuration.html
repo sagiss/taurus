@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtcore.configuration.configuration &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtcore.configuration.configuration</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtcore.configuration.configuration</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides the set of base classes designed to provide</span>
+<span class="sd">configuration features to the classes that inherit from them&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;configurableProperty&quot;</span><span class="p">,</span> <span class="s2">&quot;BaseConfigurableClass&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+
+<div class="viewcode-block" id="configurableProperty"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_configurableProperty.html#taurus.qt.qtcore.configuration.configurableProperty">[docs]</a><span class="k">class</span> <span class="nc">configurableProperty</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;A dummy class used to handle properties with the configuration API</span>
+
+<span class="sd">    .. warning:: this class is intended for internal use by the configuration</span>
+<span class="sd">                 package. Do not instantiate it directly in your code.</span>
+<span class="sd">                 Use :meth:`BaseConfigurableClass.registerConfigProperty` instead.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">fget</span><span class="p">,</span> <span class="n">fset</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fget</span> <span class="o">=</span> <span class="n">fget</span>  <span class="c1"># this may either be a method or a method name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fset</span> <span class="o">=</span> <span class="n">fset</span>  <span class="c1"># this may either be a method or a method name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">obj</span>  <span class="c1"># obj is only needed if fset or fget are method names</span>
+
+<div class="viewcode-block" id="configurableProperty.createConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_configurableProperty.html#taurus.qt.qtcore.configuration.configurableProperty.createConfig">[docs]</a>    <span class="k">def</span> <span class="nf">createConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">allowUnpickable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns value returned by the fget function of this property. the allowUnpickable parameter is ignored&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fget</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>  <span class="c1"># fget is not a method but a method name...</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fget</span><span class="p">)()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fget</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="configurableProperty.applyConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_configurableProperty.html#taurus.qt.qtcore.configuration.configurableProperty.applyConfig">[docs]</a>    <span class="k">def</span> <span class="nf">applyConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;calls the fset function for this property with the given value. The depth parameter is ignored&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fget</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>  <span class="c1"># fget is not a method but a method name...</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">)(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="configurableProperty.objectName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_configurableProperty.html#taurus.qt.qtcore.configuration.configurableProperty.objectName">[docs]</a>    <span class="k">def</span> <span class="nf">objectName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the name of this property&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div></div>
+
+
+<div class="viewcode-block" id="BaseConfigurableClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass">[docs]</a><span class="k">class</span> <span class="nc">BaseConfigurableClass</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A base class defining the API for configurable objects.</span>
+
+<span class="sd">    .. note:: One implicit requisite is that a configurable object must also provide a</span>
+<span class="sd">              `meth:`objectName` method which returns the object name. This is typically</span>
+<span class="sd">              fulfilled by inheriting from QObject.</span>
+
+<span class="sd">    Using objects that inherit from :class:`BaseConfigurableClass` automates</span>
+<span class="sd">    saving and restoring of application settings and also enables the use of</span>
+<span class="sd">    perspectives in Taurus GUIs.</span>
+
+<span class="sd">    The basic idea is that each object/widget in your application is responsible</span>
+<span class="sd">    for providing a dictionary containing information on its properties (see</span>
+<span class="sd">    :meth:`createConfig`). The same object/widget is also responsible for</span>
+<span class="sd">    restoring such properties when provided with a configuration dictionary (see</span>
+<span class="sd">    :meth:`applyConfig`).</span>
+
+<span class="sd">    For a certain property to be saved/restored it is usually enough to</span>
+<span class="sd">    *register* it using :meth:`registerConfigProperty`. When the objects are</span>
+<span class="sd">    structured in a hierarchical way (e.g. as the widgets in a Qt application),</span>
+<span class="sd">    the parent widget can (should) delegate the save/restore of its children to</span>
+<span class="sd">    the children themselves. This delegation is done by registering the children</span>
+<span class="sd">    using :meth:`registerConfigDelegate`.</span>
+
+<span class="sd">    Consider the following example: I am creating a groupbox container which</span>
+<span class="sd">    contains a :class:`TaurusForm` and I want to save/restore the state of the</span>
+<span class="sd">    checkbox and the properties of the form::</span>
+
+<span class="sd">        #The class looks like this:</span>
+<span class="sd">        class MyBox(Qt.QGroupBox, BaseConfigurableClass):</span>
+<span class="sd">            def __init__(self):</span>
+<span class="sd">                ...</span>
+<span class="sd">                self.form = TaurusForm()</span>
+<span class="sd">                ...</span>
+<span class="sd">                self.registerConfigProperty(self.isChecked, self.setChecked, &#39;checked&#39;)</span>
+<span class="sd">                self.registerConfigDelegate(self.form)   #the TaurusForm already handles its own configuration!</span>
+<span class="sd">                ...</span>
+
+<span class="sd">        #and we can retrieve the configuration doing:</span>
+<span class="sd">        b1 = MyBox()</span>
+<span class="sd">        b1.setChecked(True)  #checked is a registered property of MyBox class</span>
+<span class="sd">        b1.form.setModifiableByUser(True)  #modifiableByUser is a registered property of a TaurusForm</span>
+<span class="sd">        cfg = b1.createConfig()  #we get the configuration as a dictionary</span>
+<span class="sd">        ...</span>
+<span class="sd">        b2 = MyBox()</span>
+<span class="sd">        b2.applyConfig(cfg)  #now b2 has the same configuration as b1 when cfg was created</span>
+
+<span class="sd">    :meth:`createConfig` and :meth:`applyConfig` methods use a dictionary for</span>
+<span class="sd">    passing the configuration, but :class:`BaseConfigurableClass` also provides</span>
+<span class="sd">    some other convenience methods for working with files</span>
+<span class="sd">    (:meth:`saveConfigFile` and :meth:`loadConfigFile`) or as QByteArrays</span>
+<span class="sd">    (:meth:`createQConfig` and :meth:`applyQConfig`)</span>
+
+<span class="sd">    Finally, we recommend to use :class:`TaurusMainWindow` for all Taurus GUIs</span>
+<span class="sd">    since it automates all the steps for *saving properties when closing* and</span>
+<span class="sd">    *restoring the settings on startup*. It also provides a mechanism for</span>
+<span class="sd">    implementing &quot;perspectives&quot; in your application.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">defaultConfigRecursionDepth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="c1"># the latest element of this list is considered the current version</span>
+    <span class="n">_supportedConfigVersions</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;__UNVERSIONED__&quot;</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetConfigurableItems</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BaseConfigurableClass.isTaurusConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.isTaurusConfig">[docs]</a>    <span class="k">def</span> <span class="nf">isTaurusConfig</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Checks if the given argument has the structure of a configdict</span>
+
+<span class="sd">        :param x: (object) object to test</span>
+
+<span class="sd">        :return: (bool) True if it is a configdict, False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">,</span> <span class="s1">&#39;__itemConfigurations__&#39;</span><span class="p">,</span> <span class="s1">&#39;ConfigVersion&#39;</span><span class="p">,</span> <span class="s1">&#39;__pickable__&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;__itemConfigurations__&#39;</span><span class="p">]:</span>
+                <span class="nb">print</span> <span class="s1">&#39;missing configuration for &quot;</span><span class="si">%s</span><span class="s1">&quot; in </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.createConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.createConfig">[docs]</a>    <span class="k">def</span> <span class="nf">createConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">allowUnpickable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a dictionary containing configuration information about the</span>
+<span class="sd">        current state of the object.</span>
+
+<span class="sd">        In most usual situations, using :meth:`registerConfigProperty` and</span>
+<span class="sd">        :meth:`registerConfigDelegate`, should be enough to cover all needs using</span>
+<span class="sd">        this method, although it can be reimplemented in children classes to support</span>
+<span class="sd">        very specific configurations.</span>
+
+<span class="sd">        By default, meth:`createQConfig` and meth:`saveConfigFile` call to this</span>
+<span class="sd">        method for obtaining the data.</span>
+
+<span class="sd">        Hint: The following code allows you to serialize the configuration</span>
+<span class="sd">        dictionary as a string (which you can store as a QSetting, or as a Tango</span>
+<span class="sd">        Attribute, provided that allowUnpickable==False)::</span>
+
+<span class="sd">            import pickle</span>
+<span class="sd">            s = pickle.dumps(widget.createConfig())  #s is a string that can be stored</span>
+
+<span class="sd">        :param alllowUnpickable:  (bool) if False the returned dict is</span>
+<span class="sd">                                  guaranteed to be a pickable object. This is</span>
+<span class="sd">                                  the default and preferred option because it</span>
+<span class="sd">                                  allows the serialization as a string that can</span>
+<span class="sd">                                  be directly stored in a QSetting. If True, this</span>
+<span class="sd">                                  limitation is not enforced, which allows to</span>
+<span class="sd">                                  use more complex objects as values (but limits</span>
+<span class="sd">                                  its persistence).</span>
+
+<span class="sd">        :return: (dict&lt;str,object&gt;) configurations (which can be loaded with :meth:`applyConfig`).</span>
+
+<span class="sd">        .. seealso: :meth:`applyConfig` , :meth:`registerConfigurableItem`,  meth:`createQConfig`, meth:`saveConfigFile`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">configdict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ConfigVersion&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportedConfigVersions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                      <span class="s2">&quot;__pickable__&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+        <span class="c1"># store the configurations for all registered configurable items as</span>
+        <span class="c1"># well</span>
+        <span class="n">itemcfgs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItems</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">itemcfgs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">createConfig</span><span class="p">(</span><span class="n">allowUnpickable</span><span class="o">=</span><span class="n">allowUnpickable</span><span class="p">)</span>
+        <span class="n">configdict</span><span class="p">[</span><span class="s2">&quot;__itemConfigurations__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">itemcfgs</span>
+        <span class="n">configdict</span><span class="p">[</span><span class="s2">&quot;__orderedConfigNames__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItemNames</span>
+        <span class="k">return</span> <span class="n">configdict</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.applyConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.applyConfig">[docs]</a>    <span class="k">def</span> <span class="nf">applyConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configdict</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;applies the settings stored in a configdict to the current object.</span>
+
+<span class="sd">        In most usual situations, using :meth:`registerConfigProperty` and</span>
+<span class="sd">        :meth:`registerConfigDelegate`, should be enough to cover all needs using</span>
+<span class="sd">        this method, although it can be reimplemented in children classes to support</span>
+<span class="sd">        very specific configurations.</span>
+
+<span class="sd">        :param configdict: (dict)</span>
+<span class="sd">        :param depth: (int)  If depth = 0, applyConfig will only be called</span>
+<span class="sd">                      for this object, and not for any other object registered</span>
+<span class="sd">                      via :meth:`registerConfigurableItem`. If depth &gt; 0,</span>
+<span class="sd">                      applyConfig will be called recursively as many times as</span>
+<span class="sd">                      the depth value. If depth &lt; 0 (default, see note), no</span>
+<span class="sd">                      limit is imposed to recursion (i.e., it will recurse for</span>
+<span class="sd">                      as deep as there are registered items).</span>
+
+<span class="sd">        .. note:: the default recursion depth can be tweaked in derived classes</span>
+<span class="sd">                  by changing the class property `defaultConfigRecursionDepth`</span>
+
+<span class="sd">        .. seealso:: :meth:`createConfig`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultConfigRecursionDepth</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkConfigVersion</span><span class="p">(</span><span class="n">configdict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;the given configuration is of unsupported version&#39;</span><span class="p">)</span>
+        <span class="c1"># delegate restoring the configuration of any registered configurable</span>
+        <span class="c1"># item</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">itemcfgs</span> <span class="o">=</span> <span class="n">configdict</span><span class="p">[</span><span class="s2">&quot;__itemConfigurations__&quot;</span><span class="p">]</span>
+            <span class="c1"># we use the sorted item names that was stored in the configdict</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">configdict</span><span class="p">[</span><span class="s2">&quot;__orderedConfigNames__&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItems</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItems</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">applyConfig</span><span class="p">(</span>
+                        <span class="n">itemcfgs</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">depth</span><span class="o">=</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.getConfigurableItemNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.getConfigurableItemNames">[docs]</a>    <span class="k">def</span> <span class="nf">getConfigurableItemNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns an ordered list of the names of currently registered</span>
+<span class="sd">        configuration items (delegates and properties)</span>
+
+<span class="sd">        :return: (list&lt;unicode&gt;)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItemNames</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.resetConfigurableItems"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.resetConfigurableItems">[docs]</a>    <span class="k">def</span> <span class="nf">resetConfigurableItems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; clears the record of configurable items depending of this object</span>
+
+<span class="sd">        .. seealso:: :meth:`registerConfigurableItem`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItemNames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItems</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.registerConfigurableItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigurableItem">[docs]</a>    <span class="k">def</span> <span class="nf">registerConfigurableItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s2">&quot;Deprecation WARNING: </span><span class="si">%s</span><span class="s2">.registerConfigurableItem() has been deprecated. Use registerConfigDelegate() instead&quot;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registerConfigurableItem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.registerConfigDelegate"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigDelegate">[docs]</a>    <span class="k">def</span> <span class="nf">registerConfigDelegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delegate</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Registers the given object as a delegate for configuration.</span>
+<span class="sd">        Delegates are typically other objects inheriting from BaseConfigurableClass</span>
+<span class="sd">        (or at least they must provide the following methods:</span>
+
+<span class="sd">          - `createConfig` (as provided by, e.g., BaseConfigurableClass)</span>
+<span class="sd">          - `applyConfig` (as provided by, e.g., BaseConfigurableClass)</span>
+<span class="sd">          - `objectName` (as provided by, e.g., QObject)</span>
+
+<span class="sd">        :param delegate: (BaseConfigurableClass) The delegate object to be registered.</span>
+<span class="sd">        :param name: (str) The name to be used as a key for this item in the configuration</span>
+<span class="sd">                     dictionary. If None given, the object name is used by default.</span>
+
+<span class="sd">        .. note:: the registration order will be used when restoring configurations</span>
+
+<span class="sd">        .. seealso:: :meth:`unregisterConfigurableItem`, :meth:`registerConfigProperty`, :meth:`createConfig`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registerConfigurableItem</span><span class="p">(</span><span class="n">delegate</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.registerConfigProperty"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.registerConfigProperty">[docs]</a>    <span class="k">def</span> <span class="nf">registerConfigProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fget</span><span class="p">,</span> <span class="n">fset</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Registers a certain property to be included in the config dictionary.</span>
+
+<span class="sd">        In this context a &quot;property&quot; is some named value that can be obtained</span>
+<span class="sd">        via a getter method and can be set via a setter method.</span>
+
+<span class="sd">        :param fget: (method or str) method (or name of a method) that gets no</span>
+<span class="sd">                     arguments and returns the value of a property.</span>
+<span class="sd">        :param fset: (method or str) method (or name of a method) that gets as</span>
+<span class="sd">                     an argument the value of a property, and sets it</span>
+<span class="sd">        :param name: (str) The name to be used as a key for this property in the configuration</span>
+<span class="sd">                     dictionary</span>
+
+<span class="sd">        .. note:: the registration order will be used when restoring configurations</span>
+
+<span class="sd">        .. seealso:: :meth:`unregisterConfigurableItem`, :meth:`registerConfigDelegate`, :meth:`createConfig`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fget</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fset</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="kn">import</span> <span class="nn">weakref</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">configurableProperty</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">fget</span><span class="p">,</span> <span class="n">fset</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registerConfigurableItem</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_registerConfigurableItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Registers the given item as a configurable item which depends of this</span>
+<span class="sd">        Taurus widget.</span>
+
+<span class="sd">        .. note:: This method is not meant to be called directly. Use</span>
+<span class="sd">                  :meth:`registerConfigProperty`, :meth:`registerConfigDelegate`</span>
+<span class="sd">                  instead</span>
+
+<span class="sd">        Registered items are expected to implement the</span>
+<span class="sd">        following methods:</span>
+<span class="sd">          - `createConfig` (as provided by, e.g., BaseConfigurableClass)</span>
+<span class="sd">          - `applyConfig` (as provided by, e.g., BaseConfigurableClass)</span>
+<span class="sd">          - `objectName` (as provided by, e.g., QObject)</span>
+
+<span class="sd">        :param item: (object) The object that should be registered.</span>
+<span class="sd">        :param name: (str) The name to be used as a key for this item in the configuration</span>
+<span class="sd">                     dictionary. If None given, the object name is used by default.</span>
+
+<span class="sd">        .. note:: the registration order will be used when restoring configurations</span>
+
+<span class="sd">        .. seealso:: :meth:`unregisterConfigurableItem`, :meth:`createConfig`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItemNames</span><span class="p">:</span>
+            <span class="c1"># abort if duplicated names</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;_registerConfigurableItem: An object with name &quot;</span><span class="si">%s</span><span class="s1">&quot; is already registered&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItemNames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItems</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+
+<div class="viewcode-block" id="BaseConfigurableClass.unregisterConfigurableItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.unregisterConfigurableItem">[docs]</a>    <span class="k">def</span> <span class="nf">unregisterConfigurableItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">raiseOnError</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        unregisters the given item (either a delegate or a property) from the</span>
+<span class="sd">        configurable items record. It raises an exception if the item is not</span>
+<span class="sd">        registered</span>
+
+<span class="sd">        :param item: (object or str) The object that should be unregistered.</span>
+<span class="sd">                     Alternatively, the name under which the object was registered</span>
+<span class="sd">                     can be passed as a python string.</span>
+<span class="sd">        :param raiseOnError: (bool) If True (default), it raises a KeyError</span>
+<span class="sd">                             exception if item was not registered. If False, it</span>
+<span class="sd">                             just logs a debug message</span>
+
+<span class="sd">        .. seealso:: :meth:`registerConfigProperty`, :meth:`registerConfigDelegate`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">objectName</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItemNames</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItems</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItemNames</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__configurableItems</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">raiseOnError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; was not registered.&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; was not registered. Skipping&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.checkConfigVersion"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.checkConfigVersion">[docs]</a>    <span class="k">def</span> <span class="nf">checkConfigVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configdict</span><span class="p">,</span> <span class="n">showDialog</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">supportedVersions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Check if the version of configdict is supported. By default, the</span>
+<span class="sd">        BaseConfigurableClass objects have [&quot;__UNVERSIONED__&quot;] as their list of supported</span>
+<span class="sd">        versions, so unversioned config dicts will be accepted.</span>
+
+<span class="sd">        :param configdict: (dict) configuration dictionary to check</span>
+<span class="sd">        :param showDialog: (bool) whether to show a QtWarning dialog if check</span>
+<span class="sd">                           failed (false by default)</span>
+<span class="sd">        :param supportedVersions: (sequence&lt;str&gt;, or None) supported version</span>
+<span class="sd">                                  numbers, if None given, the versions supported</span>
+<span class="sd">                                  by this widget will be used (i.e., those</span>
+<span class="sd">                                  defined in self._supportedConfigVersions)</span>
+
+<span class="sd">        :return: (bool) returns True if the configdict is of the right version</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">supportedVersions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">supportedVersions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportedConfigVersions</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">configdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ConfigVersion&quot;</span><span class="p">,</span> <span class="s2">&quot;__UNVERSIONED__&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">supportedVersions</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Unsupported Config Version </span><span class="si">%s</span><span class="s1">. (Supported: </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">version</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">supportedVersions</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">showDialog</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Wrong Configuration Version&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.createQConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.createQConfig">[docs]</a>    <span class="k">def</span> <span class="nf">createQConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        returns the current configuration status encoded as a QByteArray. This</span>
+<span class="sd">        state can therefore be easily stored using QSettings</span>
+
+<span class="sd">        :return: (QByteArray) (in the current implementation this is just a</span>
+<span class="sd">                 pickled configdict encoded as a QByteArray</span>
+
+<span class="sd">        .. seealso:: :meth:`restoreQConfig`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+        <span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+        <span class="n">configdict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createConfig</span><span class="p">(</span><span class="n">allowUnpickable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">configdict</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.applyQConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.applyQConfig">[docs]</a>    <span class="k">def</span> <span class="nf">applyQConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qstate</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        restores the configuration from a qstate generated by :meth:`getQState`.</span>
+
+<span class="sd">        :param qstate: (QByteArray)</span>
+
+<span class="sd">        .. seealso:: :meth:`createQConfig`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">qstate</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+        <span class="n">configdict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">qstate</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applyConfig</span><span class="p">(</span><span class="n">configdict</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.saveConfigFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.saveConfigFile">[docs]</a>    <span class="k">def</span> <span class="nf">saveConfigFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ofile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stores the current configuration on a file</span>
+
+<span class="sd">        :param ofile: (file or string) file or filename to store the configuration</span>
+
+<span class="sd">        :return: (str) file name used</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+        <span class="k">if</span> <span class="n">ofile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+            <span class="n">ofile</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Save Configuration&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.pck&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;Configuration File (*.pck)&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ofile</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ofile</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">ofile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ofile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">configdict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createConfig</span><span class="p">(</span><span class="n">allowUnpickable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Saving current settings in &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">ofile</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">configdict</span><span class="p">,</span> <span class="n">ofile</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ofile</span><span class="o">.</span><span class="n">name</span></div>
+
+<div class="viewcode-block" id="BaseConfigurableClass.loadConfigFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadConfigFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reads a file stored by :meth:`saveConfig` and applies the settings</span>
+
+<span class="sd">        :param ifile: (file or string) file or filename from where to read the configuration</span>
+
+<span class="sd">        :return: (str) file name used</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+        <span class="k">if</span> <span class="n">ifile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+            <span class="n">ifile</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Load Configuration&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Configuration File (*.pck)&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ifile</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">ifile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">configdict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ifile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applyConfig</span><span class="p">(</span><span class="n">configdict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ifile</span><span class="o">.</span><span class="n">name</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

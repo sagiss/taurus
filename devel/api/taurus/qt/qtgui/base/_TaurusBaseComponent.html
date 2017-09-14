@@ -1,0 +1,1595 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusBaseComponent &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtgui.base" href="../base.html"/>
+        <link rel="next" title="TaurusBaseController" href="_TaurusBaseController.html"/>
+        <link rel="prev" title="TaurusAttributeControllerHelper" href="_TaurusAttributeControllerHelper.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+      
+          <li><a href="../base.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui.base</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">TaurusBaseComponent</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusbasecomponent">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent" title="taurus.qt.qtgui.base.TaurusBaseComponent"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseComponent</span></code></a><a class="headerlink" href="#taurusbasecomponent" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-6ca13309ed9eb012df85dc3f0c08d3a3e46192c2.png" alt="Inheritance diagram of TaurusBaseComponent" usemap="#inheritancef14e31d100" class="inheritance"/>
+<map id="inheritancef14e31d100" name="inheritancef14e31d100">
+<area shape="rect" id="node1" title="A base class defining the API for configurable objects." alt="" coords="5,197,173,245"/>
+<area shape="rect" id="node4" title="A generic Taurus component." alt="" coords="87,293,257,341"/>
+<area shape="rect" id="node2" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="219,101,291,149"/>
+<area shape="rect" id="node5" title="TaurusListener Interface" alt="" coords="197,197,312,245"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent">
+<em class="property">class </em><code class="descname">TaurusBaseComponent</code><span class="sig-paren">(</span><em>name</em>, <em>parent=None</em>, <em>designMode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.core.tauruslistener.TaurusListener</span></code>, <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtcore.configuration.configuration.BaseConfigurableClass</span></code></p>
+<p>A generic Taurus component.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any class which inherits from TaurusBaseComponent is expected to also
+inherit from QObject (or from a QObject derived class).</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getSignaller" title="taurus.qt.qtgui.base.TaurusBaseComponent.getSignaller"><code class="xref py py-meth docutils literal"><span class="pre">getSignaller()</span></code></a> is now unused and deprecated. This is because
+<cite>taurusEvent</cite> is implemented using <code class="xref py py-func docutils literal"><span class="pre">baseSignal()</span></code>, that doesn&#8217;t
+require the class to inherit from QObject.</p>
+</div>
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT">
+<code class="descname">FORMAT</code><span class="sig-paren">(</span><em>dtype=None</em>, <em>basecomponent=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default formatter callable. Returns a format string based on dtype
+and the mapping provided by 
+<a href="#id1"><span class="problematic" id="id2">:attribute:`TaurusBaseComponent.defaultFormatDict`</span></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; data type</li>
+<li><strong>basecomponent</strong> &#8211; widget whose display is to be formatted</li>
+<li><strong>kwargs</strong> &#8211; other keyworld arguments</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The format string corresponding to the given dtype.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.applyPendingOperations">
+<code class="descname">applyPendingOperations</code><span class="sig-paren">(</span><em>ops=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.applyPendingOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.applyPendingOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies operations without caring about danger messages.
+Use <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseWidget.safeApplyOperation()</span></code> if you want to warn the
+user before applying</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ops</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<code class="xref py py-class docutils literal"><span class="pre">TaurusOperation</span></code>&gt; or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; list of operations to apply.
+If None is given (default) the component fetches the pending operations</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.contextMenuEvent">
+<code class="descname">contextMenuEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.contextMenuEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle the popup menu event</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> &#8211; the popup menu event</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict">
+<code class="descname">defaultFormatDict</code><em class="property"> = {&lt;type 'float'&gt;: '{:.{bc.modelObj.precision}f}', &lt;class 'taurus.external.pint.pint_local.quantity.Quantity'&gt;: '{:~.{bc.modelObj.precision}f}', &lt;enum 'Enum'&gt;: '{0.name}'}</em><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.deleteLater">
+<code class="descname">deleteLater</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.deleteLater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.deleteLater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplements the Qt.QObject deleteLater method to ensure that the
+this object stops listening its model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.displayValue">
+<code class="descname">displayValue</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.displayValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of the given value</p>
+<p>This method will use a format string which is determined 
+dynamically from <a href="#id3"><span class="problematic" id="id4">:attribute:`FORMAT`</span></a>.</p>
+<p>By default <cite>TaurusBaseComponent.FORMAT</cite> is set to 
+<a href="#id5"><span class="problematic" id="id6">:function:`defaultFormatter`</span></a>, which makes use of 
+<a href="#id7"><span class="problematic" id="id8">:attribute:`defaultFormatDict`</span></a>.</p>
+<p>In order to customize the formatting behaviour, one can change
+<a href="#id9"><span class="problematic" id="id10">:attribute:`defaultFormatDict`</span></a> or <a href="#id11"><span class="problematic" id="id12">:attribute:`FORMAT`</span></a> directly
+at class level, or use <a href="#id13"><span class="problematic" id="id14">:method:`setFormat`</span></a> to alter the 
+format string of an specific instance</p>
+<p><cite>FORMAT</cite> can be set to a python format string [1] or a callable 
+that returns a python format string.
+If a callable is used, it will be called with the following 
+keyword arguments:
+- dtype: the data type of the value to be formatted
+- basecomponent: the affected widget</p>
+<p>The following are some examples for customizing the formatting:</p>
+<ul>
+<li><p class="first">Change FORMAT for all widgets (using a string):</p>
+<blockquote>
+<div><p>TaurusBaseComponent.FORMAT = &#8220;{:.2e}&#8221;</p>
+</div></blockquote>
+</li>
+<li><p class="first">Change FORMAT for all TaurusLabels (using a callable):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def baseFormatter(dtype=None, basecomponent=None, <a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs):</dt>
+<dd><p class="first last">return &#8220;{:.1f}&#8221;</p>
+</dd>
+</dl>
+<p>TaurusLabel.FORMAT = baseFormatter</p>
+</div></blockquote>
+</li>
+<li><p class="first">Use the defaultFormatter but modify the format string for dtype=str:</p>
+<blockquote>
+<div><p>TaurusBaseComponent.defaultFormatDict.update({&#8220;str&#8221;: &#8220;{!r}&#8221;})</p>
+</div></blockquote>
+</li>
+</ul>
+<p>[1] <a class="reference external" href="https://docs.python.org/2/library/string.html">https://docs.python.org/2/library/string.html</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; the value to be translated to string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a string representing the given value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.eventReceived">
+<code class="descname">eventReceived</code><span class="sig-paren">(</span><em>evt_src</em>, <em>evt_type</em>, <em>evt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.eventReceived"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.eventReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>The basic implementation of the event handling chain is as
+follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>eventReceived just calls <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.fireEvent" title="taurus.qt.qtgui.base.TaurusBaseComponent.fireEvent"><code class="xref py py-meth docutils literal"><span class="pre">fireEvent()</span></code></a> which emits a &#8220;taurusEvent&#8221;
+PyQt signal that is connected (by <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.preAttach" title="taurus.qt.qtgui.base.TaurusBaseComponent.preAttach"><code class="xref py py-meth docutils literal"><span class="pre">preAttach()</span></code></a>) to the
+<a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.filterEvent" title="taurus.qt.qtgui.base.TaurusBaseComponent.filterEvent"><code class="xref py py-meth docutils literal"><span class="pre">filterEvent()</span></code></a> method.</li>
+<li>After filtering, <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.handleEvent" title="taurus.qt.qtgui.base.TaurusBaseComponent.handleEvent"><code class="xref py py-meth docutils literal"><span class="pre">handleEvent()</span></code></a> is invoked with the resulting
+filtered event</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">in the earlier steps of the chain (i.e., in <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.eventReceived" title="taurus.qt.qtgui.base.TaurusBaseComponent.eventReceived"><code class="xref py py-meth docutils literal"><span class="pre">eventReceived()</span></code></a>/
+<a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.fireEvent" title="taurus.qt.qtgui.base.TaurusBaseComponent.fireEvent"><code class="xref py py-meth docutils literal"><span class="pre">fireEvent()</span></code></a>), the code is executed in a Python thread, while
+from eventFilter ahead, the code is executed in a Qt thread.
+When writing widgets, one should normally work on the Qt thread
+(i.e. reimplementing <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.handleEvent" title="taurus.qt.qtgui.base.TaurusBaseComponent.handleEvent"><code class="xref py py-meth docutils literal"><span class="pre">handleEvent()</span></code></a>)</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>evt_src</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; object that triggered the event</li>
+<li><strong>evt_type</strong> (<code class="xref py py-class docutils literal"><span class="pre">TaurusEventType</span></code>) &#8211; type of event</li>
+<li><strong>evt_value</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; event value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.filterEvent">
+<code class="descname">filterEvent</code><span class="sig-paren">(</span><em>evt_src=-1</em>, <em>evt_type=-1</em>, <em>evt_value=-1</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.filterEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.filterEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The event is processed by each and all filters in strict order
+unless one of them returns None (in which case the event is discarded)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>evt_src</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; object that triggered the event</li>
+<li><strong>evt_type</strong> (<code class="xref py py-class docutils literal"><span class="pre">TaurusEventType</span></code>) &#8211; type of event</li>
+<li><strong>evt_value</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; event value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.findModelClass">
+<code class="descname">findModelClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.findModelClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.findModelClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do a &#8220;best effort&#8221; to determine which model type corresponds to the
+given model name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">class</span> <span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The class object corresponding to the type
+of Taurus model this widget handles or None if no valid class is found.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.fireBufferedEvents">
+<code class="descname">fireBufferedEvents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.fireBufferedEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.fireBufferedEvents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fire all events currently buffered (and flush the buffer)</p>
+<dl class="docutils">
+<dt>Note: this method is normally called from an event buffer timer thread</dt>
+<dd>but it can also be called any time the buffer needs to be flushed</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.fireEvent">
+<code class="descname">fireEvent</code><span class="sig-paren">(</span><em>evt_src=None</em>, <em>evt_type=None</em>, <em>evt_value=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.fireEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.fireEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a &#8220;taurusEvent&#8221; signal.
+It is unlikely that you need to reimplement this method in subclasses.
+Consider reimplementing <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.eventReceived" title="taurus.qt.qtgui.base.TaurusBaseComponent.eventReceived"><code class="xref py py-meth docutils literal"><span class="pre">eventReceived()</span></code></a> or <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.handleEvent" title="taurus.qt.qtgui.base.TaurusBaseComponent.handleEvent"><code class="xref py py-meth docutils literal"><span class="pre">handleEvent()</span></code></a>
+instead depending on whether you need to execute code in the python
+or Qt threads, respectively</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>evt_src</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; object that triggered the event</li>
+<li><strong>evt_type</strong> (<code class="xref py py-class docutils literal"><span class="pre">TaurusEventType</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; type of event</li>
+<li><strong>evt_value</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; event value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getDangerMessage">
+<code class="descname">getDangerMessage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getDangerMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getDangerMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current apply danger message or None if the apply operation is safe</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the apply danger message</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getDisplayValue">
+<code class="descname">getDisplayValue</code><span class="sig-paren">(</span><em>cache=True</em>, <em>fragmentName=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getDisplayValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getDisplayValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of the model value associated with
+this component.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cache</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; (ignored, just for bck-compat).</li>
+<li><strong>fragmentName</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the returned value will correspond to
+the given fragmentName. If None passed,
+self.modelFragmentName will be used, and if None is
+set, the defaultFragmentName of the model will be used
+instead.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a string representation of the model value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getEventBufferPeriod">
+<code class="descname">getEventBufferPeriod</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getEventBufferPeriod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getEventBufferPeriod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the event buffer period</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">period (in s). 0 means event buffering is disabled.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getEventFilters">
+<code class="descname">getEventFilters</code><span class="sig-paren">(</span><em>preqt=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getEventFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getEventFilters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of event filters for this widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>preqt</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If true, return the pre-filters (that are applied
+in eventReceived, at the python thread),
+otherwise, return the filters to be applied at the main
+Qt thread (default)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<code class="xref py py-class docutils literal"><span class="pre">callable</span></code>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the event filters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getForceDangerousOperations">
+<code class="descname">getForceDangerousOperations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getForceDangerousOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getForceDangerousOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if apply dangerous operations is forced</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">wheter or not apply dangerous operations is forced</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getFormatedToolTip">
+<code class="descname">getFormatedToolTip</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getFormatedToolTip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getFormatedToolTip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string with contents to be displayed in a tooltip.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cache</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if set to True (default) use the cache value. If set to
+False will force a connection to the server.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a tooltip</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getFullModelName">
+<code class="descname">getFullModelName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getFullModelName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getFullModelName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full name of the current model object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the model name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getModel">
+<code class="descname">getModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the model name for this component.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the model name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getModelClass">
+<code class="descname">getModelClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getModelClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getModelClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the class object for the widget.
+Default behavior is to do a &#8216;best effort&#8217; to determine which model
+type corresponds to the current model name.
+Overwrite as necessary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">class</span> <span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The class object corresponding to the type
+of Taurus model this widget handles or None if no valid class is found.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getModelFragmentObj">
+<code class="descname">getModelFragmentObj</code><span class="sig-paren">(</span><em>fragmentName=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getModelFragmentObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getModelFragmentObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a fragment object of the model. A fragment of a model is a
+python attribute of the model object.</p>
+<p>Fragment names including dots will be used to recursively get fragments
+of fragments.</p>
+<p>For a simple fragmentName (no dots), this is roughly equivalent to
+getattr(self.getModelObj(), fragmentName)</p>
+<p>If the model does not have that fragment, <a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#AttributeError" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">AttributeError</span></code></a> is
+raised (other exceptions may be raised when accessing the fragment as
+well)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fragmentName</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the returned value will correspond to
+the given fragmentName. If None passed,
+self.modelFragmentName will be used, and if None is
+set, the defaultFragmentName of the model will be used
+instead.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">obj</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the member of the modelObj referred by the fragment.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getModelInConfig">
+<code class="descname">getModelInConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getModelInConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getModelInConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getModelName">
+<code class="descname">getModelName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getModelName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getModelName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current model name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the model name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getModelObj">
+<code class="descname">getModelObj</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getModelObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getModelObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the taurus model obj associated with this component or None if
+no taurus model is associated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the taurus model object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getModelType">
+<code class="descname">getModelType</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getModelType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getModelType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the taurus model type associated with this component or
+taurus.core.taurusbasetypes.TaurusElementType.Unknown if no taurus model is associated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusElementType</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the taurus model type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getModelValueObj">
+<code class="descname">getModelValueObj</code><span class="sig-paren">(</span><em>cache=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getModelValueObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getModelValueObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the tango obj value associated with this component or None
+if no taurus model is associated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cache</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if set to True (default) use the cache value. If set to
+False will force a connection to the server.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusAttrValue</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the tango value object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getNoneValue">
+<code class="descname">getNoneValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getNoneValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getNoneValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current string representation when no valid model or model value exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a string representation for an invalid value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getParentModelName">
+<code class="descname">getParentModelName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getParentModelName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getParentModelName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parent model name or an empty string if the component
+has no parent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parent model name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getParentModelObj">
+<code class="descname">getParentModelObj</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getParentModelObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getParentModelObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parent model object or None if the component has no
+parent or if the parent&#8217;s model is None</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parent taurus model object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getParentTaurusComponent">
+<code class="descname">getParentTaurusComponent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getParentTaurusComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getParentTaurusComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a parent Taurus component or None if no parent
+<a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent" title="taurus.qt.qtgui.base.TaurusBaseComponent"><code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.base.TaurusBaseComponent</span></code></a> is found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body">RuntimeError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getPendingOperations">
+<code class="descname">getPendingOperations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getPendingOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getPendingOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the sequence of pending operations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<code class="xref py py-class docutils literal"><span class="pre">TaurusOperation</span></code>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a list of pending operations</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getShowQuality">
+<code class="descname">getShowQuality</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getShowQuality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getShowQuality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if showing the quality as a background color</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if showing the quality or False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getShowText">
+<code class="descname">getShowText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getShowText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getShowText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if showing the display value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if showing the display value or False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getSignaller">
+<code class="descname">getSignaller</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getSignaller" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusFactory">
+<code class="descname">getTaurusFactory</code><span class="sig-paren">(</span><em>scheme=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getTaurusFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the taurus factory singleton for the given scheme.
+This is just a helper method. It is the equivalent of doing:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="n">scheme</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scheme</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the scheme. If scheme is an empty string,
+or is not passed, the scheme will be obtained from the
+model name. For backwards compatibility (but deprecated),
+passing None is equivalent to &#8216;tango&#8217;.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusFactory</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the TaurusFactory</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusManager">
+<code class="descname">getTaurusManager</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getTaurusManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the taurus manager singleton. This is just a helper method.
+It is the equivalent of doing:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">TaurusManager</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the TaurusManager</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusPopupMenu">
+<code class="descname">getTaurusPopupMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getTaurusPopupMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an xml string representing the current taurus popup menu</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an xml string representing the current taurus popup menu</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getUseParentModel">
+<code class="descname">getUseParentModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getUseParentModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getUseParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether this component is using the parent model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if using parent model or False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.handleEvent">
+<code class="descname">handleEvent</code><span class="sig-paren">(</span><em>evt_src</em>, <em>evt_type</em>, <em>evt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.handleEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.handleEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event handling. Default implementation does nothing.
+Reimplement as necessary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>evt_src</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; object that triggered the event</li>
+<li><strong>evt_type</strong> (<code class="xref py py-class docutils literal"><span class="pre">TaurusEventType</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; type of event</li>
+<li><strong>evt_value</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; event value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.hasPendingOperations">
+<code class="descname">hasPendingOperations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.hasPendingOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.hasPendingOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if the component has pending operations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if there are pending operations or False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.insertEventFilter">
+<code class="descname">insertEventFilter</code><span class="sig-paren">(</span><em>filter</em>, <em>index=-1</em>, <em>preqt=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.insertEventFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.insertEventFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>insert a filter in a given position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter</strong> (<code class="xref py py-class docutils literal"><span class="pre">callable(evt_src,</span> <span class="pre">evt_type,</span> <span class="pre">evt_value</span></code>) &#8211; ) a filter</li>
+<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; index to place the filter (default = -1 meaning place at the end)</li>
+<li><strong>preqt</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If true, set the pre-filters (that are applied in
+eventReceived, at the python thread),
+otherwise, set the filters to be applied at the main
+Qt thread (default)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>See also: setEventFilters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.isAttached">
+<code class="descname">isAttached</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.isAttached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.isAttached" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if this component is attached to the taurus model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the component is attached or False otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.isAutoProtectOperation">
+<code class="descname">isAutoProtectOperation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.isAutoProtectOperation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.isAutoProtectOperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells if this widget&#8217;s operations are protected against exceptions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if operations are protected against exceptions or
+False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.isChangeable">
+<code class="descname">isChangeable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.isChangeable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.isChangeable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells if this component value can be changed by the user. Default implementation
+will return True if and only if:</p>
+<blockquote>
+<div><ul class="simple">
+<li>this component is attached to a valid taurus model and</li>
+<li>the taurus model is writable and</li>
+<li>this component is not read-only</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if this component value can be changed by the user or False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.isDangerous">
+<code class="descname">isDangerous</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.isDangerous"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.isDangerous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if the apply operation for this component is dangerous</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">wheter or not the apply operation for this component is dangerous</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.isModifiableByUser">
+<code class="descname">isModifiableByUser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.isModifiableByUser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.isModifiableByUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>whether the user can change the contents of the widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the user is allowed to modify the look&amp;feel</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.isPaused">
+<code class="descname">isPaused</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.isPaused"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.isPaused" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current pause state</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">wheater or not the widget is paused</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.isReadOnly">
+<code class="descname">isReadOnly</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.isReadOnly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.isReadOnly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if this component is read-only or not in the sense that the
+user can interact with it. Default implementation returns True.</p>
+<p>Override when necessary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">whether or not this component is read-only</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.postAttach">
+<code class="descname">postAttach</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.postAttach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.postAttach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called inside self.attach() after actual attach is performed.
+Default implementation does not do anything.</p>
+<p>Override when necessary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.postDetach">
+<code class="descname">postDetach</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.postDetach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.postDetach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called inside self.detach() after actual deattach is performed.
+Default implementation does not do anything.</p>
+<p>Override when necessary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.preAttach">
+<code class="descname">preAttach</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.preAttach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.preAttach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called inside self.attach() before actual attach is performed.
+Default implementation just emits a signal.</p>
+<p>Override when necessary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.preDetach">
+<code class="descname">preDetach</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.preDetach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.preDetach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called inside self.detach() before actual deattach is performed.
+Default implementation just disconnects a signal.</p>
+<p>Override when necessary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetAutoProtectOperation">
+<code class="descname">resetAutoProtectOperation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetAutoProtectOperation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetAutoProtectOperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets protecting operations</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetDangerMessage">
+<code class="descname">resetDangerMessage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetDangerMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetDangerMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the danger message. After this method is executed the apply operation
+for this component will be considered safe.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetForceDangerousOperations">
+<code class="descname">resetForceDangerousOperations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetForceDangerousOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetForceDangerousOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears forcing apply dangerous operations</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetFormat">
+<code class="descname">resetFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the internal format string. It forces a recalculation
+in the next call to <a href="#id17"><span class="problematic" id="id18">:method:`displayValue`</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetModel">
+<code class="descname">resetModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the model name to the empty string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetModelInConfig">
+<code class="descname">resetModelInConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetModelInConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetModelInConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetModifiableByUser">
+<code class="descname">resetModifiableByUser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetModifiableByUser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetModifiableByUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to setModifiableByUser(self.__class__._modifiableByUser)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetPendingOperations">
+<code class="descname">resetPendingOperations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetPendingOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetPendingOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the list of pending operations</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetShowQuality">
+<code class="descname">resetShowQuality</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetShowQuality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetShowQuality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the show quality to self.__class__._showQuality</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetShowText">
+<code class="descname">resetShowText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetShowText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetShowText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the showing of the display value to True</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetTaurusPopupMenu">
+<code class="descname">resetTaurusPopupMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetTaurusPopupMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the taurus popup menu to empty</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetUseParentModel">
+<code class="descname">resetUseParentModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetUseParentModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetUseParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the usage of parent model to False</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setAutoProtectOperation">
+<code class="descname">setAutoProtectOperation</code><span class="sig-paren">(</span><em>protect</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setAutoProtectOperation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setAutoProtectOperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets/unsets this widget&#8217;s operations are protected against exceptions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>protect</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; wheater or not to protect widget operations</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setDangerMessage">
+<code class="descname">setDangerMessage</code><span class="sig-paren">(</span><em>dangerMessage=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setDangerMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setDangerMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the danger message when applying an operation. If dangerMessage is None,
+the apply operation is considered safe</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dangerMessage</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the danger message. If None is given (default)
+the apply operation is considered safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setEventBufferPeriod">
+<code class="descname">setEventBufferPeriod</code><span class="sig-paren">(</span><em>period</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setEventBufferPeriod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setEventBufferPeriod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the period at wich <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.fireBufferedEvents" title="taurus.qt.qtgui.base.TaurusBaseComponent.fireBufferedEvents"><code class="xref py py-meth docutils literal"><span class="pre">fireBufferedEvents()</span></code></a> will be called.
+If period is 0, the event buffering is disabled (i.e., events are fired
+as soon as they are received)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>period</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>) &#8211; period in seconds for the automatic event firing.
+period=0 will disable the event buffering.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setEventFilters">
+<code class="descname">setEventFilters</code><span class="sig-paren">(</span><em>filters=None</em>, <em>preqt=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setEventFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setEventFilters" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the taurus event filters list.
+The filters are run in order, using each output to feed the next filter.
+A filter must be a function that accepts 3 arguments <code class="docutils literal"><span class="pre">(evt_src,</span> <span class="pre">evt_type,</span> <span class="pre">evt_value)</span></code>
+If the event is to be ignored, the filter must return None.
+If the event is  not to be ignored, filter must return a
+<code class="docutils literal"><span class="pre">(evt_src,</span> <span class="pre">evt_type,</span> <span class="pre">evt_value)</span></code> tuple which may (or not) differ from the input.</p>
+<p>For a library of common filters, see taurus/core/util/eventfilters.py</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filters</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code>) &#8211; a sequence of filters</li>
+<li><strong>preqt</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If true, set the pre-filters (that are applied in
+eventReceived, at the python thread),
+otherwise, set the filters to be applied at the main
+Qt thread (default)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note</em>: If you are setting a filter that applies a transformation on
+the parameters, you may want to generate a fake event to force the last
+value to be filtered as well. This can be done as in this example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">TaurusBaseComponent</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span> <span class="n">TaurusBaseComponent</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">(),</span>
+                            <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">,</span>
+                            <span class="n">TaurusBaseComponent</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>See also: insertEventFilter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setForceDangerousOperations">
+<code class="descname">setForceDangerousOperations</code><span class="sig-paren">(</span><em>yesno</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setForceDangerousOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setForceDangerousOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forces/clears the dangerous operations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>yesno</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; force or not the dangerous operations</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setFormat">
+<code class="descname">setFormat</code><span class="sig-paren">(</span><em>format</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to set the <cite>FORMAT</cite> attribute for this instance.
+It also resets the internal format string, which will be recalculated
+in the next call to :method&#8221;<cite>displayValue</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>format</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">callable</span></code>) &#8211; A format string or a callable
+that returns it</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setModel">
+<code class="descname">setModel</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets/unsets the model name for this component</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the new model name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setModelCheck">
+<code class="descname">setModelCheck</code><span class="sig-paren">(</span><em>model</em>, <em>check=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setModelCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setModelCheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the component taurus model. Setting the check argument to True
+(default) will check if the current model is equal to the given argument.
+If so then nothing is done. This should be the standard way to call this
+method since it will avoid recursion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the new model name</li>
+<li><strong>check</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether or not to check against the actual model name</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setModelInConfig">
+<code class="descname">setModelInConfig</code><span class="sig-paren">(</span><em>yesno</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setModelInConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setModelInConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether the model-related properties should be stored for this
+widget when creating the config dict with <code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code> (and
+restored when calling <code class="xref py py-meth docutils literal"><span class="pre">applyConfig()</span></code>).
+By default this is not enabled.
+The following properties are affected by this:
+- &#8220;model&#8221;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>yesno</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, the model-related properties will be
+registered as config properties. If False, they will be
+unregistered.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">registerConfigProperty()</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code>,
+<code class="xref py py-meth docutils literal"><span class="pre">applyConfig()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setModelName">
+<code class="descname">setModelName</code><span class="sig-paren">(</span><em>modelName</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setModelName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setModelName" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will detach from the previous taurus model (if any), it
+will set the new model to the given modelName and it will attach
+this component to the new taurus model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>modelName</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the new taurus model name (according to the taurus convention)</li>
+<li><strong>parent</strong> (<a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent" title="taurus.qt.qtgui.base.TaurusBaseComponent"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseComponent</span></code></a>) &#8211; the parent or None (default) if this
+component does not have a parent Taurus component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setModifiableByUser">
+<code class="descname">setModifiableByUser</code><span class="sig-paren">(</span><em>modifiable</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setModifiableByUser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setModifiableByUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets whether the user is allowed to modify the look&amp;feel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>modifiable</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setNoneValue">
+<code class="descname">setNoneValue</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setNoneValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setNoneValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the new string representation when no model or no model value exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the string representation for an invalid value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setPaused">
+<code class="descname">setPaused</code><span class="sig-paren">(</span><em>paused=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setPaused"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setPaused" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggles the pause mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>paused</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether or not to pause (default = True)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setShowQuality">
+<code class="descname">setShowQuality</code><span class="sig-paren">(</span><em>showQuality</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setShowQuality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setShowQuality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets/unsets the show quality property</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>showQuality</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether or not to show the quality</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setShowText">
+<code class="descname">setShowText</code><span class="sig-paren">(</span><em>showText</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setShowText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setShowText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets/unsets showing the display value of the model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>showText</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether or not to show the display value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setTaurusPopupMenu">
+<code class="descname">setTaurusPopupMenu</code><span class="sig-paren">(</span><em>menuData</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setTaurusPopupMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets/unsets the taurus popup menu</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>menuData</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; an xml representing the popup menu</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setUseParentModel">
+<code class="descname">setUseParentModel</code><span class="sig-paren">(</span><em>yesno</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setUseParentModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setUseParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets/unsets using the parent model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>yesno</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether or not to use parent model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.taurusEvent">
+<code class="descname">taurusEvent</code><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.taurusEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base signal taurusEvent</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.toolTipObjToStr">
+<code class="descname">toolTipObjToStr</code><span class="sig-paren">(</span><em>toolTipObj</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.toolTipObjToStr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.toolTipObjToStr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a python dict to a tooltip string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>toolTipObj</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; a python object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a tooltip</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.updateStyle">
+<code class="descname">updateStyle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.updateStyle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.updateStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method called when the component detects an event that triggers a
+change in the style.
+Default implementation doesn&#8217;t do anything. Overwrite when necessary</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusBaseController.html" class="btn btn-neutral float-right" title="TaurusBaseController" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusAttributeControllerHelper.html" class="btn btn-neutral" title="TaurusAttributeControllerHelper" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

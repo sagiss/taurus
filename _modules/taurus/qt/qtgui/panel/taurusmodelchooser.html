@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.panel.taurusmodelchooser &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.panel.taurusmodelchooser</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.panel.taurusmodelchooser</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">AttributeChooser.py: widget for choosing (a list of) attributes from a tango DB</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusModelSelectorTree&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusModelChooser&quot;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">import</span> <span class="nn">taurus.core</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.tree</span> <span class="k">import</span> <span class="n">TaurusDbTreeWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessList</span>
+<span class="kn">from</span> <span class="nn">taurusmodellist</span> <span class="k">import</span> <span class="n">TaurusModelList</span>
+
+<span class="c1">#@todo: tango-centric!!</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDevInfo</span><span class="p">,</span> <span class="n">TangoAttrInfo</span>
+
+
+<div class="viewcode-block" id="TaurusModelSelectorTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelSelectorTree</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
+
+    <span class="n">addModels</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QStringList&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buttonsPos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">selectables</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">selectables</span> <span class="o">=</span> <span class="p">[</span><span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Member</span><span class="p">,</span>
+                           <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selectables</span> <span class="o">=</span> <span class="n">selectables</span>
+
+        <span class="c1"># tree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span> <span class="o">=</span> <span class="n">TaurusDbTreeWidget</span><span class="p">(</span>
+            <span class="n">perspective</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_selectables</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># toolbar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolBar</span><span class="p">(</span><span class="s2">&quot;TangoSelector toolbar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">setFloatable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addSelectedAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;list-add&quot;</span><span class="p">),</span> <span class="s2">&quot;Add selected&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">onAddSelected</span><span class="p">)</span>
+
+        <span class="c1"># defines the layout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setButtonsPos</span><span class="p">(</span><span class="n">buttonsPos</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">recheckTaurusParent</span><span class="p">()</span>  <span class="c1"># NOT WORKING????</span>
+        <span class="c1"># @todo: This is Workaround because UseSetParentModel is giving trouble again!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">setModel</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusModelSelectorTree.setButtonsPos"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree.setButtonsPos">[docs]</a>    <span class="k">def</span> <span class="nf">setButtonsPos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buttonsPos</span><span class="p">):</span>
+        <span class="c1"># we must delete the previous layout before we can set a new one</span>
+        <span class="n">currlayout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">currlayout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">currlayout</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">sendPostedEvents</span><span class="p">(</span>
+                <span class="n">currlayout</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">DeferredDelete</span><span class="p">)</span>
+        <span class="c1"># add to layout</span>
+        <span class="k">if</span> <span class="n">buttonsPos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">buttonsPos</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomToolBarArea</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">buttonsPos</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TopToolBarArea</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">buttonsPos</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftToolBarArea</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Vertical</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">buttonsPos</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RightToolBarArea</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Vertical</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid buttons position&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusModelSelectorTree.getSelectedModels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree.getSelectedModels">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectedModels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># todo: this method is tango-centric, but it could be fixed...</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">():</span>
+            <span class="n">nfo</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nfo</span><span class="p">,</span> <span class="n">TangoDevInfo</span><span class="p">):</span>
+                <span class="n">selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nfo</span><span class="o">.</span><span class="n">fullName</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nfo</span><span class="p">,</span> <span class="n">TangoAttrInfo</span><span class="p">):</span>
+                <span class="n">selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                <span class="p">(</span><span class="n">nfo</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">fullName</span><span class="p">(),</span> <span class="n">nfo</span><span class="o">.</span><span class="n">name</span><span class="p">()))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Unknown item &#39;</span><span class="si">%s</span><span class="s2">&#39; in selection&quot;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">nfo</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">selected</span></div>
+
+<div class="viewcode-block" id="TaurusModelSelectorTree.onAddSelected"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree.onAddSelected">[docs]</a>    <span class="k">def</span> <span class="nf">onAddSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addModels</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getSelectedModels</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusModelSelectorTree.treeView"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree.treeView">[docs]</a>    <span class="k">def</span> <span class="nf">treeView</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">treeView</span><span class="p">()</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusModelSelectorTree.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.panel&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:listview.png&quot;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;container&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Views&#39;</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusModelChooser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelChooser</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A widget that allows the user to select a list of models from a tree representing</span>
+<span class="sd">    devices and attributes from a Tango server.</span>
+
+<span class="sd">    The user selects models and adds them to a list. Then the user should click on the</span>
+<span class="sd">    update button to notify that the selection is ready.</span>
+
+<span class="sd">    signals::</span>
+<span class="sd">      - &quot;updateModels&quot;  emitted when the user clicks on the update button. It</span>
+<span class="sd">        passes a list&lt;str&gt; of models that have been selected.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">updateModels</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QStringList&#39;</span><span class="p">)</span>
+    <span class="n">UpdateAttrs</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">([</span><span class="s1">&#39;QStringList&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;QMimeData&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">singleModel</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Creator of TaurusModelChooser</span>
+
+<span class="sd">        :param parent: (QObject) parent for the dialog</span>
+<span class="sd">        :param selectables: (list&lt;TaurusElementType&gt;) if passed, only elements of the tree whose</span>
+<span class="sd">                            type is in the list will be selectable.</span>
+<span class="sd">        :param host: (QObject) Tango host to be explored by the chooser</span>
+<span class="sd">        :param designMode: (bool) needed for taurusdesigner but ignored here</span>
+<span class="sd">        :param singleModel: (bool) If True, the selection will be of just one</span>
+<span class="sd">                            model. Otherwise (default) a list of models can be selected</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Authority</span><span class="p">()</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allowDuplicates</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">TaurusModelSelectorTree</span><span class="p">(</span>
+            <span class="n">selectables</span><span class="o">=</span><span class="n">selectables</span><span class="p">,</span> <span class="n">buttonsPos</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomToolBarArea</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list</span> <span class="o">=</span> <span class="n">TaurusModelList</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">setSelectionMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">ExtendedSelection</span><span class="p">)</span>
+        <span class="n">applyBT</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
+        <span class="n">applyBT</span><span class="o">.</span><span class="n">setToolButtonStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolButtonTextBesideIcon</span><span class="p">)</span>
+        <span class="n">applyBT</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Apply&#39;</span><span class="p">)</span>
+        <span class="n">applyBT</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;status:available.svg&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSingleModelMode</span><span class="p">(</span><span class="n">singleModel</span><span class="p">)</span>
+
+        <span class="c1"># toolbar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_toolbar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">removeSelectedAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">removeAllAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">moveUpAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">moveDownAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">applyBT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">)</span>
+
+        <span class="c1"># self.tree.setUseParentModel(True)  #It does not work!!!!</span>
+        <span class="c1"># @todo: This is Workaround because UseSetParentModel is giving trouble again!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">setModel</span><span class="p">)</span>
+
+        <span class="c1"># connections:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">addModels</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addModels</span><span class="p">)</span>
+        <span class="n">applyBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onUpdateModels</span><span class="p">)</span>
+<span class="c1">#        self.connect(self.tree._deviceTree, Qt.SIGNAL(&quot;itemDoubleClicked&quot;), self.onTreeDoubleClick)</span>
+
+<span class="c1">#    def onTreeDoubleClick(self, item, colum): #@todo: Implement this function properly</span>
+<span class="c1">#        if item.Role in self.tree._selectables:</span>
+<span class="c1">#            self.addModels([str(item.text())])</span>
+
+<div class="viewcode-block" id="TaurusModelChooser.getListedModels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.getListedModels">[docs]</a>    <span class="k">def</span> <span class="nf">getListedModels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asMimeData</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the list of models that have been added</span>
+
+<span class="sd">        :param asMimeData: (bool) If False (default), the return value will be a</span>
+<span class="sd">                           list of models. If True, the return value is a</span>
+<span class="sd">                           `QMimeData` containing at least `TAURUS_MODEL_LIST_MIME_TYPE`</span>
+<span class="sd">                           and `text/plain` MIME types. If only one model was selected,</span>
+<span class="sd">                           the mime data also contains a TAURUS_MODEL_MIME_TYPE.</span>
+
+<span class="sd">        :return: (list&lt;str&gt; or QMimeData) the type of return depends on the value of `asMimeData`&#39;&#39;&#39;</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">getModelList</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isSingleModelMode</span><span class="p">():</span>
+            <span class="n">models</span> <span class="o">=</span> <span class="n">models</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">asMimeData</span><span class="p">:</span>
+            <span class="n">md</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMimeData</span><span class="p">()</span>
+            <span class="n">md</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">models</span><span class="p">)))</span>
+            <span class="n">md</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">models</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">md</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
+                    <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">md</span>
+        <span class="k">return</span> <span class="n">models</span></div>
+
+<div class="viewcode-block" id="TaurusModelChooser.setListedModels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.setListedModels">[docs]</a>    <span class="k">def</span> <span class="nf">setListedModels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds the given list of models to the widget list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">clearAll</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">addModels</span><span class="p">(</span><span class="n">models</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusModelChooser.resetListedModels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.resetListedModels">[docs]</a>    <span class="k">def</span> <span class="nf">resetListedModels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;equivalent to setListedModels([])&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">clearAll</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusModelChooser.updateList"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.updateList">[docs]</a>    <span class="k">def</span> <span class="nf">updateList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrList</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;for backwards compatibility with AttributeChooser only. Use :meth:`setListedModels` instead&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;ModelChooser.updateList() is provided for backwards compatibility only. Use setListedModels() instead&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setListedModels</span><span class="p">(</span><span class="n">attrList</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusModelChooser.addModels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.addModels">[docs]</a>    <span class="k">def</span> <span class="nf">addModels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Add given models to the selected models list&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isSingleModelMode</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetListedModels</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowDuplicates</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">addModels</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">listedmodels</span> <span class="o">=</span> <span class="n">CaselessList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getListedModels</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">listedmodels</span><span class="p">:</span>
+                    <span class="n">listedmodels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">addModels</span><span class="p">([</span><span class="n">m</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TaurusModelChooser.onRemoveSelected"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.onRemoveSelected">[docs]</a>    <span class="k">def</span> <span class="nf">onRemoveSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Remove the list-selected models from the list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">removeSelected</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_onUpdateModels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getListedModels</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateModels</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_selectables</span><span class="p">:</span>
+            <span class="c1"># for backwards compatibility with the old AttributeChooser</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">UpdateAttrs</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusModelChooser.setSingleModelMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.setSingleModelMode">[docs]</a>    <span class="k">def</span> <span class="nf">setSingleModelMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">single</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets whether the selection should be limited to just one model</span>
+<span class="sd">        (single=True) or not (single=False)&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">single</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">treeView</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectionMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">SingleSelection</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">treeView</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectionMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">ExtendedSelection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_singleModelMode</span> <span class="o">=</span> <span class="n">single</span></div>
+
+<div class="viewcode-block" id="TaurusModelChooser.isSingleModelMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.isSingleModelMode">[docs]</a>    <span class="k">def</span> <span class="nf">isSingleModelMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns True if the selection is limited to just one model. Returns False otherwise.</span>
+
+<span class="sd">        :return: (bool)&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_singleModelMode</span></div>
+
+<div class="viewcode-block" id="TaurusModelChooser.resetSingleModelMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.resetSingleModelMode">[docs]</a>    <span class="k">def</span> <span class="nf">resetSingleModelMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;equivalent to setSingleModelMode(False)&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSingleModelMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TaurusModelChooser.modelChooserDlg"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.modelChooserDlg">[docs]</a>    <span class="k">def</span> <span class="nf">modelChooserDlg</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">asMimeData</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">singleModel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">windowTitle</span><span class="o">=</span><span class="s1">&#39;Model Chooser&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Static method that launches a modal dialog containing a TaurusModelChooser</span>
+
+<span class="sd">        :param parent: (QObject) parent for the dialog</span>
+<span class="sd">        :param selectables: (list&lt;TaurusElementType&gt;) if passed, only elements of the tree whose</span>
+<span class="sd">                            type is in the list will be selectable.</span>
+<span class="sd">        :param host: (QObject) Tango host to be explored by the chooser</span>
+<span class="sd">        :param asMimeData: (bool) If False (default),  a list of models will be.</span>
+<span class="sd">                           returned. If True, a `QMimeData` object will be</span>
+<span class="sd">                           returned instead. See :meth:`getListedModels` for a</span>
+<span class="sd">                           detailed description of this QMimeData object.</span>
+<span class="sd">        :param singleModel: (bool) If True, the selection will be of just one</span>
+<span class="sd">                            model. Otherwise (default) a list of models can be selected</span>
+<span class="sd">        :param windowTitle: (str) Title of the dialog (default=&quot;Model Chooser&quot;)</span>
+
+<span class="sd">        :return: (list,bool or QMimeData,bool) Returns a models,ok tuple. models can be</span>
+<span class="sd">                 either a list of models or a QMimeData object, depending on</span>
+<span class="sd">                 `asMimeData`. ok is True if the dialog was accepted (by</span>
+<span class="sd">                 clicking on the &quot;update&quot; button) and False otherwise</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">dlg</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">windowTitle</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;logos:taurus.png&quot;</span><span class="p">))</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusModelChooser</span><span class="p">(</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="n">selectables</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">singleModel</span><span class="o">=</span><span class="n">singleModel</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">updateModels</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">w</span><span class="o">.</span><span class="n">getListedModels</span><span class="p">(</span><span class="n">asMimeData</span><span class="o">=</span><span class="n">asMimeData</span><span class="p">),</span> <span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="o">==</span> <span class="n">dlg</span><span class="o">.</span><span class="n">Accepted</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusModelChooser.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.panel&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:listview.png&quot;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;container&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Views&#39;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+    <span class="n">singleModelMode</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span>
+        <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">isSingleModelMode</span><span class="p">,</span> <span class="n">setSingleModelMode</span><span class="p">,</span> <span class="n">resetSingleModelMode</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="n">TaurusModelChooser</span><span class="o">.</span><span class="n">modelChooserDlg</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

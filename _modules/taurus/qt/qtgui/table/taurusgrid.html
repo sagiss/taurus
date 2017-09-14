@@ -1,0 +1,1222 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.table.taurusgrid &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.table.taurusgrid</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.table.taurusgrid</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">taurusgrid.py: module containing the Taurus Widget: TaurusGrid</span>
+<span class="sd">original idea and development by gcuni</span>
+<span class="sd">integrated with taurus and regular expressions by srubio</span>
+<span class="sd">alba, 2009</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># This module needs a total cleanup. Both re. code conventions and algorithms.</span>
+<span class="c1">#   --cpascual 20140827</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusGrid&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
+
+<span class="kn">import</span> <span class="nn">taurus</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util.emitter</span> <span class="k">import</span> <span class="n">modelSetter</span><span class="p">,</span> <span class="n">TaurusEmitterThread</span><span class="p">,</span> <span class="n">SingletonWorker</span><span class="p">,</span> <span class="n">MethodModel</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusmanager</span> <span class="k">import</span> <span class="n">TaurusManager</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusValue</span>
+
+<span class="n">metachars</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;([.][*])|([.][^*])|([$^+\-?</span><span class="si">{}</span><span class="s1">\[\]|()])&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">re_search_low</span><span class="p">(</span><span class="n">regexp</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">regexp</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">target</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">re_match_low</span><span class="p">(</span><span class="n">regexp</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regexp</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">target</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">get_all_models</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    All devices matching expressions must be obtained.</span>
+<span class="sd">    For each device only the good attributes are read.</span>
+
+<span class="sd">    It practically equals to fandango.get_matching_attributes; check which is better!</span>
+<span class="sd">    Move this method to taurus.core.tango.search</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#print( &#39;In TaurusGrid.get_all_models(%s:&quot;%s&quot;) ...&#39; % (type(expressions),expressions))</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># if any(re.match(s,expressions) for s in (&#39;\{.*\}&#39;,&#39;\(.*\)&#39;,&#39;\[.*\]&#39;)):</span>
+            <span class="c1">##self.debug( &#39;evaluating expressions ....&#39;)</span>
+            <span class="c1">#expressions = list(eval(expressions))</span>
+        <span class="c1"># else:</span>
+            <span class="c1">##self.debug( &#39;expressions as string separated by commas ...&#39;)</span>
+        <span class="n">expressions</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">klass</span><span class="p">)</span> <span class="k">for</span> <span class="n">klass</span> <span class="ow">in</span> <span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QStringList</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+        <span class="c1">#self.debug( &#39;expressions converted from list ...&#39;)</span>
+        <span class="n">expressions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">expressions</span><span class="p">)</span>
+
+    <span class="c1">#self.debug( &#39;In TaurusGrid.get_all_models(%s:&quot;%s&quot;) ...&#39; % (type(expressions),expressions))</span>
+    <span class="n">taurus_db</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Authority</span><span class="p">()</span>
+    <span class="c1">#taurus_db = taurus.Authority(os.environ[&#39;TANGO_HOST&#39;])</span>
+    <span class="c1"># WHAAAAAAT????? Someone should get beaten for this line</span>
+    <span class="k">if</span> <span class="s1">&#39;SimulationAuthority&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">taurus_db</span><span class="p">)):</span>
+        <span class="c1">#self.trace( &#39;Using a simulated database ...&#39;)</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="n">expressions</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">all_devs</span> <span class="o">=</span> <span class="n">taurus_db</span><span class="o">.</span><span class="n">get_device_exported</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">expressions</span><span class="p">:</span>
+            <span class="c1">#self.trace( &#39;evaluating exp = &quot;%s&quot;&#39; % exp)</span>
+            <span class="n">exp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+            <span class="n">devs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">exp</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">device</span><span class="p">,</span> <span class="n">attribute</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">device</span><span class="p">,</span> <span class="n">attribute</span> <span class="o">=</span> <span class="n">exp</span><span class="p">,</span> <span class="s1">&#39;State&#39;</span>
+
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">device</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;.*[]()+?&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">device</span> <span class="ow">and</span> <span class="s1">&#39;.*&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">device</span><span class="p">:</span>
+                    <span class="n">device</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">)</span>
+                <span class="n">devs</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_devs</span> <span class="k">if</span> <span class="n">re_match_low</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">s</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">devs</span> <span class="o">=</span> <span class="p">[</span><span class="n">device</span><span class="p">]</span>
+
+            <span class="c1">#self.trace( &#39;TaurusGrid.get_all_models(): devices matched by %s / %s are %d:&#39; % (device,attribute,len(devs)))</span>
+            <span class="c1">#self.debug( &#39;%s&#39; % (devs))</span>
+            <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">attribute</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;.*[]()+?&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">attribute</span> <span class="ow">and</span> <span class="s1">&#39;.*&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attribute</span><span class="p">:</span>
+                        <span class="n">attribute</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="c1">#taurus_dp = taurus.core.taurusdevice.TaurusDevice(dev)</span>
+                        <span class="n">taurus_dp</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span><span class="o">.</span><span class="n">getFactory</span><span class="p">()()</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+                        <span class="c1">#self.debug( &quot;taurus_dp = %s&quot;%taurus_dp.getFullName())</span>
+                        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">att</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">att</span> <span class="ow">in</span> <span class="n">taurus_dp</span><span class="o">.</span><span class="n">attribute_list_query</span><span class="p">(</span>
+                        <span class="p">)</span> <span class="k">if</span> <span class="n">re_match_low</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">att</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+                        <span class="n">targets</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">dev</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">att</span> <span class="k">for</span> <span class="n">att</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="c1">#self.warning( &#39;ERROR! TaurusGrid.get_all_models(): Unable to get attributes for device %s: %s&#39; % (dev,str(e)))</span>
+                        <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dev</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">attribute</span><span class="p">)</span>
+            <span class="c1"># print &#39;TaurusGrid.get_all_models(): targets added by %s are: %s&#39;</span>
+            <span class="c1"># % (exp,targets)</span>
+            <span class="n">models</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="n">models</span><span class="p">[:</span><span class="n">limit</span><span class="p">]</span>
+    <span class="c1">#print( &#39;Out of TaurusGrid.get_all_models(...)&#39;)</span>
+    <span class="k">return</span> <span class="n">models</span>
+
+
+<span class="k">def</span> <span class="nf">get_readwrite_models</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    All devices matching expressions must be obtained.</span>
+<span class="sd">    For each device only the good attributes are read.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#self.debug( &#39;In TaurusGrid.get_all_models(%s:&quot;%s&quot;) ...&#39; % (type(expressions),expressions))</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">expressions</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;\{.*\}&#39;</span><span class="p">,</span> <span class="s1">&#39;\(.*\)&#39;</span><span class="p">,</span> <span class="s1">&#39;\[.*\]&#39;</span><span class="p">)):</span>
+            <span class="c1">#self.trace( &#39;evaluating expressions ....&#39;)</span>
+            <span class="n">expressions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">expressions</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1">#self.trace( &#39;expressions as string separated by commas ...&#39;)</span>
+            <span class="n">expressions</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">klass</span><span class="p">)</span> <span class="k">for</span> <span class="n">klass</span> <span class="ow">in</span> <span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QStringList</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+        <span class="n">expressions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">expressions</span><span class="p">)</span>
+
+    <span class="n">taurus_db</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Authority</span><span class="p">()</span>
+    <span class="c1"># WHAAAT???? At least check instances...</span>
+    <span class="k">if</span> <span class="s1">&#39;SimulationAuthority&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">taurus_db</span><span class="p">)):</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="n">expressions</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">all_devs</span> <span class="o">=</span> <span class="n">taurus_db</span><span class="o">.</span><span class="n">get_device_exported</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">expressions</span><span class="p">:</span>
+            <span class="n">exp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+            <span class="n">devs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">exp</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">device</span><span class="p">,</span> <span class="n">attribute</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">device</span><span class="p">,</span> <span class="n">attribute</span> <span class="o">=</span> <span class="n">exp</span><span class="p">,</span> <span class="s1">&#39;State&#39;</span>
+
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">device</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;.*[]()+?&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">device</span> <span class="ow">and</span> <span class="s1">&#39;.*&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">device</span><span class="p">:</span>
+                    <span class="n">device</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">)</span>
+                <span class="n">devs</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_devs</span> <span class="k">if</span> <span class="n">re_match_low</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">s</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">devs</span> <span class="o">=</span> <span class="p">[</span><span class="n">device</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">attribute</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;.*[]()+?&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">attribute</span> <span class="ow">and</span> <span class="s1">&#39;.*&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attribute</span><span class="p">:</span>
+                        <span class="n">attribute</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">taurus_dp</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span><span class="o">.</span><span class="n">getFactory</span><span class="p">()()</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+                        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">att</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">att</span> <span class="ow">in</span> <span class="n">taurus_dp</span><span class="o">.</span><span class="n">attribute_list_query</span><span class="p">(</span>
+                        <span class="p">)</span> <span class="k">if</span> <span class="n">re_match_low</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">att</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="ow">and</span> <span class="n">att</span><span class="o">.</span><span class="n">isReadOnly</span><span class="p">()]</span>
+                        <span class="n">targets</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">dev</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">att</span> <span class="k">for</span> <span class="n">att</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dev</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">attribute</span><span class="p">)</span>
+            <span class="n">models</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="n">models</span><span class="p">[:</span><span class="n">limit</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">models</span>
+
+
+<div class="viewcode-block" id="TaurusGrid"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid">[docs]</a><span class="k">class</span> <span class="nc">TaurusGrid</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; TaurusGrid is a Taurus widget designed to represent a set of attributes distributed in columns and rows.</span>
+<span class="sd">    The Model will be a list with attributes or device names (for devices the State attribute will be shown).</span>
+<span class="sd">    Each setModel(*) execution will be able to modify the attribute list.</span>
+<span class="sd">    An example of execution:&lt;pre&gt;</span>
+<span class="sd">    /usr/bin/python taurusgrid.py &quot;model=lt.*/VC.*/.*/((C*)|(P*)|(I*))&quot; cols=IP,CCG,PNV rows=LT01,LT02</span>
+<span class="sd">    &lt;/pre&gt;</span>
+<span class="sd">    @author originally developed by gcuni, extended by srubio and sblanch</span>
+<span class="sd">    @todo Future releases should allow a list of filters as argument</span>
+<span class="sd">    @todo names/widgets should be accessible as a caselessdict dictionary (e.g. for adding custom context menus)</span>
+<span class="sd">    @todo refactoring to have methods that add/remove new widgets one by one, not only the whole dictionary</span>
+<span class="sd">    @todo _TAGS property should allow to change row/columns meaning and also add new Custom tags based on regexp</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#-------------------------------------------------------------------------</span>
+    <span class="c1"># Write your own code here to define the signals generated by this widget</span>
+    <span class="c1">#</span>
+
+    <span class="n">itemSelected</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
+    <span class="n">itemClicked</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="n">_TAGS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DOMAIN&#39;</span><span class="p">,</span> <span class="s1">&#39;FAMILY&#39;</span><span class="p">,</span> <span class="s1">&#39;HOST&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;LEVEL&#39;</span><span class="p">,</span> <span class="s1">&#39;CLASS&#39;</span><span class="p">,</span> <span class="s1">&#39;ATTRIBUTE&#39;</span><span class="p">,</span> <span class="s1">&#39;DEVICE&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="c1">#self.call__init__(TaurusBaseWidget, name, parent, designMode=designMode)</span>
+        <span class="c1"># It was needed to avoid exceptions in TaurusDesigner!</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
+                              <span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showLabels</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widgets_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_selected</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_frames</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_row_frame</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_column_frame</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_labels</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_units</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hideLabels</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">defineStyle</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelsQueue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__modelsThread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">designMode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelsThread</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">modelsThread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">modelsThread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__modelsThread</span>
+        <span class="k">if</span> <span class="n">modelsThread</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">modelsThread</span> <span class="o">=</span> <span class="n">SingletonWorker</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;TaurusGrid&#39;</span><span class="p">,</span>
+                                           <span class="n">queue</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modelsQueue</span><span class="p">,</span>
+                                           <span class="n">method</span><span class="o">=</span><span class="n">modelSetter</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__modelsThread</span> <span class="o">=</span> <span class="n">modelsThread</span>
+        <span class="k">return</span> <span class="n">modelsThread</span>
+
+<div class="viewcode-block" id="TaurusGrid.save"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pickle</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">,</span>
+            <span class="s1">&#39;row_labels&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="p">,</span> <span class="s1">&#39;column_labels&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="p">,</span>
+            <span class="s1">&#39;frames&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_row_frame</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_column_frame</span><span class="p">,</span> <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_labels</span><span class="p">,</span>
+            <span class="s1">&#39;units&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_units</span><span class="p">,</span> <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span>
+        <span class="p">}</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.load"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">delayed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In TauGrid.load(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">delayed</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">manual</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="kn">import</span> <span class="nn">pickle</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">manual</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRowLabels</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;row_labels&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setColumnLabels</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;column_labels&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showAttributeLabels</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;labels&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showAttributeUnits</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;units&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showOthers</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;others&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showRowFrame</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;frames&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">manual</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showColumnFrame</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;frames&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">delayed</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;delayed&#39;</span><span class="p">,</span> <span class="n">delayed</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.defineStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.defineStyle">[docs]</a>    <span class="k">def</span> <span class="nf">defineStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Defines the initial style for the widget &quot;&quot;&quot;</span>
+        <span class="c1">#----------------------------------------------------------------------</span>
+        <span class="c1"># Write your own code here to set the initial style of your widget</span>
+        <span class="c1">#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">())</span>
+        <span class="c1"># self.layout().setContentsMargins(0,0,0,0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.minimumSizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.minimumSizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget over writing</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusGrid.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#----------------------------------------------------------------------</span>
+        <span class="c1"># [MANDATORY]</span>
+        <span class="c1"># Replace your own code here</span>
+        <span class="c1"># ex.: return taurus.core.taurusattribute.Attribute</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Forgot to overwrite </span><span class="si">%s</span><span class="s2">.getModelClass&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">list</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.attach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.attach">[docs]</a>    <span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Attaches the widget to the model&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isAttached</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1">#----------------------------------------------------------------------</span>
+        <span class="c1"># Write your own code here before attaching widget to attribute connect</span>
+        <span class="c1"># the proper signal so that the first event is correctly received by the</span>
+        <span class="c1"># widget</span>
+        <span class="c1">#</span>
+        <span class="c1"># Typical code is:</span>
+        <span class="c1"># self.connect(self, QtCore.SIGNAL(&#39;valueChangedDueToEvent(QString)&#39;),</span>
+        <span class="c1">#             self.setTextValue)</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># by default enable/disable widget according to attach state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.detach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.detach">[docs]</a>    <span class="k">def</span> <span class="nf">detach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Detaches the widget from the model&quot;&quot;&quot;</span>
+
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------------------------------------</span>
+        <span class="c1"># Write your own code here after detaching the widget from the model</span>
+        <span class="c1">#</span>
+        <span class="c1"># Typical code is:</span>
+        <span class="c1"># self.emit(QtCore.SIGNAL(&#39;valueChangedDueToEvent(QString)&#39;),</span>
+        <span class="c1">#          QtCore.QString(value_str))</span>
+        <span class="c1"># self.disconnect(self, QtCore.SIGNAL(&#39;valueChangedDueToEvent(QString)&#39;),</span>
+        <span class="c1">#                self.setTextValue)</span>
+
+        <span class="c1"># by default disable widget when dettached</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+    <span class="c1">#-------------------------------------------------------------------------</span>
+    <span class="c1"># [MANDATORY]</span>
+    <span class="c1"># Uncomment the following method if your superclass does not provide with a</span>
+    <span class="c1"># isReadOnly() method or if you need to change its behavior</span>
+
+    <span class="c1"># def isReadOnly(self):</span>
+    <span class="c1">#    return True</span>
+
+<div class="viewcode-block" id="TaurusGrid.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#----------------------------------------------------------------------</span>
+        <span class="c1"># Write your own code here to update your widget style</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;@&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span>
+            <span class="s1">&#39;In TaurusGrid.updateStyle() ....... It seems never called!!!!&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;@&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+        <span class="c1"># It was showing an annoying &quot;True&quot; in the widget</span>
+        <span class="c1">#value = self.getShowText() or &#39;&#39;</span>
+        <span class="c1"># if self._setText: self._setText(value) ##It must be included</span>
+
+        <span class="c1"># update tooltip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFormatedToolTip</span><span class="p">())</span>  <span class="c1"># It must be included</span>
+
+        <span class="c1"># send a repaint in the end</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;title_widget&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">title_widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">title_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+    <span class="c1">#-------------------------------------------------------------------------</span>
+    <span class="c1"># Write your own code here for your own widget properties</span>
+
+<div class="viewcode-block" id="TaurusGrid.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">devsInRows</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">delayed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;The model can be initialized as a list of devices or hosts or dictionary or ...&#39;&#39;&#39;</span>
+        <span class="c1"># self.setModelCheck(model) ##It must be included</span>
+        <span class="c1"># differenciate if the model is a RegExp</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QString</span><span class="p">))</span> <span class="ow">and</span> <span class="p">[</span>
+                <span class="n">model</span><span class="p">]</span> <span class="ow">or</span> <span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In TaurusGrid.setModel(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)[:</span><span class="mi">100</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">delayed</span> <span class="o">=</span> <span class="n">delayed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="n">model</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">model</span><span class="p">):</span>
+                <span class="n">model</span> <span class="o">=</span> <span class="n">get_all_models</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;model was a RegExp, done the query and converted to an attr list&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">==</span> <span class="p">[]:</span>  <span class="c1"># clean to start from scratch</span>
+                <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widgets_list</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">widget</span>
+
+            <span class="c1"># here we always have the reals model list, even if it comes from a</span>
+            <span class="c1"># regexp</span>
+            <span class="k">if</span> <span class="n">append</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">+</span> <span class="n">model</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">=</span> <span class="n">model</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">((</span><span class="s1">&#39;In TaurusGrid.setModel(...): modelNames are </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span><span class="p">))[:</span><span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;...&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">load</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In TaurusGrid.setModel(</span><span class="si">%s</span><span class="s1">,load=True): modelNames are </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)[:</span><span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span><span class="p">)))</span>  <span class="c1"># ,self._modelNames))</span>
+                <span class="k">if</span> <span class="n">devsInRows</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setRowLabels</span><span class="p">(</span>
+                        <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">create_widgets_table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modelsQueue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">MethodModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">showRowFrame</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_row_frame</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modelsQueue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">MethodModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">showColumnFrame</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_column_frame</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modelsQueue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">MethodModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">showOthers</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modelsQueue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">MethodModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">showAttributeLabels</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_labels</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modelsQueue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">MethodModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">showAttributeUnits</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_units</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">delayed</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In setModel(): not delayed loading of models&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelsThread</span><span class="o">.</span><span class="n">isRunning</span><span class="p">():</span>
+                        <span class="c1"># print &#39;In setModel(): Starting Thread! (%d objs in</span>
+                        <span class="c1"># queue)&#39;%(self.modelsThread.queue.qsize())</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+                        <span class="c1"># self.modelsThread.IdlePriority)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">modelsThread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># print &#39;In setModel(): Thread already started! (%d</span>
+                        <span class="c1"># objs in queue)&#39;%(self.modelsThread.queue.qsize())</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">modelsThread</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In setModel(): models loading delayed!&#39;</span><span class="p">)</span>
+                    <span class="k">pass</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Out of TaurusGrid.setModel(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)[:</span><span class="mi">100</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.getModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.getModel">[docs]</a>    <span class="k">def</span> <span class="nf">getModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.resetModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.resetModel">[docs]</a>    <span class="k">def</span> <span class="nf">resetModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateFromList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.setTitle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.setTitle">[docs]</a>    <span class="k">def</span> <span class="nf">setTitle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;title_widget&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">title_widget</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">title_widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">title_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.parse_labels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.parse_labels">[docs]</a>    <span class="k">def</span> <span class="nf">parse_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="n">text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;}&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;]&#39;</span><span class="p">)]):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">labels</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">labels</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s1">&#39;ERROR! Unable to parse labels property: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">exprs</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;:&#39;</span> <span class="ow">in</span> <span class="n">e</span> <span class="ow">and</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">e</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
+                <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="ow">or</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">exprs</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">labels</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.setRowLabels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.setRowLabels">[docs]</a>    <span class="k">def</span> <span class="nf">setRowLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;The model can be initialized as a list of devices or hosts or ...&#39;&#39;&#39;</span>
+        <span class="c1"># self.setModelCheck(model) ##It must be included</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_labels</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">)):</span>
+                <span class="n">section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setVerticalHeaderItem</span><span class="p">(</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">section</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;setRowLabels(): Exception! </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span></div>
+        <span class="c1"># self.create_widgets_table(self._columnsNames)</span>
+
+<div class="viewcode-block" id="TaurusGrid.getRowLabels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.getRowLabels">[docs]</a>    <span class="k">def</span> <span class="nf">getRowLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.resetRowLabels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.resetRowLabels">[docs]</a>    <span class="k">def</span> <span class="nf">resetRowLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.setColumnLabels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.setColumnLabels">[docs]</a>    <span class="k">def</span> <span class="nf">setColumnLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;The model can be initialized as a list of devices or hosts or ...&#39;&#39;&#39;</span>
+        <span class="c1"># self.setModelCheck(model) ##It must be included</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_labels</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">columns</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+                <span class="n">equipment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderItem</span><span class="p">(</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">equipment</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;setColumnLabels(): Exception! </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span></div>
+        <span class="c1"># self.create_widgets_table(self._columnsNames)</span>
+
+<div class="viewcode-block" id="TaurusGrid.getColumnLabels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.getColumnLabels">[docs]</a>    <span class="k">def</span> <span class="nf">getColumnLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.resetColumnLabels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.resetColumnLabels">[docs]</a>    <span class="k">def</span> <span class="nf">resetColumnLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span></div>
+
+    <span class="c1"># FIXME: when they are called before setModel they fails because</span>
+    <span class="c1"># frames are not yet created, and it doesn&#39;t has memoty about this.</span>
+<div class="viewcode-block" id="TaurusGrid.showRowFrame"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.showRowFrame">[docs]</a>    <span class="k">def</span> <span class="nf">showRowFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_row_frame</span> <span class="o">=</span> <span class="n">boolean</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;rows_frame&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">boolean</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.showColumnFrame"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.showColumnFrame">[docs]</a>    <span class="k">def</span> <span class="nf">showColumnFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_column_frame</span> <span class="o">=</span> <span class="n">boolean</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;columns_frame&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">boolean</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.showAttributeLabels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.showAttributeLabels">[docs]</a>    <span class="k">def</span> <span class="nf">showAttributeLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In showAttributeLabels(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">boolean</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_labels</span> <span class="o">=</span> <span class="n">boolean</span>
+        <span class="k">for</span> <span class="n">tv</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widgets_list</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">tv</span> <span class="ow">and</span> <span class="n">tv</span><span class="o">.</span><span class="n">labelWidget</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">boolean</span><span class="p">:</span>
+                        <span class="n">tv</span><span class="o">.</span><span class="n">labelWidget</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">tv</span><span class="o">.</span><span class="n">labelWidget</span><span class="p">()</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_labels</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.showAttributeUnits"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.showAttributeUnits">[docs]</a>    <span class="k">def</span> <span class="nf">showAttributeUnits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In showAttributeUnits(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">boolean</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_units</span> <span class="o">=</span> <span class="n">boolean</span>
+        <span class="k">for</span> <span class="n">tv</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widgets_list</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">tv</span> <span class="ow">and</span> <span class="n">tv</span><span class="o">.</span><span class="n">unitsWidget</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">boolean</span><span class="p">:</span>
+                        <span class="n">tv</span><span class="o">.</span><span class="n">unitsWidget</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">tv</span><span class="o">.</span><span class="n">unitsWidget</span><span class="p">()</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_attr_units</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT properties</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QStringList&quot;</span><span class="p">,</span> <span class="n">getModel</span><span class="p">,</span>
+                                <span class="n">setModel</span><span class="p">,</span>
+                                <span class="n">resetModel</span><span class="p">)</span>
+
+    <span class="n">rowlabels</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getRowLabels</span><span class="p">,</span>
+                                    <span class="n">setRowLabels</span><span class="p">,</span>
+                                    <span class="n">resetRowLabels</span><span class="p">)</span>
+
+    <span class="n">columnlabels</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getColumnLabels</span><span class="p">,</span>
+                                       <span class="n">setColumnLabels</span><span class="p">,</span>
+                                       <span class="n">resetColumnLabels</span><span class="p">)</span>
+
+    <span class="n">useParentModel</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+                                         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span>
+                                         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span>
+                                         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span>
+
+    <span class="c1">#-------------------------------------------------------------------------</span>
+    <span class="c1"># Write your own code here for your own widget properties</span>
+
+<div class="viewcode-block" id="TaurusGrid.create_widgets_dict"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.create_widgets_dict">[docs]</a>    <span class="k">def</span> <span class="nf">create_widgets_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+        <span class="c1"># recursive dictionary with 2 levels</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">))</span>
+        <span class="c1">#domains = list(set(m.split(&#39;/&#39;)[0].upper()))</span>
+        <span class="c1">#families = list(set(m.split(&#39;/&#39;)[1].upper()))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="p">:</span>  <span class="c1"># Domains used by default</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="p">:</span>  <span class="c1"># Families used by default</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="p">)</span>
+
+        <span class="c1"># for m in models:</span>
+            <span class="c1"># if m.count(&#39;/&#39;)&lt;2:</span>
+            <span class="c1">#self.warning(&#39;Wrong model cannot be added: %s&#39;%m)</span>
+            <span class="c1"># else:</span>
+            <span class="c1">#domain,family = m.upper().split(&#39;/&#39;)[:2]</span>
+            <span class="c1"># values[domain][family].append(m)</span>
+
+        <span class="n">row_not_found</span><span class="p">,</span> <span class="n">col_not_found</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+            <span class="n">row</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="s1">&#39;Others&#39;</span><span class="p">,</span> <span class="s1">&#39;Others&#39;</span>
+            <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">rexp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">rexp</span> <span class="ow">and</span> <span class="s1">&#39;.*&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rexp</span><span class="p">:</span>
+                    <span class="n">rexp</span> <span class="o">=</span> <span class="n">rexp</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">re_search_low</span><span class="p">(</span><span class="n">rexp</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="n">label</span>
+                    <span class="k">break</span>
+            <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">rexp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">rexp</span> <span class="ow">and</span> <span class="s1">&#39;.*&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rexp</span><span class="p">:</span>
+                    <span class="n">rexp</span> <span class="o">=</span> <span class="n">rexp</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">re_search_low</span><span class="p">(</span><span class="n">rexp</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+                    <span class="n">column</span> <span class="o">=</span> <span class="n">label</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="s1">&#39;Others&#39;</span> <span class="o">==</span> <span class="n">row</span><span class="p">:</span>
+                <span class="n">row_not_found</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="s1">&#39;Others&#39;</span> <span class="o">==</span> <span class="n">column</span><span class="p">:</span>
+                <span class="n">col_not_found</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Model </span><span class="si">%s</span><span class="s1"> added to row </span><span class="si">%s</span><span class="s1"> , column </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                       <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">))</span>
+            <span class="n">values</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">row_not_found</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;Others&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">col_not_found</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;Others&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">values</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.create_frame_with_gridlayout"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.create_frame_with_gridlayout">[docs]</a>    <span class="k">def</span> <span class="nf">create_frame_with_gridlayout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Just a &#39;macro&#39; to create the layouts that seem to fit better. &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="p">()</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">())</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.create_widgets_table"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.create_widgets_table">[docs]</a>    <span class="k">def</span> <span class="nf">create_widgets_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
+
+        <span class="c1"># Added a title to the panel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title_widget</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title_widget</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+
+        <span class="n">dct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_widgets_dict</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+        <span class="c1"># Assignments modified to keep the order of labels as inserted in</span>
+        <span class="c1"># properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels</span><span class="p">]</span>  <span class="c1"># dct.keys()</span>
+        <span class="c1"># list(set(reduce(operator.add,v.keys()) for v in dct.values()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels</span><span class="p">]</span>
+
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="c1">#line.append(dct[row][col] if col in dct[row] else [])</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">[</span><span class="n">row</span><span class="p">]:</span>
+                    <span class="n">line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">line</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+        <span class="c1"># Here is where the table is created!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_table</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+        <span class="c1"># SET COLUMN HEADERS (self.columns)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+            <span class="n">equipment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderItem</span><span class="p">(</span>
+                <span class="n">i</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">equipment</span><span class="p">))</span>
+            <span class="c1"># SOMEDAY THIS WILL BE ICONS</span>
+
+        <span class="c1"># SET ROW HEADERS (self.rows)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">)):</span>
+            <span class="n">section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setVerticalHeaderItem</span><span class="p">(</span>
+                <span class="n">i</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">section</span><span class="p">))</span>
+
+<span class="c1">#        table.setAutoScroll(True)</span>
+<span class="c1">#        resize_mode = QtGui.QHeaderView.Stretch</span>
+<span class="c1">#        table.horizontalHeader().setSectionResizeMode(resize_mode)</span>
+        <span class="c1"># table.verticalHeader().setSectionResizeMode(resize_mode)</span>
+
+<span class="c1">#        for row in range(len(self.rows)):</span>
+<span class="c1">#            table.setRowHeight(row,5+25*sum(len(dct[self.rows[row]][col]) for col in self.columns))</span>
+        <span class="c1"># for col in range(len(self.columns)):</span>
+        <span class="c1">#    table.setColumnWidth(col,300)</span>
+
+        <span class="n">use_scroll</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># It didn&#39;t work ... it doesn&#39;t allow the table widget to resize</span>
+        <span class="k">if</span> <span class="n">use_scroll</span><span class="p">:</span>
+            <span class="n">scrollable</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QScrollArea</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">scrollable</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">scrollable</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------------------------------------</span>
+        <span class="c1"># SECTION CHECKBOXES</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkboxes_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_frame_with_gridlayout</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_frame_with_gridlayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">setFrameStyle</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">Box</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_row_frame</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkboxes_frame</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_frame_with_gridlayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">setFrameStyle</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">Box</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_column_frame</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkboxes_frame</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">layout_row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">layout_col</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># For all rows, create rows of three checkboxes in order to</span>
+        <span class="c1"># show or hide the corresponding rows in the table</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">)):</span>
+            <span class="n">section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">checkbox</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
+                <span class="n">checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">:</span>
+                    <span class="n">checkbox</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">layout_row</span><span class="p">,</span> <span class="n">layout_col</span><span class="p">)</span>
+            <span class="n">layout_col</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">layout_col</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">layout_col</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">layout_row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">checkbox</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">show_hide_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_hide_rows</span><span class="p">()</span>
+
+        <span class="n">layout_row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">layout_col</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># For all self.columns, create rows of three checkboxes in order to</span>
+        <span class="c1"># show or hide the corresponding columns in the table</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">checkbox</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
+                <span class="n">checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">:</span>
+                    <span class="n">checkbox</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">layout_row</span><span class="p">,</span> <span class="n">layout_col</span><span class="p">)</span>
+            <span class="n">layout_col</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">layout_col</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">layout_col</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">layout_row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">checkbox</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">show_hide_columns</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_hide_columns</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkboxes_frame</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+        <span class="c1"># self.resize(800,600)</span>
+
+<div class="viewcode-block" id="TaurusGrid.show_hide_rows"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.show_hide_rows">[docs]</a>    <span class="k">def</span> <span class="nf">show_hide_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This needs refactoring to be together with the show_hide_columns method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkbox</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">):</span>
+                <span class="n">table_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">showRow</span><span class="p">(</span><span class="n">table_row</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">hideRow</span><span class="p">(</span><span class="n">table_row</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.show_hide_columns"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.show_hide_columns">[docs]</a>    <span class="k">def</span> <span class="nf">show_hide_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This needs refactoring to be together with the show_hide_rows method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkbox</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">):</span>
+                <span class="n">table_col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">showColumn</span><span class="p">(</span><span class="n">table_col</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">hideColumn</span><span class="p">(</span><span class="n">table_col</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.showOthers"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.showOthers">[docs]</a>    <span class="k">def</span> <span class="nf">showOthers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">boolean</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span> <span class="o">=</span> <span class="n">boolean</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;rows_frame&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">checkbox</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">)</span> <span class="ow">and</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">:</span>
+                        <span class="n">checkbox</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">checkbox</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;columns_frame&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">checkbox</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">)</span> <span class="ow">and</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">:</span>
+                        <span class="n">checkbox</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">checkbox</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.build_table"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.build_table">[docs]</a>    <span class="k">def</span> <span class="nf">build_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is a builder. For all the elements in widgets matrix,</span>
+<span class="sd">        just set the corresponding cells of the QTableWidget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In TaurusGrid.build_table(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">values</span><span class="p">)</span>
+        <span class="n">widgets_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_widgets</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">showLabels</span><span class="p">)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">widgets_matrix</span><span class="p">)</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">rows</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">widgets_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="mi">0</span>
+
+        <span class="n">table</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTableWidget</span><span class="p">()</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="n">Delegate</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+        <span class="c1"># This example replaces the blue background of selected cells in tables</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="p">()</span>
+        <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">palette</span><span class="o">.</span><span class="n">Active</span><span class="p">,</span> <span class="n">palette</span><span class="o">.</span><span class="n">Highlight</span><span class="p">,</span>
+                         <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span>
+
+        <span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">widgets_matrix</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">widgets_matrix</span><span class="p">[</span><span class="n">row</span><span class="p">])):</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">widgets_matrix</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">])</span>
+
+        <span class="c1"># table.resizeColumnsToContents()</span>
+        <span class="c1"># table.resizeRowsToContents()</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="c1"># table.verticalHeader().setSectionResizeMode(QtGui.QHeaderView.Stretch)</span>
+        <span class="c1"># table.horizontalHeader().setSectionResizeMode(QtGui.QHeaderView.ResizeToContents)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">verticalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">table</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.build_widgets"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.build_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">build_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">240</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">value_width</span><span class="o">=</span><span class="mi">120</span><span class="p">):</span>
+        <span class="n">widgets_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">widgets_row</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+                <span class="n">cell_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_frame_with_gridlayout</span><span class="p">()</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">synoptic</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;processing synoptic </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">synoptic</span><span class="p">)</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">model</span> <span class="o">=</span> <span class="n">synoptic</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating TaurusValue with model =  </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">model</span><span class="p">)</span>
+                    <span class="n">synoptic_value</span> <span class="o">=</span> <span class="n">TaurusValue</span><span class="p">(</span><span class="n">cell_frame</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">modelsQueue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">synoptic_value</span><span class="p">,</span> <span class="n">model</span><span class="p">))</span>
+                    <span class="n">synoptic_value</span><span class="o">.</span><span class="n">itemClicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itemClicked</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hideLabels</span><span class="p">:</span>
+                        <span class="n">synoptic_value</span><span class="o">.</span><span class="n">setLabelWidgetClass</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># DO NOT DELETE THIS LINE!!!</span>
+                        <span class="n">synoptic_value</span><span class="o">.</span><span class="n">setLabelConfig</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+                    <span class="n">cell_frame</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">synoptic_value</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_widgets_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">synoptic_value</span><span class="p">)</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="c1"># Done in this way as TauValue.mousePressEvent are never called</span>
+                <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+                    <span class="c1"># print &#39;In cell clicked&#39;</span>
+                    <span class="n">targets</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">getModelName</span><span class="p">())</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">children</span><span class="p">()</span>
+                                  <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s1">&#39;underMouse&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">child</span><span class="o">.</span><span class="n">underMouse</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s1">&#39;getModelName&#39;</span><span class="p">))</span>
+                    <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">itemClicked</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">]</span>
+
+                <span class="n">cell_frame</span><span class="o">.</span><span class="n">mousePressEvent</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+                    <span class="n">mousePressEvent</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">cell_frame</span><span class="p">)</span>
+                <span class="n">cell_frame</span><span class="o">.</span><span class="n">itemClicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itemClicked</span><span class="p">)</span>
+
+                <span class="n">widgets_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cell_frame</span><span class="p">)</span>
+            <span class="n">widgets_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">widgets_row</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">widgets_matrix</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.itemClicked"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.itemClicked">[docs]</a>    <span class="k">def</span> <span class="nf">itemClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In TaurusGrid.itemClicked(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">item_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setItemSelected</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemClicked</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.setItemSelected"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.setItemSelected">[docs]</a>    <span class="k">def</span> <span class="nf">setItemSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">selected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; it adds a blue frame around a clicked item. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item_name</span><span class="p">,</span> <span class="n">TaurusValue</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In TaurusGrid.setItemSelected(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                       <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item_name</span><span class="o">.</span><span class="n">getModel</span><span class="p">()),</span> <span class="n">selected</span><span class="p">))</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">item_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In TaurusGrid.setItemSelected(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                       <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item_name</span><span class="p">),</span> <span class="n">selected</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">item_name</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItemByModel</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_selected</span>
+        <span class="k">if</span> <span class="n">item</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">selected</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">_labelWidget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+                    <span class="s1">&#39;border-style: solid ; border-width: 1px; border-color: blue; color: blue; border-radius:4px;&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_selected</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_selected</span> <span class="o">!=</span> <span class="n">item</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setItemSelected</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_selected</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_selected</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">_labelWidget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+                    <span class="s1">&#39;border-style: solid; border-width: 1px; border-color: transparent; color: black;  border-radius:4px;&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last_selected</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusGrid.getItemByModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.getItemByModel">[docs]</a>    <span class="k">def</span> <span class="nf">getItemByModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="c1"># a particular model can be many times, index means which one of them</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widgets_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">getModel</span><span class="p">())</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">model</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">widget</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">-=</span> <span class="mi">1</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusGrid.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusGrid.html#taurus.qt.qtgui.table.TaurusGrid.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.table&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Views&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:grid.png&quot;</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">Delegate</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QItemDelegate</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QItemDelegate</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cellWidget</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">size</span>
+
+
+<span class="k">def</span> <span class="nf">sysargs_to_dict</span><span class="p">(</span><span class="n">defaults</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="s1">&#39;=&#39;</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+            <span class="n">bar</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">bar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;True&#39;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">]:</span>  <span class="c1"># convert string to boolean</span>
+                <span class="n">bar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">bar</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">bar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">bar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">defaults</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">a</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="s2">&quot;The format of the call is something like:&quot;</span>
+        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">/usr/bin/python taurusgrid.py grid.pickle.file&#39;</span>
+        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">/usr/bin/python taurusgrid.py &quot;model=lt.*/VC.*/.*/((C*)|(P*)|(I*))&quot; cols=IP,CCG,PNV rows=LT01,LT02 others=False rowframe=True colframe=False&#39;</span>
+        <span class="n">exit</span><span class="p">()</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGrid</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>  <span class="c1"># first try if argument is a file to be opened</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">gui</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">sysargs_to_dict</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="s1">&#39;rows&#39;</span><span class="p">,</span> <span class="s1">&#39;cols&#39;</span><span class="p">,</span> <span class="s1">&#39;others&#39;</span><span class="p">,</span> <span class="s1">&#39;rowframe&#39;</span><span class="p">,</span> <span class="s1">&#39;colframe&#39;</span><span class="p">])</span>
+        <span class="nb">print</span> <span class="s2">&quot;args = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">args</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rows&#39;</span><span class="p">):</span>
+            <span class="n">gui</span><span class="o">.</span><span class="n">setRowLabels</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;rows&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cols&#39;</span><span class="p">):</span>
+            <span class="n">gui</span><span class="o">.</span><span class="n">setColumnLabels</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;cols&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">):</span>
+            <span class="n">gui</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">])</span>
+        <span class="n">gui</span><span class="o">.</span><span class="n">showRowFrame</span><span class="p">(</span><span class="s1">&#39;rowframe&#39;</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;rowframe&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">gui</span><span class="o">.</span><span class="n">showColumnFrame</span><span class="p">(</span><span class="s1">&#39;colframe&#39;</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;colframe&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">gui</span><span class="o">.</span><span class="n">showOthers</span><span class="p">(</span><span class="s1">&#39;others&#39;</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;others&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="nb">print</span> <span class="s2">&quot;current TaurusGrid model= </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">gui</span><span class="o">.</span><span class="n">getModel</span><span class="p">())</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

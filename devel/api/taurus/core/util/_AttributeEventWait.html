@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>AttributeEventWait &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="taurus.core.util" href="../util.html"/>
+        <link rel="next" title="BZ2Codec" href="_BZ2Codec.html"/>
+        <link rel="prev" title="AttributeEventIterator" href="_AttributeEventIterator.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../core.html"><code class="docutils literal"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+      
+          <li><a href="../util.html"><code class="docutils literal"><span class="pre">taurus.core.util</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">AttributeEventWait</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../_sources/devel/api/taurus/core/util/_AttributeEventWait.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="attributeeventwait">
+<h1><a class="reference internal" href="#taurus.core.util.AttributeEventWait" title="taurus.core.util.AttributeEventWait"><code class="xref py py-class docutils literal"><span class="pre">AttributeEventWait</span></code></a><a class="headerlink" href="#attributeeventwait" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../_images/inheritance-edc58766e7cb784800eca7179c939410a3b65ef1.png" alt="Inheritance diagram of AttributeEventWait" usemap="#inheritanceadc988d4f8" class="inheritance"/>
+<map id="inheritanceadc988d4f8" name="inheritanceadc988d4f8">
+<area shape="rect" id="node1" title="Class designed to connect to a :class:`taurus.core.taurusattribute.TaurusAttribute` and" alt="" coords="5,5,145,53"/>
+</map>
+<dl class="class">
+<dt id="taurus.core.util.AttributeEventWait">
+<em class="property">class </em><code class="descname">AttributeEventWait</code><span class="sig-paren">(</span><em>attr=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class designed to connect to a <code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusattribute.TaurusAttribute</span></code> and
+fire events or wait for a certain event.</p>
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.clearEventSet">
+<code class="descname">clearEventSet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.clearEventSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.clearEventSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the internal event buffer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>attr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to the given attribute
+:param attr: the attribute to connect to
+:type  attr: taurus.core.taurusattribute.TaurusAttribute</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.disconnect">
+<code class="descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnects from the attribute. If not connected nothing happens.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.eventReceived">
+<code class="descname">eventReceived</code><span class="sig-paren">(</span><em>s</em>, <em>t</em>, <em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.eventReceived"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.eventReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event listener method for the underlying attribute. Do not call this
+method. It will be called internally when the attribute generates
+an event.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.fireEvent">
+<code class="descname">fireEvent</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.fireEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.fireEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notifies that a given event has arrived
+This function is protected inside with the object&#8217;s lock. Do NOT call
+this function when you have the lock acquired on this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) &#8211; event value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.getLastRecordedEvent">
+<code class="descname">getLastRecordedEvent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.getLastRecordedEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.getLastRecordedEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the value of the last recorded event or None if no event has
+been received or the last event was an error event</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the last event value to be recorded</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)">object</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.getRecordedEvent">
+<code class="descname">getRecordedEvent</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.getRecordedEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.getRecordedEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the the recorded local timestamp for the event with the given
+value or None if no event with the given value has been recorded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) &#8211; event value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">local timestamp for the event or None if no event has been recorded</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.getRecordedEvents">
+<code class="descname">getRecordedEvents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.getRecordedEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.getRecordedEvents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a reference to the internal dictionary used to store the internal
+events. Modify the return dictionary at your own risk!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">reference to the internal event dictionary</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.lock">
+<code class="descname">lock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.lock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locks this event listener</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.unlock">
+<code class="descname">unlock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.unlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.unlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unocks this event listener</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.AttributeEventWait.waitEvent">
+<code class="descname">waitEvent</code><span class="sig-paren">(</span><em>val</em>, <em>after=0</em>, <em>equal=True</em>, <em>timeout=None</em>, <em>retries=-1</em>, <em>any=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#AttributeEventWait.waitEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.AttributeEventWait.waitEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for an event with the given value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>val</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) &#8211; value to compare</li>
+<li><strong>after</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) &#8211; timestamp. wait for events comming after the given time.
+default value is 0 meaning any event after Jan 1, 1970</li>
+<li><strong>equal</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; compare for equality. equal=True means an event with the
+given value, equal=False means any event which as a different value</li>
+<li><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) &#8211; maximum time to wait (seconds). Default is None meaning
+wait forever.</li>
+<li><strong>retries</strong> &#8211; number of maximum retries of max timeout to attempts.
+Default is -1 meaning infinite number of retries.
+0 means no wait. Positive number is obvious.</li>
+<li><strong>any</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; if any is True ignore &#8216;val&#8217; parameter and accept any event.
+If False (default),check with given &#8216;val&#8217; parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_BZ2Codec.html" class="btn btn-neutral float-right" title="BZ2Codec" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_AttributeEventIterator.html" class="btn btn-neutral" title="AttributeEventIterator" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,522 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ArrayBuffer &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="taurus.core.util" href="../util.html"/>
+        <link rel="next" title="AttributeEventIterator" href="_AttributeEventIterator.html"/>
+        <link rel="prev" title="TaurusMessageReportHandler" href="report/_TaurusMessageReportHandler.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../core.html"><code class="docutils literal"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+      
+          <li><a href="../util.html"><code class="docutils literal"><span class="pre">taurus.core.util</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">ArrayBuffer</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../_sources/devel/api/taurus/core/util/_ArrayBuffer.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="arraybuffer">
+<h1><a class="reference internal" href="#taurus.core.util.ArrayBuffer" title="taurus.core.util.ArrayBuffer"><code class="xref py py-class docutils literal"><span class="pre">ArrayBuffer</span></code></a><a class="headerlink" href="#arraybuffer" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../_images/inheritance-4a87f8c5081da04e6c0db172bea3317486cd5a5f.png" alt="Inheritance diagram of ArrayBuffer" usemap="#inheritance3b80b2d475" class="inheritance"/>
+<map id="inheritance3b80b2d475" name="inheritance3b80b2d475">
+<area shape="rect" id="node1" title="A data buffer which internally uses a preallocated numpy.array." alt="" coords="5,5,100,53"/>
+</map>
+<dl class="class">
+<dt id="taurus.core.util.ArrayBuffer">
+<em class="property">class </em><code class="descname">ArrayBuffer</code><span class="sig-paren">(</span><em>buffer</em>, <em>maxSize=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>A data buffer which internally uses a preallocated numpy.array.
+An ArrayBuffer will only present the actual contents, not the full internal
+buffer, so when appending or extending, it behaves as if dynamic
+reallocation was taking place.</p>
+<p>The contents of the class:<cite>ArrayBuffer</cite> can be accessed as if it was a numpy
+array (i.e slicing notation like b[2:3], b[:,2], b[-1],... are all valid).</p>
+<p>For retrieving the full contents, see <a class="reference internal" href="#taurus.core.util.ArrayBuffer.contents" title="taurus.core.util.ArrayBuffer.contents"><code class="xref py py-meth docutils literal"><span class="pre">ArrayBuffer.contents()</span></code></a> and
+<a class="reference internal" href="#taurus.core.util.ArrayBuffer.toArray" title="taurus.core.util.ArrayBuffer.toArray"><code class="xref py py-meth docutils literal"><span class="pre">ArrayBuffer.toArray()</span></code></a></p>
+<p>On creation, a given initial internal buffer and a maximum size are set. If
+the maximum size is larger than the original internal buffer, this will be
+automatically grown in geometrical steps if needed to accommodate the
+contents, up to the maximum size. Once the contents fill the maximum size,
+appending or extending the contents will result in older contents being
+discarded (in a FIFO way)</p>
+<p>The <a class="reference internal" href="#taurus.core.util.ArrayBuffer.append" title="taurus.core.util.ArrayBuffer.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a> and meth:<cite>extend</cite> methods are designed to be cheap
+(especially if the internal buffer size is already at the maximum size), at
+the expense of memory usage</p>
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>similar to the append method in a list, except that once the maximum
+buffer size is reached, elements get discarded on the begginning to keep
+the size within the limit</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<code class="xref py py-class docutils literal"><span class="pre">scalar</span></code>) &#8211; element to be appended</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.extend" title="taurus.core.util.ArrayBuffer.extend"><code class="xref py py-meth docutils literal"><span class="pre">extend()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.bufferSize">
+<code class="descname">bufferSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.bufferSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.bufferSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current size of the internal buffer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">lcurrent length of the internal buffer</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.contentsSize" title="taurus.core.util.ArrayBuffer.contentsSize"><code class="xref py py-meth docutils literal"><span class="pre">contentsSize()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.maxSize" title="taurus.core.util.ArrayBuffer.maxSize"><code class="xref py py-meth docutils literal"><span class="pre">maxSize()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.contents">
+<code class="descname">contents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.contents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the array of the contents that have already been filled. Note
+that it does not return the full buffer, only those elements that have
+been already set.</p>
+<p>It is equivalent to b[:]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">array</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">array of contents</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.toArray" title="taurus.core.util.ArrayBuffer.toArray"><code class="xref py py-meth docutils literal"><span class="pre">toArray()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.contentsSize">
+<code class="descname">contentsSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.contentsSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.contentsSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to len(b)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">length of the current contents of the ArrayBuffer (not
+the maximum size of the buffer)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.maxSize" title="taurus.core.util.ArrayBuffer.maxSize"><code class="xref py py-meth docutils literal"><span class="pre">maxSize()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.extend">
+<code class="descname">extend</code><span class="sig-paren">(</span><em>a</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.extend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.extend" title="Permalink to this definition">¶</a></dt>
+<dd><p>similar to the extend method of a list, except that once the maximum
+buffer size is reached, elements get discarded on the begginning to keep
+the size within the limit</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (<code class="xref py py-class docutils literal"><span class="pre">array</span></code>) &#8211; array of elements to append</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.append" title="taurus.core.util.ArrayBuffer.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.extendLeft" title="taurus.core.util.ArrayBuffer.extendLeft"><code class="xref py py-meth docutils literal"><span class="pre">extendLeft()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.extendLeft">
+<code class="descname">extendLeft</code><span class="sig-paren">(</span><em>a</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.extendLeft"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.extendLeft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepends data to the current contents. Note that, contrary to the
+extent method, no data will be discarded if the maximum size limit is
+reached. Instead, an exception will be raised.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (<code class="xref py py-class docutils literal"><span class="pre">array</span></code>) &#8211; array of elements to append</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.extend" title="taurus.core.util.ArrayBuffer.extend"><code class="xref py py-meth docutils literal"><span class="pre">extend()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.isFull">
+<code class="descname">isFull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.isFull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.isFull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the contents fill the whole of the internal buffer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the contents fill the maximum size. False otherwise.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.maxSize" title="taurus.core.util.ArrayBuffer.maxSize"><code class="xref py py-meth docutils literal"><span class="pre">maxSize()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.maxSize">
+<code class="descname">maxSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.maxSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.maxSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the maximum size of the internal buffer, beyond which the
+ArrayBuffer starts discarding elements when appending</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">maximum length of the internal buffer</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.contentsSize" title="taurus.core.util.ArrayBuffer.contentsSize"><code class="xref py py-meth docutils literal"><span class="pre">contentsSize()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.append" title="taurus.core.util.ArrayBuffer.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.extend" title="taurus.core.util.ArrayBuffer.extend"><code class="xref py py-meth docutils literal"><span class="pre">extend()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.isFull" title="taurus.core.util.ArrayBuffer.isFull"><code class="xref py py-meth docutils literal"><span class="pre">isFull()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.moveLeft">
+<code class="descname">moveLeft</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.moveLeft"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.moveLeft" title="Permalink to this definition">¶</a></dt>
+<dd><p>discards n elements from the begginning to make space at the end of
+the buffer. Moves all elements n positions to the left and the contents
+size gets decreased by n</p>
+<p><strong>Note:</strong> if n is larger or equal than the maximum buffer size, the
+whole buffer is wiped</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.remainingSize">
+<code class="descname">remainingSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.remainingSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.remainingSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the remaining free space in the internal buffer (e.g., 0 if it is full)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">length of the unused space in the internal buffer</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.contentsSize" title="taurus.core.util.ArrayBuffer.contentsSize"><code class="xref py py-meth docutils literal"><span class="pre">contentsSize()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.maxSize" title="taurus.core.util.ArrayBuffer.maxSize"><code class="xref py py-meth docutils literal"><span class="pre">maxSize()</span></code></a>,</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.resizeBuffer">
+<code class="descname">resizeBuffer</code><span class="sig-paren">(</span><em>newlen</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.resizeBuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.resizeBuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>resizes the internal buffer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.setMaxSize">
+<code class="descname">setMaxSize</code><span class="sig-paren">(</span><em>maxSize</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.setMaxSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.setMaxSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the maximum size of the internal buffer, beyond which the
+ArrayBuffer starts discarding elements when appending</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>maxSize</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; maximum length of the internal buffer</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.contentsSize" title="taurus.core.util.ArrayBuffer.contentsSize"><code class="xref py py-meth docutils literal"><span class="pre">contentsSize()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.append" title="taurus.core.util.ArrayBuffer.append"><code class="xref py py-meth docutils literal"><span class="pre">append()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.extend" title="taurus.core.util.ArrayBuffer.extend"><code class="xref py py-meth docutils literal"><span class="pre">extend()</span></code></a>, <a class="reference internal" href="#taurus.core.util.ArrayBuffer.isFull" title="taurus.core.util.ArrayBuffer.isFull"><code class="xref py py-meth docutils literal"><span class="pre">isFull()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.util.ArrayBuffer.toArray">
+<code class="descname">toArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.toArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.ArrayBuffer.toArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a copy of the array of the contents. It is equivalent to
+<code class="docutils literal"><span class="pre">b.contents.copy()</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">array</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">copy of array of contents</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.core.util.ArrayBuffer.contents" title="taurus.core.util.ArrayBuffer.contents"><code class="xref py py-meth docutils literal"><span class="pre">contents()</span></code></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_AttributeEventIterator.html" class="btn btn-neutral float-right" title="AttributeEventIterator" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="report/_TaurusMessageReportHandler.html" class="btn btn-neutral" title="TaurusMessageReportHandler" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

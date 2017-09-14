@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Developer’s Guide &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../index.html"/>
+        <link rel="up" title="Taurus 4.1 documentation" href="../docs.html"/>
+        <link rel="next" title="Taurus 3.x to 4.x migration guide" href="taurus3to4.html"/>
+        <link rel="prev" title="Screenshots" href="../users/screenshots.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Developer&#8217;s Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus.html">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+    <li>Developer&#8217;s Guide</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/devel/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="developer-s-guide">
+<span id="developers-guide-index"></span><h1>Developer&#8217;s Guide<a class="headerlink" href="#developer-s-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coding_guide.html">Development guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding_guide.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_guide.html#how-to-contribute-to-taurus">How to contribute to taurus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_guide.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_guide.html#coding-conventions">Coding conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_guide.html#special-notes-about-qt-programming">Special notes about Qt programming</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="taurusgui_newgui.html#advanced-control-over-the-gui">Advanced control over the GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="designer_tutorial.html">Designer tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="designer_tutorial.html#using-the-ui-file">Using the .ui file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="icon_guide.html">Icon guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="icon_guide.html#taurus-icon-catalog">Taurus icon catalog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core_tutorial.html">Core tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core_tutorial.html#model-concept">Model concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_tutorial.html#examples-of-model-names">Examples of model names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_tutorial.html#model-access">model access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_tutorial.html#advantages-of-accessing-tango-via-taurus-over-pytango">Advantages of accessing Tango via Taurus over PyTango</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#common">Common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#display-attribute-value">Display attribute value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#display-attribute-value-with-label">Display attribute value with label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#display-attribute-value-with-label-and-separate-units">Display attribute value with label and separate units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#interactively-display-attribute">Interactively display attribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#a-higher-level-of-abstraction-forms">A higher level of abstraction: forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#customizing-forms">Customizing forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#synoptics-one-o-one">Synoptics one-o-one</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#let-s-go-graphical">Let&#8217;s go graphical</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#even-higher-level-creating-a-taurusgui">Even higher level: creating a TaurusGui</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/taurus.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/taurus/console.html">console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/taurus/core.html">core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/taurus/qt.html">qt</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="taurus3to4.html" class="btn btn-neutral float-right" title="Taurus 3.x to 4.x migration guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../users/screenshots.html" class="btn btn-neutral" title="Screenshots" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

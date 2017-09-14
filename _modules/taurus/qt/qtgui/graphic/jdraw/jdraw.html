@@ -1,0 +1,623 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.graphic.jdraw.jdraw &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../../index.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.graphic.jdraw.jdraw</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.graphic.jdraw.jdraw</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the graphics factory for the jdraw file format&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusJDrawGraphicsFactory&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusBaseGraphicsFactory</span><span class="p">,</span>
+                                     <span class="n">TaurusGraphicsScene</span><span class="p">,</span> <span class="n">TaurusGraphicsItem</span><span class="p">)</span>
+
+
+<span class="n">LINESTYLE_JDW2QT</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">,</span>
+                    <span class="mi">1</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DotLine</span><span class="p">,</span>
+                    <span class="mi">2</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DashLine</span><span class="p">,</span>
+                    <span class="mi">3</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DashLine</span><span class="p">,</span>
+                    <span class="mi">4</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DashDotLine</span><span class="p">}</span>
+
+<span class="n">FILLSTYLE_JDW2QT</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoBrush</span><span class="p">,</span>
+                    <span class="mi">1</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidPattern</span><span class="p">,</span>
+                    <span class="mi">2</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FDiagPattern</span><span class="p">,</span>
+                    <span class="mi">3</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BDiagPattern</span><span class="p">,</span>
+                    <span class="mi">4</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DiagCrossPattern</span><span class="p">,</span>
+                    <span class="mi">5</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FDiagPattern</span><span class="p">,</span>
+                    <span class="mi">6</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BDiagPattern</span><span class="p">,</span>
+                    <span class="mi">7</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Dense5Pattern</span><span class="p">,</span>
+                    <span class="mi">8</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Dense7Pattern</span><span class="p">,</span>
+                    <span class="mi">9</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Dense6Pattern</span><span class="p">,</span>
+                    <span class="mi">10</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Dense4Pattern</span><span class="p">,</span>
+                    <span class="mi">11</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LinearGradientPattern</span><span class="p">}</span>
+
+<span class="n">TEXTHINT_JDW2QT</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">({</span>
+    <span class="s1">&#39;helvetica&#39;</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Helvetica</span><span class="p">,</span>
+    <span class="s1">&#39;serif&#39;</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Serif</span><span class="p">,</span>
+    <span class="s1">&#39;sansserif&#39;</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">SansSerif</span><span class="p">,</span>
+    <span class="s1">&#39;courier&#39;</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Courier</span><span class="p">,</span>
+    <span class="s1">&#39;Monospaced&#39;</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Courier</span><span class="p">,</span>
+    <span class="s1">&#39;times&#39;</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Times</span><span class="p">,</span>
+    <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">AnyStyle</span><span class="p">,</span> <span class="p">})</span>
+
+<span class="n">ALIGNMENT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignHCenter</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">VALIGNMENT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusJDrawGraphicsFactory</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">TaurusBaseGraphicsFactory</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delayed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initialization. Nothing to be done here for now.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myparent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">TaurusBaseGraphicsFactory</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_zBufferLevel</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delayed</span> <span class="o">=</span> <span class="n">delayed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="o">=</span> <span class="n">alias</span> <span class="k">if</span> <span class="n">alias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.init"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Singleton instance initialization.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseGraphicsFactory</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getZBufferLevel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getZBufferLevel">[docs]</a>    <span class="k">def</span> <span class="nf">getZBufferLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zBufferLevel</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.incZBufferLevel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.incZBufferLevel">[docs]</a>    <span class="k">def</span> <span class="nf">incZBufferLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_zBufferLevel</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zBufferLevel</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.setZBufferLevel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.setZBufferLevel">[docs]</a>    <span class="k">def</span> <span class="nf">setZBufferLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_zBufferLevel</span> <span class="o">=</span> <span class="n">level</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.resetZBufferLevel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.resetZBufferLevel">[docs]</a>    <span class="k">def</span> <span class="nf">resetZBufferLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setZBufferLevel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getSceneObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getSceneObj">[docs]</a>    <span class="k">def</span> <span class="nf">getSceneObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="n">scene</span> <span class="o">=</span> <span class="n">TaurusGraphicsScene</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myparent</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+                    <span class="n">scene</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItem</span><span class="p">):</span>
+                    <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to add item </span><span class="si">%s</span><span class="s2"> to scene&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Details:&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scene</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getObj">[docs]</a>    <span class="k">def</span> <span class="nf">getObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">method_name</span> <span class="o">=</span> <span class="s1">&#39;get&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;JD&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;Obj&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">)</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">method</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">setZValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incZBufferLevel</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Error fetching object&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Details:&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getRectangleObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getRectangleObj">[docs]</a>    <span class="k">def</span> <span class="nf">getRectangleObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Rectangle&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+        <span class="c1"># item.setPos(x1,y1)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setRect</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getRoundRectangleObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getRoundRectangleObj">[docs]</a>    <span class="k">def</span> <span class="nf">getRoundRectangleObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;RoundRectangle&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+        <span class="n">cornerWidth</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cornerWidth&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+        <span class="n">nbPoints</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+        <span class="c1"># item.setPos(x1,y1)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setRect</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setCornerWidth</span><span class="p">(</span><span class="n">cornerWidth</span><span class="p">,</span> <span class="n">nbPoints</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getLineObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getLineObj">[docs]</a>    <span class="k">def</span> <span class="nf">getLineObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Line&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setLine</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getEllipseObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getEllipseObj">[docs]</a>    <span class="k">def</span> <span class="nf">getEllipseObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Ellipse&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setRect</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getPolylineObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getPolylineObj">[docs]</a>    <span class="k">def</span> <span class="nf">getPolylineObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Polyline&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">polygon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPolygonF</span><span class="p">()</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">polygon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setPolygon</span><span class="p">(</span><span class="n">polygon</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getSplineObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getSplineObj">[docs]</a>    <span class="k">def</span> <span class="nf">getSplineObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Spline&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="mi">2</span><span class="p">)]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setControlPoints</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">isClosed</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;isClosed&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setClose</span><span class="p">(</span><span class="n">isClosed</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getLabelObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getLabelObj">[docs]</a>    <span class="k">def</span> <span class="nf">getLabelObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Label&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readLabelObj</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.readLabelObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.readLabelObj">[docs]</a>    <span class="k">def</span> <span class="nf">readLabelObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">origin</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;origin&#39;</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setPos</span><span class="p">(</span><span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">summit</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">summit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">summit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">summit</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">summit</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">summit</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">summit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setRect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+
+        <span class="c1"># it is parsed as a float</span>
+        <span class="n">vAlignment</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vAlignment&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">hAlignment</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hAlignment&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">vAlignment</span> <span class="ow">in</span> <span class="n">VALIGNMENT</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">hAlignment</span> <span class="ow">in</span> <span class="n">ALIGNMENT</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">vAlignment</span> <span class="o">=</span> <span class="n">VALIGNMENT</span><span class="p">[</span><span class="n">vAlignment</span><span class="p">]</span>
+        <span class="n">hAlignment</span> <span class="o">=</span> <span class="n">ALIGNMENT</span><span class="p">[</span><span class="n">hAlignment</span><span class="p">]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">hAlignment</span> <span class="o">|</span> <span class="n">vAlignment</span><span class="p">)</span>
+
+        <span class="n">fnt</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fnt</span><span class="p">:</span>
+            <span class="n">family</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">fnt</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="o">.</span><span class="mi">85</span> <span class="o">*</span> <span class="n">size</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Light</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">setStyleHint</span><span class="p">(</span><span class="n">TEXTHINT_JDW2QT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">AnyStyle</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">setStyleStrategy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">PreferMatch</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">style</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">setWeight</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">DemiBold</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">style</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">setItalic</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">style</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">setWeight</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">DemiBold</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">setItalic</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># TODO: Improve code in order to be able to set a suitable font</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">fg</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;foreground&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">fg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fg</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">fg</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setDefaultTextColor</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">txt</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">txt</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>  <span class="c1"># Parsing several lines of text</span>
+                <span class="n">txt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="n">txt</span><span class="p">))</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">_currText</span> <span class="o">=</span> <span class="n">txt</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getGroupObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getGroupObj">[docs]</a>    <span class="k">def</span> <span class="nf">getGroupObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setPos</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">children</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child</span><span class="p">:</span>
+                    <span class="c1">#self.info(&#39;jdraw.py: &quot;%s&quot;.addItem(&quot;%s&quot;)&#39;%(str(params.get(&#39;name&#39;)),str(child)))</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">addToGroup</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">_fillStyle</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_item_filling</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getSwingObjectObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getSwingObjectObj">[docs]</a>    <span class="k">def</span> <span class="nf">getSwingObjectObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;SwingObject&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setPos</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+
+        <span class="n">className</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;className&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">className</span> <span class="o">==</span> <span class="s2">&quot;fr.esrf.tangoatk.widget.attribute.SimpleScalarViewer&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readSimpleScalarViewerObj</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.readSimpleScalarViewerObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.readSimpleScalarViewerObj">[docs]</a>    <span class="k">def</span> <span class="nf">readSimpleScalarViewerObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readLabelObj</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extensions&#39;</span><span class="p">)</span>
+
+        <span class="n">c</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;validBackground&#39;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">validBackground</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setValidBackground</span><span class="p">(</span><span class="n">validBackground</span><span class="p">)</span>
+
+        <span class="n">invalidText</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;invalidText&#39;</span><span class="p">,</span> <span class="s2">&quot;-----&quot;</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setNoneValue</span><span class="p">(</span><span class="n">invalidText</span><span class="p">)</span>
+
+        <span class="n">alarmEnabled</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alarmEnabled&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">alarmEnabled</span> <span class="o">=</span> <span class="n">alarmEnabled</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setShowQuality</span><span class="p">(</span><span class="n">alarmEnabled</span><span class="p">)</span>
+
+        <span class="n">unitVisible</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;unitVisible&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">unitVisible</span> <span class="o">=</span> <span class="n">unitVisible</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setUnitVisible</span><span class="p">(</span><span class="n">unitVisible</span><span class="p">)</span>
+
+        <span class="n">userFormat</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;userFormat&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setUserFormat</span><span class="p">(</span><span class="n">userFormat</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getImageObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getImageObj">[docs]</a>    <span class="k">def</span> <span class="nf">getImageObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setPos</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fname</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+                <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myparent</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">):</span>
+                <span class="c1">#self.info(&#39;using path param ...&#39;)</span>
+                <span class="n">fname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">myparent</span><span class="o">.</span><span class="n">path</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">fname</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Opening JDImage(</span><span class="si">%s</span><span class="s1">) = x,y,w,h=</span><span class="si">%f</span><span class="s1">,</span><span class="si">%f</span><span class="s1">,</span><span class="si">%f</span><span class="s1">,</span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span>
+                       <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">))</span>
+            <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">))</span>
+            <span class="c1">#item.scale(float(w)/pixmap.width(), float(h)/pixmap.height())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;No filename for image!?!&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.set_common_params"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.set_common_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_common_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">_params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;ignorerepaint&quot;</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;extensions&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;extensions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extensions&#39;</span><span class="p">)[</span><span class="s2">&quot;ignoreRepaint&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="c1"># Forcing not-Taurus items to have a name and be able to trigger events</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;_name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delayed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">TaurusGraphicsItem</span><span class="p">):</span>
+                <span class="c1">#self.debug(&#39;TaurusJDrawGraphicsFactory.set_common_params(): %s.setModel(%s)&#39;%(item,name))</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;TaurusJDrawGraphicsFactory.set_common_params(</span><span class="si">%s</span><span class="s1">): </span><span class="si">%s</span><span class="s1"> is not a TaurusGraphicsItem&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+        <span class="n">visibilitymapper</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;visibilitymapper&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">visibilitymapper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mapping_type</span> <span class="o">=</span> <span class="n">visibilitymapper</span><span class="p">[</span><span class="s1">&#39;mapping_type&#39;</span><span class="p">]</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="n">visibilitymapper</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span>
+            <span class="n">default</span> <span class="o">=</span> <span class="n">visibilitymapper</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">_default</span> <span class="o">=</span> <span class="n">default</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">_map</span> <span class="o">=</span> <span class="n">visibilitymapper</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">]</span>
+
+        <span class="n">visible</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;visible&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">visible</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">visible</span><span class="p">)</span>
+
+        <span class="n">extensions</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extensions&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">extensions</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">_extensions</span> <span class="o">=</span> <span class="n">extensions</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;setPen&#39;</span><span class="p">)</span>
+            <span class="n">fg</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;foreground&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">lineWidth</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lineWidth&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">lineWidth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pen</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pen</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">fg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fg</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">fg</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+                <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="n">lineWidth</span><span class="p">)</span>
+                <span class="n">pen</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">LINESTYLE_JDW2QT</span><span class="p">[</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lineStyle&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="n">ae</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;jdraw.set_common_params(</span><span class="si">%s</span><span class="s1">(</span><span class="si">%s</span><span class="s1">)).(foreground,width,style) failed!: </span><span class="se">\n\t</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span>
+
+        <span class="n">fillStyle</span> <span class="o">=</span> <span class="n">FILLSTYLE_JDW2QT</span><span class="p">[</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fillStyle&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">_fillStyle</span> <span class="o">=</span> <span class="n">fillStyle</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;brush&#39;</span><span class="p">):</span>
+            <span class="n">brush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">fillStyle</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LinearGradientPattern</span><span class="p">:</span>
+                <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">gradient</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLinearGradient</span><span class="p">(</span><span class="n">ox</span> <span class="o">+</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gradX1&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                              <span class="n">oy</span> <span class="o">+</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gradY1&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                              <span class="n">ox</span> <span class="o">+</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gradX2&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                              <span class="n">oy</span> <span class="o">+</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gradY2&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gradC1&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">gradient</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gradC2&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+                <span class="n">gradient</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+
+                <span class="n">gradCyclic</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gradCyclic&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">gradCyclic</span><span class="p">:</span>
+                    <span class="n">gradient</span><span class="o">.</span><span class="n">setSpread</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGradient</span><span class="o">.</span><span class="n">ReflectSpread</span><span class="p">)</span>
+
+                <span class="n">brush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">gradient</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">brush</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">fillStyle</span><span class="p">)</span>
+
+            <span class="n">bg</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;background&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+            <span class="n">brush</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">bg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bg</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bg</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.set_item_filling"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.set_item_filling">[docs]</a>    <span class="k">def</span> <span class="nf">set_item_filling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Dense4Pattern</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">_fillStyle</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">_fillStyle</span> <span class="ow">or</span> <span class="n">pattern</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;brush&#39;</span><span class="p">):</span>
+            <span class="n">br</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">brush</span><span class="p">()</span>
+            <span class="n">br</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">_fillStyle</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">expand</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">childItems</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">_fillStyle</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set_item_filling</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">jdraw_view</span>
+    <span class="n">jdraw_view</span><span class="o">.</span><span class="n">jdraw_view_main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

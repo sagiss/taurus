@@ -1,0 +1,829 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusGui &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtgui.taurusgui" href="../taurusgui.html"/>
+        <link rel="next" title="taurus.qt.qtgui.tree" href="../tree.html"/>
+        <link rel="prev" title="PanelDescriptionWizard" href="_PanelDescriptionWizard.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+      
+          <li><a href="../taurusgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui.taurusgui</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">TaurusGui</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusgui">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.taurusgui.TaurusGui" title="taurus.qt.qtgui.taurusgui.TaurusGui"><code class="xref py py-class docutils literal"><span class="pre">TaurusGui</span></code></a><a class="headerlink" href="#taurusgui" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-4caa99767281917e488dd2a823e9ee4cfd93f1cb.png" alt="Inheritance diagram of TaurusGui" usemap="#inheritance4ba92eaccc" class="inheritance"/>
+<map id="inheritance4ba92eaccc" name="inheritance4ba92eaccc">
+<area shape="rect" id="node1" title="A base class defining the API for configurable objects." alt="" coords="5,197,173,245"/>
+<area shape="rect" id="node10" title="A generic Taurus component." alt="" coords="115,293,285,341"/>
+<area shape="rect" id="node2" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="219,101,291,149"/>
+<area shape="rect" id="node11" title="TaurusListener Interface" alt="" coords="197,197,312,245"/>
+<area shape="rect" id="node15" title="A Taurus&#45;aware QMainWindow with several customizations:" alt="" coords="213,581,353,629"/>
+<area shape="rect" id="node13" title="The base class for all Qt Taurus widgets." alt="" coords="132,389,271,437"/>
+<area shape="rect" id="node12" title="Base class for the Taurus container widgets." alt="" coords="125,485,283,533"/>
+<area shape="rect" id="node14" title="This is main class for constructing the dynamic GUIs. TaurusGui is a" alt="" coords="241,677,325,725"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui">
+<em class="property">class </em><code class="descname">TaurusGui</code><span class="sig-paren">(</span><em>parent=None</em>, <em>confname=None</em>, <em>configRecursionDepth=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.container.taurusmainwindow.TaurusMainWindow</span></code></p>
+<p>This is main class for constructing the dynamic GUIs. TaurusGui is a
+specialised TaurusMainWindow which is able to handle &#8220;panels&#8221; and load
+configuration files.
+There are several ways of using TaurusGui. In the following we will give
+3 examples on how to create a simple GUI called &#8220;MyGui&#8221; which contains one
+panel called &#8220;Foo&#8221; and consisting of a <cite>QWidget</cite>:</p>
+<p><strong>Example 1: use declarative configuration files.</strong></p>
+<p>You can create a purely declarative configuration file to be interpreted by
+the standard <cite>taurusgui</cite> script:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui.utils</span> <span class="k">import</span> <span class="n">PanelDescription</span>
+
+<span class="n">GUI_NAME</span> <span class="o">=</span> <span class="s1">&#39;MyGui&#39;</span>
+<span class="n">panel</span> <span class="o">=</span> <span class="n">PanelDescription</span><span class="p">(</span><span class="s1">&#39;Foo&#39;</span><span class="p">,</span>
+                         <span class="n">classname</span><span class="o">=</span><span class="s1">&#39;taurus.external.qt.Qt.QWidget&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that this just a very simple example. For a much richer one, see the
+<code class="xref py py-mod docutils literal"><span class="pre">taurus.qt.qtgui.taurusgui.conf.tgconf_example01</span></code></p>
+<p><strong>Example 2: do everything programmatically.</strong></p>
+<p>A stand-alone python script that launches the gui when executed. No
+configuration file is used here. Panels and other components are added
+programatically:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui</span> <span class="k">import</span> <span class="n">TaurusGui</span>
+    <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s1">&#39;MyGui&#39;</span><span class="p">)</span>
+    <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGui</span><span class="p">()</span>
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="s1">&#39;Foo&#39;</span><span class="p">)</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Example 3: mixing declarative and programmatic ways</strong></p>
+<p>It is also possible to create a stand-alone python script which loads itself
+as a configuration file. In this way you can add things programmatically and
+at the same time use the declarative way:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">GUI_NAME</span> <span class="o">=</span> <span class="s1">&#39;MyGui&#39;</span> <span class="c1"># &lt;-- declarative!</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui</span> <span class="k">import</span> <span class="n">TaurusGui</span>
+    <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+    <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGui</span><span class="p">(</span><span class="n">confname</span><span class="o">=</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="s1">&#39;Foo&#39;</span><span class="p">)</span>  <span class="c1"># &lt;-- programmatic!</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.IMPLICIT_ASSOCIATION">
+<code class="descname">IMPLICIT_ASSOCIATION</code><em class="property"> = '__[IMPLICIT]__'</em><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.IMPLICIT_ASSOCIATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.SelectedInstrument">
+<code class="descname">SelectedInstrument</code><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.SelectedInstrument" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.closeEvent">
+<code class="descname">closeEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.closeEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.createConfig">
+<code class="descname">createConfig</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.createConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.createConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from TaurusMainWindow.createConfig</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.createConsole">
+<code class="descname">createConsole</code><span class="sig-paren">(</span><em>kernels</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.createConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.createConsole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.createCustomPanel">
+<code class="descname">createCustomPanel</code><span class="sig-paren">(</span><em>paneldesc=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.createCustomPanel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.createCustomPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a panel from a Panel Description and sets it as &#8220;custom panel&#8221;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>paneldesc</strong> (<code class="xref py py-class docutils literal"><span class="pre">PanelDescription</span></code>) &#8211; description of the panel to be created</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.taurusgui.TaurusGui.createPanel" title="taurus.qt.qtgui.taurusgui.TaurusGui.createPanel"><code class="xref py py-meth docutils literal"><span class="pre">createPanel()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.createExternalApp">
+<code class="descname">createExternalApp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.createExternalApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.createExternalApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new external application on execution time</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.createInstrumentsFromPool">
+<code class="descname">createInstrumentsFromPool</code><span class="sig-paren">(</span><em>macroservername</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.createInstrumentsFromPool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.createInstrumentsFromPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a list of instrument panel descriptions by gathering the info
+from the Pool. Each panel is a TaurusForm grouping together all those
+elements that belong to the same instrument according to the Pool info</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<code class="xref py py-class docutils literal"><span class="pre">PanelDescription</span></code>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.createMainSynoptic">
+<code class="descname">createMainSynoptic</code><span class="sig-paren">(</span><em>synopticname</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.createMainSynoptic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.createMainSynoptic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a synoptic panel and registers it as &#8220;SelectedInstrument&#8221;
+reader and writer (allowing  selecting instruments from synoptic</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.createPanel">
+<code class="descname">createPanel</code><span class="sig-paren">(</span><em>widget</em>, <em>name</em>, <em>floating=False</em>, <em>registerconfig=True</em>, <em>custom=False</em>, <em>permanent=False</em>, <em>icon=None</em>, <em>instrumentkey=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.createPanel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.createPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a panel containing the given widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>wiget</strong> (<code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>) &#8211; the widget to be contained in the panel</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the name of the panel. It will be used in tabs as well as for configuration</li>
+<li><strong>floating</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether the panel should be docked or floating. (see note below)</li>
+<li><strong>registerconfig</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the panel will be registered as a delegate for configuration</li>
+<li><strong>custom</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True the panel is to be considered a &#8220;custom panel&#8221;</li>
+<li><strong>permanent</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; set this to True for panels that need to be recreated when restoring the app</li>
+<li><strong>icon</strong> (<code class="xref py py-class docutils literal"><span class="pre">QIcon</span></code>) &#8211; icon for the panel</li>
+<li><strong>instrumentkey</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; name of an instrument to which this panel is to be associated</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="_DockWidgetPanel.html#taurus.qt.qtgui.taurusgui.DockWidgetPanel" title="taurus.qt.qtgui.taurusgui.DockWidgetPanel"><code class="xref py py-class docutils literal"><span class="pre">DockWidgetPanel</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the created panel</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">On a previous version, there was a mandatory parameter called
+<cite>area</cite> (which accepted a Qt.DockWidgetArea or None as values)
+this parameter has now been substituted by the keyword
+argument <cite>floating</cite>. In order to provide backwards
+compatibility, the &#8220;floating&#8221; keyword argument stays at the
+same position as the old <cite>area</cite> argument and if a Qt.DockWidgetArea
+value is given, it will be interpreted as floating=True (while if
+<cite>None</cite> is passed, it will be interpreted as floating=False.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.doorNameChanged">
+<code class="descname">doorNameChanged</code><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.doorNameChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.findPanelsInArea">
+<code class="descname">findPanelsInArea</code><span class="sig-paren">(</span><em>area</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.findPanelsInArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.findPanelsInArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns all panels in the given area</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>area</strong> (<code class="xref py py-class docutils literal"><span class="pre">DockWidgetArea</span></code> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; . If
+area==&#8217;FLOATING&#8217;, the dockwidgets that are floating will be
+returned.</li>
+<li><strong>area</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This method is deprecated</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.getAllInstrumentAssociations">
+<code class="descname">getAllInstrumentAssociations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.getAllInstrumentAssociations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getAllInstrumentAssociations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the dictionary of instrument-panel associations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dict whose keys are the instruments known to the gui
+and whose values are the corresponding associated panels (or None).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap">
+<code class="descname">getCustomWidgetMap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.getCustomWidgetMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the default map used to create custom widgets by the TaurusForms
+belonging to this GUI</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dictionary whose keys are device
+type strings (i.e. see <a class="reference external" href="http://www.esrf.eu/computing/cs/tango/tango_doc/kernel_doc/pytango/latest/client_api/miscellaneous.html#PyTango.DeviceInfo" title="(in PyTango v8.1)"><code class="xref py py-class docutils literal"><span class="pre">PyTango.DeviceInfo</span></code></a>) and whose
+values are widgets to be used</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap" title="taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap"><code class="xref py py-meth docutils literal"><span class="pre">setCustomWidgetMap()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.getInstrumentAssociation">
+<code class="descname">getInstrumentAssociation</code><span class="sig-paren">(</span><em>instrumentname</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.getInstrumentAssociation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getInstrumentAssociation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the panel name associated to an instrument name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; The name of the instrument whose associated panel is wanted</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the associated panel name (or None).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.getPanel">
+<code class="descname">getPanel</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.getPanel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a panel object by name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="_DockWidgetPanel.html#taurus.qt.qtgui.taurusgui.DockWidgetPanel" title="taurus.qt.qtgui.taurusgui.DockWidgetPanel"><code class="xref py py-class docutils literal"><span class="pre">DockWidgetPanel</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.getPanelNames">
+<code class="descname">getPanelNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.getPanelNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getPanelNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the names of existing panels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>TaurusGui is not to be in designer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.hideAllPanels">
+<code class="descname">hideAllPanels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.hideAllPanels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.hideAllPanels" title="Permalink to this definition">¶</a></dt>
+<dd><p>hides all current panels</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.loadConfiguration">
+<code class="descname">loadConfiguration</code><span class="sig-paren">(</span><em>confname</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.loadConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.loadConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a configuration file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>confname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the  name of module located in the
+PYTHONPATH or in the conf subdirectory of the directory
+in which taurusgui.py file is installed.
+This method will try to import &lt;confname&gt;.
+If that fails, it will try to import
+<cite>tgconf_&lt;confname&gt;</cite>.
+Alternatively, <cite>confname</cite> can be the path to the
+configuration module (not necessarily in the
+PYTHONPATH).
+<cite>confname</cite> can also be None, in which case a dummy
+empty module will be used.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.macroserverNameChanged">
+<code class="descname">macroserverNameChanged</code><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.macroserverNameChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.newShortMessage">
+<code class="descname">newShortMessage</code><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.newShortMessage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.onExportCurrentPanelConfiguration">
+<code class="descname">onExportCurrentPanelConfiguration</code><span class="sig-paren">(</span><em>fname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.onExportCurrentPanelConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.onExportCurrentPanelConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.onSelectedInstrument">
+<code class="descname">onSelectedInstrument</code><span class="sig-paren">(</span><em>instrumentname</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.onSelectedInstrument"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.onSelectedInstrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot to be called when the selected instrument has changed (e.g. by user
+clicking in the synoptic)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name that identifies the instrument.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.onShortMessage">
+<code class="descname">onShortMessage</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.onShortMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.onShortMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot to be called when there is a new short message. Currently, the only action
+taken when there is a new message is to display it in the main window status bar.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the short descriptive message to be handled</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.onShowAssociationDialog">
+<code class="descname">onShowAssociationDialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.onShowAssociationDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.onShowAssociationDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>launches the instrument-panel association dialog (modal)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.onShowManual">
+<code class="descname">onShowManual</code><span class="sig-paren">(</span><em>anchor=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.onShowManual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.onShowManual" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <code class="xref py py-class docutils literal"><span class="pre">TaurusMainWindow</span></code> to show the manual in a panel (not just a dockwidget)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.removeExternalApp">
+<code class="descname">removeExternalApp</code><span class="sig-paren">(</span><em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.removeExternalApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.removeExternalApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the given external application from the GUI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the name of the external application to be
+removed
+If None given, the user will be prompted</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.removePanel">
+<code class="descname">removePanel</code><span class="sig-paren">(</span><em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.removePanel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.removePanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove the given panel from the GUI.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The panel; is actually removed from the current perspective.
+If the panel is saved in other perspectives, it should be removed from
+them as well.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the name of the panel to be removed
+If None given, the user will be prompted</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.setAllInstrumentAssociations">
+<code class="descname">setAllInstrumentAssociations</code><span class="sig-paren">(</span><em>associationsdict</em>, <em>clearExisting=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.setAllInstrumentAssociations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setAllInstrumentAssociations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the dictionary of instrument-panel associations.
+By default, it keeps any existing association not present in the associationsdict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>associationsdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; a dict whose keys are the instruments names
+and whose values are the corresponding associated panels (or None)</li>
+<li><strong>clearExisting</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the the existing asociations are cleared.
+If False (default) existing associations are
+updated with those in associationsdict</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap">
+<code class="descname">setCustomWidgetMap</code><span class="sig-paren">(</span><em>map</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.setCustomWidgetMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the widget map that is used application-wide. This widget map will
+be used by default in all TaurusForm Panels belonging to this gui.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>map</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>&gt;) &#8211; a dictionary whose keys are device
+type strings (e.g. see <a class="reference external" href="http://www.esrf.eu/computing/cs/tango/tango_doc/kernel_doc/pytango/latest/client_api/miscellaneous.html#PyTango.DeviceInfo" title="(in PyTango v8.1)"><code class="xref py py-class docutils literal"><span class="pre">PyTango.DeviceInfo</span></code></a>) and
+whose values are widgets to be used</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">TaurusForm.setCustomWidgetMap()</span></code>, <a class="reference internal" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap" title="taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap"><code class="xref py py-meth docutils literal"><span class="pre">getCustomWidgetMap()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.setFocusToPanel">
+<code class="descname">setFocusToPanel</code><span class="sig-paren">(</span><em>panelname</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.setFocusToPanel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setFocusToPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that sets a focus for panel passed via an argument</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>panelname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name that identifies the panel.
+This name must be unique within the panels in the GUI.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.setInstrumentAssociation">
+<code class="descname">setInstrumentAssociation</code><span class="sig-paren">(</span><em>instrumentname</em>, <em>panelname</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.setInstrumentAssociation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setInstrumentAssociation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the panel name associated to an instrument</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name of the instrument</li>
+<li><strong>panelname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; The name of the associated
+panel or None to remove the association
+for this instrument.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.setLockView">
+<code class="descname">setLockView</code><span class="sig-paren">(</span><em>locked</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.setLockView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setLockView" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.setModifiableByUser">
+<code class="descname">setModifiableByUser</code><span class="sig-paren">(</span><em>modifiable</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.setModifiableByUser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setModifiableByUser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.showAllPanels">
+<code class="descname">showAllPanels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.showAllPanels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.showAllPanels" title="Permalink to this definition">¶</a></dt>
+<dd><p>shows all current panels</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.showSDMInfo">
+<code class="descname">showSDMInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.showSDMInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.showSDMInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>pops up a dialog showing the current information from the Shared Data Manager</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.tabifyArea">
+<code class="descname">tabifyArea</code><span class="sig-paren">(</span><em>area</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.tabifyArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.tabifyArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>tabifies all panels in a given area.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>area</strong> (<code class="xref py py-class docutils literal"><span class="pre">DockWidgetArea</span></code>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This method is deprecated</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.updatePermanentCustomPanels">
+<code class="descname">updatePermanentCustomPanels</code><span class="sig-paren">(</span><em>showAlways=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.updatePermanentCustomPanels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.updatePermanentCustomPanels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a dialog for selecting which custom panels should be permanently
+stored in the configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>showAlways</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; forces showing the dialog even if there are no new custom Panels</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.updatePermanentExternalApplications">
+<code class="descname">updatePermanentExternalApplications</code><span class="sig-paren">(</span><em>showAlways=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.updatePermanentExternalApplications"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.updatePermanentExternalApplications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a dialog for selecting which new externals applications
+should be permanently stored in the configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>showAlways</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; forces showing the dialog</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tree.html" class="btn btn-neutral float-right" title="taurus.qt.qtgui.tree" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_PanelDescriptionWizard.html" class="btn btn-neutral" title="PanelDescriptionWizard" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

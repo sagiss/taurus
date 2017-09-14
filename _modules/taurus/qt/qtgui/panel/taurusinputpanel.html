@@ -1,0 +1,619 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.panel.taurusinputpanel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.panel.taurusinputpanel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.panel.taurusinputpanel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides an Input panel (usually used inside a TaurusDialog)&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusInputPanel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="nd">@UILoadable</span><span class="p">(</span><span class="n">with_ui</span><span class="o">=</span><span class="s1">&#39;_ui&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusInputPanel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel">[docs]</a><span class="k">class</span> <span class="nc">TaurusInputPanel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A panel design to get an input from the user.</span>
+
+<span class="sd">    The input_data is a dictionary which contains information on how to build</span>
+<span class="sd">    the input dialog. It **must** contains the following keys:</span>
+
+<span class="sd">        - *prompt* &lt;str&gt;: message to be displayed</span>
+
+<span class="sd">    The following are optional keys (and their corresponding default values):</span>
+
+<span class="sd">        - *title* &lt;str&gt; (doesn&#39;t have default value)</span>
+<span class="sd">        - *key* &lt;str&gt; (doesn&#39;t have default value):</span>
+<span class="sd">          a label to be presented left to the input box represeting the label</span>
+<span class="sd">        - *unit* &lt;str&gt; (doesn&#39;t have default value):</span>
+<span class="sd">          a label to be presented right to the input box representing the units</span>
+<span class="sd">        - *data_type* &lt;str or sequence&gt; (&#39;String&#39;):</span>
+<span class="sd">          type of data to be requested. Standard</span>
+<span class="sd">          accepted data types are &#39;String&#39;, &#39;Integer&#39;, &#39;Float&#39;, &#39;Boolean&#39;,</span>
+<span class="sd">          &#39;Text&#39;. A list of elements will be interpreted as a selection.</span>
+<span class="sd">          Default TaurusInputPanel class will interpret any custom data types as</span>
+<span class="sd">          &#39;String&#39; and will display input widget accordingly. Custom</span>
+<span class="sd">          data types can be handled differently by supplying a different</span>
+<span class="sd">          input_panel_klass.</span>
+<span class="sd">        - *minimum* &lt;int/float&gt;:</span>
+<span class="sd">          minimum value (makes sense when data_type is &#39;Integer&#39; or &#39;Float&#39;)</span>
+<span class="sd">        - *maximum* &lt;int/float&gt;:</span>
+<span class="sd">          maximum value (makes sense when data_type is &#39;Integer&#39; or &#39;Float&#39;)</span>
+<span class="sd">        - *step* &lt;int/float&gt; (1):</span>
+<span class="sd">          step size value (makes sense when data_type is &#39;Integer&#39; or &#39;Float&#39;)</span>
+<span class="sd">        - *decimals* &lt;int&gt; (1):</span>
+<span class="sd">          number of decimal places to show (makes sense when data_type is</span>
+<span class="sd">          &#39;Float&#39;)</span>
+<span class="sd">        - *default_value* &lt;obj&gt; (doesn&#39;t have default value):</span>
+<span class="sd">          default value</span>
+<span class="sd">        - *allow_multiple* &lt;bool&gt; (False):</span>
+<span class="sd">          allow more than one value to be selected (makes sense when data_type</span>
+<span class="sd">          is a sequence of possibilities)</span>
+
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        app = Qt.QApplication([])</span>
+
+<span class="sd">        class Listener(object):</span>
+<span class="sd">            def on_accept(self):</span>
+<span class="sd">                print &quot;user selected&quot;, self.panel.value()</span>
+
+<span class="sd">        d = dict(prompt=&quot;What&#39;s your favourite car brand?&quot;,</span>
+<span class="sd">                 data_type=[&quot;Mazda&quot;, &quot;Skoda&quot;, &quot;Citroen&quot;, &quot;Mercedes&quot;, &quot;Audi&quot;, &quot;Ferrari&quot;],</span>
+<span class="sd">                 default_value=&quot;Mercedes&quot;)</span>
+<span class="sd">        w = TaurusInputPanel(d)</span>
+<span class="sd">        l = Listener()</span>
+<span class="sd">        l.panel = w</span>
+<span class="sd">        w.connect(w.buttonBox(), Qt.SIGNAL(&quot;accepted()&quot;), l.on_accept)</span>
+<span class="sd">        w.show()</span>
+<span class="sd">        app.exec_()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_input_data</span> <span class="o">=</span> <span class="n">input_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fill_main_panel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_inputPanel</span><span class="p">,</span> <span class="n">input_data</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusInputPanel.fill_main_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.fill_main_panel">[docs]</a>    <span class="k">def</span> <span class="nf">fill_main_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">panel</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
+            <span class="n">single_panel</span><span class="p">,</span> <span class="n">getter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_single_input_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">single_panel</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">getter</span>
+            <span class="k">if</span> <span class="s1">&#39;title&#39;</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.create_single_input_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.create_single_input_panel">[docs]</a>    <span class="k">def</span> <span class="nf">create_single_input_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">standardIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">SP_MessageBoxQuestion</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIconPixmap</span><span class="p">(</span><span class="n">icon</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;prompt&#39;</span><span class="p">])</span>
+
+        <span class="n">data_type</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_type&#39;</span><span class="p">,</span> <span class="s1">&#39;String&#39;</span><span class="p">)</span>
+        <span class="n">is_seq</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_type</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">))</span> <span class="ow">and</span> \
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_type</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_seq</span><span class="p">:</span>
+            <span class="n">panel</span><span class="p">,</span> <span class="n">getter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_selection_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_type_l</span> <span class="o">=</span> <span class="n">data_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">creator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;create_&quot;</span> <span class="o">+</span> <span class="n">data_type_l</span> <span class="o">+</span>
+                              <span class="s2">&quot;_panel&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_custom_panel</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">creator</span><span class="p">:</span>
+                <span class="n">panel</span><span class="p">,</span> <span class="n">getter</span> <span class="o">=</span> <span class="n">creator</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">panel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot create widget for data type &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">data_type</span><span class="p">)</span>
+            <span class="n">getter</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="n">getter</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.create_custom_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.create_custom_panel">[docs]</a>    <span class="k">def</span> <span class="nf">create_custom_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_string_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.create_selection_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.create_selection_panel">[docs]</a>    <span class="k">def</span> <span class="nf">create_selection_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">allow_multiple</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;allow_multiple&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">allow_multiple</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_multi_selection_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_single_selection_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_create_single_selection_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_combobox_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_radiobutton_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_combobox_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_simple_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span> <span class="o">=</span> <span class="n">combobox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">is_seq</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">))</span> <span class="ow">and</span> \
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_seq</span><span class="p">:</span>
+                <span class="n">text</span><span class="p">,</span> <span class="n">userData</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">text</span><span class="p">,</span> <span class="n">userData</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">item</span>
+            <span class="n">combobox</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">userData</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">combobox</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_combobox_value</span>
+
+    <span class="k">def</span> <span class="nf">_get_combobox_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">_create_radiobutton_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_group_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">]</span>
+        <span class="n">default_value</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;default_value&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span> <span class="o">=</span> <span class="n">buttongroup</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QButtonGroup</span><span class="p">()</span>
+        <span class="n">buttongroup</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">is_seq</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">))</span> <span class="ow">and</span> \
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_seq</span><span class="p">:</span>
+                <span class="n">text</span><span class="p">,</span> <span class="n">userData</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">text</span><span class="p">,</span> <span class="n">userData</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">item</span>
+            <span class="n">button</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QRadioButton</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">button</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">userData</span>
+            <span class="k">if</span> <span class="n">default_value</span> <span class="o">==</span> <span class="n">userData</span><span class="p">:</span>
+                <span class="n">button</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">buttongroup</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_radiobutton_value</span>
+
+    <span class="k">def</span> <span class="nf">_get_radiobutton_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">buttongroup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span>
+        <span class="n">button</span> <span class="o">=</span> <span class="n">buttongroup</span><span class="o">.</span><span class="n">checkedButton</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">button</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">button</span><span class="o">.</span><span class="n">_value</span>
+
+    <span class="k">def</span> <span class="nf">_create_multi_selection_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_group_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">]</span>
+        <span class="n">default_value</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;default_value&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">default_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="p">()</span>
+        <span class="n">dft_is_seq</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default_value</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">))</span> <span class="ow">and</span> \
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">default_value</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dft_is_seq</span><span class="p">:</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="n">default_value</span><span class="p">,</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span> <span class="o">=</span> <span class="n">listwidget</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QListWidget</span><span class="p">()</span>
+        <span class="n">listwidget</span><span class="o">.</span><span class="n">setSelectionMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">MultiSelection</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">is_seq</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">))</span> <span class="ow">and</span> \
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_seq</span><span class="p">:</span>
+                <span class="n">text</span><span class="p">,</span> <span class="n">userData</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">text</span><span class="p">,</span> <span class="n">userData</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">item</span>
+            <span class="n">item_widget</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QListWidgetItem</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">listwidget</span><span class="p">)</span>
+            <span class="n">item_widget</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">to_qvariant</span><span class="p">(</span><span class="n">userData</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">userData</span> <span class="ow">in</span> <span class="n">default_value</span><span class="p">:</span>
+                <span class="n">item_widget</span><span class="o">.</span><span class="n">setSelected</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">listwidget</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_multi_selection_value</span>
+
+    <span class="k">def</span> <span class="nf">_get_multi_selection_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">listwidget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">listwidget</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()]</span>
+
+    <span class="k">def</span> <span class="nf">_create_group_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">unit</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;unit&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">unit</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">+=</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="n">unit</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputLabel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">unitLabel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">panel</span>
+
+    <span class="k">def</span> <span class="nf">_create_simple_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">+=</span> <span class="s2">&quot;:&quot;</span>
+        <span class="n">unit</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;unit&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputLabel</span> <span class="o">=</span> <span class="n">label</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">unitLabel</span> <span class="o">=</span> <span class="n">unit</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">setColumnStretch</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">setColumnStretch</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">setColumnStretch</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span>
+
+<div class="viewcode-block" id="TaurusInputPanel.create_integer_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.create_integer_panel">[docs]</a>    <span class="k">def</span> <span class="nf">create_integer_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_simple_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">minimum</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;minimum&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+        <span class="n">maximum</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maximum&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span> <span class="o">=</span> <span class="n">spinbox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">()</span>
+        <span class="n">spinbox</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span>
+        <span class="n">spinbox</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="n">maximum</span><span class="p">)</span>
+        <span class="n">spinbox</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;default_value&#39;</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+            <span class="n">spinbox</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;default_value&#39;</span><span class="p">])</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">spinbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_integer_value</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_integer_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+
+<div class="viewcode-block" id="TaurusInputPanel.create_float_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.create_float_panel">[docs]</a>    <span class="k">def</span> <span class="nf">create_float_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_simple_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">minimum</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;minimum&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+        <span class="n">maximum</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maximum&#39;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">decimals</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;decimals&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span> <span class="o">=</span> <span class="n">spinbox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleSpinBox</span><span class="p">()</span>
+        <span class="n">spinbox</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span>
+        <span class="n">spinbox</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="n">maximum</span><span class="p">)</span>
+        <span class="n">spinbox</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">spinbox</span><span class="o">.</span><span class="n">setDecimals</span><span class="p">(</span><span class="n">decimals</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;default_value&#39;</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+            <span class="n">spinbox</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;default_value&#39;</span><span class="p">])</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">spinbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_float_value</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_float_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+
+<div class="viewcode-block" id="TaurusInputPanel.create_string_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.create_string_panel">[docs]</a>    <span class="k">def</span> <span class="nf">create_string_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_simple_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span> <span class="o">=</span> <span class="n">lineedit</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;default_value&#39;</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+            <span class="n">lineedit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;default_value&#39;</span><span class="p">]))</span>
+        <span class="n">lineedit</span><span class="o">.</span><span class="n">selectAll</span><span class="p">()</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lineedit</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_string_value</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_string_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+
+<div class="viewcode-block" id="TaurusInputPanel.create_text_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.create_text_panel">[docs]</a>    <span class="k">def</span> <span class="nf">create_text_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_group_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span> <span class="o">=</span> <span class="n">textedit</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTextEdit</span><span class="p">()</span>
+        <span class="n">textedit</span><span class="o">.</span><span class="n">setAcceptRichText</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;default_value&#39;</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+            <span class="n">textedit</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;default_value&#39;</span><span class="p">]))</span>
+        <span class="n">textedit</span><span class="o">.</span><span class="n">selectAll</span><span class="p">()</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">textedit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_value</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_text_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span>
+
+<div class="viewcode-block" id="TaurusInputPanel.create_boolean_panel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.create_boolean_panel">[docs]</a>    <span class="k">def</span> <span class="nf">create_boolean_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
+        <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_simple_panel</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">panel</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span> <span class="o">=</span> <span class="n">checkbox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">()</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;default_value&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_boolean_value</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_boolean_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span><span class="o">.</span><span class="n">checkState</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
+
+<div class="viewcode-block" id="TaurusInputPanel.inputPanel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.inputPanel">[docs]</a>    <span class="k">def</span> <span class="nf">inputPanel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_inputPanel</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.buttonBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.buttonBox">[docs]</a>    <span class="k">def</span> <span class="nf">buttonBox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the button box from this panel</span>
+
+<span class="sd">        :return: the button box from this panel</span>
+<span class="sd">        :rtype: PyQt4.Qt.QDialogButtonBox&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_buttonBox</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.addButton"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.addButton">[docs]</a>    <span class="k">def</span> <span class="nf">addButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">ActionRole</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds the given button with the given to the button box</span>
+
+<span class="sd">        :param button: the button to be added</span>
+<span class="sd">        :type button: PyQt4.QtGui.QPushButton</span>
+<span class="sd">        :param role: button role</span>
+<span class="sd">        :type role: PyQt4.Qt.QDialogButtonBox.ButtonRole&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_buttonBox</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.setIconPixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.setIconPixmap">[docs]</a>    <span class="k">def</span> <span class="nf">setIconPixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the icon to the dialog</span>
+
+<span class="sd">        :param pixmap: the icon pixmap</span>
+<span class="sd">        :type pixmap: PyQt4.Qt.QPixmap&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">iconLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.setText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.setText">[docs]</a>    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the text of this panel</span>
+
+<span class="sd">        :param text: the new text</span>
+<span class="sd">        :type text: str&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">textLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.getText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.getText">[docs]</a>    <span class="k">def</span> <span class="nf">getText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current text of this panel</span>
+
+<span class="sd">        :return: the text for this panel</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">textLabel</span><span class="o">.</span><span class="n">text</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusInputPanel.setInputFocus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusInputPanel.html#taurus.qt.qtgui.panel.TaurusInputPanel.setInputFocus">[docs]</a>    <span class="k">def</span> <span class="nf">setInputFocus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">inputWidget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">inputWidget</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inputWidget</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputWidget</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+            <span class="n">inputWidget</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputWidget</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QButtonGroup</span><span class="p">):</span>
+            <span class="n">bid</span> <span class="o">=</span> <span class="n">inputWidget</span><span class="o">.</span><span class="n">checkedId</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">bid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">button</span> <span class="o">=</span> <span class="n">inputWidget</span><span class="o">.</span><span class="n">buttons</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">button</span> <span class="o">=</span> <span class="n">inputWidget</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">bid</span><span class="p">)</span>
+            <span class="n">button</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+
+    <span class="k">class</span> <span class="nc">Listener</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">on_accept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="s2">&quot;user selected&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;What&#39;s your favourite car brand?&quot;</span><span class="p">,</span>
+             <span class="n">data_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Mazda&quot;</span><span class="p">,</span> <span class="s2">&quot;Skoda&quot;</span><span class="p">,</span> <span class="s2">&quot;Citroen&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Mercedes&quot;</span><span class="p">,</span> <span class="s2">&quot;Audi&quot;</span><span class="p">,</span> <span class="s2">&quot;Ferrari&quot;</span><span class="p">],</span>
+             <span class="n">default_value</span><span class="o">=</span><span class="s2">&quot;Mercedes&quot;</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusInputPanel</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Listener</span><span class="p">()</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">panel</span> <span class="o">=</span> <span class="n">w</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">buttonBox</span><span class="p">()</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">on_accept</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

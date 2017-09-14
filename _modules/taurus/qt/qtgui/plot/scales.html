@@ -1,0 +1,715 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.plot.scales &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.plot.scales</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.plot.scales</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">scales.py: Custom scales used by taurus.qt.qtgui.plot module</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DateTimeScaleEngine&quot;</span><span class="p">,</span> <span class="s2">&quot;DeltaTimeScaleEngine&quot;</span><span class="p">,</span> <span class="s2">&quot;FixedLabelsScaleEngine&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;FancyScaleDraw&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTimeScaleDraw&quot;</span><span class="p">,</span> <span class="s2">&quot;DeltaTimeScaleDraw&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;FixedLabelsScaleDraw&quot;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">mktime</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Qwt5</span>
+
+
+<span class="k">def</span> <span class="nf">_getDefaultAxisLabelsAlignment</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;return a &quot;smart&quot; alignment for the axis labels depending on the axis</span>
+<span class="sd">    and the label rotation</span>
+
+<span class="sd">    :param axis: (Qwt5.QwtPlot.Axis) the axis</span>
+<span class="sd">    :param rotation: (float) The rotation (in degrees, clockwise-positive)</span>
+
+<span class="sd">    :return: (Qt.Alignment) an alignment</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignHCenter</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span>
+        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span>
+    <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yLeft</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span>
+        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span>
+    <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">yRight</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span>
+        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span>
+    <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xTop</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignHCenter</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span>
+        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span>
+
+
+<div class="viewcode-block" id="FancyScaleDraw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FancyScaleDraw.html#taurus.qt.qtgui.plot.FancyScaleDraw">[docs]</a><span class="k">class</span> <span class="nc">FancyScaleDraw</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDraw</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;This is a scaleDraw with a tuneable palette and label formats&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDraw</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labelFormat</span> <span class="o">=</span> <span class="nb">format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_palette</span> <span class="o">=</span> <span class="n">palette</span>
+
+<div class="viewcode-block" id="FancyScaleDraw.setPalette"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FancyScaleDraw.html#taurus.qt.qtgui.plot.FancyScaleDraw.setPalette">[docs]</a>    <span class="k">def</span> <span class="nf">setPalette</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">palette</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;pass a QPalette or None to use default&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_palette</span> <span class="o">=</span> <span class="n">palette</span></div>
+
+<div class="viewcode-block" id="FancyScaleDraw.getPalette"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FancyScaleDraw.html#taurus.qt.qtgui.plot.FancyScaleDraw.getPalette">[docs]</a>    <span class="k">def</span> <span class="nf">getPalette</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palette</span></div>
+
+<div class="viewcode-block" id="FancyScaleDraw.setLabelFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FancyScaleDraw.html#taurus.qt.qtgui.plot.FancyScaleDraw.setLabelFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setLabelFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;pass a format string (e.g. &quot;%g&quot;) or None to use default (it uses the locale)&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labelFormat</span> <span class="o">=</span> <span class="nb">format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">invalidateCache</span><span class="p">()</span>  <span class="c1"># to force repainting of the labels</span></div>
+
+<div class="viewcode-block" id="FancyScaleDraw.getLabelFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FancyScaleDraw.html#taurus.qt.qtgui.plot.FancyScaleDraw.getLabelFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getLabelFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;pass a format string (e.g. &quot;%g&quot;) or None to use default (it uses the locale)&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labelFormat</span></div>
+
+<div class="viewcode-block" id="FancyScaleDraw.label"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FancyScaleDraw.html#taurus.qt.qtgui.plot.FancyScaleDraw.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labelFormat</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtText</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labelFormat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDraw</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labelFormat</span> <span class="o">%</span> <span class="n">val</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FancyScaleDraw.draw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FancyScaleDraw.html#taurus.qt.qtgui.plot.FancyScaleDraw.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">palette</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palette</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDraw</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">palette</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDraw</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_palette</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DateTimeScaleEngine"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DateTimeScaleEngine.html#taurus.qt.qtgui.plot.DateTimeScaleEngine">[docs]</a><span class="k">class</span> <span class="nc">DateTimeScaleEngine</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setScaleDraw</span><span class="p">(</span><span class="n">scaleDraw</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DateTimeScaleEngine.setScaleDraw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DateTimeScaleEngine.html#taurus.qt.qtgui.plot.DateTimeScaleEngine.setScaleDraw">[docs]</a>    <span class="k">def</span> <span class="nf">setScaleDraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scaleDraw</span> <span class="o">=</span> <span class="n">scaleDraw</span></div>
+
+<div class="viewcode-block" id="DateTimeScaleEngine.scaleDraw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DateTimeScaleEngine.html#taurus.qt.qtgui.plot.DateTimeScaleEngine.scaleDraw">[docs]</a>    <span class="k">def</span> <span class="nf">scaleDraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scaleDraw</span></div>
+
+<div class="viewcode-block" id="DateTimeScaleEngine.divideScale"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DateTimeScaleEngine.html#taurus.qt.qtgui.plot.DateTimeScaleEngine.divideScale">[docs]</a>    <span class="k">def</span> <span class="nf">divideScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">maxMajSteps</span><span class="p">,</span> <span class="n">maxMinSteps</span><span class="p">,</span> <span class="n">stepSize</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Reimplements Qwt5.QwtLinearScaleEngine.divideScale</span>
+
+<span class="sd">        **Important**: The stepSize parameter is **ignored**.</span>
+
+<span class="sd">        :return: (Qwt5.QwtScaleDiv) a scale division whose ticks are aligned with</span>
+<span class="sd">                 the natural time units &#39;&#39;&#39;</span>
+
+        <span class="c1"># if stepSize != 0:</span>
+        <span class="c1">#    scaleDiv = Qwt5.QwtLinearScaleEngine.divideScale(self, x1, x2, maxMajSteps, maxMinSteps, stepSize)</span>
+        <span class="c1">#    scaleDiv.datetimeLabelFormat = &quot;%Y/%m/%d %H:%M%S.%f&quot;</span>
+        <span class="c1">#    return scaleDiv</span>
+
+        <span class="n">interval</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtDoubleInterval</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">interval</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDiv</span><span class="p">()</span>
+
+        <span class="n">dt1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">interval</span><span class="o">.</span><span class="n">minValue</span><span class="p">())</span>
+        <span class="n">dt2</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">interval</span><span class="o">.</span><span class="n">maxValue</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">dt1</span><span class="o">.</span><span class="n">year</span> <span class="o">&lt;</span> <span class="mi">1900</span> <span class="ow">or</span> <span class="n">dt2</span><span class="o">.</span><span class="n">year</span> <span class="o">&gt;</span> <span class="mi">9999</span><span class="p">:</span>  <span class="c1"># limits in time.mktime and datetime</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDiv</span><span class="p">()</span>
+
+        <span class="n">majticks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">medticks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">minticks</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+
+        <span class="c1"># = 3600s*24*(365+366) = 2 years (counting a leap year)</span>
+        <span class="k">if</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">63072001</span><span class="p">:</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y&quot;</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dt1</span><span class="o">.</span><span class="n">year</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dt2</span><span class="o">.</span><span class="n">year</span><span class="p">):</span>
+                <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">majticks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+
+        <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">5270400</span><span class="p">:</span>  <span class="c1"># = 3600s*24*61 = 61 days</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y %b&quot;</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">31</span><span class="p">)</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">dt1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">hour</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                             <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">dt</span> <span class="o">&lt;</span> <span class="n">dt2</span><span class="p">):</span>
+                <span class="c1"># make sure that we are on day 1 (even if always sum 31 days)</span>
+                <span class="n">dt</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">majticks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+                <span class="n">dt</span> <span class="o">+=</span> <span class="n">d</span>
+
+        <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">172800</span><span class="p">:</span>  <span class="c1"># 3600s24*2 = 2 days</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%b/</span><span class="si">%d</span><span class="s2">&quot;</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">dt1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">hour</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">dt</span> <span class="o">&lt;</span> <span class="n">dt2</span><span class="p">):</span>
+                <span class="n">majticks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+                <span class="n">dt</span> <span class="o">+=</span> <span class="n">d</span>
+
+        <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">7200</span><span class="p">:</span>  <span class="c1"># 3600s*2 = 2hours</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%b/</span><span class="si">%d</span><span class="s2">-%Hh&quot;</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">dt1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">dt</span> <span class="o">&lt;</span> <span class="n">dt2</span><span class="p">):</span>
+                <span class="n">majticks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+                <span class="n">dt</span> <span class="o">+=</span> <span class="n">d</span>
+
+        <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">1200</span><span class="p">:</span>  <span class="c1"># 60s*20 =20 minutes</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%H:%M&quot;</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">dt1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">minute</span><span class="o">=</span><span class="p">(</span><span class="n">dt1</span><span class="o">.</span><span class="n">minute</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span>
+                             <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">dt</span> <span class="o">&lt;</span> <span class="n">dt2</span><span class="p">):</span>
+                <span class="n">majticks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+                <span class="n">dt</span> <span class="o">+=</span> <span class="n">d</span>
+
+        <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">120</span><span class="p">:</span>  <span class="c1"># =60s*2 = 2 minutes</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%H:%M&quot;</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">dt1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">dt</span> <span class="o">&lt;</span> <span class="n">dt2</span><span class="p">):</span>
+                <span class="n">majticks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+                <span class="n">dt</span> <span class="o">+=</span> <span class="n">d</span>
+
+        <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>  <span class="c1"># 20 s</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%H:%M:%S&quot;</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">dt1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">second</span><span class="o">=</span><span class="p">(</span><span class="n">dt1</span><span class="o">.</span><span class="n">second</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">dt</span> <span class="o">&lt;</span> <span class="n">dt2</span><span class="p">):</span>
+                <span class="n">majticks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+                <span class="n">dt</span> <span class="o">+=</span> <span class="n">d</span>
+
+        <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># 2s</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%H:%M:%S&quot;</span>
+            <span class="n">majticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">x2</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># less than 2s (show microseconds)</span>
+            <span class="n">scaleDiv</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="o">.</span><span class="n">divideScale</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">maxMajSteps</span><span class="p">,</span> <span class="n">maxMinSteps</span><span class="p">,</span> <span class="n">stepSize</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scaleDraw</span><span class="p">()</span><span class="o">.</span><span class="n">setDatetimeLabelFormat</span><span class="p">(</span><span class="s2">&quot;%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">scaleDiv</span>
+
+        <span class="c1"># make sure to comply with maxMajTicks</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">majticks</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">L</span> <span class="o">&gt;</span> <span class="n">maxMajSteps</span><span class="p">:</span>
+            <span class="n">majticks</span> <span class="o">=</span> <span class="n">majticks</span><span class="p">[::</span><span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">/</span> <span class="n">maxMajSteps</span><span class="p">))]</span>
+
+        <span class="n">scaleDiv</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDiv</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">minticks</span><span class="p">,</span> <span class="n">medticks</span><span class="p">,</span> <span class="n">majticks</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scaleDraw</span><span class="p">()</span><span class="o">.</span><span class="n">setDatetimeLabelFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x1</span> <span class="o">&gt;</span> <span class="n">x2</span><span class="p">:</span>
+            <span class="n">scaleDiv</span><span class="o">.</span><span class="n">invert</span><span class="p">()</span>
+
+        <span class="c1"># START DEBUG</span>
+        <span class="c1"># print &quot;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&quot;</span>
+        <span class="c1"># for tk in  scaleDiv.ticks(scaleDiv.MajorTick):</span>
+        <span class="c1">#    print datetime.fromtimestamp(tk).isoformat()</span>
+        <span class="c1"># print &quot;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&quot;</span>
+        <span class="c1"># END DEBUG</span>
+
+        <span class="k">return</span> <span class="n">scaleDiv</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DateTimeScaleEngine.getDefaultAxisLabelsAlignment"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DateTimeScaleEngine.html#taurus.qt.qtgui.plot.DateTimeScaleEngine.getDefaultAxisLabelsAlignment">[docs]</a>    <span class="k">def</span> <span class="nf">getDefaultAxisLabelsAlignment</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;return a &quot;smart&quot; alignment for the axis labels depending on the axis</span>
+<span class="sd">        and the label rotation</span>
+
+<span class="sd">        :param axis: (Qwt5.QwtPlot.Axis) the axis</span>
+<span class="sd">        :param rotation: (float) The rotation (in degrees, clockwise-positive)</span>
+
+<span class="sd">        :return: (Qt.Alignment) an alignment</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">_getDefaultAxisLabelsAlignment</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DateTimeScaleEngine.enableInAxis"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DateTimeScaleEngine.html#taurus.qt.qtgui.plot.DateTimeScaleEngine.enableInAxis">[docs]</a>    <span class="k">def</span> <span class="nf">enableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;convenience method that will enable this engine in the given</span>
+<span class="sd">        axis. Note that it changes the ScaleDraw as well.</span>
+
+<span class="sd">        :param plot: (Qwt5.QwtPlot) the plot to change</span>
+<span class="sd">        :param axis: (Qwt5.QwtPlot.Axis) the id of the axis</span>
+<span class="sd">        :param scaleDraw: (Qwt5.QwtScaleDraw) Scale draw to use. If None given,</span>
+<span class="sd">                          the current ScaleDraw for the plot will be used if</span>
+<span class="sd">                          possible, and a :class:`TaurusTimeScaleDraw` will be set if not</span>
+<span class="sd">        :param rotation: (float or None) The rotation of the labels (in degrees, clockwise-positive)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">scaleDraw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">axisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scaleDraw</span><span class="p">,</span> <span class="n">TaurusTimeScaleDraw</span><span class="p">):</span>
+                <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">TaurusTimeScaleDraw</span><span class="p">()</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleEngine</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">DateTimeScaleEngine</span><span class="p">(</span><span class="n">scaleDraw</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">rotation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">alignment</span> <span class="o">=</span> <span class="n">DateTimeScaleEngine</span><span class="o">.</span><span class="n">getDefaultAxisLabelsAlignment</span><span class="p">(</span>
+                <span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">setAxisLabelRotation</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">setAxisLabelAlignment</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">alignment</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DateTimeScaleEngine.disableInAxis"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DateTimeScaleEngine.html#taurus.qt.qtgui.plot.DateTimeScaleEngine.disableInAxis">[docs]</a>    <span class="k">def</span> <span class="nf">disableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaleEngine</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;convenience method that will disable this engine in the given</span>
+<span class="sd">        axis. Note that it changes the ScaleDraw as well.</span>
+
+<span class="sd">        :param plot: (Qwt5.QwtPlot) the plot to change</span>
+<span class="sd">        :param axis: (Qwt5.QwtPlot.Axis) the id of the axis</span>
+<span class="sd">        :param scaleDraw: (Qwt5.QwtScaleDraw) Scale draw to use. If None given,</span>
+<span class="sd">                          a :class:`FancyScaleDraw` will be set</span>
+<span class="sd">        :param scaleEngine: (Qwt5.QwtScaleEngine) Scale draw to use. If None given,</span>
+<span class="sd">                          a :class:`Qwt5.QwtLinearScaleEngine` will be set</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">scaleDraw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">FancyScaleDraw</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">scaleEngine</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleEngine</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="p">()</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleEngine</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleEngine</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusTimeScaleDraw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusTimeScaleDraw.html#taurus.qt.qtgui.plot.TaurusTimeScaleDraw">[docs]</a><span class="k">class</span> <span class="nc">TaurusTimeScaleDraw</span><span class="p">(</span><span class="n">FancyScaleDraw</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">FancyScaleDraw</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusTimeScaleDraw.setDatetimeLabelFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusTimeScaleDraw.html#taurus.qt.qtgui.plot.TaurusTimeScaleDraw.setDatetimeLabelFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setDatetimeLabelFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datetimeLabelFormat</span> <span class="o">=</span> <span class="nb">format</span></div>
+
+<div class="viewcode-block" id="TaurusTimeScaleDraw.datetimeLabelFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusTimeScaleDraw.html#taurus.qt.qtgui.plot.TaurusTimeScaleDraw.datetimeLabelFormat">[docs]</a>    <span class="k">def</span> <span class="nf">datetimeLabelFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datetimeLabelFormat</span></div>
+
+<div class="viewcode-block" id="TaurusTimeScaleDraw.label"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusTimeScaleDraw.html#taurus.qt.qtgui.plot.TaurusTimeScaleDraw.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labelFormat</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtText</span><span class="p">()</span>
+        <span class="c1"># From val to a string with time</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>  <span class="c1"># If the scaleDiv was created by a DateTimeScaleEngine it has a _datetimeLabelFormat</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datetimeLabelFormat</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s2">&quot;Warning: cannot get the datetime label format (Are you using a DateTimeScaleEngine?)&quot;</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtText</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DeltaTimeScaleEngine"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleEngine.html#taurus.qt.qtgui.plot.DeltaTimeScaleEngine">[docs]</a><span class="k">class</span> <span class="nc">DeltaTimeScaleEngine</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setScaleDraw</span><span class="p">(</span><span class="n">scaleDraw</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DeltaTimeScaleEngine.setScaleDraw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleEngine.html#taurus.qt.qtgui.plot.DeltaTimeScaleEngine.setScaleDraw">[docs]</a>    <span class="k">def</span> <span class="nf">setScaleDraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scaleDraw</span> <span class="o">=</span> <span class="n">scaleDraw</span></div>
+
+<div class="viewcode-block" id="DeltaTimeScaleEngine.scaleDraw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleEngine.html#taurus.qt.qtgui.plot.DeltaTimeScaleEngine.scaleDraw">[docs]</a>    <span class="k">def</span> <span class="nf">scaleDraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scaleDraw</span></div>
+
+<div class="viewcode-block" id="DeltaTimeScaleEngine.divideScale"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleEngine.html#taurus.qt.qtgui.plot.DeltaTimeScaleEngine.divideScale">[docs]</a>    <span class="k">def</span> <span class="nf">divideScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">maxMajSteps</span><span class="p">,</span> <span class="n">maxMinSteps</span><span class="p">,</span> <span class="n">stepSize</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Reimplements Qwt5.QwtLinearScaleEngine.divideScale</span>
+
+<span class="sd">        :return: (Qwt5.QwtScaleDiv) a scale division whose ticks are aligned with</span>
+<span class="sd">                 the natural delta time units &#39;&#39;&#39;</span>
+        <span class="n">interval</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtDoubleInterval</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">interval</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDiv</span><span class="p">()</span>
+        <span class="n">d_range</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">d_range</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># 2s</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="o">.</span><span class="n">divideScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">maxMajSteps</span><span class="p">,</span> <span class="n">maxMinSteps</span><span class="p">,</span> <span class="n">stepSize</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">d_range</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>  <span class="c1"># 20 s</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">d_range</span> <span class="o">&lt;</span> <span class="mi">120</span><span class="p">:</span>  <span class="c1"># =60s*2 = 2 minutes</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">elif</span> <span class="n">d_range</span> <span class="o">&lt;</span> <span class="mi">1200</span><span class="p">:</span>  <span class="c1"># 60s*20 =20 minutes</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">60</span>
+        <span class="k">elif</span> <span class="n">d_range</span> <span class="o">&lt;</span> <span class="mi">7200</span><span class="p">:</span>  <span class="c1"># 3600s*2 = 2 hours</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">600</span>
+        <span class="k">elif</span> <span class="n">d_range</span> <span class="o">&lt;</span> <span class="mi">172800</span><span class="p">:</span>  <span class="c1"># 3600s24*2 = 2 days</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">3600</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mi">86400</span>  <span class="c1"># 1 day</span>
+        <span class="c1"># calculate a step size that respects the base step (s) and also</span>
+        <span class="c1"># enforces the maxMajSteps</span>
+        <span class="n">stepSize</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">d_range</span> <span class="o">//</span> <span class="n">s</span><span class="p">)</span> <span class="o">/</span> <span class="n">maxMajSteps</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="o">.</span><span class="n">divideScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">maxMajSteps</span><span class="p">,</span> <span class="n">maxMinSteps</span><span class="p">,</span> <span class="n">stepSize</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DeltaTimeScaleEngine.getDefaultAxisLabelsAlignment"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleEngine.html#taurus.qt.qtgui.plot.DeltaTimeScaleEngine.getDefaultAxisLabelsAlignment">[docs]</a>    <span class="k">def</span> <span class="nf">getDefaultAxisLabelsAlignment</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;return a &quot;smart&quot; alignment for the axis labels depending on the axis</span>
+<span class="sd">        and the label rotation</span>
+
+<span class="sd">        :param axis: (Qwt5.QwtPlot.Axis) the axis</span>
+<span class="sd">        :param rotation: (float) The rotation (in degrees, clockwise-positive)</span>
+
+<span class="sd">        :return: (Qt.Alignment) an alignment</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">_getDefaultAxisLabelsAlignment</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DeltaTimeScaleEngine.enableInAxis"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleEngine.html#taurus.qt.qtgui.plot.DeltaTimeScaleEngine.enableInAxis">[docs]</a>    <span class="k">def</span> <span class="nf">enableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;convenience method that will enable this engine in the given</span>
+<span class="sd">        axis. Note that it changes the ScaleDraw as well.</span>
+
+<span class="sd">        :param plot: (Qwt5.QwtPlot) the plot to change</span>
+<span class="sd">        :param axis: (Qwt5.QwtPlot.Axis) the id of the axis</span>
+<span class="sd">        :param scaleDraw: (Qwt5.QwtScaleDraw) Scale draw to use. If None given,</span>
+<span class="sd">                          the current ScaleDraw for the plot will be used if</span>
+<span class="sd">                          possible, and a :class:`TaurusTimeScaleDraw` will be set if not</span>
+<span class="sd">        :param rotation: (float or None) The rotation of the labels (in degrees, clockwise-positive)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">scaleDraw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">axisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scaleDraw</span><span class="p">,</span> <span class="n">DeltaTimeScaleDraw</span><span class="p">):</span>
+                <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">DeltaTimeScaleDraw</span><span class="p">()</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleEngine</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">DeltaTimeScaleEngine</span><span class="p">(</span><span class="n">scaleDraw</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">rotation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">alignment</span> <span class="o">=</span> <span class="n">DeltaTimeScaleEngine</span><span class="o">.</span><span class="n">getDefaultAxisLabelsAlignment</span><span class="p">(</span>
+                <span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">setAxisLabelRotation</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">setAxisLabelAlignment</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">alignment</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DeltaTimeScaleEngine.disableInAxis"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleEngine.html#taurus.qt.qtgui.plot.DeltaTimeScaleEngine.disableInAxis">[docs]</a>    <span class="k">def</span> <span class="nf">disableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaleEngine</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;convenience method that will disable this engine in the given</span>
+<span class="sd">        axis. Note that it changes the ScaleDraw as well.</span>
+
+<span class="sd">        :param plot: (Qwt5.QwtPlot) the plot to change</span>
+<span class="sd">        :param axis: (Qwt5.QwtPlot.Axis) the id of the axis</span>
+<span class="sd">        :param scaleDraw: (Qwt5.QwtScaleDraw) Scale draw to use. If None given,</span>
+<span class="sd">                          a :class:`FancyScaleDraw` will be set</span>
+<span class="sd">        :param scaleEngine: (Qwt5.QwtScaleEngine) Scale draw to use. If None given,</span>
+<span class="sd">                          a :class:`Qwt5.QwtLinearScaleEngine` will be set</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">scaleDraw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">FancyScaleDraw</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">scaleEngine</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleEngine</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="p">()</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleEngine</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleEngine</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DeltaTimeScaleDraw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleDraw.html#taurus.qt.qtgui.plot.DeltaTimeScaleDraw">[docs]</a><span class="k">class</span> <span class="nc">DeltaTimeScaleDraw</span><span class="p">(</span><span class="n">FancyScaleDraw</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">FancyScaleDraw</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DeltaTimeScaleDraw.label"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_DeltaTimeScaleDraw.html#taurus.qt.qtgui.plot.DeltaTimeScaleDraw.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;+</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">val</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=-</span><span class="n">val</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtText</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="FixedLabelsScaleEngine"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FixedLabelsScaleEngine.html#taurus.qt.qtgui.plot.FixedLabelsScaleEngine">[docs]</a><span class="k">class</span> <span class="nc">FixedLabelsScaleEngine</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;labels is a sequence of (pos,label) tuples where pos is the point</span>
+<span class="sd">        at wich to draw the label and label is given as a python string (or QwtText)&#39;&#39;&#39;</span>
+        <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleEngine</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span> <span class="o">=</span> <span class="n">positions</span>
+        <span class="c1"># self.setAttribute(self.Floating,True)</span>
+
+<div class="viewcode-block" id="FixedLabelsScaleEngine.divideScale"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FixedLabelsScaleEngine.html#taurus.qt.qtgui.plot.FixedLabelsScaleEngine.divideScale">[docs]</a>    <span class="k">def</span> <span class="nf">divideScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">maxMajSteps</span><span class="p">,</span> <span class="n">maxMinSteps</span><span class="p">,</span> <span class="n">stepSize</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="n">div</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDiv</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[])</span>
+        <span class="n">div</span><span class="o">.</span><span class="n">setTicks</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleDiv</span><span class="o">.</span><span class="n">MajorTick</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">div</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FixedLabelsScaleEngine.enableInAxis"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FixedLabelsScaleEngine.html#taurus.qt.qtgui.plot.FixedLabelsScaleEngine.enableInAxis">[docs]</a>    <span class="k">def</span> <span class="nf">enableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;convenience method that will enable this engine in the given</span>
+<span class="sd">        axis. Note that it changes the ScaleDraw as well.</span>
+
+<span class="sd">        :param plot: (Qwt5.QwtPlot) the plot to change</span>
+<span class="sd">        :param axis: (Qwt5.QwtPlot.Axis) the id of the axis</span>
+<span class="sd">        :param scaleDraw: (Qwt5.QwtScaleDraw) Scale draw to use. If None given,</span>
+<span class="sd">                          the current ScaleDraw for the plot will be used if</span>
+<span class="sd">                          possible, and a :class:`FixedLabelsScaleDraw` will be set if not</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">scaleDraw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">axisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scaleDraw</span><span class="p">,</span> <span class="n">FixedLabelsScaleDraw</span><span class="p">):</span>
+                <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">FixedLabelsScaleDraw</span><span class="p">()</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleEngine</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">FixedLabelsScaleEngine</span><span class="p">(</span><span class="n">scaleDraw</span><span class="p">))</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FixedLabelsScaleEngine.disableInAxis"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FixedLabelsScaleEngine.html#taurus.qt.qtgui.plot.FixedLabelsScaleEngine.disableInAxis">[docs]</a>    <span class="k">def</span> <span class="nf">disableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaleEngine</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;convenience method that will disable this engine in the given</span>
+<span class="sd">        axis. Note that it changes the ScaleDraw as well.</span>
+
+<span class="sd">        :param plot: (Qwt5.QwtPlot) the plot to change</span>
+<span class="sd">        :param axis: (Qwt5.QwtPlot.Axis) the id of the axis</span>
+<span class="sd">        :param scaleDraw: (Qwt5.QwtScaleDraw) Scale draw to use. If None given,</span>
+<span class="sd">                          a :class:`FancyScaleDraw` will be set</span>
+<span class="sd">        :param scaleEngine: (Qwt5.QwtScaleEngine) Scale draw to use. If None given,</span>
+<span class="sd">                          a :class:`Qwt5.QwtLinearScaleEngine` will be set</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">scaleDraw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleDraw</span> <span class="o">=</span> <span class="n">FancyScaleDraw</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">scaleEngine</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scaleEngine</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="p">()</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleEngine</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleEngine</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">setAxisScaleDraw</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">scaleDraw</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="FixedLabelsScaleDraw"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FixedLabelsScaleDraw.html#taurus.qt.qtgui.plot.FixedLabelsScaleDraw">[docs]</a><span class="k">class</span> <span class="nc">FixedLabelsScaleDraw</span><span class="p">(</span><span class="n">FancyScaleDraw</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This is a custom ScaleDraw that shows labels at given positions (and nowhere else)</span>
+<span class="sd">        positions is a sequence of points for which labels are defined.</span>
+<span class="sd">        labels is a sequence strings (or QwtText)</span>
+<span class="sd">        Note that the lengths of positions and labels must match&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;lengths of positions and labels do not match&#39;</span><span class="p">)</span>
+
+        <span class="n">FancyScaleDraw</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span> <span class="o">=</span> <span class="n">positions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="c1"># self._positionsarray = numpy.array(self._positions) #this is stored</span>
+        <span class="c1"># just in case</span>
+
+<div class="viewcode-block" id="FixedLabelsScaleDraw.label"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_FixedLabelsScaleDraw.html#taurus.qt.qtgui.plot.FixedLabelsScaleDraw.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>  <span class="c1"># try to find an exact match</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># It won&#39;t show any label</span>
+            <span class="c1"># use the index of the closest position</span>
+            <span class="c1">#index = (numpy.abs(self._positionsarray - val)).argmin()</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtText</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

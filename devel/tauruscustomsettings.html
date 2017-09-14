@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Taurus custom settings &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../index.html"/>
+        <link rel="up" title="Developer’s Guide" href="index.html"/>
+        <link rel="next" title="Examples" href="examples.html"/>
+        <link rel="prev" title="taurus core tutorial" href="core_tutorial.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus.html">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+    <li>Taurus custom settings</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/devel/tauruscustomsettings.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurus-custom-settings">
+<span id="tauruscustomsettings"></span><h1>Taurus custom settings<a class="headerlink" href="#taurus-custom-settings" title="Permalink to this headline">¶</a></h1>
+<p>Taurus provides a module located at its root directory called
+<cite>tauruscustomsettings</cite>.</p>
+<span class="target" id="module-taurus.tauruscustomsettings"></span><p>This module contains some Taurus-wide default configurations.</p>
+<p>The idea is that the final user may edit the values here to customize certain
+aspects of Taurus.</p>
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.DEFAULT_QT_API">
+<code class="descname">DEFAULT_QT_API</code><em class="property"> = 'pyqt'</em><a class="headerlink" href="#taurus.tauruscustomsettings.DEFAULT_QT_API" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set preffered API if not is already loaded</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_AUTO_INIT_LOG">
+<code class="descname">QT_AUTO_INIT_LOG</code><em class="property"> = True</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_AUTO_INIT_LOG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auto initialize Qt logging to python logging</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_AUTO_REMOVE_INPUTHOOK">
+<code class="descname">QT_AUTO_REMOVE_INPUTHOOK</code><em class="property"> = True</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_AUTO_REMOVE_INPUTHOOK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove input hook (only valid for PyQt4)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_THEME_DIR">
+<code class="descname">QT_THEME_DIR</code><em class="property"> = ''</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_THEME_DIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the theme to be used: set the theme dir  and the theme name.
+The path can be absolute or relative to the dir of taurus.qt.qtgui.icon
+If not set, the dir of taurus.qt.qtgui.icon will be used</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_THEME_FORCE_ON_LINUX">
+<code class="descname">QT_THEME_FORCE_ON_LINUX</code><em class="property"> = True</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_THEME_FORCE_ON_LINUX" title="Permalink to this definition">¶</a></dt>
+<dd><p>In Linux the QT_THEME_NAME is not applied (to respect the system theme)
+setting QT_THEME_FORCE_ON_LINUX=True overrides this.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_THEME_NAME">
+<code class="descname">QT_THEME_NAME</code><em class="property"> = 'Tango'</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_THEME_NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the icon theme (e.g. &#8216;Tango&#8217;, &#8216;Oxygen&#8217;, etc). Default=&#8217;Tango&#8217;</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="core_tutorial.html" class="btn btn-neutral" title="taurus core tutorial" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

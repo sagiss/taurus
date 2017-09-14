@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.table.qlogtable &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.table.qlogtable</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.table.qlogtable</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides Qt table widgets which display logging messages from the</span>
+<span class="sd">python :mod:`logging` module&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QLoggingTableModel&quot;</span><span class="p">,</span> <span class="s2">&quot;QLoggingTable&quot;</span><span class="p">,</span> <span class="s2">&quot;QLoggingWidget&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;QRemoteLoggingTableModel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.handlers</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="kn">import</span> <span class="nn">taurus</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.remotelogmonitor</span> <span class="k">import</span> <span class="n">LogRecordStreamHandler</span><span class="p">,</span> \
+    <span class="n">LogRecordSocketReceiver</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.decorator.memoize</span> <span class="k">import</span> <span class="n">memoized</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.model</span> <span class="k">import</span> <span class="n">FilterToolBar</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ActionFactory</span>
+
+<span class="kn">from</span> <span class="nn">qtable</span> <span class="k">import</span> <span class="n">QBaseTableWidget</span>
+
+<span class="n">LEVEL</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">MSG</span><span class="p">,</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">HORIZ_HEADER</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="s1">&#39;Message&#39;</span><span class="p">,</span> <span class="s1">&#39;By&#39;</span><span class="p">,</span> <span class="s1">&#39;Origin&#39;</span>
+
+<span class="n">__LEVEL_BRUSH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">Trace</span><span class="p">:</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">lightGray</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">Debug</span><span class="p">:</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">green</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">Info</span><span class="p">:</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">blue</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">),</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">Warning</span><span class="p">:</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">Critical</span><span class="p">:</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">240</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">getBrushForLevel</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
+    <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Trace</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Trace</span><span class="p">:</span>
+        <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Trace</span>
+    <span class="k">elif</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Debug</span><span class="p">:</span>
+        <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Debug</span>
+    <span class="k">elif</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Info</span><span class="p">:</span>
+        <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Info</span>
+    <span class="k">elif</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Warning</span><span class="p">:</span>
+        <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Warning</span>
+    <span class="k">elif</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+        <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Error</span>
+    <span class="k">elif</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Critical</span><span class="p">:</span>
+        <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Critical</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">,</span> <span class="n">__LEVEL_BRUSH</span><span class="p">[</span><span class="n">elevel</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span>
+
+
+<span class="k">def</span> <span class="nf">_origin_cmp</span><span class="p">(</span><span class="n">rec1</span><span class="p">,</span> <span class="n">rec2</span><span class="p">):</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">rec1</span><span class="o">.</span><span class="n">process</span><span class="p">,</span> <span class="n">rec2</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">c1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">rec1</span><span class="o">.</span><span class="n">thread</span><span class="p">,</span> <span class="n">rec2</span><span class="o">.</span><span class="n">thread</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">rec1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">rec2</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c2</span>
+    <span class="k">return</span> <span class="n">c1</span>
+
+<span class="n">gethostname</span> <span class="o">=</span> <span class="n">memoized</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_record_origin</span><span class="p">(</span><span class="n">rec</span><span class="p">):</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;hostName&#39;</span><span class="p">,</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="n">gethostname</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;?&quot;</span><span class="p">)</span>
+    <span class="n">procName</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;processName&#39;</span><span class="p">,</span> <span class="s2">&quot;?process?&quot;</span><span class="p">)</span>
+    <span class="n">procID</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;process&#39;</span><span class="p">,</span> <span class="s2">&quot;?PID?&quot;</span><span class="p">)</span>
+    <span class="n">threadName</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;threadName&#39;</span><span class="p">,</span> <span class="s2">&quot;?thread?&quot;</span><span class="p">)</span>
+    <span class="n">threadID</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;thread&#39;</span><span class="p">,</span> <span class="s2">&quot;?threadID?&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">procName</span><span class="p">,</span> <span class="n">procID</span><span class="p">,</span> <span class="n">threadName</span><span class="p">,</span> <span class="n">threadID</span>
+
+
+<span class="k">def</span> <span class="nf">_get_record_trace</span><span class="p">(</span><span class="n">rec</span><span class="p">):</span>
+    <span class="n">pathname</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;pathname&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">modulename</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;module&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">funcname</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;funcName&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">lineno</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;lineno&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pathname</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">modulename</span><span class="p">,</span> <span class="n">funcname</span><span class="p">,</span> <span class="n">lineno</span>
+
+
+<span class="k">def</span> <span class="nf">_get_record_origin_str</span><span class="p">(</span><span class="n">rec</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2">.</span><span class="si">{3}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">_get_record_origin</span><span class="p">(</span><span class="n">rec</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_get_record_origin_tooltip</span><span class="p">(</span><span class="n">rec</span><span class="p">):</span>
+
+    <span class="n">host</span><span class="p">,</span> <span class="n">procName</span><span class="p">,</span> <span class="n">procID</span><span class="p">,</span> <span class="n">threadName</span><span class="p">,</span> <span class="n">threadID</span> <span class="o">=</span> <span class="n">_get_record_origin</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
+    <span class="n">pathname</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">modulename</span><span class="p">,</span> <span class="n">funcname</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="n">_get_record_trace</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">created</span><span class="p">))</span>
+    <span class="n">bgcolor</span><span class="p">,</span> <span class="n">fgcolor</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">levelno</span><span class="p">))</span>
+    <span class="n">bgcolor</span> <span class="o">=</span> <span class="s2">&quot;#</span><span class="si">%02x%02x%02x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">bgcolor</span><span class="o">.</span><span class="n">red</span><span class="p">(),</span> <span class="n">bgcolor</span><span class="o">.</span><span class="n">green</span><span class="p">(),</span> <span class="n">bgcolor</span><span class="o">.</span><span class="n">blue</span><span class="p">())</span>
+    <span class="n">fgcolor</span> <span class="o">=</span> <span class="s2">&quot;#</span><span class="si">%02x%02x%02x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">fgcolor</span><span class="o">.</span><span class="n">red</span><span class="p">(),</span> <span class="n">fgcolor</span><span class="o">.</span><span class="n">green</span><span class="p">(),</span> <span class="n">fgcolor</span><span class="o">.</span><span class="n">blue</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="s2">&quot;&quot;&quot;&lt;html&gt;&lt;font face=&quot;monospace&quot; size=&quot;1&quot;&gt;</span>
+<span class="s2">&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;</span>
+<span class="s2">&lt;tr&gt;&lt;td&gt;Level:&lt;/td&gt;&lt;td&gt;&lt;font color=&quot;</span><span class="si">{level_bgcolor}</span><span class="s2">&quot;&gt;</span><span class="si">{level}</span><span class="s2">&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;</span><span class="si">{timestamp}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;tr&gt;&lt;td&gt;Message:&lt;/td&gt;&lt;td&gt;</span><span class="si">{message}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;tr&gt;&lt;td&gt;By:&lt;/td&gt;&lt;td&gt;</span><span class="si">{name}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;tr&gt;&lt;td&gt;Host:&lt;/td&gt;&lt;td&gt;</span><span class="si">{host}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;tr&gt;&lt;td&gt;Process:&lt;/td&gt;&lt;td&gt;</span><span class="si">{procname}</span><span class="s2">(</span><span class="si">{procID}</span><span class="s2">)&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;tr&gt;&lt;td&gt;Thread:&lt;/td&gt;&lt;td&gt;</span><span class="si">{threadname}</span><span class="s2">(</span><span class="si">{threadID}</span><span class="s2">)&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;tr&gt;&lt;td&gt;From:&lt;/td&gt;&lt;td&gt;File pathname(</span><span class="si">{filename}</span><span class="s2">), line </span><span class="si">{lineno}</span><span class="s2">, in </span><span class="si">{funcname}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;/table&gt;&lt;/font&gt;&lt;/html&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">rec</span><span class="o">.</span><span class="n">levelname</span><span class="p">,</span> <span class="n">level_fgcolor</span><span class="o">=</span><span class="n">fgcolor</span><span class="p">,</span> <span class="n">level_bgcolor</span><span class="o">=</span><span class="n">bgcolor</span><span class="p">,</span>
+           <span class="n">timestamp</span><span class="o">=</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">rec</span><span class="o">.</span><span class="n">getMessage</span><span class="p">(),</span>
+           <span class="n">name</span><span class="o">=</span><span class="n">rec</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">procname</span><span class="o">=</span><span class="n">procName</span><span class="p">,</span> <span class="n">procID</span><span class="o">=</span><span class="n">procID</span><span class="p">,</span>
+           <span class="n">threadname</span><span class="o">=</span><span class="n">threadName</span><span class="p">,</span> <span class="n">threadID</span><span class="o">=</span><span class="n">threadID</span><span class="p">,</span>
+           <span class="n">pathname</span><span class="o">=</span><span class="n">pathname</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">funcname</span><span class="o">=</span><span class="n">funcname</span><span class="p">,</span>
+           <span class="n">lineno</span><span class="o">=</span><span class="n">lineno</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="QLoggingTableModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel">[docs]</a><span class="k">class</span> <span class="nc">QLoggingTableModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+
+    <span class="n">DftFont</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Mono&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">DftColSize</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> \
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">500000</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mf">0.25</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span> <span class="o">=</span> <span class="n">capacity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accumulated_records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">addRootLogHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startTimer</span><span class="p">(</span><span class="n">freq</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+
+    <span class="c1"># ---------------------------------</span>
+    <span class="c1"># Qt.QAbstractTableModel overwrite</span>
+    <span class="c1"># ---------------------------------</span>
+
+<div class="viewcode-block" id="QLoggingTableModel.sort"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.sort">[docs]</a>    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AscendingOrder</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">levelno</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">levelno</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">TIME</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">created</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">created</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">MSG</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">msg</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">NAME</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">ORIGIN</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">_origin_cmp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_records</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">,</span> <span class="nb">cmp</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+                               <span class="n">reverse</span><span class="o">=</span><span class="n">order</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DescendingOrder</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.rowCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.rowCount">[docs]</a>    <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.columnCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.columnCount">[docs]</a>    <span class="k">def</span> <span class="nf">columnCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">HORIZ_HEADER</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.getRecord"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.getRecord">[docs]</a>    <span class="k">def</span> <span class="nf">getRecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRecord</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">TIME</span><span class="p">:</span>
+                <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">created</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
+                <span class="c1"># return Qt.QVariant(dt.strftime(&quot;%Y-%m-%d %H:%m:%S.%f&quot;))</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">MSG</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">NAME</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">ORIGIN</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">_get_record_origin_str</span><span class="p">(</span><span class="n">record</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextAlignmentRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">(</span><span class="n">LEVEL</span><span class="p">,</span> <span class="n">MSG</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BackgroundRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ForegroundRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">_get_record_origin_tooltip</span><span class="p">(</span><span class="n">record</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SizeHintRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getSizeHint</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+        <span class="c1"># elif role == Qt.Qt.StatusTipRole:</span>
+        <span class="c1"># elif role == Qt.Qt.CheckStateRole:</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DftFont</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_getSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">QLoggingTableModel</span><span class="o">.</span><span class="n">DftColSize</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+
+<div class="viewcode-block" id="QLoggingTableModel.headerData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.headerData">[docs]</a>    <span class="k">def</span> <span class="nf">headerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextAlignmentRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SizeHintRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Vertical</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getSizeHint</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Mono&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">section</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;log level&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="n">TIME</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;log time stamp&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="n">MSG</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;log message&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="n">NAME</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;object who recorded the log&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="n">ORIGIN</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;the host, process and thread where the &quot;</span>
+                                   <span class="s2">&quot;log was executed from&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">!=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">HORIZ_HEADER</span><span class="p">[</span><span class="n">section</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">section</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.insertRows"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.insertRows">[docs]</a>    <span class="k">def</span> <span class="nf">insertRows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginInsertRows</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">(),</span> <span class="n">position</span><span class="p">,</span> <span class="n">position</span> <span class="o">+</span> <span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endInsertRows</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.removeRows"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.removeRows">[docs]</a>    <span class="k">def</span> <span class="nf">removeRows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginRemoveRows</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">(),</span> <span class="n">position</span><span class="p">,</span> <span class="n">position</span> <span class="o">+</span> <span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endRemoveRows</span><span class="p">()</span></div>
+
+    <span class="c1"># def setData(self, index, value, role=Qt.Qt.DisplayRole):</span>
+    <span class="c1">#    pass</span>
+
+    <span class="c1"># def flags(self, index)</span>
+    <span class="c1">#    pass</span>
+
+    <span class="c1"># def insertColumns(self):</span>
+    <span class="c1">#    pass</span>
+
+    <span class="c1"># def removeColumns(self):</span>
+    <span class="c1">#    pass</span>
+
+    <span class="c1"># --------------------------</span>
+    <span class="c1"># logging.Handler overwrite</span>
+    <span class="c1"># --------------------------</span>
+
+<div class="viewcode-block" id="QLoggingTableModel.timerEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.timerEvent">[docs]</a>    <span class="k">def</span> <span class="nf">timerEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePendingRecords</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.updatePendingRecords"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.updatePendingRecords">[docs]</a>    <span class="k">def</span> <span class="nf">updatePendingRecords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accumulated_records</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">row_nb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accumulated_records</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accumulated_records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insertRows</span><span class="p">(</span><span class="n">row_nb</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_records</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">removeRows</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.emit"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.emit">[docs]</a>    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accumulated_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.flush"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="QLoggingTableModel.close"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">[:]</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">_LogRecordStreamHandler</span><span class="p">(</span><span class="n">LogRecordStreamHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">handleLogRecord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="QRemoteLoggingTableModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QRemoteLoggingTableModel.html#taurus.qt.qtgui.table.QRemoteLoggingTableModel">[docs]</a><span class="k">class</span> <span class="nc">QRemoteLoggingTableModel</span><span class="p">(</span><span class="n">QLoggingTableModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A remote Qt table that displays the taurus logging messages&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QRemoteLoggingTableModel.connect_logging"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QRemoteLoggingTableModel.html#taurus.qt.qtgui.table.QRemoteLoggingTableModel.connect_logging">[docs]</a>    <span class="k">def</span> <span class="nf">connect_logging</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+                        <span class="n">port</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">,</span>
+                        <span class="n">handler</span><span class="o">=</span><span class="n">_LogRecordStreamHandler</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_receiver</span> <span class="o">=</span> <span class="n">LogRecordSocketReceiver</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span>
+                                                    <span class="n">handler</span><span class="o">=</span><span class="n">handler</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_receiver</span><span class="o">.</span><span class="n">serve_until_stopped</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QRemoteLoggingTableModel.disconnect_logging"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QRemoteLoggingTableModel.html#taurus.qt.qtgui.table.QRemoteLoggingTableModel.disconnect_logging">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect_logging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;log_receiver&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_receiver</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_receiver</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_receiver</span></div></div>
+
+
+<div class="viewcode-block" id="QLoggingTable"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTable.html#taurus.qt.qtgui.table.QLoggingTable">[docs]</a><span class="k">class</span> <span class="nc">QLoggingTable</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Qt table that displays the taurus logging messages&quot;&quot;&quot;</span>
+
+    <span class="n">scrollLock</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="QLoggingTable.rowsInserted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTable.html#taurus.qt.qtgui.table.QLoggingTable.rowsInserted">[docs]</a>    <span class="k">def</span> <span class="nf">rowsInserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overwrite of slot rows inserted to do proper resize and scroll to</span>
+<span class="sd">        bottom if desired&quot;&quot;&quot;</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="o">.</span><span class="n">rowsInserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resizeRowToContents</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resizeColumnsToContents</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">scrollLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scrollToBottom</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QLoggingTable.setScrollLock"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTable.html#taurus.qt.qtgui.table.QLoggingTable.setScrollLock">[docs]</a>    <span class="k">def</span> <span class="nf">setScrollLock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scrollLock</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the state for scrollLock&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollLock</span> <span class="o">=</span> <span class="n">scrollLock</span></div>
+
+<div class="viewcode-block" id="QLoggingTable.getScrollLock"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTable.html#taurus.qt.qtgui.table.QLoggingTable.getScrollLock">[docs]</a>    <span class="k">def</span> <span class="nf">getScrollLock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns wheater or not the scrollLock is active&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scrollLock</span></div>
+
+<div class="viewcode-block" id="QLoggingTable.resetScrollLock"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTable.html#taurus.qt.qtgui.table.QLoggingTable.resetScrollLock">[docs]</a>    <span class="k">def</span> <span class="nf">resetScrollLock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setScrollLock</span><span class="p">(</span><span class="n">QLoggingTable</span><span class="o">.</span><span class="n">ScrollLock</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">LoggingToolBar</span><span class="p">(</span><span class="n">FilterToolBar</span><span class="p">):</span>
+
+    <span class="n">scrollLockToggled</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">FilterToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span>
+                               <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getFilterLineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Quick filter by log name&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logLevelComboBox</span> <span class="o">=</span> <span class="n">logLevelComboBox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="n">levels</span> <span class="o">=</span> <span class="s2">&quot;Trace&quot;</span><span class="p">,</span> <span class="s2">&quot;Debug&quot;</span><span class="p">,</span> <span class="s2">&quot;Info&quot;</span><span class="p">,</span> <span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Critical&quot;</span>
+        <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">levels</span><span class="p">:</span>
+            <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span>
+                <span class="n">level</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">taurus</span><span class="p">,</span> <span class="n">level</span><span class="p">)))</span>
+        <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onLogLevelChanged</span><span class="p">)</span>
+        <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Filter by log level&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filterLevelAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">logLevelComboBox</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+
+        <span class="n">af</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scrollLockAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Refresh&quot;</span><span class="p">,</span>
+                                                 <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                                                     <span class="s2">&quot;system-lock-screen&quot;</span><span class="p">),</span>
+                                                 <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Scroll lock&quot;</span><span class="p">,</span>
+                                                 <span class="n">toggled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onToggleScrollLock</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scrollLockAction</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onToggleScrollLock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yesno</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollLockToggled</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">yesno</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onLogLevelChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">onFilterChanged</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">getLogLevelComboBox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logLevelComboBox</span>
+
+    <span class="k">def</span> <span class="nf">getLogLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLogLevelComboBox</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">setLogLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLogLevelComboBox</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">level</span><span class="p">:</span>
+                <span class="n">combo</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">QLoggingFilterProxyModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A filter by log record object name&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logLevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Trace</span>
+
+        <span class="c1"># filter configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFilterCaseSensitivity</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CaseInsensitive</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFilterKeyColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFilterRole</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
+
+        <span class="c1"># sort configuration</span>
+        <span class="c1"># self.setSortCaseSensitivity(Qt.Qt.CaseInsensitive)</span>
+        <span class="c1"># self.setSortRole(Qt.Qt.DisplayRole)</span>
+
+        <span class="c1"># general configuration</span>
+
+    <span class="k">def</span> <span class="nf">setFilterLogLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logLevel</span> <span class="o">=</span> <span class="n">level</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">(),</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">filterAcceptsRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sourceRow</span><span class="p">,</span> <span class="n">sourceParent</span><span class="p">):</span>
+        <span class="n">sourceModel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">sourceModel</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sourceRow</span><span class="p">,</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">sourceParent</span><span class="p">)</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRecord</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">levelno</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logLevel</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sourceModel</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+        <span class="n">regexp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterRegExp</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="n">_W</span> <span class="o">=</span> <span class="s2">&quot;Warning: Switching log perspective will erase previous log messages &quot;</span> \
+     <span class="s2">&quot;from current perspective!&quot;</span>
+
+
+<div class="viewcode-block" id="QLoggingWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget">[docs]</a><span class="k">class</span> <span class="nc">QLoggingWidget</span><span class="p">(</span><span class="n">QBaseTableWidget</span><span class="p">):</span>
+
+    <span class="n">KnownPerspectives</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Standard&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Local&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;computer&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;Local logging.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">_W</span><span class="p">,</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">QLoggingFilterProxyModel</span><span class="p">,</span> <span class="n">QLoggingTableModel</span><span class="p">,</span> <span class="p">],</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;Remote&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Remote&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;network-server&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;Monitor remote logs.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">_W</span><span class="p">,</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">QLoggingFilterProxyModel</span><span class="p">,</span> <span class="n">QRemoteLoggingTableModel</span><span class="p">,</span> <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="n">DftPerspective</span> <span class="o">=</span> <span class="s1">&#39;Standard&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">with_filter_widget</span><span class="o">=</span><span class="n">LoggingToolBar</span><span class="p">,</span>
+                 <span class="n">with_selection_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_refresh_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">perspective</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">QBaseTableWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">,</span>
+                                  <span class="n">with_filter_widget</span><span class="o">=</span><span class="n">with_filter_widget</span><span class="p">,</span>
+                                  <span class="n">with_selection_widget</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_refresh_widget</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                  <span class="n">perspective</span><span class="o">=</span><span class="n">perspective</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QLoggingWidget.createViewWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget.createViewWidget">[docs]</a>    <span class="k">def</span> <span class="nf">createViewWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">klass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="n">QLoggingTable</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="n">QBaseTableWidget</span><span class="o">.</span><span class="n">createViewWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="n">klass</span><span class="p">)</span>
+        <span class="n">hh</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">setShowGrid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">sortByColumn</span><span class="p">(</span><span class="n">TIME</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AscendingOrder</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">view</span></div>
+
+<div class="viewcode-block" id="QLoggingWidget.createToolArea"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget.createToolArea">[docs]</a>    <span class="k">def</span> <span class="nf">createToolArea</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tb</span> <span class="o">=</span> <span class="n">QBaseTableWidget</span><span class="o">.</span><span class="n">createToolArea</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">filterBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFilterBar</span><span class="p">()</span>
+        <span class="n">filterBar</span><span class="o">.</span><span class="n">scrollLockToggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onScrollLockToggled</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tb</span></div>
+
+<div class="viewcode-block" id="QLoggingWidget.onScrollLockToggled"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget.onScrollLockToggled">[docs]</a>    <span class="k">def</span> <span class="nf">onScrollLockToggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yesno</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span><span class="o">.</span><span class="n">setScrollLock</span><span class="p">(</span><span class="n">yesno</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLoggingWidget.onFilterChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget.onFilterChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onFilterChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">usesProxyQModel</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">proxy_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFilterBar</span><span class="p">()</span><span class="o">.</span><span class="n">getLogLevel</span><span class="p">()</span>
+        <span class="n">proxy_model</span><span class="o">.</span><span class="n">setFilterLogLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">QBaseTableWidget</span><span class="o">.</span><span class="n">onFilterChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLoggingWidget.onSwitchPerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget.onSwitchPerspective">[docs]</a>    <span class="k">def</span> <span class="nf">onSwitchPerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_logging</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">perspective</span> <span class="o">==</span> <span class="s2">&quot;Remote&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;hostName&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">):</span>
+                <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostName</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">isValid</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">dft</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">(),</span>
+                                 <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">)</span>
+                <span class="k">while</span> <span class="ow">not</span> <span class="n">isValid</span><span class="p">:</span>
+                    <span class="n">txt</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                                       <span class="s2">&quot;Please input remote logging host and port&quot;</span><span class="p">,</span>
+                                                       <span class="s2">&quot;Location (&lt;host&gt;:&lt;port&gt;):&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">dft</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="p">:</span>
+                        <span class="k">return</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+                        <span class="n">isValid</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Invalid name&quot;</span><span class="p">,</span>
+                                                   <span class="s2">&quot;Please type a valid &lt;host&gt;:&lt;port&gt;&quot;</span><span class="p">)</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">QBaseTableWidget</span><span class="o">.</span><span class="n">onSwitchPerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">)</span>
+            <span class="n">qmodel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span>
+            <span class="n">qmodel</span><span class="o">.</span><span class="n">connect_logging</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">QBaseTableWidget</span><span class="o">.</span><span class="n">onSwitchPerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="QLoggingWidget.destroy"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destroyWindow</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">destroySubWindows</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_logging</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">QBaseTableWidget</span><span class="o">.</span><span class="n">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destroyWindow</span><span class="p">,</span> <span class="n">destroySubWindows</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLoggingWidget.stop_logging"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget.stop_logging">[docs]</a>    <span class="k">def</span> <span class="nf">stop_logging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getBaseQModel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;disconnect_logging&#39;</span><span class="p">):</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">disconnect_logging</span><span class="p">()</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="QLoggingWidget.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingWidget.html#taurus.qt.qtgui.table.QLoggingWidget.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.table&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Views&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s1">&#39;designer:table.png&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">fill_log</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">import</span> <span class="nn">random</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">taurus</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello world </span><span class="si">%04d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">loggers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Object</span><span class="si">%02d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">loggers</span><span class="p">))</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">Trace</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Critical</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="s2">&quot;log message </span><span class="si">%04d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+    <span class="n">Application</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Logging demo&quot;</span><span class="p">,</span> <span class="n">app_version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                          <span class="n">org_domain</span><span class="o">=</span><span class="s2">&quot;Taurus&quot;</span><span class="p">,</span> <span class="n">org_name</span><span class="o">=</span><span class="s2">&quot;Taurus community&quot;</span><span class="p">)</span>
+
+    <span class="n">taurus</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">Trace</span><span class="p">)</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">disableLogOutput</span><span class="p">()</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">QLoggingWidget</span><span class="p">()</span>
+
+    <span class="n">taurus</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;trace message&quot;</span><span class="p">)</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;debug message&quot;</span><span class="p">)</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Warning message&quot;</span><span class="p">)</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;error message&quot;</span><span class="p">)</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;critical message&quot;</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="mi">1200</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">stop_logging</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,1314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.container.taurusmainwindow &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.container.taurusmainwindow</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.container.taurusmainwindow</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">mainwindow.py: a main window implementation with many added features by default</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusMainWindow&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurusbasecontainer</span> <span class="k">import</span> <span class="n">TaurusBaseContainer</span>
+
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ExternalAppAction</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.dialog</span> <span class="k">import</span> <span class="n">protectTaurusMessageBox</span>
+
+
+<span class="k">class</span> <span class="nc">CommandArgsLineEdit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; An specialized QLineEdit that can transform its text from/to command argument lists&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extapp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_extapp</span> <span class="o">=</span> <span class="n">extapp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">textEdited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setCmdText</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setCmdText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">)):</span>
+            <span class="n">cmdargs</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_extapp</span><span class="o">.</span><span class="n">setCmdArgs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getCmdArgs</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getCmdArgs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">shlex</span>
+        <span class="k">return</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span>
+
+
+<span class="k">class</span> <span class="nc">ConfigurationDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">,</span> <span class="n">BaseConfigurableClass</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; A Configuration Dialog&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">BaseConfigurableClass</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tabwidget</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTabWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setModal</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsPage</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tabwidget</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">addExternalAppConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extapp</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Creates an entry in the &quot;External Apps&quot; tab of the configuration dialog</span>
+
+<span class="sd">        :param extapp: (ExternalAppAction) the external application that is to</span>
+<span class="sd">                       be included in the configuration menu.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsPage</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsPage</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QScrollArea</span><span class="p">()</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsPage</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsPage</span><span class="o">.</span><span class="n">setWidgetResizable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tabwidget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">externalAppsPage</span><span class="p">,</span>
+                                   <span class="s2">&quot;External Application Paths&quot;</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Command line for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">unicode</span><span class="p">(</span><span class="n">extapp</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">editWidget</span> <span class="o">=</span> <span class="n">CommandArgsLineEdit</span><span class="p">(</span><span class="n">extapp</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extapp</span><span class="o">.</span><span class="n">cmdArgs</span><span class="p">()))</span>
+        <span class="c1">#editWidget = Qt.QLineEdit(&quot; &quot;.join(extapp.cmdArgs()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsPage</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">editWidget</span><span class="p">)</span>
+        <span class="n">extapp</span><span class="o">.</span><span class="n">cmdArgsChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">editWidget</span><span class="o">.</span><span class="n">setCmdText</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">deleteExternalAppConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extapp</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Remove the given external application configuration from</span>
+<span class="sd">        the &quot;External Apps&quot; tab of the configuration dialog</span>
+
+<span class="sd">        :param extapp: (ExternalAppAction) the external application that is to</span>
+<span class="sd">                       be included in the configuration menu.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsPage</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">count</span><span class="p">())):</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>  <span class="c1"># command1</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+                    <span class="n">dialog_text</span> <span class="o">=</span> <span class="s2">&quot;Command line for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">unicode</span><span class="p">(</span>
+                        <span class="n">extapp</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="n">dialog_text</span><span class="p">:</span>
+                        <span class="n">layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+                        <span class="n">widget</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cmdargs</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extapp</span><span class="o">.</span><span class="n">cmdArgs</span><span class="p">())</span>
+                    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="n">cmdargs</span><span class="p">:</span>
+                        <span class="n">layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+                        <span class="n">widget</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; calls :meth:`Qt.QDialog.show` only if there is something to configure&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tabwidget</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Rpdb2Thread</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QThread</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">Rpdb2WaitDialog</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Rpdb2WaitDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Waitting for a debugger console to attach...&quot;</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Rpdb2 waitting...&quot;</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">parent</span><span class="o">.</span><span class="n">rpdb2Started</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onStarted</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onStarted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Rpdb2 running!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;A rpdb2 debugger was started successfully!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TaurusMainWindow"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow">[docs]</a><span class="k">class</span> <span class="nc">TaurusMainWindow</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">TaurusBaseContainer</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A Taurus-aware QMainWindow with several customizations:</span>
+
+<span class="sd">        - It takes care of (re)storing its geometry and state (see :meth:`loadSettings`)</span>
+<span class="sd">        - Supports perspectives (programmatic access and, optionally,</span>
+<span class="sd">          accessible by user), and allows defining a set of &quot;factory settings&quot;</span>
+<span class="sd">        - It provides a customizable splashScreen (optional)</span>
+<span class="sd">        - Supports spawning remote consoles and remote debugging</span>
+<span class="sd">        - Supports full-screen mode toggling</span>
+<span class="sd">        - Supports adding launchers to external applications</span>
+<span class="sd">        - It provides a statusBar with an optional heart-beat LED</span>
+<span class="sd">        - The following Menus are optionally provided and populated with basic actions:</span>
+<span class="sd">            - File  (accessible by derived classes  as `self.fileMenu`)</span>
+<span class="sd">            - View (accessible by derived classes  as `self.viewMenu`)</span>
+<span class="sd">            - Taurus (accessible by derived classes  as `self.taurusMenu`)</span>
+<span class="sd">            - Tools (accessible by derived classes  as `self.toolsMenu`)</span>
+<span class="sd">            - Help (accessible by derived classes  as `self.helpMenu`)</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">modelChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;const QString &amp;&#39;</span><span class="p">)</span>
+    <span class="n">perspectiveChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="c1"># customization options:</span>
+    <span class="c1"># blinking semi-period in ms. Set to None for not showing the Heart beat</span>
+    <span class="c1"># LED</span>
+    <span class="n">_heartbeat</span> <span class="o">=</span> <span class="mi">1500</span>
+    <span class="n">_showFileMenu</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_showViewMenu</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_showTaurusMenu</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_showToolsMenu</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_showHelpMenu</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># Allows the user to change/create/delete perspectives</span>
+    <span class="n">_supportUserPerspectives</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_showLogger</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_splashLogo</span> <span class="o">=</span> <span class="s2">&quot;:/TaurusSplash.png&quot;</span>  <span class="c1"># set to None for disabling splash screen</span>
+    <span class="n">_splashMessage</span> <span class="o">=</span> <span class="s2">&quot;Initializing Main window...&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">splash</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseContainer</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">splash</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">splash</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_splashLogo</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">splash</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">designMode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSplashScreen</span><span class="p">(</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_splashLogo</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_splashMessage</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__tangoHost</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__settings</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helpManualDW</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetHelpManualURI</span><span class="p">()</span>
+
+        <span class="c1"># Heartbeat</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_heartbeat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">QLed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">heartbeatLed</span> <span class="o">=</span> <span class="n">QLed</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">heartbeatLed</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span>
+                <span class="s1">&#39;Heartbeat: if it does not blink, the application is hung&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">addPermanentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heartbeatLed</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetHeartbeat</span><span class="p">()</span>
+
+        <span class="c1"># The configuration Dialog (which is launched with the</span>
+        <span class="c1"># configurationAction)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurationDialog</span> <span class="o">=</span> <span class="n">ConfigurationDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># create a few common Application-wide actions</span>
+        <span class="c1">#Qt.QTimer.singleShot(0, self.__createActions())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__createActions</span><span class="p">()</span>
+
+        <span class="c1"># logger dock widget</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showLogger</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addLoggerWidget</span><span class="p">()</span>
+
+        <span class="c1"># Create Menus</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showFileMenu</span><span class="p">:</span>  <span class="c1"># File menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">createFileMenu</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showViewMenu</span><span class="p">:</span>  <span class="c1"># View menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">createViewMenu</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showTaurusMenu</span><span class="p">:</span>  <span class="c1"># Taurus Menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">createTaurusMenu</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showToolsMenu</span><span class="p">:</span>  <span class="c1"># Tools Menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">createToolsMenu</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showHelpMenu</span><span class="p">:</span>  <span class="c1"># Help Menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">createHelpMenu</span><span class="p">()</span>
+
+        <span class="c1"># View Toolbar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="s2">&quot;View&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;viewToolBar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggleFullScreenAction</span><span class="p">)</span>
+
+        <span class="c1"># Perspectives Toolbar</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportUserPerspectives</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">createPerspectivesToolBar</span><span class="p">()</span>
+
+        <span class="c1"># disable the configuration action if there is nothing to configure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configurationDialog</span><span class="o">.</span><span class="n">_tabwidget</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+
+<div class="viewcode-block" id="TaurusMainWindow.addLoggerWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.addLoggerWidget">[docs]</a>    <span class="k">def</span> <span class="nf">addLoggerWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds a QLoggingWidget as a dockwidget of the main window (and hides it by default)&#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.table</span> <span class="k">import</span> <span class="n">QLoggingWidget</span>
+        <span class="n">loggingWidget</span> <span class="o">=</span> <span class="n">QLoggingWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__loggerDW</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">(</span><span class="s2">&quot;Taurus logs&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__loggerDW</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">loggingWidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__loggerDW</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;loggerDW&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addDockWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__loggerDW</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hidden</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__loggerDW</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.createFileMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.createFileMenu">[docs]</a>    <span class="k">def</span> <span class="nf">createFileMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds a &quot;File&quot; Menu&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fileMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;File&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportUserPerspectives</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fileMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFileAction</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fileMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFileAction</span><span class="p">)</span>
+            <span class="c1"># self.fileMenu.addAction(self.resetSettingsAction)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fileMenu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fileMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quitApplicationAction</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.createViewMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.createViewMenu">[docs]</a>    <span class="k">def</span> <span class="nf">createViewMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds a &quot;View&quot; Menu&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;View&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showLogger</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__loggerDW</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;Tool Bars&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggleFullScreenAction</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportUserPerspectives</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="s2">&quot;Load Perspectives&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">savePerspectiveAction</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deletePerspectiveAction</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.createTaurusMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.createTaurusMenu">[docs]</a>    <span class="k">def</span> <span class="nf">createTaurusMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds a &quot;Taurus&quot; Menu&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;Taurus&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changeTangoHostAction</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.createToolsMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.createToolsMenu">[docs]</a>    <span class="k">def</span> <span class="nf">createToolsMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds a &quot;Tools&quot; Menu&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolsMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;Tools&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolsMenu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;External Applications&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.createHelpMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.createHelpMenu">[docs]</a>    <span class="k">def</span> <span class="nf">createHelpMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds a &quot;Help&quot; Menu&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helpMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;Help&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helpMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;About ...&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">showHelpAbout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helpMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;help-browser&quot;</span><span class="p">),</span> <span class="s2">&quot;Manual&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">onShowManual</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.createPerspectivesToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.createPerspectivesToolBar">[docs]</a>    <span class="k">def</span> <span class="nf">createPerspectivesToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds a Perspectives ToolBar&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesToolBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="s2">&quot;Perspectives&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesToolBar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;perspectivesToolBar&quot;</span><span class="p">)</span>
+        <span class="n">pbutton</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
+        <span class="c1"># it may have been created earlier (for the view menu)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;perspectivesMenu&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="s2">&quot;Load Perspectives&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;document-open&quot;</span><span class="p">))</span>
+        <span class="n">pbutton</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Load Perspectives&quot;</span><span class="p">)</span>
+        <span class="n">pbutton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Load Perspectives&quot;</span><span class="p">)</span>
+        <span class="n">pbutton</span><span class="o">.</span><span class="n">setPopupMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="o">.</span><span class="n">InstantPopup</span><span class="p">)</span>
+        <span class="n">pbutton</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesToolBar</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">pbutton</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesToolBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">savePerspectiveAction</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showViewMenu</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesToolBar</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.updatePerspectivesMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.updatePerspectivesMenu">[docs]</a>    <span class="k">def</span> <span class="nf">updatePerspectivesMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;re-checks the perspectives available to update self.perspectivesMenu</span>
+
+<span class="sd">        .. note:: This method may need be called by derived classes at the end</span>
+<span class="sd">                  of their initialization.</span>
+
+<span class="sd">        :return: (QMenu) the updated perspectives menu (or None if self._supportUserPerspectives is False)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportUserPerspectives</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">pname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPerspectivesList</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
+                <span class="n">pname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__onPerspectiveSelected</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span></div>
+
+    <span class="k">def</span> <span class="nf">__onPerspectiveSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot to be called by the actions in the perspectivesMenu&#39;&#39;&#39;</span>
+        <span class="n">pname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadPerspective</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pname</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusMainWindow.splashScreen"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.splashScreen">[docs]</a>    <span class="k">def</span> <span class="nf">splashScreen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns a the splashScreen</span>
+
+<span class="sd">        :return: (QSplashScreen)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.basicTaurusToolbar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.basicTaurusToolbar">[docs]</a>    <span class="k">def</span> <span class="nf">basicTaurusToolbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns a QToolBar with few basic buttons (most important, the logo)</span>
+
+<span class="sd">        :return: (QToolBar)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">tb</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolBar</span><span class="p">(</span><span class="s1">&#39;Taurus Toolbar&#39;</span><span class="p">)</span>
+        <span class="n">tb</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s1">&#39;Taurus Toolbar&#39;</span><span class="p">)</span>
+<span class="c1">#        tb.addAction(self.changeTangoHostAction)</span>
+<span class="c1">#        tb.addWidget(self.taurusLogo)</span>
+        <span class="n">logo</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;ORGANIZATION_LOGO&#39;</span><span class="p">,</span>
+                       <span class="s2">&quot;logos:taurus.png&quot;</span><span class="p">)</span>
+        <span class="n">tb</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">logo</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">organizationName</span><span class="p">())</span>
+        <span class="n">tb</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">tb</span></div>
+
+    <span class="k">def</span> <span class="nf">__createActions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;initializes the application-wide actions&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quitApplicationAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;process-stop&quot;</span><span class="p">),</span> <span class="s1">&#39;Exit Application&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quitApplicationAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeTangoHostAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;network-server&quot;</span><span class="p">),</span> <span class="s1">&#39;Change Tango Host ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeTangoHostAction</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span><span class="s2">&quot;Ctrl+P&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeTangoHostAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onChangeTangoHostAction</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadPerspectiveAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;document-open&quot;</span><span class="p">),</span> <span class="s1">&#39;Load Perspective ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadPerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loadPerspective</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">savePerspectiveAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;document-save&quot;</span><span class="p">),</span> <span class="s1">&#39;Save Perspective ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">savePerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">savePerspective</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">deletePerspectiveAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;actions:edit-delete.svg&quot;</span><span class="p">),</span> <span class="s1">&#39;Delete Perspective ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deletePerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removePerspective</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFileAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;document-save&quot;</span><span class="p">),</span> <span class="s1">&#39;Export Settings ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFileAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFile</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFileAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;document-open&quot;</span><span class="p">),</span> <span class="s1">&#39;Import Settings ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFileAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFile</span><span class="p">)</span>
+
+        <span class="c1">#self.resetSettingsAction = Qt.QAction(Qt.QIcon.fromTheme(&quot;edit-undo&quot;),&#39;Reset Settings&#39;, self)</span>
+        <span class="c1">#self.connect(self.resetSettingsAction, Qt.SIGNAL(&quot;triggered()&quot;), self.resetSettings)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;preferences-system&quot;</span><span class="p">),</span> <span class="s1">&#39;Configurations ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configurationDialog</span><span class="o">.</span><span class="n">show</span><span class="p">)</span>
+
+        <span class="c1">#self.rpdb2Action = Qt.QAction(&quot;Spawn rpdb2&quot;, self)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRpdb2Shortcut</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRpdb2Shortcut</span><span class="o">.</span><span class="n">setKey</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_F9</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRpdb2Shortcut</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onSpawnRpdb2</span><span class="p">)</span>
+
+        <span class="c1">#self.rpdb2Action = Qt.QAction(&quot;Spawn rpdb2&quot;, self)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRpdb2Shortcut</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">rpdb2key</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CTRL</span> <span class="o">+</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ALT</span> <span class="o">+</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRpdb2Shortcut</span><span class="o">.</span><span class="n">setKey</span><span class="p">(</span><span class="n">rpdb2key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRpdb2Shortcut</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onSpawnRpdb2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRConsoleShortcut</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">rconsolekey</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CTRL</span> <span class="o">+</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ALT</span> <span class="o">+</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRConsoleShortcut</span><span class="o">.</span><span class="n">setKey</span><span class="p">(</span><span class="n">rconsolekey</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spawnRConsoleShortcut</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onSpawnRConsole</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggleFullScreenAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;actions:view-fullscreen.svg&quot;</span><span class="p">),</span> <span class="s1">&#39;Show FullScreen&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggleFullScreenAction</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggleFullScreenAction</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onToggleFullScreen</span><span class="p">)</span>
+
+        <span class="c1"># In Qt &lt;= 4.4 setting the QAction shortcut at the application level</span>
+        <span class="c1"># doesn&#39;t work when trying to get out of fullscreen so we create a</span>
+        <span class="c1"># QShortcut manually to solve the problem.</span>
+        <span class="c1"># self.toggleFullScreenAction.setShortcut(Qt.QKeySequence(Qt.Qt.Key_F11))</span>
+        <span class="c1"># self.toggleFullScreenAction.setShortcutContext(Qt.Qt.ApplicationShortcut)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fullScreenShortcut</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fullScreenShortcut</span><span class="o">.</span><span class="n">setKey</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_F11</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fullScreenShortcut</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onToggleFullScreen</span><span class="p">)</span>
+
+    <span class="nd">@protectTaurusMessageBox</span>
+    <span class="k">def</span> <span class="nf">_onSpawnRpdb2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">rpdb2</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Rpdb2 not installed&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;Cannot spawn debugger: Rpdb2 is not &quot;</span>
+                                   <span class="s2">&quot;installed on your system.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_rpdb2&quot;</span><span class="p">):</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Rpdb2 running&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;A rpdb2 debugger is already started&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">pwd</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Rpdb2 password&quot;</span><span class="p">,</span> <span class="s2">&quot;Password:&quot;</span><span class="p">,</span>
+                                          <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="n">Password</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Rpdb2 freeze&quot;</span><span class="p">,</span>
+                               <span class="s2">&quot;The application will freeze until a &quot;</span>
+                               <span class="s2">&quot;debugger attaches.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rpdb2</span> <span class="o">=</span> <span class="n">rpdb2</span><span class="o">.</span><span class="n">start_embedded_debugger</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">pwd</span><span class="p">))</span>
+
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Rpdb2 running&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;rpdb2 debugger started successfully!&quot;</span><span class="p">)</span>
+
+    <span class="nd">@protectTaurusMessageBox</span>
+    <span class="k">def</span> <span class="nf">_onSpawnRConsole</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">rfoo.utils.rconsole</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;rfoo not installed&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;Cannot spawn debugger: rfoo is not &quot;</span>
+                                   <span class="s2">&quot;installed on your system.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_rconsole_port&quot;</span><span class="p">):</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;rconsole running&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;A rconsole is already running on &quot;</span>
+                                       <span class="s2">&quot;port </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rconsole_port</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">port</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getInteger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;rconsole port&quot;</span><span class="p">,</span> <span class="s2">&quot;Port:&quot;</span><span class="p">,</span>
+                                              <span class="n">rfoo</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">rconsole</span><span class="o">.</span><span class="n">PORT</span><span class="p">,</span>
+                                              <span class="mi">0</span><span class="p">,</span> <span class="mi">65535</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">rfoo</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">rconsole</span><span class="o">.</span><span class="n">spawn_server</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rconsole_port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Rpdb2 running&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;&lt;html&gt;rconsole started successfully!&lt;br&gt;&quot;</span>
+                                   <span class="s2">&quot;Type:&lt;p&gt;&quot;</span>
+                                   <span class="s2">&quot;&lt;b&gt;rconsole -p </span><span class="si">%d</span><span class="s2">&lt;/b&gt;&lt;/p&gt;&quot;</span>
+                                   <span class="s2">&quot;to connect to it&quot;</span> <span class="o">%</span> <span class="n">port</span><span class="p">)</span>
+
+    <span class="c1"># I put the yesno=None keyword arg so it may be called by both toggled(bool)</span>
+    <span class="c1"># activated() Qt signals. There is no problem as long as we don&#39;t use the</span>
+    <span class="c1"># parameter internally in the method</span>
+    <span class="k">def</span> <span class="nf">_onToggleFullScreen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yesno</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isFullScreen</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showNormal</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_toggleToolBarsAndMenu</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_toggleToolBarsAndMenu</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showFullScreen</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_toggleToolBarsAndMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visible</span><span class="p">,</span> <span class="n">toolBarAreas</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TopToolBarArea</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">toolbar</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChildren</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QToolBar</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toolBarArea</span><span class="p">(</span><span class="n">toolbar</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">toolBarAreas</span><span class="p">):</span>
+                <span class="n">toolbar</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">visible</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusMainWindow.setQSettings"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.setQSettings">[docs]</a>    <span class="k">def</span> <span class="nf">setQSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets the main window settings object</span>
+
+<span class="sd">        :param settings: (QSettings or None)</span>
+
+<span class="sd">        .. seealso:: :meth:`getQSettings`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__settings</span> <span class="o">=</span> <span class="n">settings</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.resetQSettings"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.resetQSettings">[docs]</a>    <span class="k">def</span> <span class="nf">resetQSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;equivalent to setQSettings(None) &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setQSettings</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.getQSettings"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.getQSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getQSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the main window settings object.</span>
+<span class="sd">        If it was not previously set, it will create a new QSettings object</span>
+<span class="sd">        following the Taurus convention i.e., it using Ini format and userScope)</span>
+
+<span class="sd">        :return: (QSettings) the main window QSettings object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">newQSettings</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__settings</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.newQSettings"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.newQSettings">[docs]</a>    <span class="k">def</span> <span class="nf">newQSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns a settings taurus-specific QSettings object.</span>
+<span class="sd">        The returned QSettings object will comply with the Taurus defaults for</span>
+<span class="sd">        storing application settings (i.e., it uses Ini format and userScope)</span>
+
+<span class="sd">        :return: (QSettings) a taurus-specific QSettings object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># using the ALBA-Controls Coding Convention on how to store application</span>
+        <span class="c1"># settings</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="o">.</span><span class="n">IniFormat</span>
+        <span class="n">scope</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="o">.</span><span class="n">UserScope</span>
+        <span class="n">appname</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">applicationName</span><span class="p">()</span>
+        <span class="n">orgname</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">organizationName</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">orgname</span><span class="p">,</span> <span class="n">appname</span><span class="p">)</span></div>
+        <span class="c1"># Note: for Qt v&gt;=4.4, the five previous lines could have been substituted by the following two:</span>
+        <span class="c1"># self.__settings = Qt.QSettings() #this uses QCoreApplication.applicationName() and QCoreApplication.organizationName()</span>
+        <span class="c1"># self.__settings.setDefaultFormat(Qt.QSettings.IniFormat)</span>
+
+<div class="viewcode-block" id="TaurusMainWindow.getFactorySettingsFileName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.getFactorySettingsFileName">[docs]</a>    <span class="k">def</span> <span class="nf">getFactorySettingsFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the file name of the &quot;factory settings&quot; (the ini file with default settings).</span>
+<span class="sd">        The default implementation returns &quot;&lt;path&gt;/&lt;appname&gt;.ini&quot;, where &lt;path&gt;</span>
+<span class="sd">        is the path of the module where the main window class is defined and</span>
+<span class="sd">        &lt;appname&gt; is the application name (as obtained from QApplication).</span>
+
+<span class="sd">        :return: (str) the absolute file name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">root</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span><span class="o">.</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="n">basename</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.ini&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">applicationName</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.loadSettings"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.loadSettings">[docs]</a>    <span class="k">def</span> <span class="nf">loadSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignoreGeometry</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factorySettingsFileName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;restores the application settings previously saved with :meth:`saveSettings`.</span>
+
+<span class="sd">        .. note:: This method should be called explicitly from derived classes after all</span>
+<span class="sd">                  initialization is done</span>
+
+<span class="sd">        :param settings: (QSettings or None) a QSettings object. If None given,</span>
+<span class="sd">                         the default one returned by :meth:`getQSettings` will</span>
+<span class="sd">                         be used</span>
+<span class="sd">        :param group: (str) a prefix that will be added to the keys to be</span>
+<span class="sd">                       loaded (no prefix by default)</span>
+<span class="sd">        :param ignoreGeometry: (bool) if True, the geometry of the MainWindow</span>
+<span class="sd">                               won&#39;t be restored</span>
+<span class="sd">        :param factorySettingsFileName: (str) file name of a ini file containing the default</span>
+<span class="sd">                                        settings to be used as a fallback in</span>
+<span class="sd">                                        case the settings file is not found</span>
+<span class="sd">                                        (e.g., the first time the application is</span>
+<span class="sd">                                        launched after installation)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQSettings</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">allKeys</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">fname</span> <span class="o">=</span> <span class="n">factorySettingsFileName</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFactorySettingsFileName</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Importing factory settings from &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ignoreGeometry</span><span class="p">:</span>
+            <span class="c1"># With API2, from_qvariant is returning None instead</span>
+            <span class="n">ba</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span>
+                <span class="s2">&quot;MainWindow/Geometry&quot;</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
+            <span class="c1"># of an empty QByTeArray</span>
+            <span class="c1"># and this caused an exception later on. Hence the &quot;or&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
+        <span class="c1"># restore the Taurus config</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ba</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span>
+                <span class="s2">&quot;TaurusConfig&quot;</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">applyQConfig</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Problem loading configuration from &quot;</span><span class="si">%s</span><span class="s1">&quot;. Some settings may not be restored.</span><span class="se">\n</span><span class="s1"> Details: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">unicode</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">fileName</span><span class="p">()),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Error Loading settings&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="n">ba</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span>
+            <span class="s2">&quot;MainWindow/State&quot;</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
+        <span class="c1"># hide all dockwidgets (so that they are shown only if they were</span>
+        <span class="c1"># present in the settings)</span>
+        <span class="n">dockwidgets</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">(</span>
+        <span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dockwidgets</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">restoreDockWidget</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="n">ba</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span>
+            <span class="s2">&quot;MainWindow/State&quot;</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePerspectivesMenu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MainWindow settings restored&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.saveSettings"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.saveSettings">[docs]</a>    <span class="k">def</span> <span class="nf">saveSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;saves the application settings (so that they can be restored with :meth:`loadSettings`)</span>
+
+<span class="sd">        .. note:: this method is automatically called by default when closing the</span>
+<span class="sd">                  window, so in general there is no need to call it from derived classes</span>
+
+<span class="sd">        :param group: (str) a prefix that will be added to the keys to be</span>
+<span class="sd">                       saved (no prefix by default)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQSettings</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="c1"># main window geometry</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;MainWindow/State&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">()))</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;MainWindow/Geometry&quot;</span><span class="p">,</span>
+                          <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">()))</span>
+
+        <span class="c1"># store the config dict</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;TaurusConfig&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">createQConfig</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MainWindow settings saved in &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">settings</span><span class="o">.</span><span class="n">fileName</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.savePerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.savePerspective">[docs]</a>    <span class="k">def</span> <span class="nf">savePerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Stores current state of the application as a perspective with the given name</span>
+
+<span class="sd">        :param name: (str) name of the perspective</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">perspectives</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPerspectivesList</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Save Perspective&quot;</span><span class="p">,</span> <span class="s2">&quot;Store current settings as the following perspective:&quot;</span><span class="p">,</span>
+                                               <span class="n">perspectives</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">perspectives</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Overwrite perspective?&quot;</span><span class="p">,</span> <span class="s2">&quot;overwrite existing perspective </span><span class="si">%s</span><span class="s2">?&quot;</span> <span class="o">%</span> <span class="n">unicode</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+                                          <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">No</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ans</span> <span class="o">!=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveSettings</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s2">&quot;Perspectives/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePerspectivesMenu</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.loadPerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.loadPerspective">[docs]</a>    <span class="k">def</span> <span class="nf">loadPerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Loads the settings saved for the given perspective.</span>
+<span class="sd">        It emits a &#39;perspectiveChanged&#39; signal with name as its parameter</span>
+
+<span class="sd">        :param name: (str) name of the perspective</span>
+<span class="sd">        :param settings: (QSettings or None) a QSettings object. If None given,</span>
+<span class="sd">                         the default one returned by :meth:`getQSettings` will</span>
+<span class="sd">                         be used</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">perspectives</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPerspectivesList</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">perspectives</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Load Perspective&quot;</span><span class="p">,</span> <span class="s2">&quot;Change perspective to:&quot;</span><span class="p">,</span>
+                                               <span class="n">perspectives</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadSettings</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">,</span>
+                          <span class="n">group</span><span class="o">=</span><span class="s2">&quot;Perspectives/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">ignoreGeometry</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectiveChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.getPerspectivesList"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.getPerspectivesList">[docs]</a>    <span class="k">def</span> <span class="nf">getPerspectivesList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the list of saved perspectives</span>
+
+<span class="sd">        :param settings: (QSettings or None) a QSettings object. If None given,</span>
+<span class="sd">                         the default one returned by :meth:`getQSettings` will</span>
+<span class="sd">                         be used</span>
+
+<span class="sd">        :return: (QStringList) the list of the names of the currently saved</span>
+<span class="sd">                 perspectives</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQSettings</span><span class="p">()</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="s2">&quot;Perspectives&quot;</span><span class="p">)</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">childGroups</span><span class="p">()</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">names</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.removePerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.removePerspective">[docs]</a>    <span class="k">def</span> <span class="nf">removePerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;removes the given perspective from the settings</span>
+
+<span class="sd">        :param name: (str) name of the perspective</span>
+<span class="sd">        :param settings: (QSettings or None) a QSettings object. If None given,</span>
+<span class="sd">                         the default one returned by :meth:`getQSettings` will</span>
+<span class="sd">                         be used</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQSettings</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">perspectives</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPerspectivesList</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">perspectives</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Delete Perspective&quot;</span><span class="p">,</span> <span class="s2">&quot;Choose perspective to be deleted:&quot;</span><span class="p">,</span>
+                                               <span class="n">perspectives</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">perspectives</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot remove perspective </span><span class="si">%s</span><span class="s2"> (not found)&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="s2">&quot;Perspectives&quot;</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePerspectivesMenu</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.exportSettingsFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.exportSettingsFile">[docs]</a>    <span class="k">def</span> <span class="nf">exportSettingsFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;copies the current settings file into the given file name.</span>
+
+<span class="sd">        :param fname: (str) name of output file. If None given, a file dialog will be shown.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Choose file where the current settings should be saved&#39;</span><span class="p">,</span>
+                                                           <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s2">&quot;Ini files (*.ini);;All files (*)&quot;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveSettings</span><span class="p">()</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFile</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getQSettings</span><span class="p">()</span><span class="o">.</span><span class="n">fileName</span><span class="p">(),</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ok</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MainWindow settings saved in &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">unicode</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Settings could not be exported to </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">unicode</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Export error&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.importSettingsFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.importSettingsFile">[docs]</a>    <span class="k">def</span> <span class="nf">importSettingsFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        loads settings (including importing all perspectives) from a given ini</span>
+<span class="sd">        file. It warns before overwriting an existing perspective.</span>
+
+<span class="sd">        :param fname: (str) name of ini file. If None given, a file dialog will be shown.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Select a ini-format settings file&#39;</span><span class="p">,</span>
+                                                           <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s2">&quot;Ini files (*.ini);;All files (*)&quot;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="o">.</span><span class="n">IniFormat</span><span class="p">)</span>
+        <span class="c1"># clone the perspectives found in the &quot;factory&quot; settings</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPerspectivesList</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">s</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loadPerspective</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">s</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">savePerspective</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+        <span class="c1"># finally load the settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadSettings</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">s</span><span class="p">)</span></div>
+
+<span class="c1">#    def resetSettings(self):</span>
+<span class="c1">#        &#39;&#39;&#39;deletes current settings file and clears all settings&#39;&#39;&#39;</span>
+<span class="c1">#        self.__settings = self.newQSettings()</span>
+<span class="c1">#        self.saveSettings()</span>
+
+<div class="viewcode-block" id="TaurusMainWindow.showEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.showEvent">[docs]</a>    <span class="k">def</span> <span class="nf">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This event handler receives widget show events&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">spontaneous</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.closeEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This event handler receives widget close events&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveSettings</span><span class="p">()</span>  <span class="c1"># save current window state before closing</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;socketServer&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+        <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div>
+
+        <span class="c1"># print &quot;\n\n------ MAIN WINDOW CLOSED ------ \n\n&quot;</span>
+
+<div class="viewcode-block" id="TaurusMainWindow.addExternalAppLauncher"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.addExternalAppLauncher">[docs]</a>    <span class="k">def</span> <span class="nf">addExternalAppLauncher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extapp</span><span class="p">,</span> <span class="n">toToolBar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">toMenu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Adds launchers for an external application to the Tools Menu</span>
+<span class="sd">        and/or to the Tools ToolBar.</span>
+
+<span class="sd">        :param extapp: (ExternalAppAction or list&lt;str&gt;) the external application</span>
+<span class="sd">                       to be launched passed as a :class:`ExternalAppAction`</span>
+<span class="sd">                       (recommended because it allows to specify custom text and</span>
+<span class="sd">                       icon) or, alternatively, as a list of strings (sys.argv-</span>
+<span class="sd">                       like) that will be passed to :meth:`subprocess.Popen`.</span>
+<span class="sd">        :param toToolBar: (bool) If True (default) a button will be added in the</span>
+<span class="sd">                          Tools toolBar</span>
+<span class="sd">        :param toMenu: (bool) If True (default) an entry will be added in the</span>
+<span class="sd">                          Tools Menu, under the &quot;External Applications&quot; submenu</span>
+
+<span class="sd">        .. seealso:: :class:`ExternalAppAction`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">extapp</span><span class="p">,</span> <span class="n">ExternalAppAction</span><span class="p">):</span>
+            <span class="n">extapp</span> <span class="o">=</span> <span class="n">ExternalAppAction</span><span class="p">(</span><span class="n">extapp</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">extapp</span><span class="o">.</span><span class="n">parentWidget</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">extapp</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurationDialog</span><span class="o">.</span><span class="n">addExternalAppConfig</span><span class="p">(</span><span class="n">extapp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">toToolBar</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="s2">&quot;External Applications&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;External Applications&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">setToolButtonStyle</span><span class="p">(</span>
+                    <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolButtonTextBesideIcon</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showViewMenu</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">extapp</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">toMenu</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showToolsMenu</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolsMenu</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">createToolsMenu</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">extapp</span><span class="p">)</span>
+        <span class="c1"># register this action for config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="n">extapp</span><span class="p">,</span> <span class="s2">&quot;_extApp[</span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">extapp</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.deleteExternalAppLauncher"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.deleteExternalAppLauncher">[docs]</a>    <span class="k">def</span> <span class="nf">deleteExternalAppLauncher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Remove launchers for an external application to the Tools Menu</span>
+<span class="sd">        and/or to the Tools ToolBar.</span>
+
+<span class="sd">        :param extapp: (ExternalAppAction) the external application</span>
+<span class="sd">                       to be removed passed as a :class:`ExternalAppAction`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurationDialog</span><span class="o">.</span><span class="n">deleteExternalAppConfig</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># if is in ToolBar</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">removeAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># if is in Menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsMenu</span><span class="o">.</span><span class="n">removeAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsMenu</span><span class="o">.</span><span class="n">update</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="c1"># unregister this action for config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unregisterConfigurableItem</span><span class="p">(</span><span class="s2">&quot;_extApp[</span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span>
+                                        <span class="n">raiseOnError</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_onChangeTangoHostAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        slot called when the Change Tango Host is triggered. It prompts for a</span>
+<span class="sd">        Tango host name and calls :meth:`setTangoHost`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">host</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getText</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Change Tango Host&#39;</span><span class="p">,</span> <span class="s1">&#39;New Tango Host&#39;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span>  <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getTangoHost</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="n">valid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setTangoHost</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">host</span><span class="p">))</span>
+
+<div class="viewcode-block" id="TaurusMainWindow.setTangoHost"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.setTangoHost">[docs]</a>    <span class="k">def</span> <span class="nf">setTangoHost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__tangoHost</span> <span class="o">=</span> <span class="n">host</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.getTangoHost"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.getTangoHost">[docs]</a>    <span class="k">def</span> <span class="nf">getTangoHost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tangoHost</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.resetTangoHost"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.resetTangoHost">[docs]</a>    <span class="k">def</span> <span class="nf">resetTangoHost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTangoHost</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusMainWindow.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="c1"># Current versions of designer don&#39;t work with MainWindow as custom</span>
+        <span class="c1"># widgets. Therefore until this is solved, the widget will not appear</span>
+        <span class="c1"># in the designer</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.setHelpManualURI"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.setHelpManualURI">[docs]</a>    <span class="k">def</span> <span class="nf">setHelpManualURI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helpManualURI</span> <span class="o">=</span> <span class="n">uri</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">taurus.external.qt.QtWebKit</span> <span class="k">import</span> <span class="n">QWebView</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span> <span class="o">=</span> <span class="n">QWebView</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;QWebkit is not available&#39;</span><span class="p">)</span>
+
+                <span class="k">def</span> <span class="nf">dummyload</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+                    <span class="k">pass</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span><span class="o">.</span><span class="n">load</span> <span class="o">=</span> <span class="n">dummyload</span>
+                <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QUrl</span><span class="o">.</span><span class="n">fromUserInput</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>  <span class="c1"># fallback for Qt&lt;4.6</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.getHelpManualURI"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.getHelpManualURI">[docs]</a>    <span class="k">def</span> <span class="nf">getHelpManualURI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__helpManualURI</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.resetHelpManualURI"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.resetHelpManualURI">[docs]</a>    <span class="k">def</span> <span class="nf">resetHelpManualURI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">release</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;MANUAL_URI&#39;</span><span class="p">,</span> <span class="n">release</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHelpManualURI</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.showHelpAbout"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.showHelpAbout">[docs]</a>    <span class="k">def</span> <span class="nf">showHelpAbout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">appname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">applicationName</span><span class="p">())</span>
+        <span class="n">appversion</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">applicationVersion</span><span class="p">())</span>
+        <span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">release</span>
+        <span class="n">abouttext</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="se">\n\n</span><span class="s2">Using </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">appname</span><span class="p">,</span> <span class="n">appversion</span><span class="p">,</span> <span class="n">release</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">about</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;About&#39;</span><span class="p">,</span> <span class="n">abouttext</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.onShowManual"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.onShowManual">[docs]</a>    <span class="k">def</span> <span class="nf">onShowManual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Shows the User Manual in a dockwidget&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">helpManualDW</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helpManualDW</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">(</span><span class="s2">&quot;Manual&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helpManualDW</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helpManualDW</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;helpManualDW&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addDockWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">helpManualDW</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helpManualDW</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.checkSingleInstance"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.checkSingleInstance">[docs]</a>    <span class="k">def</span> <span class="nf">checkSingleInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Tries to connect via a QLocalSocket to an existing application with the</span>
+<span class="sd">        given key. If another instance already exists (i.e. the connection succeeds),</span>
+<span class="sd">        it means that this application is not the only one</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus.core.util.user</span> <span class="k">import</span> <span class="n">getSystemUserName</span>
+            <span class="n">username</span> <span class="o">=</span> <span class="n">getSystemUserName</span><span class="p">()</span>
+            <span class="n">appname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">applicationName</span><span class="p">())</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;__socket_</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">__&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">appname</span><span class="p">)</span>
+        <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">QtNetwork</span>
+        <span class="n">socket</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QLocalSocket</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">socket</span><span class="o">.</span><span class="n">connectToServer</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">alive</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">waitForConnected</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">alive</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Another application with key &quot;</span><span class="si">%s</span><span class="s1">&quot; is already running&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QLocalServer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="o">.</span><span class="n">newConnection</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onIncommingSocketConnection</span><span class="p">)</span>
+            <span class="n">ok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+                <span class="n">AddressInUseError</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QAbstractSocket</span><span class="o">.</span><span class="n">AddressInUseError</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="o">.</span><span class="n">serverError</span><span class="p">()</span> <span class="o">==</span> <span class="n">AddressInUseError</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s1">&#39;Resetting unresponsive socket with key &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                    <span class="c1"># removeServer() was added in Qt4.5. (In Qt4.4 a call to</span>
+                    <span class="c1"># listen() removes a previous server)</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="p">,</span> <span class="s1">&#39;removeServer&#39;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="o">.</span><span class="n">removeServer</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                    <span class="n">ok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Cannot start local socket with key &quot;</span><span class="si">%s</span><span class="s1">&quot;. Reason: </span><span class="si">%s</span><span class="s1"> &#39;</span><span class="p">,</span>
+                                 <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="o">.</span><span class="n">errorString</span><span class="p">())</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Registering as single instance with key &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.onIncommingSocketConnection"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.onIncommingSocketConnection">[docs]</a>    <span class="k">def</span> <span class="nf">onIncommingSocketConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Slot to be called when another application/instance with the same key</span>
+<span class="sd">        checks if this application exists.</span>
+
+<span class="sd">        .. note:: This is a dummy implementation which</span>
+<span class="sd">                  just logs the connection and discards the associated socket</span>
+<span class="sd">                  You may want to reimplement this if you want to act on such</span>
+<span class="sd">                  connections</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Incomming connection from application&#39;</span><span class="p">)</span>
+        <span class="n">socket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socketServer</span><span class="o">.</span><span class="n">nextPendingConnection</span><span class="p">()</span>
+        <span class="n">socket</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raise_</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activateWindow</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.setHeartbeat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.setHeartbeat">[docs]</a>    <span class="k">def</span> <span class="nf">setHeartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets the interval of the heartbeat LED for the window.</span>
+<span class="sd">        The heartbeat is displayed by a Led in the status bar unless</span>
+<span class="sd">        it is disabled by setting the interval to 0</span>
+
+<span class="sd">        :param interval: (int) heart beat interval in millisecs. Set to 0 to disable</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeatLed</span><span class="o">.</span><span class="n">setBlinkingInterval</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeatLed</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">interval</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.getHeartbeat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.getHeartbeat">[docs]</a>    <span class="k">def</span> <span class="nf">getHeartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the heart beat interval&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeatLed</span><span class="o">.</span><span class="n">getBlinkingInterval</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMainWindow.resetHeartbeat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.resetHeartbeat">[docs]</a>    <span class="k">def</span> <span class="nf">resetHeartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;resets the heartbeat interval&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHeartbeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">_heartbeat</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Public slots for apply/restore changes</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+<div class="viewcode-block" id="TaurusMainWindow.applyPendingChanges"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.applyPendingChanges">[docs]</a>    <span class="k">def</span> <span class="nf">applyPendingChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applyPendingOperations</span><span class="p">()</span></div>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+<div class="viewcode-block" id="TaurusMainWindow.resetPendingChanges"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.resetPendingChanges">[docs]</a>    <span class="k">def</span> <span class="nf">resetPendingChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetPendingOperations</span><span class="p">()</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT properties</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+
+    <span class="n">useParentModel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span>
+
+    <span class="n">showQuality</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">getShowQuality</span><span class="p">,</span>
+                                  <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">setShowQuality</span><span class="p">,</span>
+                                  <span class="n">TaurusBaseContainer</span><span class="o">.</span><span class="n">resetShowQuality</span><span class="p">)</span>
+
+    <span class="n">tangoHost</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getTangoHost</span><span class="p">,</span>
+                                <span class="n">setTangoHost</span><span class="p">,</span>
+                                <span class="n">resetTangoHost</span><span class="p">)</span>
+
+    <span class="n">helpManualURI</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getHelpManualURI</span><span class="p">,</span>
+                                    <span class="n">setHelpManualURI</span><span class="p">,</span>
+                                    <span class="n">resetHelpManualURI</span><span class="p">)</span>
+
+    <span class="n">heartbeat</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getHeartbeat</span><span class="p">,</span>
+                                <span class="n">setHeartbeat</span><span class="p">,</span>
+                                <span class="n">resetHeartbeat</span><span class="p">)</span></div>
+
+<span class="c1">#---------</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">setApplicationName</span><span class="p">(</span><span class="s1">&#39;TaurusMainWindow-test&#39;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">setOrganizationName</span><span class="p">(</span><span class="s1">&#39;ALBA&#39;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">MyMainWindow</span><span class="p">(</span><span class="n">TaurusMainWindow</span><span class="p">):</span>
+        <span class="n">_heartbeat</span> <span class="o">=</span> <span class="mi">300</span>  <span class="c1"># blinking semi-period in ms. Set to None for not showing the Heart beat LED</span>
+        <span class="n">_showFileMenu</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">_showViewMenu</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">_showTaurusMenu</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">_showToolsMenu</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">_showHelpMenu</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Allows the user to change/create/delete perspectives</span>
+        <span class="n">_supportUserPerspectives</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">_showLogger</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">_splashLogo</span> <span class="o">=</span> <span class="s2">&quot;:/TaurusSplash.png&quot;</span>  <span class="c1"># set to None for disabling splash screen</span>
+        <span class="n">_splashMessage</span> <span class="o">=</span> <span class="s2">&quot;Initializing Main window...&quot;</span>
+
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">TaurusMainWindow</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">splash</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="c1"># simulating a lengthy initialization</span>
+            <span class="kn">import</span> <span class="nn">time</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">splashScreen</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;starting: step </span><span class="si">%i</span><span class="s2">/5&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1">#MainWindowKlass = TaurusMainWindow</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">MyMainWindow</span><span class="p">()</span>
+
+    <span class="c1"># ensure only a single instance of this application is running</span>
+    <span class="n">single</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">checkSingleInstance</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">single</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># form.setHelpManualURI(&#39;http://google.com&#39;)</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">loadSettings</span><span class="p">()</span>
+
+    <span class="c1"># form.setCentralWidget(Qt.QMdiArea()) #just for testing</span>
+
+    <span class="c1"># form.addExternalAppLauncher(&#39;pwd&#39;)</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

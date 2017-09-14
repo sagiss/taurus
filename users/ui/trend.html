@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusTrend User’s Interface &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../index.html"/>
+        <link rel="up" title="User’s Interface" href="index.html"/>
+        <link rel="next" title="Image’s interface" href="taurusimage.html"/>
+        <link rel="prev" title="TaurusPlot User’s Interface" href="plot.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">User&#8217;s Interface</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ui_colors.html">Color meaning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forms.html">Forms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="modelchooser.html">Model Chooser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plot.html">Plots</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">TaurusTrend User&#8217;s Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spectrograms-2d-trends">Spectrograms (2D trends)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="taurusimage.html">Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arrayeditor.html">Array Editor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="synoptics.html">Synoptics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devpanels.html">TaurusPanel &amp; TaurusDevicePanel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="taurusgui.html">TaurusGui</a></li>
+<li class="toctree-l4"><a class="reference internal" href="taurusdemo.html">TaurusDemo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logs.html">Logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configurations.html">Configurations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../screenshots.html">Screenshots</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../devel/index.html">Developer&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../index.html">User&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="index.html">User&#8217;s Interface</a> &raquo;</li>
+      
+    <li>TaurusTrend User&#8217;s Interface</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/users/ui/trend.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurustrend-user-s-interface">
+<span id="trend-ui"></span><h1><a class="toc-backref" href="#id1">TaurusTrend User&#8217;s Interface</a><a class="headerlink" href="#taurustrend-user-s-interface" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#taurustrend-user-s-interface" id="id1">TaurusTrend User&#8217;s Interface</a><ul>
+<li><a class="reference internal" href="#taurustrend-as-a-stand-alone-application" id="id2">TaurusTrend as a stand-alone application</a></li>
+<li><a class="reference internal" href="#timestamp-vs-event-number-mode" id="id3">Timestamp VS &#8220;event number&#8221; mode</a></li>
+<li><a class="reference internal" href="#the-fixed-range-x-scale" id="id4">The Fixed-range X scale</a></li>
+<li><a class="reference internal" href="#using-a-spectrum-as-a-collection-of-scalar-values" id="id5">Using a spectrum as a collection of scalar values</a></li>
+<li><a class="reference internal" href="#accessing-archived-values" id="id6">Accessing archived values</a></li>
+<li><a class="reference internal" href="#polling-buffer" id="id7">Polling buffer</a></li>
+<li><a class="reference internal" href="#forced-read-of-attributes" id="id8">Forced read of attributes</a></li>
+<li><a class="reference internal" href="#known-limitations" id="id9">Known limitations</a><ul>
+<li><a class="reference internal" href="#limited-timing-precision-when-comparing-two-attributes" id="id10">Limited timing precision when comparing two attributes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spectrograms-2d-trends" id="id11">Spectrograms (2D trends)</a></li>
+</ul>
+</div>
+<p>The <a class="reference internal" href="../../devel/api/taurus/qt/qtgui/plot/_TaurusTrend.html#taurus.qt.qtgui.plot.TaurusTrend" title="taurus.qt.qtgui.plot.TaurusTrend"><code class="xref py py-class docutils literal"><span class="pre">TaurusTrend</span></code></a> widget is the standard way for Taurus applications to
+graphically show the evolution of one or more <strong>scalar</strong> attributes from the control
+system.</p>
+<div class="figure align-center">
+<img alt="../../_images/taurustrend03.png" src="../../_images/taurustrend03.png" />
+</div>
+<p>The value of the scalar attributes is plotted in a Y axis with incrementing X
+value each time an event from this attribute is received. The X values can
+either be an index for the event number or a timestamp value. See
+<a class="reference internal" href="#timestamp-vs-event-number-mode">Timestamp VS &#8220;event number&#8221; mode</a> for more details.</p>
+<p>TaurusTrend is based on <a class="reference internal" href="../../devel/api/taurus/qt/qtgui/plot/_TaurusPlot.html#taurus.qt.qtgui.plot.TaurusPlot" title="taurus.qt.qtgui.plot.TaurusPlot"><code class="xref py py-class docutils literal"><span class="pre">TaurusPlot</span></code></a>, and shares all its features. Please
+check the <a class="reference internal" href="plot.html#taurusplot-ui"><span class="std std-ref">TaurusPlot User&#8217;s Interface Guide</span></a> for learning about
+them. In the following, only those features that are exclusive of TaurusTrend are
+discussed.</p>
+<div class="section" id="taurustrend-as-a-stand-alone-application">
+<span id="standalonetaurustrend"></span><h2><a class="toc-backref" href="#id2">TaurusTrend as a stand-alone application</a><a class="headerlink" href="#taurustrend-as-a-stand-alone-application" title="Permalink to this headline">¶</a></h2>
+<p>You may also use TaurusTrend as a stand-alone application for showing trends of
+attributes from the control system. You can launch the stand-alone TaurusTrend
+with the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurustrend</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">model_list</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Run the following command for more details:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurustrend</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<p>The model list is optional and is a space-separated list of models for TaurusTrend.
+Valid models are: SCALAR or SPECTRUM attribute names or alias (spectra will be treated
+as collections of scalars). See <a class="reference internal" href="../../devel/api/taurus/qt/qtgui/plot/_TaurusTrend.html#taurus.qt.qtgui.plot.TaurusTrend" title="taurus.qt.qtgui.plot.TaurusTrend"><code class="xref py py-class docutils literal"><span class="pre">TaurusTrend</span></code></a> API for more information about valid models</p>
+</div>
+<div class="section" id="timestamp-vs-event-number-mode">
+<h2><a class="toc-backref" href="#id3">Timestamp VS &#8220;event number&#8221; mode</a><a class="headerlink" href="#timestamp-vs-event-number-mode" title="Permalink to this headline">¶</a></h2>
+<p>When TaurusTrend receives an event from an attribute, it plots the attribute value
+against either:</p>
+<ul class="simple">
+<li>the sequential order of arrival of the event (i.e., the <em>event number</em>), or</li>
+<li>the <em>timestamp</em> associated with this value. See
+<a class="reference internal" href="plot.html#taurusplottime"><span class="std std-ref">Date/time support</span></a> for more information.</li>
+</ul>
+<p>When TaurusTrend is part of a GUI, this behavior is set by that GUI. If TaurusTrend is
+used as a stand-alone application, the behavior is determined by the <cite>-x</cite>
+parameter (see the <a class="reference internal" href="#taurustrend-as-a-stand-alone-application">TaurusTrend as a stand-alone application</a> section).</p>
+<p>The timestamp mode is in general the most used one, but it is important to be
+aware that the timestamp will only be as accurate as the (distributed) control
+system allows (not all attributes will, typically, be controlled by a centralised
+high-accuracy clock). See the <a class="reference internal" href="#known-limitations">Known limitations</a> section for more details.</p>
+</div>
+<div class="section" id="the-fixed-range-x-scale">
+<h2><a class="toc-backref" href="#id4">The Fixed-range X scale</a><a class="headerlink" href="#the-fixed-range-x-scale" title="Permalink to this headline">¶</a></h2>
+<p>When working with trends, you may want to see the latest changes only. For
+example, you may be interested in seeing the changes occurred within the last 5
+minutes (assuming you are working in time scale) or only the latest 20 values
+(if you were working in &#8220;event number&#8221; mode).</p>
+<p>You can switch the <cite>Fixed-range X scale</cite> mode on and off from either:</p>
+<ul>
+<li><p class="first">The <a class="reference internal" href="plot.html#taurusplotcontextmenu"><span class="std std-ref">Context Menu</span></a> (under the <cite>Scales</cite> submenu)</p>
+</li>
+<li><p class="first">The <a class="reference internal" href="plot.html#plotconfiguration"><span class="std std-ref">Plot Configuration dialog</span></a> (under the
+<cite>X axis</cite>/<cite>Time</cite> section). Here you can choose from suggested values or simply
+type a range:</p>
+<blockquote>
+<div><ul class="simple">
+<li>If working in Time mode, the range consists of a number followed by one
+of the following time units: &#8220;s&#8221;, &#8220;m&#8221;, &#8220;h&#8221;, &#8220;d&#8221;, &#8220;w&#8221; and &#8220;y&#8221;. See
+<a class="reference internal" href="plot.html#taurusplottime"><span class="std std-ref">Date/time support</span></a> for more information.</li>
+</ul>
+<img alt="../../_images/taurustrend-fixedRange01.png" src="../../_images/taurustrend-fixedRange01.png" />
+</div></blockquote>
+</li>
+</ul>
+<p>Note that if you switch the Fixed-range mode from off to on, the current range
+of the X axis (Max-Min or End-Start) will be used.</p>
+</div>
+<div class="section" id="using-a-spectrum-as-a-collection-of-scalar-values">
+<h2><a class="toc-backref" href="#id5">Using a spectrum as a collection of scalar values</a><a class="headerlink" href="#using-a-spectrum-as-a-collection-of-scalar-values" title="Permalink to this headline">¶</a></h2>
+<p>TaurusTrend plots the evolution of <em>scalar</em> values. However, in many occasions the
+SPECTRUM attributes are (ab)used in the control system as a way of packing
+a set of scalar values together.</p>
+<p>For this reason, TaurusTrend allows you to plot
+trends of SPECTRUM attributes assuming that each item in the spectrum is an
+independent scalar number (e.g., a SPECTRUM of length 8 will be plotted as 8
+separate curves).</p>
+<p>Obviously, all curves related to a single SPECTRUM attribute will be updated
+simultaneously, since events are received per attribute.</p>
+<div class="figure align-center">
+<img alt="../../_images/taurustrend02.png" src="../../_images/taurustrend02.png" />
+</div>
+</div>
+<div class="section" id="accessing-archived-values">
+<h2><a class="toc-backref" href="#id6">Accessing archived values</a><a class="headerlink" href="#accessing-archived-values" title="Permalink to this headline">¶</a></h2>
+<p>TaurusTrend supports connecting to a Database of archived values for the
+parameters being plotted, which allows to access values previous to the moment the
+GUI trend was created.</p>
+<p>To improve performance, this feature is not enabled
+by default but it can be enabled in the <a class="reference internal" href="plot.html#taurusplotcontextmenu"><span class="std std-ref">Context Menu</span></a>.
+If launching the TaurusTrend as a stand-alone application, you can also enable this
+at launch time by passing the <cite>-a</cite> option (see the <a class="reference internal" href="#taurustrend-as-a-stand-alone-application">TaurusTrend as a stand-alone
+application</a> section).</p>
+<p>Important: retrieving archived values can be slow. Even if archived values are
+accessed only when needed (i.e., when the time range being displayed requires it),
+you may experience performance issues if you change the scale to include  large
+time range. For this reason a warning dialog may be shown when you try to access
+too much archived data.</p>
+</div>
+<div class="section" id="polling-buffer">
+<h2><a class="toc-backref" href="#id7">Polling buffer</a><a class="headerlink" href="#polling-buffer" title="Permalink to this headline">¶</a></h2>
+<p>The Tango control system provides a buffer of the last values read for an attribute.
+This can be useful sometimes for performance reasons. The Polling Buffer support in
+TaurusTrend can be enabled in the <a class="reference internal" href="plot.html#taurusplotcontextmenu"><span class="std std-ref">Context Menu</span></a>.</p>
+</div>
+<div class="section" id="forced-read-of-attributes">
+<h2><a class="toc-backref" href="#id8">Forced read of attributes</a><a class="headerlink" href="#forced-read-of-attributes" title="Permalink to this headline">¶</a></h2>
+<p>Some attributes of the control system may be set to only send events when their
+value changes. In the case of TaurusTrend, this behaviour causes that attributes
+that do not change often, do not get new points in the trend and thus may seem
+to have been &#8220;lost&#8221;. To avoid this issue, you can instruct the TaurusTrend to
+periodically force re-read the attributes being displayed. You can enable this
+feature (and set the re-read period) from the <a class="reference internal" href="plot.html#taurusplotcontextmenu"><span class="std std-ref">Context Menu</span></a>.</p>
+<p>If launching the TaurusTrend as a stand-alone application, you can also enable this
+at launch time by passing the <cite>-r</cite> option (see the <a class="reference internal" href="#taurustrend-as-a-stand-alone-application">TaurusTrend as a stand-alone
+application</a> section).</p>
+<p>Keep in mind the following:</p>
+<ul class="simple">
+<li>When enabling this feature, TaurusTrend will ignore all other events (to
+guarantee that the refresh occurs at <em>and only at</em> the desired periodic
+times).</li>
+<li>Setting very frequent re-reads may impact your control system and GUI
+performance. Specially if you are plotting several attributes. <strong>So, do not
+use this feature unless it is really needed</strong></li>
+</ul>
+</div>
+<div class="section" id="known-limitations">
+<h2><a class="toc-backref" href="#id9">Known limitations</a><a class="headerlink" href="#known-limitations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="limited-timing-precision-when-comparing-two-attributes">
+<h3><a class="toc-backref" href="#id10">Limited timing precision when comparing two attributes</a><a class="headerlink" href="#limited-timing-precision-when-comparing-two-attributes" title="Permalink to this headline">¶</a></h3>
+<p>If two different attributes are plotted in the same trend, their times may appear
+slightly out-of-synch. For example, two parameters that are known to vary
+simultaneously may be apparently 0.5 seconds apart.</p>
+<p>This occurs because TaurusTrend relies on the control system timestamps for
+assigning the time values. Therefore, its precision is limited by that of the
+control system for the given parameters.</p>
+<p>Note that timestamps for an attribute may be assigned using the internal
+clock of the machine hosting the device server. Therefore, attributes managed
+by different machines may only be compared to the extent of the synchronization
+of the corresponding internal clocks. In such a case, keeping all machines
+synchronized is highly recommended (e.g., using <a class="reference external" href="http://en.wikipedia.org/wiki/Network_Time_Protocol">NTP</a>, accuracy should not be
+worse than 0.1s).</p>
+</div>
+</div>
+</div>
+<div class="section" id="spectrograms-2d-trends">
+<span id="trend2d-ui"></span><h1><a class="toc-backref" href="#id11">Spectrograms (2D trends)</a><a class="headerlink" href="#spectrograms-2d-trends" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">TaurusTrend2DDialog</span></code> widget is the standard way for Taurus
+applications to graphically show the evolution of a one-dimensional
+attribute. The representation is done as a <em>spectrogram</em>: the time (or
+event number) is represented in the X axis while values of the array
+are color-coded along the Y axis.</p>
+<div class="figure align-center">
+<img alt="../../_images/taurustrend2d.png" src="../../_images/taurustrend2d.png" />
+</div>
+<p>Several tools from the standard <a class="reference external" href="https://pypi.python.org/pypi/guiqwt">guiqwt</a> toolkit for images are available,
+and zooming and panning are possible using the standard mechanisms of
+<a class="reference external" href="https://pypi.python.org/pypi/guiqwt">guiqwt</a>.</p>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">TaurusTrend2DDialog</span></code> widget can be launched as a
+stand-alone application with the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurustrend2d</span> <span class="o">&lt;</span><span class="n">array_attribute_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Run the following command for more details:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurustrend2d</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="taurusimage.html" class="btn btn-neutral float-right" title="Image’s interface" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="plot.html" class="btn btn-neutral" title="TaurusPlot User’s Interface" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

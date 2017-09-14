@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Taurus development guidelines &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../index.html"/>
+        <link rel="up" title="Developer’s Guide" href="index.html"/>
+        <link rel="next" title="Creating GUIs with the TaurusGUI framework" href="taurusgui_newgui.html"/>
+        <link rel="prev" title="Taurus 3.x to 4.x migration guide" href="taurus3to4.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus.html">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+    <li>Taurus development guidelines</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/devel/coding_guide.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurus-development-guidelines">
+<span id="coding-guide"></span><h1>Taurus development guidelines<a class="headerlink" href="#taurus-development-guidelines" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This document describes taurus from the perspective of developers. Most
+importantly, it gives information for people who want to contribute to the
+development of taurus. So if you want to help out, read on!</p>
+</div>
+<div class="section" id="how-to-contribute-to-taurus">
+<h2>How to contribute to taurus<a class="headerlink" href="#how-to-contribute-to-taurus" title="Permalink to this headline">¶</a></h2>
+<p>Taurus is Free Software developed in open way. Contributions to code,
+documentation, etc. are always welcome.</p>
+<p>The &#8220;official&#8221; Taurus source code is hosted in a <a class="reference external" href="https://github.com/taurus-org/taurus">git repository</a>.</p>
+<p>The details in how to contribute are described in the <cite>CONTRIBUTING.md</cite> file
+at the root of the git repository.</p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>All standalone documentation should be written in plain text (<code class="docutils literal"><span class="pre">.rst</span></code>) files
+using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> for markup and formatting. All such
+documentation should be placed in directory <code class="file docutils literal"><span class="pre">docs/source</span></code> of the taurus
+source tree. The documentation in this location will serve as the main source
+for taurus documentation and all existing documentation should be converted
+to this format.</p>
+</div>
+<div class="section" id="coding-conventions">
+<h2>Coding conventions<a class="headerlink" href="#coding-conventions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Code in Taurus should follow the standard Python style conventions as
+described in <a class="reference external" href="http://www.python.org/peps/pep-0008.html">PEP8</a>. Specially:<ul>
+<li>Use 4 spaces for indentation</li>
+<li>Respect the maximum of 79 characters per line</li>
+<li>Surround top-level function and class definitions with two blank lines.</li>
+<li>use <code class="docutils literal"><span class="pre">lower_case</span></code> for module names. If possible prefix module names with the
+word <code class="docutils literal"><span class="pre">taurus</span></code> (like <code class="file docutils literal"><span class="pre">taurusutil.py</span></code>) to avoid import mistakes.</li>
+<li>use <code class="docutils literal"><span class="pre">CamelCase</span></code> for class names</li>
+<li>use <code class="docutils literal"><span class="pre">lower_case</span></code> for method names, except in the context of taurus.qt
+where the prevailing convention is <code class="docutils literal"><span class="pre">mixedCase</span></code> due to influence from PyQt</li>
+</ul>
+</li>
+<li>Code must be python 2.7 compatible, and, if possible, new contributions
+should also consider being compatible with python3.5 (to prepare for
+python3 support)</li>
+<li>Every python module file should contain license information (see template below).
+The preferred license is the <a class="reference external" href="http://www.gnu.org/licenses/lgpl.html">LGPL</a>. If you need/want to use a different one,
+it should be compatible with the LGPL v3+.</li>
+<li>avoid polluting namespace by making private definitions private (<code class="docutils literal"><span class="pre">__</span></code> prefix)
+or/and implementing <code class="docutils literal"><span class="pre">__all__</span></code> (see template below)</li>
+<li>whenever a python module can be executed from the command line, it should
+contain a <code class="docutils literal"><span class="pre">main</span></code> function and a call to it in a <code class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;</span></code>
+like statement (see template below)</li>
+<li>All public API code should be documented (modules, classes and public API) using
+<a class="reference external" href="http://www.sphinx-doc.org">Sphinx</a> extension to <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a></li>
+</ul>
+<p>The following code can serve as a template for writing new python modules to
+taurus:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;A :mod:`taurus` module written for template purposes only&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusDemo&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="k">class</span> <span class="nc">TaurusDemo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class is written for template purposes only&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span> <span class="s2">&quot;TaurusDemo&quot;</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="special-notes-about-qt-programming">
+<h2>Special notes about Qt programming<a class="headerlink" href="#special-notes-about-qt-programming" title="Permalink to this headline">¶</a></h2>
+<p>The following Qt guidelines are intended to ensure compatibility between all
+PyQt4, PyQt5 and PySide versions.</p>
+<ol class="arabic">
+<li><p class="first">Avoid importing PyQt / PySide directly. Imports like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt4</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="k">import</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="k">import</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="k">import</span> <span class="n">QtNetwork</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="k">import</span> <span class="n">QtWebKit</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="k">import</span> <span class="n">Qwt5</span>
+</pre></div>
+</div>
+<p>Should be replaced by:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">QtNetwork</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">QtWebKit</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qwt5</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Since Taurus v&gt;=4.0, Qt-based code in Taurus may assume
+that <a class="reference external" href="http://pyqt.sourceforge.net/Docs/PyQt4/incompatible_apis.html">PyQt API v2</a> is used. PyQt API 1 code, which was supported by Taurus 3,
+is no longer guaranteed to work.</p>
+<ul>
+<li><p class="first">Use standard python strings (e.g., use <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> for Qt strings instead of
+<code class="xref py py-class docutils literal"><span class="pre">QString</span></code>). Code like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">my_string</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="s2">&quot; hello &quot;</span><span class="p">)</span>
+<span class="n">my_string2</span> <span class="o">=</span> <span class="n">my_string</span><span class="o">.</span><span class="n">trimmed</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Should be replaced by:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">my_string</span> <span class="o">=</span> <span class="s2">&quot; hello &quot;</span>
+<span class="n">my_string2</span> <span class="o">=</span> <span class="n">my_string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Do not use <code class="xref py py-class docutils literal"><span class="pre">QVariant</span></code>. QVariant objects don&#8217;t exist in
+PySide or in the new PyQt4 API 2. Code like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">qvalue</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">qvalue</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span>  <span class="c1"># this assumes qvalue to be a :class:`QVariant`</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span>
+
+    <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Should be replaced by:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># value is already a python object</span>
+
+<span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span>
+
+    <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>For compatibility reasons, <code class="xref py py-func docutils literal"><span class="pre">Qt()</span></code> defines <cite>QVariant</cite> and
+<cite>from_qvariant</cite> which is internally used used to write code that supports both
+API v1 and v2 for QVariant. But new code in Taurus v&gt;=4 may assume v2 only.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">Use <a class="reference external" href="http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html">new-style signals</a>.
+Old-style code like the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;mySignal(int)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;mySignal(int)&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Should be replaced by:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="n">mySignal</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mySignal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mySignal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Use of <a class="reference internal" href="api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication" title="taurus.qt.qtgui.application.TaurusApplication"><code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.application.TaurusApplication</span></code></a> instead of
+<code class="xref py py-class docutils literal"><span class="pre">QApplication</span></code> is recommended (it takes care of various
+initialization and exit tasks that are convenient).</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="taurusgui_newgui.html" class="btn btn-neutral float-right" title="Creating GUIs with the TaurusGUI framework" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="taurus3to4.html" class="btn btn-neutral" title="Taurus 3.x to 4.x migration guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

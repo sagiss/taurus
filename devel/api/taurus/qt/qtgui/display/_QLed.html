@@ -1,0 +1,555 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>QLed &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtgui.display" href="../display.html"/>
+        <link rel="next" title="QLedOld" href="_QLedOld.html"/>
+        <link rel="prev" title="QFallBackWidget" href="_QFallBackWidget.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+      
+          <li><a href="../display.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui.display</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">QLed</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/display/_QLed.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qled">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.display.QLed" title="taurus.qt.qtgui.display.QLed"><code class="xref py py-class docutils literal"><span class="pre">QLed</span></code></a><a class="headerlink" href="#qled" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-4c8481685e8e3e5944ada969fbb37eff384d4694.png" alt="Inheritance diagram of QLed" usemap="#inheritancea8c0f85cac" class="inheritance"/>
+<map id="inheritancea8c0f85cac" name="inheritancea8c0f85cac">
+<area shape="rect" id="node1" title="A Led" alt="" coords="31,485,103,533"/>
+<area shape="rect" id="node2" title="This widget displays an image (pixmap). By default the pixmap is" alt="" coords="5,389,128,437"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtgui.display.QLed">
+<em class="property">class </em><code class="descname">QLed</code><span class="sig-paren">(</span><em>parent=None</em>, <em>designMode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.display.qpixmapwidget.QPixmapWidget</span></code></p>
+<p>A Led</p>
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.DefaultBlinkingInterval">
+<code class="descname">DefaultBlinkingInterval</code><em class="property"> = 0</em><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.DefaultBlinkingInterval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.DefaultLedColor">
+<code class="descname">DefaultLedColor</code><em class="property"> = 'green'</em><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.DefaultLedColor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.DefaultLedInverted">
+<code class="descname">DefaultLedInverted</code><em class="property"> = False</em><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.DefaultLedInverted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.DefaultLedPattern">
+<code class="descname">DefaultLedPattern</code><em class="property"> = 'leds_images256:led_{color}_{status}.png'</em><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.DefaultLedPattern" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.DefaultLedStatus">
+<code class="descname">DefaultLedStatus</code><em class="property"> = True</em><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.DefaultLedStatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.blinkingInterval">
+<code class="descname">blinkingInterval</code><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.blinkingInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the blinking interval in millisecs. 0 means no blinking</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.getBlinkingInterval" title="taurus.qt.qtgui.display.QLed.getBlinkingInterval"><code class="xref py py-meth docutils literal"><span class="pre">QLed.getBlinkingInterval()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.setBlinkingInterval" title="taurus.qt.qtgui.display.QLed.setBlinkingInterval"><code class="xref py py-meth docutils literal"><span class="pre">QLed.setBlinkingInterval()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.resetBlinkingInterval" title="taurus.qt.qtgui.display.QLed.resetBlinkingInterval"><code class="xref py py-meth docutils literal"><span class="pre">QLed.resetBlinkingInterval()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.getBlinkingInterval">
+<code class="descname">getBlinkingInterval</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.getBlinkingInterval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.getBlinkingInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the blinking interval</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">blinking interval or 0 if blinking is not enabled.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.getLedColor">
+<code class="descname">getLedColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.getLedColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.getLedColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the led color
+:return: led color
+:rtype: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.getLedInverted">
+<code class="descname">getLedInverted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.getLedInverted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.getLedInverted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if the led is inverted.
+:return: inverted mode
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.getLedPatternName">
+<code class="descname">getLedPatternName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.getLedPatternName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.getLedPatternName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current led pattern name
+:return: led pattern name
+:rtype: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.getLedStatus">
+<code class="descname">getLedStatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.getLedStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.getLedStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the led status
+:return: led status
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.qt.qtgui.display.QLed.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.isLedColorValid">
+<code class="descname">isLedColorValid</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.isLedColorValid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.isLedColorValid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the given color name is valid.
+:param color: the color
+:type  color: str
+:return: True is the given color name is valid or False otherwise
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.ledColor">
+<code class="descname">ledColor</code><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.ledColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the led color</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.getLedColor" title="taurus.qt.qtgui.display.QLed.getLedColor"><code class="xref py py-meth docutils literal"><span class="pre">QLed.getLedColor()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.setLedColor" title="taurus.qt.qtgui.display.QLed.setLedColor"><code class="xref py py-meth docutils literal"><span class="pre">QLed.setLedColor()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.resetLedColor" title="taurus.qt.qtgui.display.QLed.resetLedColor"><code class="xref py py-meth docutils literal"><span class="pre">QLed.resetLedColor()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.ledInverted">
+<code class="descname">ledInverted</code><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.ledInverted" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the led inverted: False means do not invert the</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.getLedInverted" title="taurus.qt.qtgui.display.QLed.getLedInverted"><code class="xref py py-meth docutils literal"><span class="pre">QLed.getLedInverted()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.setLedInverted" title="taurus.qt.qtgui.display.QLed.setLedInverted"><code class="xref py py-meth docutils literal"><span class="pre">QLed.setLedInverted()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.resetLedInverted" title="taurus.qt.qtgui.display.QLed.resetLedInverted"><code class="xref py py-meth docutils literal"><span class="pre">QLed.resetLedInverted()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.ledPattern">
+<code class="descname">ledPattern</code><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.ledPattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the led pattern name</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.getLedPatternName" title="taurus.qt.qtgui.display.QLed.getLedPatternName"><code class="xref py py-meth docutils literal"><span class="pre">QLed.getLedPatternName()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.setLedPatternName" title="taurus.qt.qtgui.display.QLed.setLedPatternName"><code class="xref py py-meth docutils literal"><span class="pre">QLed.setLedPatternName()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.resetLedPatternName" title="taurus.qt.qtgui.display.QLed.resetLedPatternName"><code class="xref py py-meth docutils literal"><span class="pre">QLed.resetLedPatternName()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.QLed.ledStatus">
+<code class="descname">ledStatus</code><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.ledStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the led status: False means OFF, True means ON</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.getLedStatus" title="taurus.qt.qtgui.display.QLed.getLedStatus"><code class="xref py py-meth docutils literal"><span class="pre">QLed.getLedStatus()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.setLedStatus" title="taurus.qt.qtgui.display.QLed.setLedStatus"><code class="xref py py-meth docutils literal"><span class="pre">QLed.setLedStatus()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.display.QLed.resetLedStatus" title="taurus.qt.qtgui.display.QLed.resetLedStatus"><code class="xref py py-meth docutils literal"><span class="pre">QLed.resetLedStatus()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.minimumSizeHint">
+<code class="descname">minimumSizeHint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.minimumSizeHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.minimumSizeHint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrite the default minimum size hint (0,0) to be (16,16)
+:return: the minimum size hint 16,16
+:rtype: PyQt4.Qt.QSize</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.resetBlinkingInterval">
+<code class="descname">resetBlinkingInterval</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.resetBlinkingInterval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.resetBlinkingInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>resets the blinking interval</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.resetLedColor">
+<code class="descname">resetLedColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.resetLedColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.resetLedColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the led color</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.resetLedInverted">
+<code class="descname">resetLedInverted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.resetLedInverted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.resetLedInverted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the led inverted mode</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.resetLedPatternName">
+<code class="descname">resetLedPatternName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.resetLedPatternName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.resetLedPatternName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the led pattern to <strong>:leds/images256/led_{color}_{status}.png</strong>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.resetLedStatus">
+<code class="descname">resetLedStatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.resetLedStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.resetLedStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the led status</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.setBlinkingInterval">
+<code class="descname">setBlinkingInterval</code><span class="sig-paren">(</span><em>interval</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.setBlinkingInterval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.setBlinkingInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the blinking interval (the time between status switching).
+Set to a nonpositive number for disabling blinking</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>interval</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; the blinking interval in millisecs. Set to 0 for disabling blinking</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.setLedColor">
+<code class="descname">setLedColor</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.setLedColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.setLedColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the led color
+:param status: the new color
+:type  status: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.setLedInverted">
+<code class="descname">setLedInverted</code><span class="sig-paren">(</span><em>inverted</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.setLedInverted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.setLedInverted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the led inverted mode
+:param status: the new inverted mode
+:type  status: bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.setLedPatternName">
+<code class="descname">setLedPatternName</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.setLedPatternName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.setLedPatternName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the led pattern name. Should be a string containing a path
+to valid images. The string can contain the keywords:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>{status} - transformed to &#8216;on&#8217; of &#8216;off&#8217; according to the status</li>
+<li>{color} - transformed to the current led color</li>
+</ol>
+</div></blockquote>
+<p>Example: <strong>:leds/images256/led_{color}_{status}.png</strong> will be transformed
+to <strong>:leds/images256/led_red_on.png</strong> when the led status is True and
+the led color is red.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; new pattern</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.setLedStatus">
+<code class="descname">setLedStatus</code><span class="sig-paren">(</span><em>status</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.setLedStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.setLedStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the led status
+:param status: the new status
+:type  status: bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.sizeHint">
+<code class="descname">sizeHint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.sizeHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.toLedName">
+<code class="descname">toLedName</code><span class="sig-paren">(</span><em>status=None</em>, <em>color=None</em>, <em>inverted=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.toLedName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.toLedName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the led name for the given status and color. If status or
+color are not given, the current led status or color are used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>status</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; the status</li>
+<li><strong>color</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; the color</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">string containing the led name</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.QLed.toggleLedStatus">
+<code class="descname">toggleLedStatus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/qled.html#QLed.toggleLedStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.QLed.toggleLedStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>toggles the current status of the led</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_QLedOld.html" class="btn btn-neutral float-right" title="QLedOld" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_QFallBackWidget.html" class="btn btn-neutral" title="QFallBackWidget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

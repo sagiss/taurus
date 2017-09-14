@@ -1,0 +1,542 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtcore.communication.communication &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtcore.communication.communication</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtcore.communication.communication</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">comunications.py:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">QtCore</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="n">_DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="get_signal"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication.html#taurus.qt.qtcore.communication.get_signal">[docs]</a><span class="k">def</span> <span class="nf">get_signal</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">signalname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return signal from object and signal name.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;(&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">signalname</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">signalname</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">signalname</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dtype</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">)[</span><span class="n">dtype</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="DataModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel">[docs]</a><span class="k">class</span> <span class="nc">DataModel</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    An object containing one piece of data which is intended to be shared. The</span>
+<span class="sd">    data will be identified by its UID (a unique identifier known to objects</span>
+<span class="sd">    that intend to access the data)</span>
+
+<span class="sd">    In general, you are not supposed to instantiate objects of this class</span>
+<span class="sd">    directly. Instead, you should interact via the :class:`SharedDataManager`,</span>
+<span class="sd">    which uses :meth:`SharedDataManager.__getDataModel` to ensure that the</span>
+<span class="sd">    DataModels are singletons.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">dataChanged</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">dataUID</span><span class="p">,</span> <span class="n">defaultData</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        creator</span>
+<span class="sd">        :param parent: (QObject) the object&#39;s parent</span>
+<span class="sd">        :param dataUID: (str) a unique identifier for the Data Model</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dataUID</span> <span class="o">=</span> <span class="n">dataUID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="n">defaultData</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__isDataSet</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__readerSlots</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__writerSignals</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;DataModel object with dataUID=&quot;</span><span class="si">%s</span><span class="s1">&quot;&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataUID</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DataModel.dataUID"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.dataUID">[docs]</a>    <span class="k">def</span> <span class="nf">dataUID</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        returns the data unique identifier</span>
+
+<span class="sd">        :return: (str)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dataUID</span></div>
+
+<div class="viewcode-block" id="DataModel.getData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.getData">[docs]</a>    <span class="k">def</span> <span class="nf">getData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns the data object.</span>
+
+<span class="sd">        :return: (object) the data object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span></div>
+
+<div class="viewcode-block" id="DataModel.setData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.setData">[docs]</a>    <span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        sets the data object and emits a &quot;dataChanged&quot; signal with the data as the parameter</span>
+
+<span class="sd">        :param data: (object) the new value for the Model&#39;s data</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__isDataSet</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataModel.connectReader"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.connectReader">[docs]</a>    <span class="k">def</span> <span class="nf">connectReader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">readOnConnect</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Registers the given slot method to receive notifications whenever the</span>
+<span class="sd">        data is changed.</span>
+
+<span class="sd">        :param slot: (callable) a method that will be called when the data changes.</span>
+<span class="sd">                     This slot will be the receiver of a signal which has the</span>
+<span class="sd">                     data as its first argument.</span>
+<span class="sd">        :param readOnConnect: (bool) if True (default) the slot will be called</span>
+<span class="sd">                              immediately with the current value of the data</span>
+<span class="sd">                              if the data has been already initialized</span>
+
+<span class="sd">        .. seealso:: :meth:`connectWriter`, :meth:`getData`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">readOnConnect</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__isDataSet</span><span class="p">:</span>
+            <span class="n">slot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">slot</span><span class="p">,</span> <span class="s1">&#39;__self__&#39;</span><span class="p">,</span> <span class="n">slot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__readerSlots</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="n">slot</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="DataModel.connectWriter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.connectWriter">[docs]</a>    <span class="k">def</span> <span class="nf">connectWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">signalname</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Registers the given writer object as a writer of the data. The writer is</span>
+<span class="sd">        then expected to emit a `QtCore.SIGNAL(signalname)` with the new data as the</span>
+<span class="sd">        first parameter.</span>
+
+<span class="sd">        :param writer: (QObject) object that will change the data</span>
+<span class="sd">        :param signalname: (str) the signal name that will notify changes</span>
+<span class="sd">                           of the data</span>
+
+<span class="sd">        .. seealso:: :meth:`connectReader`, :meth:`setData`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">get_signal</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">signalname</span><span class="p">)</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setData</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="c1"># support old-style signal</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">signalname</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">setData</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__writerSignals</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">writer</span><span class="p">),</span> <span class="n">signalname</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="DataModel.disconnectWriter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.disconnectWriter">[docs]</a>    <span class="k">def</span> <span class="nf">disconnectWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">signalname</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;unregister a writer from this data model</span>
+
+<span class="sd">        :param writer: (QObject) object to unregister</span>
+<span class="sd">        :param signalname: (str) the signal that was registered</span>
+
+<span class="sd">        .. seealso:: :meth:`SharedDataManager.disconnectWriter`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="n">get_signal</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">signalname</span><span class="p">)</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setData</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__writerSignals</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">writer</span><span class="p">),</span> <span class="n">signalname</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="DataModel.disconnectReader"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.disconnectReader">[docs]</a>    <span class="k">def</span> <span class="nf">disconnectReader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        unregister a reader</span>
+
+<span class="sd">        :param slot: (callable) the slot to which this was connected</span>
+
+<span class="sd">        .. seealso:: :meth:`SharedDataManager.disconnectReader`, :meth:`getData`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__readerSlots</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">slot</span><span class="o">.</span><span class="vm">__self__</span><span class="p">),</span> <span class="n">slot</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="DataModel.isDataSet"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.isDataSet">[docs]</a>    <span class="k">def</span> <span class="nf">isDataSet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Whether the data has been set at least once or if it is uninitialized</span>
+
+<span class="sd">        :return: (bool) True if the data has been set. False it is uninitialized&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__isDataSet</span></div>
+
+<div class="viewcode-block" id="DataModel.info"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">readers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">::</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">r</span><span class="p">()),</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__readerSlots</span><span class="p">]</span>
+        <span class="n">writers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">::</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">r</span><span class="p">()),</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__writerSignals</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;UID: </span><span class="si">%s</span><span class="se">\n\t</span><span class="s2"> Readers (</span><span class="si">%i</span><span class="s2">):</span><span class="si">%s</span><span class="se">\n\t</span><span class="s2"> Writers (</span><span class="si">%i</span><span class="s2">):</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dataUID</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">readers</span><span class="p">),</span>
+                                                                      <span class="n">readers</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">writers</span><span class="p">),</span> <span class="n">writers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataModel.readerCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.readerCount">[docs]</a>    <span class="k">def</span> <span class="nf">readerCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the number of currently registered readers of this model</span>
+
+<span class="sd">        :return: (int)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__readerSlots</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataModel.writerCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_DataModel.html#taurus.qt.qtcore.communication.DataModel.writerCount">[docs]</a>    <span class="k">def</span> <span class="nf">writerCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the number of currently registered writers of this model</span>
+
+<span class="sd">        :return: (int)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__writerSignals</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SharedDataManager"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager">[docs]</a><span class="k">class</span> <span class="nc">SharedDataManager</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A Factory of :class:`DataModel` objects. The :meth:`__getDataModel` method</span>
+<span class="sd">    ensures that the created DataModels are singletons. DataModels are not kept</span>
+<span class="sd">    alive unless there at least some Reader or Writer registered to it (or</span>
+<span class="sd">    another object referencing them)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__models</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">__getDataModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataUID</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns the :class:`DataModel` object for the given data UID (which is a singleton).</span>
+<span class="sd">        If it does not previously exist, it creates one).</span>
+
+<span class="sd">        .. note:: This is a private method. You are probably more interested</span>
+<span class="sd">                  in using :meth:`connectReader` and :meth:`connectWriter`</span>
+
+<span class="sd">        :param dataUID: (str) the unique identifier of the data</span>
+
+<span class="sd">        :return: (DataModel)</span>
+
+<span class="sd">        .. seealso:: :meth:`connectReader`,  :meth:`connectWriter`, :class:`DataModel`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">dataUID</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__models</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__models</span><span class="p">[</span><span class="n">dataUID</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataUID</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__models</span><span class="p">[</span><span class="n">dataUID</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SharedDataManager.getDataModelProxy"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager.getDataModelProxy">[docs]</a>    <span class="k">def</span> <span class="nf">getDataModelProxy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataUID</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a :class:`weakref.proxy` to a :class:`DataModel` object for the</span>
+<span class="sd">        given data UID or None if the UID is not registered.</span>
+
+<span class="sd">        .. note:: The underlying :class:`DataModel` object may cease to exist if</span>
+<span class="sd">                  all its readers and writers are unregistered.</span>
+
+<span class="sd">        :param dataUID: (str) the unique identifier of the data</span>
+<span class="sd">        :param callback: (callable) same as in :class:`weakref.ref` callback parameter</span>
+
+<span class="sd">        :return: (weakref.proxy or None)</span>
+
+<span class="sd">        .. seealso:: :meth:`connectReader`,  :meth:`connectWriter`, :class:`DataModel`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">dataUID</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__models</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">dm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getDataModel</span><span class="p">(</span><span class="n">dataUID</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">dm</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SharedDataManager.connectReader"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager.connectReader">[docs]</a>    <span class="k">def</span> <span class="nf">connectReader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataUID</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">readOnConnect</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Registers the given slot method to receive notifications whenever the</span>
+<span class="sd">        data identified by dataUID is changed.</span>
+
+<span class="sd">        Note that it returns the :meth:`DataModel.getData` method for the given data</span>
+<span class="sd">        UID, which can be used for reading the data at any moment.</span>
+
+<span class="sd">        :param dataUID: (str) the unique identifier of the data</span>
+<span class="sd">        :param slot: (callable) a method that will be called when the data changes</span>
+<span class="sd">                     this slot will be the receiver of a signal which has the</span>
+<span class="sd">                     data as its first argument.</span>
+<span class="sd">        :param readOnConnect: (bool) if True (default) the slot will be called</span>
+<span class="sd">                              immediately with the current value of the data</span>
+<span class="sd">                              if the data has been already initialized</span>
+
+<span class="sd">        :return: (callable) a callable that can be used for reading the data</span>
+
+<span class="sd">        .. seealso:: :meth:`connectWriter`, :meth:`__getDataModel`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getDataModel</span><span class="p">(</span><span class="n">dataUID</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="n">slot</span><span class="p">,</span> <span class="n">readOnConnect</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_DEBUG</span><span class="p">:</span>
+            <span class="c1"># @todo: comment this line out. ONLY FOR DEBUGGING</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugReader</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">getData</span></div>
+
+<div class="viewcode-block" id="SharedDataManager.connectWriter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager.connectWriter">[docs]</a>    <span class="k">def</span> <span class="nf">connectWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataUID</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">signalname</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Registers the given writer object as a changer of the shared data</span>
+<span class="sd">        identified by dataUID. The writer is then expected to emit a</span>
+<span class="sd">        `QtCore.SIGNAL(signalname)` with the new data as the first parameter</span>
+
+<span class="sd">        Note that it returns the :meth:`DataModel.setData` method for the given data</span>
+<span class="sd">        UID, which can be used for changing the data at any moment.</span>
+
+<span class="sd">        :param dataUID: (str) the unique identifier of the data</span>
+<span class="sd">        :param writer: (QObject) object that will change the data</span>
+<span class="sd">        :param signalname: (str) the signal name that will notify changes</span>
+<span class="sd">                           of the data</span>
+
+<span class="sd">        :return: (callable) a callable that can be used for setting the data.</span>
+<span class="sd">                 When using it, one parameter has to be passed containing the</span>
+<span class="sd">                 new data</span>
+
+<span class="sd">        .. seealso:: :meth:`connectWriter`, :meth:`__getDataModel`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getDataModel</span><span class="p">(</span><span class="n">dataUID</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">connectWriter</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">signalname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_DEBUG</span><span class="p">:</span>
+            <span class="c1"># @todo: comment this line out. ONLY FOR DEBUGGING</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugReader</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">setData</span></div>
+
+<div class="viewcode-block" id="SharedDataManager.disconnectWriter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager.disconnectWriter">[docs]</a>    <span class="k">def</span> <span class="nf">disconnectWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataUID</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">signalname</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Unregister the given object as writer of the shared data</span>
+
+<span class="sd">        :param dataUID: (str) the unique identifier of the data</span>
+<span class="sd">        :param writer: (QObject) object to unregister</span>
+<span class="sd">        :param signalname: (str) the signal that was registered</span>
+
+<span class="sd">        .. seealso:: :meth:`DataModel.disconnectWriter`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getDataModel</span><span class="p">(</span><span class="n">dataUID</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">disconnectWriter</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">signalname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">readerCount</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">writerCount</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__models</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">dataUID</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SharedDataManager.disconnectReader"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager.disconnectReader">[docs]</a>    <span class="k">def</span> <span class="nf">disconnectReader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataUID</span><span class="p">,</span> <span class="n">slot</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Unregister the given method as data receiver</span>
+
+<span class="sd">        :param dataUID: (str) the unique identifier of the data</span>
+<span class="sd">        :param slot: (str) the slot that was registered</span>
+
+<span class="sd">        .. seealso:: :meth:`DataModel.disconnectReader`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getDataModel</span><span class="p">(</span><span class="n">dataUID</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">disconnectReader</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">readerCount</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">writerCount</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__models</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">dataUID</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SharedDataManager.activeDataUIDs"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager.activeDataUIDs">[docs]</a>    <span class="k">def</span> <span class="nf">activeDataUIDs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of currently shared data. Note that this list only</span>
+<span class="sd">        reflects the situation at the moment of calling this method: a given</span>
+<span class="sd">        DataModel may die at any moment if there are no references to it.</span>
+
+<span class="sd">        :returns: (list&lt;str&gt;) UIDs of currently shared data.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__models</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SharedDataManager.debugReader"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager.debugReader">[docs]</a>    <span class="k">def</span> <span class="nf">debugReader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A slot which you can connect as a reader for debugging. It will print info to the stdout</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">print</span> <span class="s2">&quot;SharedDataManager: </span><span class="se">\n\t</span><span class="s2">Sender=: </span><span class="si">%s</span><span class="se">\n\t</span><span class="s2">Data=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">(),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SharedDataManager.info"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__models</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()):</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="n">m</span><span class="o">.</span><span class="n">info</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">s</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

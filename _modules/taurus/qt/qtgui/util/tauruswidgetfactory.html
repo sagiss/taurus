@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.util.tauruswidgetfactory &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.util.tauruswidgetfactory</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.util.tauruswidgetfactory</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">tauruswidgetfactory.py:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusWidgetFactory&quot;</span><span class="p">,</span> <span class="s2">&quot;getWidgetsOfType&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
+
+<span class="kn">import</span> <span class="nn">taurus.qt.qtgui.base</span>
+
+
+<span class="k">def</span> <span class="nf">_getWidgetsOfType</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">widgets</span><span class="p">,</span> <span class="n">class_or_type_or_tuple</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">class_or_type_or_tuple</span><span class="p">):</span>
+        <span class="n">widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">widget</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+            <span class="n">_getWidgetsOfType</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">widgets</span><span class="p">,</span> <span class="n">class_or_type_or_tuple</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="getWidgetsOfType"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util.html#taurus.qt.qtgui.util.getWidgetsOfType">[docs]</a><span class="k">def</span> <span class="nf">getWidgetsOfType</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">class_or_type_or_tuple</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns all widgets in a hierarchy of a certain type</span>
+
+<span class="sd">    :param widget: the widget to be inspected</span>
+<span class="sd">    :type widget: Qt.QWidget</span>
+<span class="sd">    :param class-or-type-or-tuple: type to be checked</span>
+<span class="sd">    :type class-or-type-or-tuple: type class or a tuple of type classes</span>
+
+<span class="sd">    :return: a sequence containning all widgets in the hierarchy that match the</span>
+<span class="sd">             given type</span>
+<span class="sd">    :rtype: seq&lt;Qt.QWidget&gt;&quot;&quot;&quot;</span>
+    <span class="n">widgets</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">_getWidgetsOfType</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">widgets</span><span class="p">,</span> <span class="n">class_or_type_or_tuple</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">widgets</span></div>
+
+
+<div class="viewcode-block" id="TaurusWidgetFactory"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusWidgetFactory</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The TaurusWidgetFactory is a utility class that provides information</span>
+<span class="sd">    about all Qt widgets (Taurus and non Taurus) that are found in the</span>
+<span class="sd">    current taurus distribution.</span>
+<span class="sd">    TaurusWidgetFactory is a singleton class so you can freely create new</span>
+<span class="sd">    instances since they will all reference the same object.</span>
+<span class="sd">    Usage::</span>
+
+<span class="sd">        from taurus.qt.qtgui.util import TaurusWidgetFactory</span>
+
+<span class="sd">        wf = TaurusWidgetFactory()</span>
+<span class="sd">        print wf.getTaurusWidgetClassNames()&quot;&quot;&quot;</span>
+
+    <span class="n">skip_modules</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;widget&#39;</span><span class="p">,</span> <span class="s1">&#39;util&#39;</span><span class="p">,</span> <span class="s1">&#39;qtdesigner&#39;</span><span class="p">,</span> <span class="s1">&#39;uic&#39;</span><span class="p">,</span> <span class="s1">&#39;resource&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initialization. Nothing to be done here for now.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.init"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Singleton instance initialization.&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="n">path</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buildWidgets</span><span class="p">(</span>
+            <span class="s1">&#39;taurus.qt.qtgui&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addExtraTaurusWidgets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_buildWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.base</span>
+
+        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+
+        <span class="n">elems</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_ret</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;__init__.py&#39;</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_ret</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">],</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dir_names</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dir_name</span> <span class="ow">in</span> <span class="n">dir_names</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">dir_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">attr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+                        <span class="n">package</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">__package__</span>
+                        <span class="n">qt_ret</span><span class="p">[</span><span class="n">dir_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">package</span><span class="p">,</span> <span class="n">attr</span>
+                        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">TaurusBaseWidget</span><span class="p">):</span>
+                            <span class="n">taurus_ret</span><span class="p">[</span><span class="n">dir_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">package</span><span class="p">,</span> <span class="n">attr</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_ret</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">recursive</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_ret</span>
+
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
+            <span class="n">abs_elem</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">elem</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">abs_elem</span><span class="p">)</span> <span class="ow">and</span> \
+               <span class="p">(</span><span class="ow">not</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip_modules</span><span class="p">):</span>
+                <span class="n">m_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">elem</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">new_module_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">m_name</span><span class="p">)</span>
+                <span class="n">new_taurus_ret</span><span class="p">,</span> <span class="n">new_qt_ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buildWidgets</span><span class="p">(</span>
+                    <span class="n">new_module_name</span><span class="p">,</span> <span class="n">abs_elem</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="n">taurus_ret</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_taurus_ret</span><span class="p">)</span>
+                <span class="n">qt_ret</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_qt_ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_ret</span>
+
+    <span class="k">def</span> <span class="nf">_addExtraTaurusWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_widgets</span><span class="p">):</span>
+        <span class="n">designer_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;TAURUSQTDESIGNERPATH&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">designer_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">taurus_ret</span>
+        <span class="n">designer_path</span> <span class="o">=</span> <span class="n">designer_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">designer_path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_addExtraTaurusWidgetsPath</span><span class="p">(</span><span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_widgets</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_addExtraTaurusWidgetsPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_widgets</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Trying extra taurus widgets in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="n">elems</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
+            <span class="n">m_name</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ext</span> <span class="o">!=</span> <span class="s1">&#39;.py&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Trying to find extra module </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m_name</span><span class="p">)</span>
+                <span class="n">f</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="n">m_name</span><span class="p">,</span> <span class="p">[</span><span class="n">path</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">ie</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not find extra module </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m_name</span><span class="p">,</span> <span class="n">ie</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Trying to load extra module </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m_name</span><span class="p">)</span>
+                <span class="n">mod</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">m_name</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">ie</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not load extra module </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m_name</span><span class="p">,</span> <span class="n">ie</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">dir_names</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dir_name</span> <span class="ow">in</span> <span class="n">dir_names</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">dir_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">dir_name</span> <span class="ow">in</span> <span class="n">taurus_ret</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">attr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">TaurusBaseWidget</span><span class="p">):</span>
+                            <span class="n">qt_info</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+                            <span class="n">taurus_ret</span><span class="p">[</span><span class="n">dir_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">qt_info</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">],</span> <span class="n">attr</span>
+                            <span class="n">qt_widgets</span><span class="p">[</span><span class="n">dir_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">qt_info</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">],</span> <span class="n">attr</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;registered taurus widget </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.getWidgets"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getWidgets">[docs]</a>    <span class="k">def</span> <span class="nf">getWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span></div>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.getTaurusWidgets"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getTaurusWidgets">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span></div>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.getWidgetClassNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getWidgetClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">getWidgetClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.getWidgetClasses"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getWidgetClasses">[docs]</a>    <span class="k">def</span> <span class="nf">getWidgetClasses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">klass</span> <span class="k">for</span> <span class="n">mod_name</span><span class="p">,</span> <span class="n">klass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.getWidgetClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getWidgetClass">[docs]</a>    <span class="k">def</span> <span class="nf">getWidgetClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.getTaurusWidgetClassNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getTaurusWidgetClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusWidgetClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.getTaurusWidgetClasses"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getTaurusWidgetClasses">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusWidgetClasses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">klass</span> <span class="k">for</span> <span class="n">mod_name</span><span class="p">,</span> <span class="n">klass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="TaurusWidgetFactory.getTaurusWidgetClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getTaurusWidgetClass">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusWidgetClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

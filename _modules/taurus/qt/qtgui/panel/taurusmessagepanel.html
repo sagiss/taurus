@@ -1,0 +1,844 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.panel.taurusmessagepanel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.panel.taurusmessagepanel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.panel.taurusmessagepanel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a panel to display taurus messages&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusMessagePanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusMessageErrorHandler&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TangoMessageErrorHandler&quot;</span><span class="p">,</span> <span class="s2">&quot;MacroServerMessageErrorHandler&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pygments</span>
+    <span class="kn">from</span> <span class="nn">pygments</span> <span class="k">import</span> <span class="n">highlight</span>
+    <span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="k">import</span> <span class="n">HtmlFormatter</span>
+    <span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="k">import</span> <span class="n">PythonTracebackLexer</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pygments</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># shame on me for importing PyTango! well not so much since this is designed to</span>
+<span class="c1"># show PyTango exceptions</span>
+<span class="kn">import</span> <span class="nn">PyTango</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.util.report</span> <span class="k">import</span> <span class="n">TaurusMessageReportHandler</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<div class="viewcode-block" id="TaurusMessageErrorHandler"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessageErrorHandler.html#taurus.qt.qtgui.panel.TaurusMessageErrorHandler">[docs]</a><span class="k">class</span> <span class="nc">TaurusMessageErrorHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class is designed to handle a generic error into a</span>
+<span class="sd">    :class:`TaurusMessagePanel`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgbox</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_msgbox</span> <span class="o">=</span> <span class="n">msgbox</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Taurus Error&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setError</span><span class="p">(</span><span class="o">*</span><span class="n">msgbox</span><span class="o">.</span><span class="n">getError</span><span class="p">())</span>
+
+<div class="viewcode-block" id="TaurusMessageErrorHandler.setError"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessageErrorHandler.html#taurus.qt.qtgui.panel.TaurusMessageErrorHandler.setError">[docs]</a>    <span class="k">def</span> <span class="nf">setError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_traceback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Translates the given error object into an HTML string and places it</span>
+<span class="sd">        in the message panel</span>
+
+<span class="sd">        :param error: an error object (typically an exception object)</span>
+<span class="sd">        :type error: object&quot;&quot;&quot;</span>
+
+        <span class="n">msgbox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_msgbox</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception_only</span><span class="p">(</span><span class="n">err_type</span><span class="p">,</span> <span class="n">err_value</span><span class="p">))</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;&lt;html&gt;&lt;body&gt;&lt;pre&gt;</span><span class="si">%s</span><span class="s2">&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="n">error</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setDetailedHtml</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">html_orig</span> <span class="o">=</span> <span class="s1">&#39;&lt;html&gt;&lt;head&gt;&lt;style type=&quot;text/css&quot;&gt;</span><span class="si">{style}</span><span class="s1">&lt;/style&gt;&#39;</span> \
+                    <span class="s1">&#39;&lt;/head&gt;&lt;body&gt;&#39;</span>
+        <span class="n">exc_info</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">err_type</span><span class="p">,</span> <span class="n">err_value</span><span class="p">,</span>
+                                                      <span class="n">err_traceback</span><span class="p">))</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">pygments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">()</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">html_orig</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pygments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;pre&gt;</span><span class="si">%s</span><span class="s2">&lt;/pre&gt;&quot;</span> <span class="o">%</span> <span class="n">exc_info</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">()</span>
+            <span class="n">html</span> <span class="o">+=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">exc_info</span><span class="p">,</span> <span class="n">PythonTracebackLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
+        <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setOriginHtml</span><span class="p">(</span><span class="n">html</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TangoMessageErrorHandler"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoMessageErrorHandler.html#taurus.qt.qtgui.panel.TangoMessageErrorHandler">[docs]</a><span class="k">class</span> <span class="nc">TangoMessageErrorHandler</span><span class="p">(</span><span class="n">TaurusMessageErrorHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class is designed to handle :class:`PyTango.DevFailed` error into</span>
+<span class="sd">    a :class:`TaurusMessagePanel`&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TangoMessageErrorHandler.setError"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoMessageErrorHandler.html#taurus.qt.qtgui.panel.TangoMessageErrorHandler.setError">[docs]</a>    <span class="k">def</span> <span class="nf">setError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_traceback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Translates the given error object into an HTML string and places it</span>
+<span class="sd">        it the message panel</span>
+
+<span class="sd">        :param error: an error object (typically an exception object)</span>
+<span class="sd">        :type error: object&quot;&quot;&quot;</span>
+
+        <span class="n">msgbox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_msgbox</span>
+        <span class="n">html_orig</span> <span class="o">=</span> <span class="s1">&#39;&lt;html&gt;&lt;head&gt;&lt;style type=&quot;text/css&quot;&gt;</span><span class="si">{style}</span><span class="s1">&lt;/style&gt;&#39;</span> \
+                    <span class="s1">&#39;&lt;/head&gt;&lt;body&gt;&#39;</span>
+        <span class="n">style</span><span class="p">,</span> <span class="n">formatter</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">pygments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">()</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">html_orig</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">de</span> <span class="ow">in</span> <span class="n">err_value</span><span class="p">:</span>
+            <span class="n">e_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;pre&gt;</span><span class="si">{reason}</span><span class="s2">: </span><span class="si">{desc}</span><span class="s2">&lt;/pre&gt;</span><span class="si">{origin}</span><span class="s2">&lt;hr&gt;&quot;&quot;&quot;</span>
+            <span class="n">origin</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="n">de</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span> <span class="n">de</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">de</span><span class="o">.</span><span class="n">desc</span>
+            <span class="k">if</span> <span class="n">reason</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;PyDs_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pygments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">origin</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">PythonTracebackLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">origin</span> <span class="o">=</span> <span class="s2">&quot;&lt;pre&gt;</span><span class="si">%s</span><span class="s2">&lt;/pre&gt;&quot;</span> <span class="o">%</span> <span class="n">origin</span>
+            <span class="n">html</span> <span class="o">+=</span> <span class="n">e_html</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">)</span>
+        <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">err_value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setDetailedHtml</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+
+        <span class="n">exc_info</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">err_type</span><span class="p">,</span> <span class="n">err_value</span><span class="p">,</span>
+                                                      <span class="n">err_traceback</span><span class="p">))</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">html_orig</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pygments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;pre&gt;</span><span class="si">%s</span><span class="s2">&lt;/pre&gt;&quot;</span> <span class="o">%</span> <span class="n">exc_info</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">html</span> <span class="o">+=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">exc_info</span><span class="p">,</span> <span class="n">PythonTracebackLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
+        <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setOriginHtml</span><span class="p">(</span><span class="n">html</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="MacroServerMessageErrorHandler"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_MacroServerMessageErrorHandler.html#taurus.qt.qtgui.panel.MacroServerMessageErrorHandler">[docs]</a><span class="k">class</span> <span class="nc">MacroServerMessageErrorHandler</span><span class="p">(</span><span class="n">TaurusMessageErrorHandler</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MacroServerMessageErrorHandler.setError"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_MacroServerMessageErrorHandler.html#taurus.qt.qtgui.panel.MacroServerMessageErrorHandler.setError">[docs]</a>    <span class="k">def</span> <span class="nf">setError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_traceback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Translates the given error object into an HTML string and places it</span>
+<span class="sd">        in the message panel</span>
+
+<span class="sd">        :param error: an error object (typically an exception object)</span>
+<span class="sd">        :type error: object&quot;&quot;&quot;</span>
+
+        <span class="n">msgbox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_msgbox</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">err_value</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;&lt;html&gt;&lt;body&gt;&lt;pre&gt;</span><span class="si">%s</span><span class="s2">&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="n">err_value</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setDetailedHtml</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">html_orig</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;html&gt;&lt;head&gt;&lt;style type=&quot;text/css&quot;&gt;</span><span class="si">{style}</span><span class="s2">&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&quot;&quot;&quot;</span>
+        <span class="n">exc_info</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">err_traceback</span><span class="p">)</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">pygments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">()</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">html_orig</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pygments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;pre&gt;</span><span class="si">%s</span><span class="s2">&lt;/pre&gt;&quot;</span> <span class="o">%</span> <span class="n">exc_info</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">()</span>
+            <span class="n">html</span> <span class="o">+=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">exc_info</span><span class="p">,</span> <span class="n">PythonTracebackLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
+        <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setOriginHtml</span><span class="p">(</span><span class="n">html</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">is_report_handler</span><span class="p">(</span><span class="n">report</span><span class="p">,</span> <span class="n">abs_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function to determine if a certain python object is a valid</span>
+<span class="sd">    report handler&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">inspect</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">report</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">report</span><span class="p">,</span> <span class="n">TaurusMessageReportHandler</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getabsfile</span><span class="p">(</span><span class="n">report</span><span class="p">)</span> <span class="o">!=</span> <span class="n">abs_file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="n">_REPORT_HANDLERS</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">get_report_handlers</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">_REPORT_HANDLERS</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_REPORT_HANDLERS</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_REPORT_HANDLERS</span>
+
+    <span class="kn">import</span> <span class="nn">os.path</span>
+    <span class="kn">import</span> <span class="nn">functools</span>
+    <span class="kn">import</span> <span class="nn">inspect</span>
+
+    <span class="n">this</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="n">report_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">this</span><span class="p">),</span> <span class="s2">&quot;report&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">report_path</span><span class="p">)</span>
+
+    <span class="n">_REPORT_HANDLERS</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">report_path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="n">full_elem</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">report_path</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">full_elem</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">elem</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.py&#39;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">elem</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+            <span class="n">_is_report_handler</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+                <span class="n">is_report_handler</span><span class="p">,</span> <span class="n">abs_file</span><span class="o">=</span><span class="n">full_elem</span><span class="p">)</span>
+            <span class="n">report_lib</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="p">[],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">report_lib</span><span class="p">,</span> <span class="n">_is_report_handler</span><span class="p">):</span>
+                <span class="n">_REPORT_HANDLERS</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_REPORT_HANDLERS</span>
+
+<span class="n">_REPORT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">-- Description -----------------------------------------------------------------</span>
+<span class="s2">An error occured in &#39;</span><span class="si">{appName}</span><span class="s2"> </span><span class="si">{appVersion}</span><span class="s2">&#39; on </span><span class="si">{time}</span><span class="s2"></span>
+<span class="si">{text}</span><span class="s2"></span>
+
+<span class="s2">-- Details ---------------------------------------------------------------------</span>
+<span class="si">{detail}</span><span class="s2"></span>
+
+<span class="s2">-- Origin ----------------------------------------------------------------------</span>
+<span class="si">{origin}</span><span class="s2"></span>
+<span class="s2">--------------------------------------------------------------------------------</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@UILoadable</span><span class="p">(</span><span class="n">with_ui</span><span class="o">=</span><span class="s1">&#39;_ui&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusMessagePanel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel">[docs]</a><span class="k">class</span> <span class="nc">TaurusMessagePanel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A panel intended to display a taurus error.</span>
+<span class="sd">    Example::</span>
+
+<span class="sd">        dev = taurus.Device(&quot;sys/tg_test/1&quot;)</span>
+<span class="sd">        try:</span>
+<span class="sd">            print dev.read_attribute(&quot;throw_exception&quot;)</span>
+<span class="sd">        except PyTango.DevFailed, df:</span>
+<span class="sd">            msgbox = TaurusMessagePanel()</span>
+<span class="sd">            msgbox.show()</span>
+
+<span class="sd">    You can show the error outside the exception handling code. If you do this,</span>
+<span class="sd">    you should keep a record of the exception information as given by</span>
+<span class="sd">    :func:`sys.exc_info`::</span>
+
+<span class="sd">        dev = taurus.Device(&quot;sys/tg_test/1&quot;)</span>
+<span class="sd">        exc_info = None</span>
+<span class="sd">        try:</span>
+<span class="sd">            print dev.read_attribute(&quot;throw_exception&quot;)</span>
+<span class="sd">        except PyTango.DevFailed, df:</span>
+<span class="sd">            exc_info = sys.exc_info()</span>
+
+<span class="sd">        if exc_info:</span>
+<span class="sd">            msgbox = TaurusMessagePanel(*exc_info)</span>
+<span class="sd">            msgbox.show()&quot;&quot;&quot;</span>
+
+    <span class="n">toggledDetails</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_traceback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exc_info</span> <span class="o">=</span> <span class="n">err_type</span><span class="p">,</span> <span class="n">err_value</span><span class="p">,</span> <span class="n">err_traceback</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_detailsWidget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_checkBox</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_checkBox</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initReportCombo</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_showDetailsButton</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onShowDetails</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_reportComboBox</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onReportTriggered</span><span class="p">)</span>
+
+        <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;emblem-important&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIconPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">err_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setError</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_exc_info</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjustSize</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_initReportCombo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">report_handlers</span> <span class="o">=</span> <span class="n">get_report_handlers</span><span class="p">()</span>
+        <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reportComboBox</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">report_handler</span> <span class="ow">in</span> <span class="n">report_handlers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">combo</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">report_handler</span><span class="o">.</span><span class="n">Label</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_onReportTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">report_handlers</span> <span class="o">=</span> <span class="n">get_report_handlers</span><span class="p">()</span>
+        <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reportComboBox</span><span class="p">()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">report_handler</span> <span class="o">=</span> <span class="n">report_handlers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">report</span> <span class="o">=</span> <span class="n">report_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">_REPORT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">appName</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">applicationName</span><span class="p">(),</span>
+                             <span class="n">appVersion</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">applicationVersion</span><span class="p">(),</span>
+                             <span class="n">time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">ctime</span><span class="p">(),</span>
+                             <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getText</span><span class="p">(),</span>
+                             <span class="n">detail</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getDetailedText</span><span class="p">(),</span>
+                             <span class="n">origin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getOriginText</span><span class="p">())</span>
+        <span class="n">report</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_onShowDetails</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_detailsWidget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">show</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hide details...&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Show details...&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_showDetailsButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjustSize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggledDetails</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">show</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusMessagePanel.reportComboBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.reportComboBox">[docs]</a>    <span class="k">def</span> <span class="nf">reportComboBox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_reportComboBox</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.checkBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.checkBox">[docs]</a>    <span class="k">def</span> <span class="nf">checkBox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the check box from this panel</span>
+
+<span class="sd">        :return: the check box from this panel</span>
+<span class="sd">        :rtype: PyQt4.Qt.QCheckBox&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_checkBox</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.checkBoxState"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.checkBoxState">[docs]</a>    <span class="k">def</span> <span class="nf">checkBoxState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the check box state</span>
+
+<span class="sd">        :return: the check box state</span>
+<span class="sd">        :rtype: PyQt4.Qt.CheckState&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkBox</span><span class="p">()</span><span class="o">.</span><span class="n">checkState</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.checkBoxText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.checkBoxText">[docs]</a>    <span class="k">def</span> <span class="nf">checkBoxText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the check box text</span>
+
+<span class="sd">        :return: the check box text</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkBox</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setCheckBoxText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxText">[docs]</a>    <span class="k">def</span> <span class="nf">setCheckBoxText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the checkbox text.</span>
+
+<span class="sd">        :param text: new checkbox text</span>
+<span class="sd">        :type text: str&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBox</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setCheckBoxState"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxState">[docs]</a>    <span class="k">def</span> <span class="nf">setCheckBoxState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the checkbox state.</span>
+
+<span class="sd">        :param text: new checkbox state</span>
+<span class="sd">        :type text: PyQt4.Qt.CheckState&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBox</span><span class="p">()</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setCheckBoxVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setCheckBoxVisible">[docs]</a>    <span class="k">def</span> <span class="nf">setCheckBoxVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visible</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the checkbox visibility.</span>
+
+<span class="sd">        :param visible: True makes checkbox visible, False hides it</span>
+<span class="sd">        :type visible: bool&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkBox</span><span class="p">()</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">visible</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.buttonBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.buttonBox">[docs]</a>    <span class="k">def</span> <span class="nf">buttonBox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the button box from this panel</span>
+
+<span class="sd">        :return: the button box from this panel</span>
+<span class="sd">        :rtype: PyQt4.Qt.QDialogButtonBox&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_buttonBox</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.addButton"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.addButton">[docs]</a>    <span class="k">def</span> <span class="nf">addButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">ActionRole</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds the given button with the given to the button box</span>
+
+<span class="sd">        :param button: the button to be added</span>
+<span class="sd">        :type button: PyQt4.QtGui.QPushButton</span>
+<span class="sd">        :param role: button role</span>
+<span class="sd">        :type role: PyQt4.Qt.QDialogButtonBox.ButtonRole&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_buttonBox</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setIconPixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setIconPixmap">[docs]</a>    <span class="k">def</span> <span class="nf">setIconPixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the icon to the dialog</span>
+
+<span class="sd">        :param pixmap: the icon pixmap</span>
+<span class="sd">        :type pixmap: PyQt4.Qt.QPixmap&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_iconLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setText">[docs]</a>    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the text of this panel</span>
+
+<span class="sd">        :param text: the new text</span>
+<span class="sd">        :type text: str&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_textLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.getText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.getText">[docs]</a>    <span class="k">def</span> <span class="nf">getText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current text of this panel</span>
+
+<span class="sd">        :return: the text for this panel</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_textLabel</span><span class="o">.</span><span class="n">text</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setDetailedText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setDetailedText">[docs]</a>    <span class="k">def</span> <span class="nf">setDetailedText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the detailed text of the dialog</span>
+
+<span class="sd">        :param text: the new text</span>
+<span class="sd">        :type text: str&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_detailsTextEdit</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setDetailedHtml"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setDetailedHtml">[docs]</a>    <span class="k">def</span> <span class="nf">setDetailedHtml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">html</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the detailed HTML of the dialog</span>
+
+<span class="sd">        :param html: the new HTML text</span>
+<span class="sd">        :type html: str&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_detailsTextEdit</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="n">html</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.getDetailedText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.getDetailedText">[docs]</a>    <span class="k">def</span> <span class="nf">getDetailedText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current detailed text of this panel</span>
+
+<span class="sd">        :return: the detailed text for this panel</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_detailsTextEdit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.getDetailedHtml"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.getDetailedHtml">[docs]</a>    <span class="k">def</span> <span class="nf">getDetailedHtml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current detailed HTML of this panel</span>
+
+<span class="sd">        :return: the detailed HTML for this panel</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_detailsTextEdit</span><span class="o">.</span><span class="n">toHtml</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setOriginText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setOriginText">[docs]</a>    <span class="k">def</span> <span class="nf">setOriginText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the origin text of the dialog</span>
+
+<span class="sd">        :param text: the new text</span>
+<span class="sd">        :type text: str&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_originTextEdit</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setOriginHtml"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setOriginHtml">[docs]</a>    <span class="k">def</span> <span class="nf">setOriginHtml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">html</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the origin HTML of the dialog</span>
+
+<span class="sd">        :param html: the new HTML text</span>
+<span class="sd">        :type html: str&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_originTextEdit</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="n">html</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.getOriginText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.getOriginText">[docs]</a>    <span class="k">def</span> <span class="nf">getOriginText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current origin text of this panel</span>
+
+<span class="sd">        :return: the origin text for this panel</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_originTextEdit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.getOriginHtml"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.getOriginHtml">[docs]</a>    <span class="k">def</span> <span class="nf">getOriginHtml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current origin HTML of this panel</span>
+
+<span class="sd">        :return: the origin HTML for this panel</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">_originTextEdit</span><span class="o">.</span><span class="n">toHtml</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.setError"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.setError">[docs]</a>    <span class="k">def</span> <span class="nf">setError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_traceback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the exception object.</span>
+<span class="sd">        Example usage::</span>
+
+<span class="sd">            dev = taurus.Device(&quot;sys/tg_test/1&quot;)</span>
+<span class="sd">            exc_info = None</span>
+<span class="sd">            msgbox = TaurusMessagePanel()</span>
+<span class="sd">            try:</span>
+<span class="sd">                print dev.read_attribute(&quot;throw_exception&quot;)</span>
+<span class="sd">            except PyTango.DevFailed, df:</span>
+<span class="sd">                exc_info = sys.exc_info()</span>
+
+<span class="sd">            if exc_info:</span>
+<span class="sd">                msgbox.setError(*exc_info)</span>
+<span class="sd">                msgbox.show()</span>
+
+<span class="sd">        :param err_type: the exception type of the exception being handled</span>
+<span class="sd">                         (a class object)</span>
+<span class="sd">        :type error: class object</span>
+<span class="sd">        :param err_value: exception object</span>
+<span class="sd">        :type err_value: object</span>
+<span class="sd">        :param err_traceback: a traceback object which encapsulates the call</span>
+<span class="sd">                              stack at the point where the exception originally</span>
+<span class="sd">                              occurred</span>
+<span class="sd">        :type err_traceback: TracebackType&quot;&quot;&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exc_info</span> <span class="o">=</span> <span class="p">[</span><span class="n">err_type</span> <span class="ow">or</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="n">err_value</span> <span class="ow">or</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">err_traceback</span> <span class="ow">or</span> <span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+
+        <span class="n">handler_klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findErrorHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_exc_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">handler_klass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusMessagePanel.getError"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.getError">[docs]</a>    <span class="k">def</span> <span class="nf">getError</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current exception information of this panel</span>
+
+<span class="sd">        :return: the current exception information (same as type as returned by</span>
+<span class="sd">                 :func:`sys.exc_info`)</span>
+<span class="sd">        :rtype: tuple&lt;type, value, traceback&gt;&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exc_info</span></div>
+
+    <span class="n">ErrorHandlers</span> <span class="o">=</span> <span class="p">{</span><span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">:</span> <span class="n">TangoMessageErrorHandler</span><span class="p">}</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusMessagePanel.registerErrorHandler"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.registerErrorHandler">[docs]</a>    <span class="k">def</span> <span class="nf">registerErrorHandler</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">err_type</span><span class="p">,</span> <span class="n">err_handler</span><span class="p">):</span>
+        <span class="n">klass</span><span class="o">.</span><span class="n">ErrorHandlers</span><span class="p">[</span><span class="n">err_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">err_handler</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusMessagePanel.findErrorHandler"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.findErrorHandler">[docs]</a>    <span class="k">def</span> <span class="nf">findErrorHandler</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">err_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finds the proper error handler class for the given error</span>
+
+<span class="sd">        :param err_type: error class</span>
+<span class="sd">        :type err_type: class object</span>
+<span class="sd">        :return: a message box error handler</span>
+<span class="sd">        :rtype: TaurusMessageBoxErrorHandler class object&quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">exc</span><span class="p">,</span> <span class="n">h_klass</span> <span class="ow">in</span> <span class="n">klass</span><span class="o">.</span><span class="n">ErrorHandlers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">err_type</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">h_klass</span>
+        <span class="k">return</span> <span class="n">TaurusMessageErrorHandler</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">DemoException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Just a plain python exception for demo purposes&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">s1</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Just a function to make the stack more interesting&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">s2</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">s2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Just a function to make the stack more interesting&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">s3</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">s3</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Just a function to make the stack more interesting&quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="n">DemoException</span><span class="p">(</span><span class="s2">&quot;A demo exception occurred&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">QMessageDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper class for the demo&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgbox</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">msgbox</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addStretch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">py_exc</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Shows a python exception in a TaurusMessagePanel&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">s1</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessagePanel</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+        <span class="n">QMessageDialog</span><span class="p">(</span><span class="n">msgbox</span><span class="p">)</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">tg_exc</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Shows a tango exception in a TaurusMessagePanel&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">Except</span><span class="o">.</span><span class="n">throw_exception</span><span class="p">(</span>
+            <span class="s1">&#39;TangoException&#39;</span><span class="p">,</span> <span class="s1">&#39;A simple tango exception&#39;</span><span class="p">,</span> <span class="s1">&#39;right here&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">:</span>
+        <span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessagePanel</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+        <span class="n">QMessageDialog</span><span class="p">(</span><span class="n">msgbox</span><span class="p">)</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">tg_serv_exc</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Shows a tango exception from a server in a TaurusMessagePanel&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">taurus</span>
+    <span class="n">dev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;sys/tg_test/1&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dev</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="s2">&quot;throw_exception&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">:</span>
+        <span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessagePanel</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+        <span class="n">QMessageDialog</span><span class="p">(</span><span class="n">msgbox</span><span class="p">)</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessagePanel</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+        <span class="n">QMessageDialog</span><span class="p">(</span><span class="n">msgbox</span><span class="p">)</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">py_tg_serv_exc</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Shows a tango exception from a python server in a TaurusMessagePanel&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">Except</span><span class="o">.</span><span class="n">throw_exception</span><span class="p">(</span>
+            <span class="s1">&#39;TangoException&#39;</span><span class="p">,</span> <span class="s1">&#39;A simple tango exception&#39;</span><span class="p">,</span> <span class="s1">&#39;right here&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df1</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">traceback</span>
+            <span class="kn">import</span> <span class="nn">StringIO</span>
+            <span class="n">origin</span> <span class="o">=</span> <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_stack</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span>
+            <span class="n">origin</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">origin</span> <span class="o">=</span> <span class="n">origin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">PyTango</span><span class="o">.</span><span class="n">Except</span><span class="o">.</span><span class="n">re_throw_exception</span><span class="p">(</span>
+                <span class="n">df1</span><span class="p">,</span> <span class="s1">&#39;PyDs_Exception&#39;</span><span class="p">,</span> <span class="s1">&#39;DevFailed: A simple tango exception&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">:</span>
+            <span class="n">msgbox</span> <span class="o">=</span> <span class="n">TaurusMessagePanel</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+            <span class="n">QMessageDialog</span><span class="p">(</span><span class="n">msgbox</span><span class="p">)</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Message panel&quot;&quot;&quot;</span>
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Python exception&quot;</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span>
+    <span class="n">m1</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">py_exc</span><span class="p">)</span>
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Tango exception&quot;</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
+    <span class="n">m2</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tg_exc</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
+    <span class="n">m3</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Tango server exception&quot;</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">m3</span><span class="p">)</span>
+    <span class="n">m3</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tg_serv_exc</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">m3</span><span class="p">)</span>
+    <span class="n">m4</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Python tango server exception&quot;</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">m4</span><span class="p">)</span>
+    <span class="n">m4</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">py_tg_serv_exc</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">m4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">panel</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+
+    <span class="n">Application</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">setApplicationName</span><span class="p">(</span><span class="s2">&quot;Taurus message demo&quot;</span><span class="p">)</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">setApplicationVersion</span><span class="p">(</span><span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">demo</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">w</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.extra_guiqwt.taurustrend2d &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.extra_guiqwt.taurustrend2d</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.extra_guiqwt.taurustrend2d</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">taurustrend.py: Generic trend widget for Taurus</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusTrend2DDialog&quot;</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">guiqwt.plot</span> <span class="k">import</span> <span class="n">ImageDialog</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">import</span> <span class="nn">taurus.core</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.image</span> <span class="k">import</span> <span class="n">TaurusTrend2DItem</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusModelChooserTool</span><span class="p">,</span>
+                                                <span class="n">TimeAxisTool</span><span class="p">,</span> <span class="n">AutoScrollTool</span><span class="p">,</span>
+                                                <span class="n">AutoScaleXTool</span><span class="p">,</span> <span class="n">AutoScaleYTool</span><span class="p">,</span>
+                                                <span class="n">AutoScaleZTool</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TaurusTrend2DDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog">[docs]</a><span class="k">class</span> <span class="nc">TaurusTrend2DDialog</span><span class="p">(</span><span class="n">ImageDialog</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a widget for displaying trends from 1D Taurus attributes (i.e.,</span>
+<span class="sd">    representing the variation over time of a 1D array). Sometimes this kind of</span>
+<span class="sd">    plots are also known as &quot;spectrograms&quot;.</span>
+
+<span class="sd">    The widget shows a 3D plot (Z represented with colors) where the values in</span>
+<span class="sd">    the 1D array are plotted in the Y-Z plane and are stacked along the X axis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_modifiableByUser</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">stackMode</span><span class="o">=</span><span class="s1">&#39;deltatime&#39;</span><span class="p">,</span> <span class="n">buffersize</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">autoscale</span><span class="o">=</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param param: param to be passed to XYImageItem constructor</span>
+<span class="sd">        :param buffersize: (int) size of the stack</span>
+<span class="sd">        :param stackMode: (str) can be &#39;datetime&#39;, &#39;timedelta&#39; or &#39;event&#39;</span>
+<span class="sd">        :param autoscale: (str) if autscale string contains &#39;x&#39;, the x axis </span>
+<span class="sd">                          will be autoscaled. Same with &#39;y&#39; and &#39;z&#39;.</span>
+<span class="sd">                          Defaults to &#39;xyz&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;see :class:`guiqwt.plot.ImageDialog` for other valid initialization</span>
+<span class="sd">        parameters&quot;&quot;&quot;</span>
+        <span class="n">defaultOptions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">lock_aspect_ratio</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">defaultOptions</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">ImageDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="n">toolbar</span><span class="p">,</span>
+                             <span class="n">options</span><span class="o">=</span><span class="n">defaultOptions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;TaurusTrend2DDialog&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffersize</span> <span class="o">=</span> <span class="n">buffersize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_useArchiving</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stackMode</span> <span class="o">=</span> <span class="n">stackMode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStackMode</span><span class="p">(</span><span class="n">stackMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Widget</span><span class="p">)</span>
+        <span class="c1"># add some tools</span>
+        <span class="k">for</span> <span class="n">toolklass</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TaurusModelChooserTool</span><span class="p">,</span> <span class="n">AutoScrollTool</span><span class="p">,</span>
+                          <span class="n">AutoScaleXTool</span><span class="p">,</span> <span class="n">AutoScaleYTool</span><span class="p">,</span> <span class="n">AutoScaleZTool</span>
+                          <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_tool</span><span class="p">(</span><span class="n">toolklass</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">TaurusModelChooserTool</span><span class="p">)</span><span class="o">.</span><span class="n">singleModel</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">autoscale</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">AutoScaleXTool</span><span class="p">)</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">autoscale</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">AutoScaleYTool</span><span class="p">)</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;z&#39;</span> <span class="ow">in</span> <span class="n">autoscale</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">AutoScaleZTool</span><span class="p">)</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiableByUser</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setContextMenuPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomContextMenu</span><span class="p">)</span>
+
+        <span class="c1"># Config properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setModelInConfig</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span> <span class="ow">or</span> <span class="n">BaseConfigurableClass</span><span class="p">(),</span>
+                                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;trendItem&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">AutoScrollTool</span><span class="p">),</span>
+                                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AutoScrollTool&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">AutoScaleXTool</span><span class="p">),</span>
+                                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AutoScaleXTool&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">AutoScaleYTool</span><span class="p">),</span>
+                                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AutoScaleYTool&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">AutoScaleZTool</span><span class="p">),</span>
+                                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AutoScaleZTool&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getStackMode</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">setStackMode</span><span class="p">,</span>
+                                    <span class="s1">&#39;stackMode&#39;</span>
+                                    <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_axes_conf</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_set_axes_conf</span><span class="p">,</span>
+                                    <span class="s1">&#39;axes_confs&#39;</span>
+                                    <span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_get_axes_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span>
+        <span class="n">conf</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">AXIS_IDS</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">c</span><span class="p">[</span><span class="s1">&#39;limits&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_axis_limits</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">c</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_axis_title</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">c</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_axis_color</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">c</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_axis_scale</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">c</span><span class="p">[</span><span class="s1">&#39;unit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_axis_unit</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">conf</span>
+
+    <span class="k">def</span> <span class="nf">_set_axes_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes_conf</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">AXIS_IDS</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">axes_conf</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s1">&#39;limits&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">set_axis_limits</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;limits&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s1">&#39;title&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">set_axis_title</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s1">&#39;color&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">set_axis_color</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s1">&#39;scale&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">set_axis_scale</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">],</span> <span class="n">autoscale</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;unit&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">set_axis_unit</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.keyPressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">):</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ImageDialog</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.setStackMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.setStackMode">[docs]</a>    <span class="k">def</span> <span class="nf">setStackMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set the type of stack to be used. This determines how X values are</span>
+<span class="sd">        interpreted:</span>
+
+<span class="sd">            - as timestamps (&#39;datetime&#39;)</span>
+<span class="sd">            - as time deltas (&#39;timedelta&#39;)</span>
+<span class="sd">            - as event numbers (&#39;event&#39;)</span>
+
+<span class="sd">        :param mode:(one of &#39;datetime&#39;, &#39;timedelta&#39; or &#39;event&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;datetime&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_tool</span><span class="p">(</span><span class="n">TimeAxisTool</span><span class="p">)</span>
+            <span class="n">timetool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">TimeAxisTool</span><span class="p">)</span>
+            <span class="n">timetool</span><span class="o">.</span><span class="n">set_scale_y_t</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;deltatime&#39;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.scales</span> <span class="k">import</span> <span class="n">DeltaTimeScaleEngine</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span>
+            <span class="n">DeltaTimeScaleEngine</span><span class="o">.</span><span class="n">enableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">plot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=-</span><span class="mi">45</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;event&#39;</span><span class="p">:</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span>
+            <span class="n">scaleEngine</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">axisScaleEngine</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">scaleEngine</span><span class="p">,</span> <span class="s1">&#39;disableInAxis&#39;</span><span class="p">):</span>
+                <span class="n">scaleEngine</span><span class="o">.</span><span class="n">disableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">plot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unknown stack mode &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stackMode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="p">,</span> <span class="s1">&#39;stackMode&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="o">.</span><span class="n">stackMode</span> <span class="o">=</span> <span class="n">mode</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.getStackMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.getStackMode">[docs]</a>    <span class="k">def</span> <span class="nf">getStackMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stackMode</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.resetStackMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.resetStackMode">[docs]</a>    <span class="k">def</span> <span class="nf">resetStackMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStackMode</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusattribute</span><span class="o">.</span><span class="n">TaurusAttribute</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">del_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span> <span class="o">=</span> <span class="n">TaurusTrend2DItem</span><span class="p">(</span>
+            <span class="n">stackMode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getStackMode</span><span class="p">(),</span> <span class="n">buffersize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">buffersize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="p">,</span> <span class="n">autoscale</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="o">.</span><span class="n">set_readonly</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">())</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">set_axis_title</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">colormap_axis</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">set_axis_unit</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">set_axis_title</span><span class="p">(</span>
+                <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">())</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cannot set title for left axis&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span><span class="o">.</span><span class="n">getConfig</span><span class="p">()</span><span class="o">.</span><span class="n">getUnit</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">set_axis_unit</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">colormap_axis</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cannot set units for colormap axis&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_cross_sections</span><span class="p">)</span>
+
+        <span class="c1"># unregister old trendItem and register the new one as config delegate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unregisterConfigurableItem</span> <span class="p">(</span><span class="s2">&quot;trendItem&quot;</span><span class="p">,</span> <span class="n">raiseOnError</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelInConfig</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;trendItem&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.getModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.getModel">[docs]</a>    <span class="k">def</span> <span class="nf">getModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="o">.</span><span class="n">getModel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.setUseArchiving"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.setUseArchiving">[docs]</a>    <span class="k">def</span> <span class="nf">setUseArchiving</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;enables/disables looking up in the archiver for data stored before</span>
+<span class="sd">        the Trend was started</span>
+
+<span class="sd">        :param enable: (bool) if True, archiving values will be used if</span>
+<span class="sd">                       available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stackMode</span> <span class="o">==</span> <span class="s1">&#39;datetime&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;ignoring setUseArchiving. Reason: not in X time scale&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_useArchiving</span> <span class="o">=</span> <span class="n">enable</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.getUseArchiving"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.getUseArchiving">[docs]</a>    <span class="k">def</span> <span class="nf">getUseArchiving</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;whether TaurusTrend is looking for data in the archiver when needed</span>
+
+<span class="sd">        :return: (bool)</span>
+
+<span class="sd">        .. seealso:: :meth:`setUseArchiving`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_useArchiving</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.resetUseArchiving"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.resetUseArchiving">[docs]</a>    <span class="k">def</span> <span class="nf">resetUseArchiving</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Same as setUseArchiving(False)&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setUseArchiving</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.setMaxDataBufferSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.setMaxDataBufferSize">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxDataBufferSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxSize</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sets the maximum number of events that will be stacked</span>
+
+<span class="sd">        :param maxSize: (int) the maximum limit</span>
+
+<span class="sd">        .. seealso:: :class:`TaurusTrendSet`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span><span class="o">.</span><span class="n">setBufferSize</span><span class="p">(</span><span class="n">maxSize</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffersize</span> <span class="o">=</span> <span class="n">maxSize</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.getMaxDataBufferSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.getMaxDataBufferSize">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxDataBufferSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns the maximum number of events that can be plotted in the trend</span>
+
+<span class="sd">        :return: (int)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffersize</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.resetMaxDataBufferSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.resetMaxDataBufferSize">[docs]</a>    <span class="k">def</span> <span class="nf">resetMaxDataBufferSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Same as setMaxDataBufferSize(512)  (i.e. 512 events)&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaxDataBufferSize</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusTrend2DDialog.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.plot&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Display&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;designer:qwtplot.png&#39;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusTrend2DDialog.setModifiableByUser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog.setModifiableByUser">[docs]</a>    <span class="k">def</span> <span class="nf">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">TaurusModelChooserTool</span><span class="p">)</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span><span class="o">.</span><span class="n">set_items_readonly</span><span class="p">(</span><span class="ow">not</span> <span class="n">modifiable</span><span class="p">)</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">)</span></div>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getModel</span><span class="p">,</span> <span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+    <span class="c1"># @todo uncomment this when archiving is supported</span>
+    <span class="n">useArchiving</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getUseArchiving</span><span class="p">,</span> <span class="n">setUseArchiving</span><span class="p">,</span>
+                                   <span class="n">resetUseArchiving</span><span class="p">)</span>
+    <span class="n">maxDataBufferSize</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getMaxDataBufferSize</span><span class="p">,</span>
+                                        <span class="n">setMaxDataBufferSize</span><span class="p">,</span>
+                                        <span class="n">resetMaxDataBufferSize</span><span class="p">)</span>
+    <span class="n">stackMode</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getStackMode</span><span class="p">,</span> <span class="n">setStackMode</span><span class="p">,</span>
+                                <span class="n">resetStackMode</span><span class="p">)</span>
+    <span class="n">modifiableByUser</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+                                       <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">,</span>
+                                       <span class="n">setModifiableByUser</span><span class="p">,</span>
+                                       <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModifiableByUser</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">taurusTrend2DMain</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">import</span> <span class="nn">taurus.core</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+
+    <span class="c1"># prepare options</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_usage</span><span class="p">(</span><span class="s2">&quot;%prog [options] &lt;model&gt;&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s1">&#39;a Taurus application for plotting trends of &#39;</span> <span class="o">+</span>
+                           <span class="s1">&#39;arrays (aka &quot;spectrograms&quot;)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;--x-axis-mode&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;x_axis_mode&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span>
+                      <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;t|d|e&quot;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;interpret X values as timestamps (t), &quot;</span> <span class="o">+</span>
+                            <span class="s2">&quot;time deltas (d) or event numbers (e). &quot;</span> <span class="o">+</span>
+                            <span class="s2">&quot;Accepted values: t|d|e&quot;</span><span class="p">)</span>
+                      <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;--buffer&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;max_buffer_size&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;512&#39;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;maximum number of values to be stacked &quot;</span> <span class="o">+</span>
+                            <span class="s2">&quot;(when reached, the oldest values will be &quot;</span> <span class="o">+</span>
+                            <span class="s2">&quot;discarded)&quot;</span><span class="p">)</span>
+                      <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="s2">&quot;--use-archiving&quot;</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;use_archiving&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--demo&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;demo&quot;</span><span class="p">,</span>
+                      <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;show a demo of the widget&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--window-name&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;window_name&quot;</span><span class="p">,</span>
+                      <span class="n">default</span><span class="o">=</span><span class="s2">&quot;Taurus Trend 2D&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Name of the window&quot;</span><span class="p">)</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus Trend 2D&quot;</span><span class="p">,</span>
+                            <span class="n">app_version</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_options</span><span class="p">()</span>
+
+    <span class="c1"># check &amp; process options</span>
+    <span class="n">stackModeMap</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="s1">&#39;deltatime&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">x_axis_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stackModeMap</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">stackMode</span> <span class="o">=</span> <span class="n">stackModeMap</span><span class="p">[</span><span class="n">options</span><span class="o">.</span><span class="n">x_axis_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">demo</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;eval:x=linspace(0,3,40);t=rand();sin(x+t)&#39;</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusTrend2DDialog</span><span class="p">(</span><span class="n">stackMode</span><span class="o">=</span><span class="n">stackMode</span><span class="p">,</span> <span class="n">wintitle</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">window_name</span><span class="p">,</span>
+                            <span class="n">buffersize</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">max_buffer_size</span><span class="p">))</span>
+
+    <span class="c1"># set archiving</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">use_archiving</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Archiving support is not yet implemented&#39;</span><span class="p">)</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setUseArchiving</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># set model</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">taurusTrend2DMain</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

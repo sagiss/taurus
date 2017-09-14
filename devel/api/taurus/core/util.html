@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.util &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="taurus.core" href="../core.html"/>
+        <link rel="next" title="taurus.core.util.argparse" href="util/argparse.html"/>
+        <link rel="prev" title="TangoServInfo" href="tango/_TangoServInfo.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../core.html"><code class="docutils literal"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">taurus.core.util</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../_sources/devel/api/taurus/core/util.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-taurus.core.util">
+<span id="taurus-core-util"></span><h1><a class="reference internal" href="#module-taurus.core.util" title="taurus.core.util"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.util</span></code></a><a class="headerlink" href="#module-taurus.core.util" title="Permalink to this headline">¶</a></h1>
+<p>This package consists of a collection of useful classes and functions. Most of
+the elements are taurus independent and can be used generically.</p>
+<p>This module contains a python implementation of <a class="reference external" href="https://docs.python.org/dev/library/json.html#module-json" title="(in Python v3.7)"><code class="xref py py-mod docutils literal"><span class="pre">json</span></code></a>. This was done because
+json only became part of python since version 2.6.
+The json implementation follows the rule:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>if python &gt;= 2.6 use standard json from python distribution</li>
+<li>otherwise use private implementation distributed with taurus</li>
+</ol>
+</div></blockquote>
+<p class="rubric">Modules</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="util/argparse.html">argparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/decorator.html">decorator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/report.html">report</a></li>
+</ul>
+</div>
+<p class="rubric">Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="hlist"><tr><td><ul class="simple">
+<li><a class="reference internal" href="util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer" title="taurus.core.util.ArrayBuffer"><code class="xref py py-class docutils literal"><span class="pre">ArrayBuffer</span></code></a></li>
+<li><a class="reference internal" href="util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator" title="taurus.core.util.AttributeEventIterator"><code class="xref py py-class docutils literal"><span class="pre">AttributeEventIterator</span></code></a></li>
+<li><a class="reference internal" href="util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait" title="taurus.core.util.AttributeEventWait"><code class="xref py py-class docutils literal"><span class="pre">AttributeEventWait</span></code></a></li>
+<li><a class="reference internal" href="util/_BZ2Codec.html#taurus.core.util.BZ2Codec" title="taurus.core.util.BZ2Codec"><code class="xref py py-class docutils literal"><span class="pre">BZ2Codec</span></code></a></li>
+<li><a class="reference internal" href="util/_BoundMethodWeakref.html#taurus.core.util.BoundMethodWeakref" title="taurus.core.util.BoundMethodWeakref"><code class="xref py py-class docutils literal"><span class="pre">BoundMethodWeakref</span></code></a></li>
+<li><a class="reference internal" href="util/_CaselessDefaultDict.html#taurus.core.util.CaselessDefaultDict" title="taurus.core.util.CaselessDefaultDict"><code class="xref py py-class docutils literal"><span class="pre">CaselessDefaultDict</span></code></a></li>
+<li><a class="reference internal" href="util/_CaselessDict.html#taurus.core.util.CaselessDict" title="taurus.core.util.CaselessDict"><code class="xref py py-class docutils literal"><span class="pre">CaselessDict</span></code></a></li>
+<li><a class="reference internal" href="util/_CaselessList.html#taurus.core.util.CaselessList" title="taurus.core.util.CaselessList"><code class="xref py py-class docutils literal"><span class="pre">CaselessList</span></code></a></li>
+<li><a class="reference internal" href="util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict" title="taurus.core.util.CaselessWeakValueDict"><code class="xref py py-class docutils literal"><span class="pre">CaselessWeakValueDict</span></code></a></li>
+<li><a class="reference internal" href="util/_CircBuf.html#taurus.core.util.CircBuf" title="taurus.core.util.CircBuf"><code class="xref py py-class docutils literal"><span class="pre">CircBuf</span></code></a></li>
+<li><a class="reference internal" href="util/_Codec.html#taurus.core.util.Codec" title="taurus.core.util.Codec"><code class="xref py py-class docutils literal"><span class="pre">Codec</span></code></a></li>
+<li><a class="reference internal" href="util/_CodecFactory.html#taurus.core.util.CodecFactory" title="taurus.core.util.CodecFactory"><code class="xref py py-class docutils literal"><span class="pre">CodecFactory</span></code></a></li>
+<li><a class="reference internal" href="util/_CodecPipeline.html#taurus.core.util.CodecPipeline" title="taurus.core.util.CodecPipeline"><code class="xref py py-class docutils literal"><span class="pre">CodecPipeline</span></code></a></li>
+<li><a class="reference internal" href="util/_ColorPalette.html#taurus.core.util.ColorPalette" title="taurus.core.util.ColorPalette"><code class="xref py py-class docutils literal"><span class="pre">ColorPalette</span></code></a></li>
+<li><a class="reference internal" href="util/_ConfigEventGenerator.html#taurus.core.util.ConfigEventGenerator" title="taurus.core.util.ConfigEventGenerator"><code class="xref py py-class docutils literal"><span class="pre">ConfigEventGenerator</span></code></a></li>
+<li><a class="reference internal" href="util/_CriticalIt.html#taurus.core.util.CriticalIt" title="taurus.core.util.CriticalIt"><code class="xref py py-class docutils literal"><span class="pre">CriticalIt</span></code></a></li>
+<li><a class="reference internal" href="util/_DebugIt.html#taurus.core.util.DebugIt" title="taurus.core.util.DebugIt"><code class="xref py py-class docutils literal"><span class="pre">DebugIt</span></code></a></li>
+<li><a class="reference internal" href="util/_DefaultThreadDict.html#taurus.core.util.DefaultThreadDict" title="taurus.core.util.DefaultThreadDict"><code class="xref py py-class docutils literal"><span class="pre">DefaultThreadDict</span></code></a></li>
+<li><a class="reference internal" href="util/_EnumException.html#taurus.core.util.EnumException" title="taurus.core.util.EnumException"><code class="xref py py-class docutils literal"><span class="pre">EnumException</span></code></a></li>
+<li><a class="reference internal" href="util/_Enumeration.html#taurus.core.util.Enumeration" title="taurus.core.util.Enumeration"><code class="xref py py-class docutils literal"><span class="pre">Enumeration</span></code></a></li>
+<li><a class="reference internal" href="util/_ErrorIt.html#taurus.core.util.ErrorIt" title="taurus.core.util.ErrorIt"><code class="xref py py-class docutils literal"><span class="pre">ErrorIt</span></code></a></li>
+<li><a class="reference internal" href="util/_EventGenerator.html#taurus.core.util.EventGenerator" title="taurus.core.util.EventGenerator"><code class="xref py py-class docutils literal"><span class="pre">EventGenerator</span></code></a></li>
+<li><a class="reference internal" href="util/_EventListener.html#taurus.core.util.EventListener" title="taurus.core.util.EventListener"><code class="xref py py-class docutils literal"><span class="pre">EventListener</span></code></a></li>
+<li><a class="reference internal" href="util/_FunctionCodec.html#taurus.core.util.FunctionCodec" title="taurus.core.util.FunctionCodec"><code class="xref py py-class docutils literal"><span class="pre">FunctionCodec</span></code></a></li>
+<li><a class="reference internal" href="util/_InfoIt.html#taurus.core.util.InfoIt" title="taurus.core.util.InfoIt"><code class="xref py py-class docutils literal"><span class="pre">InfoIt</span></code></a></li>
+</ul>
+</td><td><ul class="simple">
+<li><a class="reference internal" href="util/_JSONCodec.html#taurus.core.util.JSONCodec" title="taurus.core.util.JSONCodec"><code class="xref py py-class docutils literal"><span class="pre">JSONCodec</span></code></a></li>
+<li><a class="reference internal" href="util/_LIFO.html#taurus.core.util.LIFO" title="taurus.core.util.LIFO"><code class="xref py py-class docutils literal"><span class="pre">LIFO</span></code></a></li>
+<li><a class="reference internal" href="util/_ListEventGenerator.html#taurus.core.util.ListEventGenerator" title="taurus.core.util.ListEventGenerator"><code class="xref py py-class docutils literal"><span class="pre">ListEventGenerator</span></code></a></li>
+<li><a class="reference internal" href="util/_LogExceptHook.html#taurus.core.util.LogExceptHook" title="taurus.core.util.LogExceptHook"><code class="xref py py-class docutils literal"><span class="pre">LogExceptHook</span></code></a></li>
+<li><a class="reference internal" href="util/_LogFilter.html#taurus.core.util.LogFilter" title="taurus.core.util.LogFilter"><code class="xref py py-class docutils literal"><span class="pre">LogFilter</span></code></a></li>
+<li><a class="reference internal" href="util/_LogIt.html#taurus.core.util.LogIt" title="taurus.core.util.LogIt"><code class="xref py py-class docutils literal"><span class="pre">LogIt</span></code></a></li>
+<li><a class="reference internal" href="util/_Logger.html#taurus.core.util.Logger" title="taurus.core.util.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a></li>
+<li><a class="reference internal" href="util/_LoopList.html#taurus.core.util.LoopList" title="taurus.core.util.LoopList"><code class="xref py py-class docutils literal"><span class="pre">LoopList</span></code></a></li>
+<li><a class="reference internal" href="util/_MemoryLogHandler.html#taurus.core.util.MemoryLogHandler" title="taurus.core.util.MemoryLogHandler"><code class="xref py py-class docutils literal"><span class="pre">MemoryLogHandler</span></code></a></li>
+<li><a class="reference internal" href="util/_NullCodec.html#taurus.core.util.NullCodec" title="taurus.core.util.NullCodec"><code class="xref py py-class docutils literal"><span class="pre">NullCodec</span></code></a></li>
+<li><a class="reference internal" href="util/_Object.html#taurus.core.util.Object" title="taurus.core.util.Object"><code class="xref py py-class docutils literal"><span class="pre">Object</span></code></a></li>
+<li><a class="reference internal" href="util/_PlotCodec.html#taurus.core.util.PlotCodec" title="taurus.core.util.PlotCodec"><code class="xref py py-class docutils literal"><span class="pre">PlotCodec</span></code></a></li>
+<li><a class="reference internal" href="util/_SafeEvaluator.html#taurus.core.util.SafeEvaluator" title="taurus.core.util.SafeEvaluator"><code class="xref py py-class docutils literal"><span class="pre">SafeEvaluator</span></code></a></li>
+<li><a class="reference internal" href="util/_Singleton.html#taurus.core.util.Singleton" title="taurus.core.util.Singleton"><code class="xref py py-class docutils literal"><span class="pre">Singleton</span></code></a></li>
+<li><a class="reference internal" href="util/_ThreadDict.html#taurus.core.util.ThreadDict" title="taurus.core.util.ThreadDict"><code class="xref py py-class docutils literal"><span class="pre">ThreadDict</span></code></a></li>
+<li><a class="reference internal" href="util/_ThreadPool.html#taurus.core.util.ThreadPool" title="taurus.core.util.ThreadPool"><code class="xref py py-class docutils literal"><span class="pre">ThreadPool</span></code></a></li>
+<li><a class="reference internal" href="util/_TimedQueue.html#taurus.core.util.TimedQueue" title="taurus.core.util.TimedQueue"><code class="xref py py-class docutils literal"><span class="pre">TimedQueue</span></code></a></li>
+<li><a class="reference internal" href="util/_Timer.html#taurus.core.util.Timer" title="taurus.core.util.Timer"><code class="xref py py-class docutils literal"><span class="pre">Timer</span></code></a></li>
+<li><a class="reference internal" href="util/_TraceIt.html#taurus.core.util.TraceIt" title="taurus.core.util.TraceIt"><code class="xref py py-class docutils literal"><span class="pre">TraceIt</span></code></a></li>
+<li><a class="reference internal" href="util/_WarnIt.html#taurus.core.util.WarnIt" title="taurus.core.util.WarnIt"><code class="xref py py-class docutils literal"><span class="pre">WarnIt</span></code></a></li>
+<li><a class="reference internal" href="util/_Worker.html#taurus.core.util.Worker" title="taurus.core.util.Worker"><code class="xref py py-class docutils literal"><span class="pre">Worker</span></code></a></li>
+<li><a class="reference internal" href="util/_ZIPCodec.html#taurus.core.util.ZIPCodec" title="taurus.core.util.ZIPCodec"><code class="xref py py-class docutils literal"><span class="pre">ZIPCodec</span></code></a></li>
+<li><a class="reference internal" href="util/_defaultdict.html#taurus.core.util.defaultdict" title="taurus.core.util.defaultdict"><code class="xref py py-class docutils literal"><span class="pre">defaultdict</span></code></a></li>
+<li><a class="reference internal" href="util/_defaultdict_fromkey.html#taurus.core.util.defaultdict_fromkey" title="taurus.core.util.defaultdict_fromkey"><code class="xref py py-class docutils literal"><span class="pre">defaultdict_fromkey</span></code></a></li>
+</ul>
+</td></tr></table>
+<p class="rubric">Functions</p>
+<dl class="function">
+<dt id="taurus.core.util.CallableRef">
+<code class="descname">CallableRef</code><span class="sig-paren">(</span><em>object</em>, <em>del_cb=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/event.html#CallableRef"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.CallableRef" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns a callable weak reference to a callable object.
+Object can be a callable object, a function or a method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>object</strong> (<em>callable object</em>) &#8211; a callable object</li>
+<li><strong>del_cb</strong> (<em>callable object or None</em>) &#8211; calback function. Default is None meaning to callback.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a weak reference for the given callable</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BoundMethodWeakref or weakref.ref</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.critical">
+<code class="descname">critical</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.critical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.debug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.deprecated">
+<code class="descname">deprecated</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#deprecated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.deprecated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.deprecation_decorator">
+<code class="descname">deprecation_decorator</code><span class="sig-paren">(</span><em>func=None</em>, <em>alt=None</em>, <em>rel=None</em>, <em>dbg_msg=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#deprecation_decorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.deprecation_decorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>decorator to mark methods as deprecated</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.dictFromSequence">
+<code class="descname">dictFromSequence</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/init_bkcomp.html#dictFromSequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.dictFromSequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates a sequence into a dictionary by converting each to elements of
+the sequence (k,v) into a k:v pair in the dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seq</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code>) &#8211; any sequence object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary built from the given sequence</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.fatal">
+<code class="descname">fatal</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#fatal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.fatal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.getDictAsTree">
+<code class="descname">getDictAsTree</code><span class="sig-paren">(</span><em>dct</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/containers.html#getDictAsTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.getDictAsTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will print a recursive dict in a tree-like
+shape:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">getDictAsTree</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:{</span><span class="s1">&#39;B&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">&#39;C&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">]}})</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.getSystemUserName">
+<code class="descname">getSystemUserName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/user.html#getSystemUserName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.getSystemUserName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds out user inf (currently just the logged user name) for Windows and
+Posix machines. sets a USER_NAME variable containing the logged user name
+defines a UNKNOWN_USER variable to which username falls back.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">current user name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.propertx">
+<code class="descname">propertx</code><span class="sig-paren">(</span><em>fct</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/prop.html#propertx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.propertx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to simplify the use of property.
+Like &#64;property for attrs who need more than a getter.
+For getter only property use &#64;property.</p>
+<p>adapted from <a class="reference external" href="http://code.activestate.com/recipes/502243/">http://code.activestate.com/recipes/502243/</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.self_locked">
+<code class="descname">self_locked</code><span class="sig-paren">(</span><em>func</em>, <em>reentrant=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/containers.html#self_locked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.self_locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to make thread-safe class members
+Decorator to create thread-safe objects.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<ul class="last simple">
+<li>With Lock() this decorator should not be used to decorate
+nested functions; it will cause Deadlock!</li>
+<li>With RLock this problem is avoided ... but you should rely more
+on python threading</li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.trace">
+<code class="descname">trace</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#trace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.trace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.warning">
+<code class="descname">warning</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/util/log.html#warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="util/argparse.html" class="btn btn-neutral float-right" title="taurus.core.util.argparse" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tango/_TangoServInfo.html" class="btn btn-neutral" title="TangoServInfo" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,1134 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.table.taurusvaluestable &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.table.taurusvaluestable</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.table.taurusvaluestable</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusValuesTable&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.pint</span> <span class="k">import</span> <span class="n">Quantity</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">import</span> <span class="nn">taurus.core</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">DataFormat</span><span class="p">,</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span>
+                                         <span class="n">TaurusElementType</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">PintValidator</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+
+
+<span class="k">def</span> <span class="nf">_value2Quantity</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Creates a Quantity from value and forces units if the vaule is unitless</span>
+
+<span class="sd">    :param value: (int, float or str) a number or a string from which a quantity</span>
+<span class="sd">                  can be created</span>
+<span class="sd">    :param units: (str or Pint units) Units to use if the value is unitless</span>
+<span class="sd">    :return: (Quantity)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">unitless</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">q</span>
+
+
+<span class="k">class</span> <span class="nc">TaurusValuesIOTableModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="p">):</span>
+    <span class="n">typeCastingMap</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                      <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;U&#39;</span><span class="p">:</span> <span class="n">unicode</span><span class="p">}</span>
+    <span class="c1"># Need to have an array</span>
+
+    <span class="n">dataChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QModelIndex&#39;</span><span class="p">,</span> <span class="s1">&#39;QModelIndex&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rtabledata</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wtabledata</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rowCount</span> <span class="o">=</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_columnCount</span> <span class="o">=</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editedIndex</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">isDirty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns True if there are user changes. False Otherwise&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">)</span>
+
+    <span class="c1"># To be implemented -----</span>
+    <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`Qt.QAbstractTableModel.rowCount`&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rowCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rowCount</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rowCount</span>
+
+    <span class="k">def</span> <span class="nf">columnCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`Qt.QAbstractTableModel.columnCount`&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_columnCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_columnCount</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_columnCount</span>
+
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`Qt.QAbstractTableModel.data`&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">tabledata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rtabledata</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tabledata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wtabledata</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tabledata</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span> <span class="ow">and</span> <span class="n">rc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttr</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
+                    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[</span><span class="n">rc</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[</span><span class="n">rc</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">tabledata</span><span class="p">[</span><span class="n">rc</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">):</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="c1"># cast the value to a standard python type</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">typeCastingMap</span><span class="p">[</span><span class="n">tabledata</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span><span class="p">](</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())))</span> <span class="ow">and</span>\
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttr</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())]</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inAlarmRange</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                        <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;document-save&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;emblem-important&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;document-save&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span> <span class="ow">and</span>\
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">tabledata</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span>
+                <span class="k">if</span> <span class="n">tabledata</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BackgroundRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">223</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ForegroundRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span> <span class="ow">and</span>\
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttr</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())]</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inAlarmRange</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;orange&#39;</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span> <span class="ow">and</span>\
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span> <span class="ow">and</span>\
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())])</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Original value: </span><span class="si">%s</span><span class="s1">.</span><span class="se">\n</span><span class="s1">New value that will be saved: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>\
+                      <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tabledata</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]),</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">getAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span>
+
+    <span class="k">def</span> <span class="nf">setAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Updated the internal table data from an attribute value</span>
+
+<span class="sd">        :param attr: (DeviceAttribute)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="o">=</span> <span class="n">attr</span>
+        <span class="n">rvalue</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">rvalue</span>
+        <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">]:</span>
+            <span class="n">rvalue</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span>
+        <span class="c1"># reshape the table</span>
+        <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_1D</span><span class="p">:</span>
+            <span class="n">rows</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rvalue</span><span class="p">),</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">attr</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_2D</span><span class="p">:</span>
+            <span class="n">rows</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">rvalue</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Unsupported data format &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                            <span class="nb">repr</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">data_format</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rowCount</span> <span class="o">!=</span> <span class="n">rows</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_columnCount</span> <span class="o">!=</span> <span class="n">columns</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rowCount</span> <span class="o">=</span> <span class="n">rows</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_columnCount</span> <span class="o">=</span> <span class="n">columns</span>
+        <span class="n">rvalue</span> <span class="o">=</span> <span class="n">rvalue</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">getCurrentUnits</span><span class="p">()</span>
+            <span class="n">rvalue</span> <span class="o">=</span> <span class="n">rvalue</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rtabledata</span> <span class="o">=</span> <span class="n">rvalue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">columns</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">getStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns Status of the variable</span>
+
+<span class="sd">        :returns:  (taurus.core.taurusbasetypes.AttrQuality)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">quality</span>
+
+    <span class="k">def</span> <span class="nf">getType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns the table data type.</span>
+
+<span class="sd">        :returns:  (numpy.dtype)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rtabledata</span><span class="o">.</span><span class="n">dtype</span>
+
+    <span class="k">def</span> <span class="nf">addValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;adds a value to the dictionary of modified cell values</span>
+
+<span class="sd">        :param index: (QModelIndex) table index</span>
+<span class="sd">        :param value: (object)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">rtable_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rtabledata</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()][</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">]:</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">getCurrentUnits</span><span class="p">()</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">_value2Quantity</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+            <span class="n">equals</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">rtable_value</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">equals</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">rtable_value</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">equals</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">removeValue</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">removeValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Removes index from dictionary</span>
+
+<span class="sd">        :param index:  (QModelIndex) table index</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`Qt.QAbstractTableModel`&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEditable</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsSelectable</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsSelectable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getModifiedWriteData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        returns an array for the write data that includes the user modifications</span>
+
+<span class="sd">        :return: (numpy.array) The write values including user modifications.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wtabledata</span>
+        <span class="n">kind</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span>
+        <span class="k">if</span> <span class="n">kind</span> <span class="ow">in</span> <span class="s1">&#39;SU&#39;</span><span class="p">:</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># we want to allow the strings to be larger than the original ones</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">table</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">kind</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]:</span>
+                    <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">getCurrentUnits</span><span class="p">()</span>
+                    <span class="n">q</span> <span class="o">=</span> <span class="n">_value2Quantity</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+                    <span class="n">table</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">q</span>
+                <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span>
+                    <span class="c1"># TODO: This does not work Qt.from_qvariant(v, bool)</span>
+                    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
+                        <span class="n">table</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">table</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Unknown data type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">kind</span><span class="p">)</span>
+        <span class="c1"># reshape if needed</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_1D</span><span class="p">:</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">table</span>
+
+    <span class="k">def</span> <span class="nf">clearChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;clears the dictionary of changed values&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">inAlarmRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Checkes if value is in alarm range.</span>
+
+<span class="sd">        :param value:  Quantity value</span>
+<span class="sd">        :returns:  (bool) True if value in alarm range, False if valid</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">min_alarm</span><span class="p">,</span> <span class="n">max_alarm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">alarms</span>
+            <span class="k">if</span> <span class="n">min_alarm</span> <span class="o">&gt;=</span> <span class="n">value</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="n">max_alarm</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">inRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Checks if value is in range.</span>
+
+<span class="sd">        :param value:  Quantity value</span>
+<span class="sd">        :returns:  (bool) True if value in range, False if valid</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">min_range</span><span class="p">,</span> <span class="n">max_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">range</span>
+            <span class="k">if</span> <span class="n">min_range</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="n">max_range</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">setWriteMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">isWrite</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Changes the write state</span>
+
+<span class="sd">        :param isWrite: (bool)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span> <span class="o">=</span> <span class="n">isWrite</span>
+        <span class="k">if</span> <span class="n">isWrite</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isDirty</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># refresh the write data (unless it is dirty)</span>
+            <span class="n">wvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">wvalue</span>
+
+            <span class="c1"># reshape the table</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">String</span><span class="p">:</span>
+                <span class="n">wvalue</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wvalue</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">getCurrentUnits</span><span class="p">()</span>
+                <span class="n">wvalue</span> <span class="o">=</span> <span class="n">wvalue</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_1D</span><span class="p">:</span>
+                <span class="n">rows</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">wvalue</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">rows</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># TODO: Ask to the user for a default shape</span>
+                    <span class="n">rows</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_2D</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">rows</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">wvalue</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="c1"># TODO: Ask to the user for a default shape</span>
+                    <span class="n">rows</span> <span class="o">=</span> <span class="mi">3</span>
+                    <span class="n">columns</span> <span class="o">=</span> <span class="mi">3</span>
+                    <span class="n">wvalue</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;unsupported data format </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">wvalue</span><span class="o">.</span><span class="n">data_format</span><span class="p">))</span>
+            <span class="n">wvalue</span> <span class="o">=</span> <span class="n">wvalue</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
+            <span class="c1"># In version 4.6 of Qt when whole table is updated it is</span>
+            <span class="c1"># recommended to use beginReset()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wtabledata</span> <span class="o">=</span> <span class="n">wvalue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                                                           <span class="bp">self</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">getModifiedDict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns dictionary.</span>
+
+<span class="sd">        :returns:  (dictionary) dictionary containing modified indexes and values</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span>
+
+    <span class="k">def</span> <span class="nf">getReadValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns read value for a given index.</span>
+
+<span class="sd">        :param index:  (QModelIndex) table model index</span>
+<span class="sd">        :returns:  (string/int/float/bool) read table value for a given cell</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rtabledata</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span>
+
+
+<span class="k">class</span> <span class="nc">TaurusValuesIOTable</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showQuality</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSelectionMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">SingleSelection</span><span class="p">)</span>
+        <span class="n">itemDelegate</span> <span class="o">=</span> <span class="n">TaurusValuesIOTableDelegate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="n">itemDelegate</span><span class="p">)</span>
+        <span class="c1">#self.setStyleSheet(&#39;TaurusValuesIOTable { selection-background-color: violet;} &#39;)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget overwriting</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Creates an instance of QTableModel and sets a QT model.</span>
+
+<span class="sd">        :param shape:  (tuple&lt;int&gt;) shape of the model table to be set</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">qmodel</span> <span class="o">=</span> <span class="n">TaurusValuesIOTableModel</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qmodel</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">cancelChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Cancels all table modifications.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">clearChanges</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">removeChange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        If the cell was modified it restores the original write value.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">removeValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">showHelp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Shows QMessageBox help window. It contains explanations of used icons.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">buttonBox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;document-save&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span>
+            <span class="s1">&#39;- value is valid and will be saved if changes will be accepted&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;ddialog-warning&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span>
+            <span class="s1">&#39;- value is in alarm range and will be saved if changes will be accepted&#39;</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">getCurrentUnits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_units</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">TaurusValuesIOTableDelegate</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStyledItemDelegate</span><span class="p">):</span>
+
+    <span class="n">editorCreated</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QStyledItemDelegate</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Creates a custom editor for a table delagate.</span>
+
+<span class="sd">        see :meth:`Qt.QStyledItemDelegate.createEditor`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="c1">#editor = Qt.QStyledItemDelegate.createEditor(self,parent,option,index)</span>
+            <span class="n">editor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">editor</span> <span class="o">=</span> <span class="n">TableInlineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="n">editor</span><span class="o">.</span><span class="n">_updateValidator</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getAttr</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editorCreated</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">editor</span>
+
+    <span class="k">def</span> <span class="nf">setEditorData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        see :meth:`Qt.QStyledItemDelegate.setEditorData`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">editedIndex</span> <span class="o">==</span> <span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()):</span>
+            <span class="k">return</span>
+        <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">editedIndex</span> <span class="o">=</span> <span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="n">editor</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">])</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="nb">bool</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span> <span class="o">=</span> <span class="n">a</span>
+
+            <span class="n">editor</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">editor</span><span class="o">.</span><span class="n">findText</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="n">editor</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        see :meth:`Qt.QStyledItemDelegate.setModelData`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># if editor text changed, then don&#39;t mark as updated.</span>
+        <span class="n">isNumeric</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">getCurrentUnits</span><span class="p">()</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">_value2Quantity</span><span class="p">(</span><span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span> <span class="n">units</span><span class="p">)</span>
+            <span class="n">isNumeric</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">inRange</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+                <span class="k">return</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">isNumeric</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">q</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">text</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">text</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+            <span class="n">hh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+            <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+            <span class="n">vh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">verticalHeader</span><span class="p">()</span>
+            <span class="n">vh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+
+        <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">editedIndex</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">class</span> <span class="nc">TableInlineEdit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    TableInLineEdit is used to validate the content of the new value, also to paint the text: blue - valid, orange - in alarm, grey - invalid.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">textEdited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onTextEdited</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min_range</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_range</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min_alarm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_alarm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_unit</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">onTextEdited</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Paints the text while typing.</span>
+
+<span class="sd">        Slot for the `Qt.QLineEdit.textEdited` signal</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># default case: the value is in normal range with no pending changes</span>
+        <span class="n">color</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;normal&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">displayText</span><span class="p">()</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">_value2Quantity</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_unit</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_alarm</span> <span class="o">&lt;</span> <span class="n">q</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_alarm</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_range</span> <span class="o">&lt;=</span> <span class="n">q</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_range</span><span class="p">:</span>
+                <span class="c1"># the value is valid but in alarm range...</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;orange&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># the value is invalid and can&#39;t be applied</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
+
+        <span class="n">weight</span> <span class="o">=</span> <span class="s1">&#39;bold&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;TableInlineEdit {color: </span><span class="si">%s</span><span class="s1">; font-weight: </span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span>
+                           <span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">weight</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_updateValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method sets a validator depending on the data type</span>
+
+<span class="sd">        :param attr: TaurusAttribute</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">data_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_min_range</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_range</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">range</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_min_alarm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_alarm</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">alarms</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_default_unit</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">wvalue</span><span class="o">.</span><span class="n">units</span>
+            <span class="n">validator</span> <span class="o">=</span> <span class="n">PintValidator</span><span class="p">()</span>
+            <span class="n">validator</span><span class="o">.</span><span class="n">setBottom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_min_range</span><span class="p">)</span>
+            <span class="n">validator</span><span class="o">.</span><span class="n">setTop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_range</span><span class="p">)</span>
+            <span class="n">validator</span><span class="o">.</span><span class="n">setUnits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_default_unit</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__decimalDigits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns the number of decimal digits from a format string</span>
+<span class="sd">        (or None if they are not defined)&#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fmt</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;.&#39;</span> <span class="ow">in</span> <span class="n">fmt</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">fmt</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="TaurusValuesTable"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable">[docs]</a><span class="k">class</span> <span class="nc">TaurusValuesTable</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A table for displaying and/or editing 1D/2D Taurus attributes</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">_showQuality</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">_writeMode</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">defaultWriteMode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span> <span class="o">=</span> <span class="n">TaurusValuesIOTable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">()</span><span class="o">.</span><span class="n">editorCreated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onEditorCreated</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">defaultWriteMode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">defaultWriteMode</span> <span class="o">=</span> <span class="s2">&quot;rw&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">defaultWriteMode</span> <span class="o">=</span> <span class="n">defaultWriteMode</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">TaurusLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">setBgRole</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">setFgRole</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_applyBT</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;Apply&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cancelBT</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;Cancel&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_applyBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">okClicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cancelBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cancelClicked</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rwModeCB</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rwModeCB</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Write mode&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rwModeCB</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setWriteMode</span><span class="p">)</span>
+
+        <span class="n">lv</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">lv</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">)</span>
+        <span class="n">lv</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lv</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rwModeCB</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">lv</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">lv</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_applyBT</span><span class="p">)</span>
+        <span class="n">lv</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cancelBT</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lv</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initActions</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_initActions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the actions for this widget (currently, the pause action.)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;&amp;Pause&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span><span class="o">.</span><span class="n">setShortcuts</span><span class="p">([</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_P</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Pause</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setPaused</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Choose &amp;Model&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModel</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusValuesTable.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`TaurusWidget.getModelClass`&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusattribute</span><span class="o">.</span><span class="n">TaurusAttribute</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplemented from :meth:`TaurusWidget.setModel`&#39;&#39;&#39;</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">isWritable</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultWriteMode</span> <span class="o">!=</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">defaultWriteMode</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>
+
+        <span class="k">if</span> <span class="n">model_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">_attr</span> <span class="o">=</span> <span class="n">model_obj</span>
+            <span class="k">if</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">default_unit</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">model_obj</span><span class="o">.</span><span class="n">wvalue</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                        <span class="n">default_unit</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">default_unit</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">model_obj</span><span class="o">.</span><span class="n">rvalue</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+                <span class="c1"># TODO: fill the combobox with the compatible units</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">default_unit</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="o">.</span><span class="n">findText</span><span class="p">(</span><span class="n">default_unit</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">raiseException</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_2D</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">dim_x</span><span class="p">,</span> <span class="n">dim_y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">model_obj</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="n">raiseException</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_1D</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">dim_x</span><span class="p">,</span> <span class="n">dim_y</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_obj</span><span class="o">.</span><span class="n">rvalue</span><span class="p">),</span> <span class="mi">1</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="n">raiseException</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">raiseException</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">raiseException</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;rvalue is invalid&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">setModel</span><span class="p">([</span><span class="n">dim_x</span><span class="p">,</span> <span class="n">dim_y</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWriteMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see :meth:`TaurusWidget.handleEvent`&#39;&#39;&#39;</span>
+        <span class="c1">#@fixme: in some situations, we may miss some config event because of the qmodel not being set. The whole handleEvent Method and setModel method should be re-thought</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">evt_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span>
+                        <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">)</span>\
+                <span class="ow">and</span> <span class="n">evt_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setAttr</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setWriteMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">)</span>
+
+            <span class="n">hh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+            <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+            <span class="n">vh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">verticalHeader</span><span class="p">()</span>
+            <span class="n">vh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultWriteMode</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
+                <span class="n">isWritable</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">isWritable</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">writable</span> <span class="o">=</span> <span class="n">isWritable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span> <span class="ow">and</span>\
+                <span class="n">attr</span><span class="o">.</span><span class="n">isWritable</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setWriteMode</span><span class="p">(</span><span class="n">writable</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span><span class="p">:</span>
+            <span class="c1"># force a read to set an attr</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setAttr</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.contextMenuEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.contextMenuEvent">[docs]</a>    <span class="k">def</span> <span class="nf">contextMenuEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplemented from :meth:`QWidget.contextMenuEvent`&#39;&#39;&#39;</span>
+        <span class="n">menu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
+        <span class="n">globalPos</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">()</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getReadValue</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getModifiedDict</span><span class="p">()</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())):</span>
+                    <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                        <span class="s1">&#39;edit-undo&#39;</span><span class="p">),</span> <span class="s2">&quot;Reset to original value (</span><span class="si">%s</span><span class="s2">) &quot;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">removeChange</span><span class="p">)</span>
+                    <span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+                <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;process-stop&#39;</span><span class="p">),</span>
+                               <span class="s2">&quot;Reset all table&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">askCancel</span><span class="p">)</span>
+                <span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+                <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;help-browser&#39;</span><span class="p">),</span>
+                               <span class="s2">&quot;Help&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">showHelp</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">globalPos</span><span class="p">)</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.applyChanges"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.applyChanges">[docs]</a>    <span class="k">def</span> <span class="nf">applyChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Writes table modifications to the device server.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getModifiedWriteData</span><span class="p">()</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">String</span><span class="p">:</span>
+            <span class="c1"># String arrays has to be converted to a list</span>
+            <span class="n">tab</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">attr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">clearChanges</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.okClicked"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.okClicked">[docs]</a>    <span class="k">def</span> <span class="nf">okClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This is a SLOT that is being triggered when ACCEPT button is clicked.</span>
+
+<span class="sd">        .. note:: This SLOT is called, when user wants to apply table modifications.</span>
+<span class="sd">                  When no cell was modified it will not be called. When</span>
+<span class="sd">                  modifications have been done, they will be writen to w_value</span>
+<span class="sd">                  of an attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">isDirty</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">applyChanges</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetWriteMode</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.cancelClicked"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.cancelClicked">[docs]</a>    <span class="k">def</span> <span class="nf">cancelClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This is a SLOT that is being triggered when CANCEL button is clicked.</span>
+
+<span class="sd">        .. note:: This SLOT is called, when user does not want to apply table</span>
+<span class="sd">                  modifications. When no cell was modified it will not be called.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">isDirty</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">askCancel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.askCancel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.askCancel">[docs]</a>    <span class="k">def</span> <span class="nf">askCancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Shows a QMessageBox, asking if user wants to cancel all changes. Triggered when user clicks Cancel button.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Your changes will be lost!&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;Do you want to cancel changes done to the whole table?&#39;</span><span class="p">,</span>
+                                        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">cancelChanges</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetWriteMode</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_onEditorCreated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot called when an editor has been created&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWriteMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusValuesTable.getWriteMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.getWriteMode">[docs]</a>    <span class="k">def</span> <span class="nf">getWriteMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;whether the widget is showing the read or write values</span>
+
+<span class="sd">        :return: (bool)&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.setWriteMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.setWriteMode">[docs]</a>    <span class="k">def</span> <span class="nf">setWriteMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">isWrite</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Triggered when the read mode is changed to write mode.</span>
+
+<span class="sd">        :param isWrite: (bool)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_applyBT</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">isWrite</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cancelBT</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">isWrite</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rwModeCB</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">isWrite</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultWriteMode</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;rw&quot;</span><span class="p">,</span> <span class="s2">&quot;wr&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rwModeCB</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rwModeCB</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">table_view_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">table_view_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">table_view_model</span><span class="o">.</span><span class="n">setWriteMode</span><span class="p">(</span><span class="n">isWrite</span><span class="p">)</span>
+            <span class="n">table_view_model</span><span class="o">.</span><span class="n">_editable</span> <span class="o">=</span> <span class="n">isWrite</span>
+        <span class="k">if</span> <span class="n">isWrite</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span> <span class="o">=</span> <span class="n">isWrite</span>
+        <span class="n">valueObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">isWrite</span> <span class="ow">and</span> <span class="n">valueObj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w_value</span> <span class="o">=</span> <span class="n">valueObj</span><span class="o">.</span><span class="n">wvalue</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">valueObj</span><span class="o">.</span><span class="n">rvalue</span>
+            <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">w_value</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+                <span class="n">ta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="c1"># @fixme: this is ugly! we should not be writing into the attribute without asking first...</span>
+                <span class="n">ta</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.resetWriteMode"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.resetWriteMode">[docs]</a>    <span class="k">def</span> <span class="nf">resetWriteMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;equivalent to self.setWriteMode(self.defaultWriteMode)&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultWriteMode</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
+            <span class="n">isWritable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">isWritable</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWriteMode</span><span class="p">(</span><span class="n">isWritable</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusValuesTable.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplemented from :meth:`TaurusWidget.getQtDesignerPluginInfo`&#39;&#39;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.table&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Views&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:table.png&quot;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.chooseModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.chooseModel">[docs]</a>    <span class="k">def</span> <span class="nf">chooseModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;shows a model chooser&#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusModelChooser</span>
+        <span class="n">selectables</span> <span class="o">=</span> <span class="p">[</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">]</span>
+        <span class="n">models</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">TaurusModelChooser</span><span class="o">.</span><span class="n">modelChooserDlg</span><span class="p">(</span>
+            <span class="n">selectables</span><span class="o">=</span><span class="n">selectables</span><span class="p">,</span> <span class="n">singleModel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ok</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.setModifiableByUser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.setModifiableByUser">[docs]</a>    <span class="k">def</span> <span class="nf">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplemented from :meth:`TaurusWidget.setModifiableByUser`&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValuesTable.isReadOnly"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplemented from :meth:`TaurusWidget.isReadOnly`&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT property definition</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+    <span class="n">writeMode</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span>
+        <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getWriteMode</span><span class="p">,</span> <span class="n">setWriteMode</span><span class="p">,</span> <span class="n">resetWriteMode</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">taurusTableMain</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;A launcher for TaurusValuesTable.&#39;&#39;&#39;</span>
+
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">argparse</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_usage</span><span class="p">(</span><span class="s2">&quot;%prog [options] [model]]&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span>
+        <span class="s2">&quot;A table for viewing and editing 1D and 2D attribute values&quot;</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+                            <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;TaurusValuesTable&quot;</span><span class="p">,</span>
+                            <span class="n">app_version</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
+
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">TaurusValuesTable</span><span class="p">()</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">applicationName</span><span class="p">())</span>
+
+    <span class="c1"># set a model list from the command line or launch the chooser</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">chooseModel</span><span class="p">()</span>
+        <span class="c1">#model = &#39;sys/tg_test/1/boolean_spectrum&#39;</span>
+        <span class="c1"># model = &#39;sys/tg_test/1/boolean_image&#39;</span>
+        <span class="c1"># model = &#39;sys/tg_test/1/string_spectrum&#39;</span>
+        <span class="c1"># model = &#39;sys/tg_test/1/float_image&#39;</span>
+        <span class="c1"># model = &#39;sys/tg_test/1/double_image&#39;</span>
+        <span class="c1"># model = &#39;sys/tg_test/1/double_image_ro&#39;</span>
+        <span class="c1"># model = &#39;sys/tg_test/1/wave&#39;</span>
+        <span class="c1"># dialog.setModel(model)</span>
+
+    <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">taurusTableMain</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.taurusmodel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.taurusmodel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.taurusmodel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the base TaurusModel class&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusModel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">.util.event</span> <span class="k">import</span> <span class="n">CallableRef</span><span class="p">,</span> <span class="n">BoundMethodWeakref</span>
+<span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusEventType</span><span class="p">,</span> <span class="n">MatchLevel</span>
+<span class="kn">from</span> <span class="nn">.taurushelper</span> <span class="k">import</span> <span class="n">Factory</span>
+
+
+<div class="viewcode-block" id="TaurusModel"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusModel</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
+
+    <span class="n">_factory</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">RegularEvent</span> <span class="o">=</span> <span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span>
+                    <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">full_name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">serializationMode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_full_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simp_name</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span>
+            <span class="n">full_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_full_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm_name</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simp_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;invalid name&quot;</span><span class="p">)</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simp_name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm_name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_full_name</span> <span class="ow">or</span> <span class="s1">&#39;TaurusModel&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">serializationMode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s_obj</span> <span class="o">=</span> <span class="n">parent</span>
+            <span class="k">if</span> <span class="n">s_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">s_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span>
+                <span class="n">serializationMode</span> <span class="o">=</span> <span class="n">s_obj</span><span class="o">.</span><span class="n">getSerializationMode</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">serializationMode</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parentObj</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">__str__name__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">(</span><span class="si">{1}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__str__name__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__str__name__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">())</span>
+
+<div class="viewcode-block" id="TaurusModel.cleanUp"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TaurusModel] cleanUp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parentObj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for Factory access</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusModel.factory"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.factory">[docs]</a>    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">_scheme</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for naming</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusModel.getTaurusElementType"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getTaurusElementType">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusElementType</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;TaurusModel.getTaurusElementType cannot&quot;</span>
+                                  <span class="s2">&quot; be called&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusModel.getFullName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getFullName">[docs]</a>    <span class="k">def</span> <span class="nf">getFullName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_full_name</span></div>
+
+<div class="viewcode-block" id="TaurusModel.getNormalName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getNormalName">[docs]</a>    <span class="k">def</span> <span class="nf">getNormalName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm_name</span></div>
+
+<div class="viewcode-block" id="TaurusModel.getSimpleName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getSimpleName">[docs]</a>    <span class="k">def</span> <span class="nf">getSimpleName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simp_name</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusModel.isValid"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.isValid">[docs]</a>    <span class="k">def</span> <span class="nf">isValid</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusModel.buildModelName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.buildModelName">[docs]</a>    <span class="k">def</span> <span class="nf">buildModelName</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent_model</span><span class="p">,</span> <span class="n">relative_name</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;TaurusModel.buildModelName cannot be called&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusModel.getNameValidator"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getNameValidator</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;TaurusModel.getNameValidator cannot be&quot;</span>
+                                  <span class="s2">&quot;called&quot;</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for hierarchy access</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusModel.getParentObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getParentObj">[docs]</a>    <span class="k">def</span> <span class="nf">getParentObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parentObj</span></div>
+
+<div class="viewcode-block" id="TaurusModel.getChildObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getChildObj">[docs]</a>    <span class="k">def</span> <span class="nf">getChildObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># TODO: consider raising NotImplementedError instead</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for serialization</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusModel.setSerializationMode"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.setSerializationMode">[docs]</a>    <span class="k">def</span> <span class="nf">setSerializationMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the serialization mode for the system.</span>
+
+<span class="sd">        :param mode: (TaurusSerializationMode) the new serialization mode&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">mode</span></div>
+
+<div class="viewcode-block" id="TaurusModel.getSerializationMode"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getSerializationMode">[docs]</a>    <span class="k">def</span> <span class="nf">getSerializationMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gives the serialization operation mode.</span>
+
+<span class="sd">        :return: (TaurusSerializationMode) the current serialization mode&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for value access</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusModel.getDisplayDescrObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getDisplayDescrObj">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescrObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A brief description of the model. Can be used as tooltip, for example&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;TaurusModel.getDisplayDescrObj cannot be&quot;</span>
+                                  <span class="s2">&quot; called&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusModel.getDisplayName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getDisplayName">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">complete</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">full_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="n">normal_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">()</span>
+        <span class="n">simple_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">simple_name</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">simple_name</span>
+            <span class="k">if</span> <span class="n">complete</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">+=</span> <span class="s2">&quot; (&quot;</span> <span class="o">+</span> <span class="n">normal_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+        <span class="k">elif</span> <span class="n">normal_name</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">normal_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">full_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusModel.getFragmentObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.getFragmentObj">[docs]</a>    <span class="k">def</span> <span class="nf">getFragmentObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fragmentName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a fragment object of the model. A fragment of a model is a</span>
+<span class="sd">        python attribute of the model object.</span>
+
+<span class="sd">        Fragment names including dots will be used to recursively get fragments</span>
+<span class="sd">        of fragments.</span>
+
+<span class="sd">        For a simple fragmentName (no dots), this is roughly equivalent to</span>
+<span class="sd">        getattr(self, fragmentName)</span>
+
+<span class="sd">        If the model does not have the fragment, :class:`AttributeError` is</span>
+<span class="sd">        raised</span>
+
+<span class="sd">        :param fragmentName: (str or None) the returned value will correspond to</span>
+<span class="sd">                         the given fragmentName. If None is passed the</span>
+<span class="sd">                         defaultFragmentName will be used instead.</span>
+
+<span class="sd">        :return: (obj) the member of the modelObj referred by the fragment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">fragmentName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fragmentName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultFragmentName</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">fragmentName</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">fn</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="c1"># avoid a generic Exception, make it AttributeError instead</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Cannot get empty fragment&#39;</span><span class="p">)</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for listeners</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="k">def</span> <span class="nf">_listenerDied</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weak_listener</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">weak_listener</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_getCallableRef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">,</span> <span class="n">cb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># return weakref.ref(listener, self._listenerDied)</span>
+        <span class="n">meth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span> <span class="s1">&#39;eventReceived&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">meth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">operator</span><span class="o">.</span><span class="n">isCallable</span><span class="p">(</span><span class="n">meth</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span> <span class="n">cb</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">CallableRef</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span> <span class="n">cb</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusModel.addListener"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.addListener">[docs]</a>    <span class="k">def</span> <span class="nf">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">listener</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">weak_listener</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getCallableRef</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listenerDied</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weak_listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weak_listener</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TaurusModel.removeListener"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.removeListener">[docs]</a>    <span class="k">def</span> <span class="nf">removeListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">weak_listener</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getCallableRef</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">weak_listener</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TaurusModel.forceListening"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.forceListening">[docs]</a>    <span class="k">def</span> <span class="nf">forceListening</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">__DummyListener</span><span class="p">:</span>
+
+            <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+                <span class="k">pass</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__dummyListener&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dummyListener</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dummyListener</span> <span class="o">=</span> <span class="n">__DummyListener</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dummyListener</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusModel.unforceListening"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.unforceListening">[docs]</a>    <span class="k">def</span> <span class="nf">unforceListening</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__dummyListener&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dummyListener</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">removeListener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dummyListener</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dummyListener</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusModel.deleteListener"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.deleteListener">[docs]</a>    <span class="k">def</span> <span class="nf">deleteListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="s2">&quot;Use removeListener(listener) instead&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeListener</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusModel.hasListeners"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.hasListeners">[docs]</a>    <span class="k">def</span> <span class="nf">hasListeners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; returns True if anybody is listening to events from this attribute &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="TaurusModel.fireEvent"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">event_value</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sends an event to all listeners or a specific one&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">listeners</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">listeners</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span>
+
+        <span class="k">if</span> <span class="n">listeners</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">operator</span><span class="o">.</span><span class="n">isSequenceType</span><span class="p">(</span><span class="n">listeners</span><span class="p">):</span>
+            <span class="n">listeners</span> <span class="o">=</span> <span class="n">listeners</span><span class="p">,</span>
+
+        <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="n">listeners</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span> <span class="n">BoundMethodWeakref</span><span class="p">):</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">listener</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">listener</span>
+            <span class="k">if</span> <span class="n">l</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">meth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="s1">&#39;eventReceived&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">meth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">operator</span><span class="o">.</span><span class="n">isCallable</span><span class="p">(</span><span class="n">meth</span><span class="p">):</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">event_value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">operator</span><span class="o">.</span><span class="n">isCallable</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+                <span class="n">l</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">event_value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusModel.isWritable"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModel.html#taurus.core.TaurusModel.isWritable">[docs]</a>    <span class="k">def</span> <span class="nf">isWritable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simp_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_full_name</span>
+
+    <span class="n">parentObj</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fget</span><span class="o">=</span><span class="n">getParentObj</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

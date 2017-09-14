@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.plot.monitor &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.plot.monitor</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.plot.monitor</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">monitor.py: Specialized mini-trend widget to monitor some scalar value</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.plot</span> <span class="k">import</span> <span class="n">TaurusTrend</span>
+
+
+<div class="viewcode-block" id="TaurusMonitorTiny"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusMonitorTiny.html#taurus.qt.qtgui.plot.TaurusMonitorTiny">[docs]</a><span class="k">class</span> <span class="nc">TaurusMonitorTiny</span><span class="p">(</span><span class="n">TaurusTrend</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A specialised :class:`TaurusTrend` widget for monitoring scalar values and show</span>
+<span class="sd">    their evolution over time. It is designed to be small (e.g. to fit in a</span>
+<span class="sd">    toolbar). It is inspired by the SysMon applet in old KDE3.</span>
+
+<span class="sd">    .. seealso:: :class:`TaurusTrend`,</span>
+<span class="sd">                 :ref:`TaurusTrend User&#39;s Interface Guide &lt;trend_ui&gt;`,</span>
+<span class="sd">                 :ref:`The TaurusTrend coding examples &lt;examples_taurustrend&gt;`</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">DEFAULT_MAX_BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">8192</span>  <span class="c1"># (8K events))</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">TaurusTrend</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setXIsTime</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># set a 5 minutes range by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAxisScale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xBottom</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setXDynScale</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCanvasBackground</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">showLegend</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enableAxis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xBottom</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enableAxis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xTop</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enableAxis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yLeft</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enableAxis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yRight</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAllowZoomers</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggleDataInspectorMode</span><span class="p">(</span><span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusMonitorTiny.autoShowYAxes"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusMonitorTiny.html#taurus.qt.qtgui.plot.TaurusMonitorTiny.autoShowYAxes">[docs]</a>    <span class="k">def</span> <span class="nf">autoShowYAxes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;reimplemented to avoid auto-enabling of axes&#39;&#39;&#39;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TaurusMonitorTiny.event"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusMonitorTiny.html#taurus.qt.qtgui.plot.TaurusMonitorTiny.event">[docs]</a>    <span class="k">def</span> <span class="nf">event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1"># if event.type() == Qt.QEvent.ToolTip: print &quot;!!!!!!!&quot;, event.type()</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">ToolTip</span><span class="p">:</span>
+            <span class="c1">#            info = self.getMonitorInfo()</span>
+            <span class="c1">#            self.setToolTip(info)</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">TaurusTrend</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div></div>
+
+<span class="c1">#    def getMonitorInfo(self):</span>
+<span class="c1">#        time = datetime.datetime.now().isoformat()</span>
+<span class="c1"># for</span>
+<span class="c1">#        return time</span>
+<span class="c1">#        #print &quot;!!!!!!!!!&quot;, event.type()</span>
+<span class="c1">#    #def mouse</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="n">KLASS</span> <span class="o">=</span> <span class="n">TaurusTrend</span>
+    <span class="n">SHOW</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">EXPORT</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">CONFIG</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">MODELS</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">XISTIME</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># MANAGING ARGUMENTS</span>
+    <span class="c1">#----------------------------------------------</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s2">&quot;-xt&quot;</span><span class="p">:</span>  <span class="c1"># argument &quot;-xt&quot; means interprete X values as time</span>
+            <span class="n">XISTIME</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">a</span> <span class="o">==</span> <span class="s2">&quot;-xe&quot;</span><span class="p">:</span>  <span class="c1"># argument &quot;-xe&quot; means interprete X values as events</span>
+            <span class="n">XISTIME</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># argument &quot;-conf=FILENAME&quot; launches TaurusTrend/Plot with a predefined</span>
+        <span class="c1"># config file</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-config=&#39;</span><span class="p">):</span>
+            <span class="n">CONFIG</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">):</span>  <span class="c1"># whatever other argument starting by &quot;-&quot;</span>
+            <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Usage: </span><span class="se">\n</span><span class="si">%s</span><span class="s2"> [-xe|-xt] [-config=configfilename] [model1 [model2] ...]</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># anything that is not a parameter is interpreted as a model</span>
+            <span class="n">MODELS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="c1">#----------------------------------------------</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">TaurusMonitorTiny</span><span class="p">()</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">setXIsTime</span><span class="p">(</span><span class="n">XISTIME</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">CONFIG</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">loadConfig</span><span class="p">(</span><span class="n">CONFIG</span><span class="p">)</span>
+    <span class="c1"># form.setDefaultCurvesTitle(&quot;&lt;dev_full_name&gt;&lt;[trend_index]&gt;&quot;)</span>
+    <span class="k">if</span> <span class="n">MODELS</span><span class="p">:</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">MODELS</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">SHOW</span><span class="p">:</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="c1"># if no models are passed, show the data import dialog</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">MODELS</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">CONFIG</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">showDataImportDlg</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

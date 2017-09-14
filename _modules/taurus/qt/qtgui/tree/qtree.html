@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.tree.qtree &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.tree.qtree</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.tree.qtree</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides base tree widget&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QBaseTreeWidget&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.model</span> <span class="k">import</span> <span class="n">QBaseModelWidget</span><span class="p">,</span> <span class="n">BaseToolBar</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ActionFactory</span>
+
+
+<span class="k">class</span> <span class="nc">_NavigationWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Internal widget that provides a navigation path to be placed in a toolbar&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">treeWidget</span><span class="p">,</span> <span class="n">toolBarWidget</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_NavigationWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span> <span class="o">=</span> <span class="n">treeWidget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span> <span class="o">=</span> <span class="n">toolBarWidget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">treeWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span>
+
+    <span class="k">def</span> <span class="nf">viewWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">toolBarWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span>
+
+    <span class="k">def</span> <span class="nf">updateSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">treeWidget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span>
+        <span class="n">src_model</span> <span class="o">=</span> <span class="n">treeWidget</span><span class="o">.</span><span class="n">getBaseQModel</span><span class="p">()</span>
+        <span class="n">toolbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolBarWidget</span><span class="p">()</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&quot;</span>
+
+        <span class="k">while</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">src_index</span> <span class="o">=</span> <span class="n">treeWidget</span><span class="o">.</span><span class="n">_mapToSource</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">src_model</span><span class="o">.</span><span class="n">pyData</span><span class="p">(</span><span class="n">src_index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
+            <span class="n">txt</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot; </span><span class="se">\u00bb</span><span class="s2"> &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="n">txt</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;Root&quot;</span> <span class="o">+</span> <span class="n">txt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onGotoNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
+        <span class="n">persistent_index</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">(</span><span class="n">persistent_index</span><span class="p">)</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setRootIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">NavigationToolBar</span><span class="p">(</span><span class="n">BaseToolBar</span><span class="p">):</span>
+
+    <span class="n">goIntoTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">goUpTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">goTopTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">BaseToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Taurus selection toolbar&quot;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+                             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="n">af</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_goIntoAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Go Into&quot;</span><span class="p">,</span>
+                                             <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;go-down&quot;</span><span class="p">),</span>
+                                             <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Go into the selected item&quot;</span><span class="p">,</span>
+                                             <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">goInto</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_goUpAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Go Up&quot;</span><span class="p">,</span>
+                                           <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;go-up&quot;</span><span class="p">),</span>
+                                           <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Go up one level&quot;</span><span class="p">,</span>
+                                           <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">goUp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_goTopAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Go Top&quot;</span><span class="p">,</span>
+                                            <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;go-top&quot;</span><span class="p">),</span>
+                                            <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Go to top level&quot;</span><span class="p">,</span>
+                                            <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">goTop</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_goIntoAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_goUpAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_goTopAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_navigationWidget</span> <span class="o">=</span> <span class="n">_NavigationWidget</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_navigationAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_navigationWidget</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">goIntoAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_goIntoAction</span>
+
+    <span class="k">def</span> <span class="nf">goTopAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_goTopAction</span>
+
+    <span class="k">def</span> <span class="nf">goUpAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_goUpAction</span>
+
+    <span class="k">def</span> <span class="nf">goInto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goIntoTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">goUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goUpTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">goTop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goTopTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">ExpansionBar</span><span class="p">(</span><span class="n">BaseToolBar</span><span class="p">):</span>
+
+    <span class="n">expandTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">collapseTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">expandSelectionTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">collapseSelectionTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">BaseToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Taurus selection toolbar&quot;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+                             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="n">af</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expandAllAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Expand All&quot;</span><span class="p">,</span>
+                                                <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span>
+                                                    <span class="s2">&quot;actions:expand.png&quot;</span><span class="p">),</span>
+                                                <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Expand all items&quot;</span><span class="p">,</span>
+                                                <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onExpandAll</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_collapseAllAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Collapse All&quot;</span><span class="p">,</span>
+                                                  <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span>
+                                                      <span class="s2">&quot;actions:collapse.png&quot;</span><span class="p">),</span>
+                                                  <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Collapse all items&quot;</span><span class="p">,</span>
+                                                  <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onCollapseAll</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expandSelectionAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Expand selection&quot;</span><span class="p">,</span>
+                                                      <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span>
+                                                          <span class="s2">&quot;actions:expand-selection.png&quot;</span><span class="p">),</span>
+                                                      <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Expand selection&quot;</span><span class="p">,</span>
+                                                      <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onExpandSelection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_collapseSelectionAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Collapse All&quot;</span><span class="p">,</span>
+                                                        <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span>
+                                                            <span class="s2">&quot;actions:collapse-selection.png&quot;</span><span class="p">),</span>
+                                                        <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Collapse selection&quot;</span><span class="p">,</span>
+                                                        <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onCollapseSelection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_expandAllAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collapseAllAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_expandSelectionAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collapseSelectionAction</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onExpandAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expandTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">onCollapseAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collapseTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">onExpandSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expandSelectionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">onCollapseSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collapseSelectionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="QBaseTreeWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget">[docs]</a><span class="k">class</span> <span class="nc">QBaseTreeWidget</span><span class="p">(</span><span class="n">QBaseModelWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A pure Qt tree widget implementing a tree with a navigation toolbar&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_navigation_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">with_filter_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_selection_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">with_refresh_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">perspective</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">with_navigation_bar</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">with_navigation_bar</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_with_navigation_bar</span> <span class="o">=</span> <span class="n">NavigationToolBar</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_with_navigation_bar</span> <span class="o">=</span> <span class="n">with_navigation_bar</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_with_navigation_bar</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">QBaseModelWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span>
+                                  <span class="n">with_filter_widget</span><span class="o">=</span><span class="n">with_filter_widget</span><span class="p">,</span>
+                                  <span class="n">with_selection_widget</span><span class="o">=</span><span class="n">with_selection_widget</span><span class="p">,</span>
+                                  <span class="n">with_refresh_widget</span><span class="o">=</span><span class="n">with_refresh_widget</span><span class="p">,</span>
+                                  <span class="n">perspective</span><span class="o">=</span><span class="n">perspective</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QBaseTreeWidget.createToolArea"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.createToolArea">[docs]</a>    <span class="k">def</span> <span class="nf">createToolArea</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ta</span> <span class="o">=</span> <span class="n">QBaseModelWidget</span><span class="o">.</span><span class="n">createToolArea</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">e_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expandBar</span> <span class="o">=</span> <span class="n">ExpansionBar</span><span class="p">(</span><span class="n">view</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">e_bar</span><span class="o">.</span><span class="n">expandTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expandAllTree</span><span class="p">)</span>
+        <span class="n">e_bar</span><span class="o">.</span><span class="n">collapseTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collapseAllTree</span><span class="p">)</span>
+        <span class="n">e_bar</span><span class="o">.</span><span class="n">expandSelectionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expandSelectionTree</span><span class="p">)</span>
+        <span class="n">e_bar</span><span class="o">.</span><span class="n">collapseSelectionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collapseSelectionTree</span><span class="p">)</span>
+        <span class="n">ta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e_bar</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_navigation_bar</span><span class="p">:</span>
+            <span class="n">n_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_navigation_bar</span><span class="p">(</span>
+                <span class="n">view</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">n_bar</span><span class="o">.</span><span class="n">goIntoTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goIntoTree</span><span class="p">)</span>
+            <span class="n">n_bar</span><span class="o">.</span><span class="n">goTopTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goTopTree</span><span class="p">)</span>
+            <span class="n">n_bar</span><span class="o">.</span><span class="n">goUpTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goUpTree</span><span class="p">)</span>
+            <span class="n">ta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_bar</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">ta</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.createViewWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.createViewWidget">[docs]</a>    <span class="k">def</span> <span class="nf">createViewWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">klass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTreeView</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">klass</span><span class="p">()</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setSortingEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">sortByColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AscendingOrder</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setUniformRowHeights</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setAlternatingRowColors</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setSelectionBehavior</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">SelectRows</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setSelectionMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">ExtendedSelection</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setDragEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setDropIndicatorShown</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">expanded</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onExpanded</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onClicked</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">doubleClicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onDoubleClicked</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">header</span><span class="p">()</span>
+        <span class="n">h</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.treeView"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.treeView">[docs]</a>    <span class="k">def</span> <span class="nf">treeView</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.goIntoAction"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.goIntoAction">[docs]</a>    <span class="k">def</span> <span class="nf">goIntoAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span><span class="o">.</span><span class="n">goIntoAction</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.goTopAction"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.goTopAction">[docs]</a>    <span class="k">def</span> <span class="nf">goTopAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span><span class="o">.</span><span class="n">goTopAction</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.goUpAction"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.goUpAction">[docs]</a>    <span class="k">def</span> <span class="nf">goUpAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span><span class="o">.</span><span class="n">goUpAction</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.expandAllTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.expandAllTree">[docs]</a>    <span class="k">def</span> <span class="nf">expandAllTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;Expanding all items... (it may take a few seconds)&quot;</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expandTree</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_expandTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">expandAll</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;All items expanded!&quot;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QBaseTreeWidget.onExpanded"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.onExpanded">[docs]</a>    <span class="k">def</span> <span class="nf">onExpanded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resizeColumns</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.collapseAllTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.collapseAllTree">[docs]</a>    <span class="k">def</span> <span class="nf">collapseAllTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span><span class="o">.</span><span class="n">collapseAll</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.expandSelectionTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.expandSelectionTree">[docs]</a>    <span class="k">def</span> <span class="nf">expandSelectionTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.collapseSelectionTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.collapseSelectionTree">[docs]</a>    <span class="k">def</span> <span class="nf">collapseSelectionTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">collapse</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.resizeColumns"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.resizeColumns">[docs]</a>    <span class="k">def</span> <span class="nf">resizeColumns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()):</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">resizeColumnToContents</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.goIntoTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.goIntoTree">[docs]</a>    <span class="k">def</span> <span class="nf">goIntoTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="n">base_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapToSource</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span>
+
+        <span class="c1"># do not enter if the item doesn&#39;t have any children</span>
+        <span class="k">if</span> <span class="n">base_index</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span><span class="o">.</span><span class="n">childCount</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">setRootIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateToolBar</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.goUpTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.goUpTree">[docs]</a>    <span class="k">def</span> <span class="nf">goUpTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">index_parent</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">setRootIndex</span><span class="p">(</span><span class="n">index_parent</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateToolBar</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseTreeWidget.goTopTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.goTopTree">[docs]</a>    <span class="k">def</span> <span class="nf">goTopTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">current_root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">()</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">current_root</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">p</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setRootIndex</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateToolBar</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_updateToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">previous</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_navigation_bar</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="n">goInto</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">base_current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapToSource</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">ip</span> <span class="o">=</span> <span class="n">base_current</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">goInto</span> <span class="o">=</span> <span class="n">ip</span><span class="o">.</span><span class="n">childCount</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span><span class="o">.</span><span class="n">_goIntoAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">goInto</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expandBar</span><span class="o">.</span><span class="n">_expandSelectionAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">goInto</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expandBar</span><span class="o">.</span><span class="n">_collapseSelectionAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">goInto</span><span class="p">)</span>
+
+        <span class="n">goUp</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">()</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span><span class="o">.</span><span class="n">_goUpAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">goUp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span><span class="o">.</span><span class="n">_goTopAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">goUp</span><span class="p">)</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_navigationToolBar</span><span class="o">.</span><span class="n">_navigationWidget</span><span class="o">.</span><span class="n">updateSelection</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

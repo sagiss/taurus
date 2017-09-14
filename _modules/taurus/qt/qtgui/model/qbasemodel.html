@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.model.qbasemodel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.model.qbasemodel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.model.qbasemodel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides base widget that displays a Qt view widget envolved</span>
+<span class="sd">by a toolbar and a status bar (optional)&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QBaseModelWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusBaseModelWidget&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;BaseToolBar&quot;</span><span class="p">,</span> <span class="s2">&quot;FilterToolBar&quot;</span><span class="p">,</span> <span class="s2">&quot;EditorToolBar&quot;</span><span class="p">,</span> <span class="s2">&quot;SelectionToolBar&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;RefreshToolBar&quot;</span><span class="p">,</span> <span class="s2">&quot;PerspectiveToolBar&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ActionFactory</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
+
+
+<div class="viewcode-block" id="BaseToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_BaseToolBar.html#taurus.qt.qtgui.model.BaseToolBar">[docs]</a><span class="k">class</span> <span class="nc">BaseToolBar</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QToolBar</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Base toolbar&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_viewWidget</span> <span class="o">=</span> <span class="n">view</span> <span class="ow">or</span> <span class="n">parent</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFloatable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMovable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BaseToolBar.viewWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_BaseToolBar.html#taurus.qt.qtgui.model.BaseToolBar.viewWidget">[docs]</a>    <span class="k">def</span> <span class="nf">viewWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewWidget</span></div></div>
+
+
+<div class="viewcode-block" id="FilterToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_FilterToolBar.html#taurus.qt.qtgui.model.FilterToolBar">[docs]</a><span class="k">class</span> <span class="nc">FilterToolBar</span><span class="p">(</span><span class="n">BaseToolBar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Internal widget providing quick filter to be placed in a _QToolArea&quot;&quot;&quot;</span>
+
+    <span class="n">filterEdited</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;const QString &amp;&#39;</span><span class="p">)</span>
+    <span class="n">filterChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;const QString &amp;&#39;</span><span class="p">)</span>
+    <span class="n">clearFilterTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">BaseToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Taurus filter toolbar&quot;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+                             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="n">filterLineEdit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filterLineEdit</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">filterLineEdit</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">,</span>
+                                                    <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">))</span>
+        <span class="n">filterLineEdit</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Quick filter&quot;</span><span class="p">)</span>
+        <span class="n">filterLineEdit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onFilterChanged</span><span class="p">)</span>
+        <span class="n">filterLineEdit</span><span class="o">.</span><span class="n">textEdited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onFilterEdited</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">filterLineEdit</span><span class="p">)</span>
+
+        <span class="n">af</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clearFilterAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Clear&quot;</span><span class="p">,</span>
+                                                  <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                                                      <span class="s2">&quot;edit-clear&quot;</span><span class="p">),</span>
+                                                  <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Clears the filter&quot;</span><span class="p">,</span>
+                                                  <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onClearFilter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clearFilterAction</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FilterToolBar.getFilterLineEdit"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_FilterToolBar.html#taurus.qt.qtgui.model.FilterToolBar.getFilterLineEdit">[docs]</a>    <span class="k">def</span> <span class="nf">getFilterLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filterLineEdit</span></div>
+
+<div class="viewcode-block" id="FilterToolBar.onClearFilter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_FilterToolBar.html#taurus.qt.qtgui.model.FilterToolBar.onClearFilter">[docs]</a>    <span class="k">def</span> <span class="nf">onClearFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getFilterLineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearFilterTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FilterToolBar.onFilterChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_FilterToolBar.html#taurus.qt.qtgui.model.FilterToolBar.onFilterChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onFilterChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFilterLineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filterChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FilterToolBar.onFilterEdited"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_FilterToolBar.html#taurus.qt.qtgui.model.FilterToolBar.onFilterEdited">[docs]</a>    <span class="k">def</span> <span class="nf">onFilterEdited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFilterLineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filterEdited</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FilterToolBar.setFilterText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_FilterToolBar.html#taurus.qt.qtgui.model.FilterToolBar.setFilterText">[docs]</a>    <span class="k">def</span> <span class="nf">setFilterText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getFilterLineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="EditorToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_EditorToolBar.html#taurus.qt.qtgui.model.EditorToolBar">[docs]</a><span class="k">class</span> <span class="nc">EditorToolBar</span><span class="p">(</span><span class="n">BaseToolBar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Internal widget to be placed in a _QToolArea providing buttons for</span>
+<span class="sd">    moving, adding and removing items from a view based widget&quot;&quot;&quot;</span>
+
+    <span class="n">addTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">removeTriggered</span>  <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">moveTopTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">moveDownTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">moveUpTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">moveBottomTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">BaseToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Taurus editor toolbar&quot;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+                             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="n">af</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;New item&quot;</span><span class="p">,</span>
+                                          <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;list-add&quot;</span><span class="p">),</span>
+                                          <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Add new item&quot;</span><span class="p">,</span>
+                                          <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onAdd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_removeAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Remove item&quot;</span><span class="p">,</span>
+                                             <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                                                 <span class="s2">&quot;list-remove&quot;</span><span class="p">),</span>
+                                             <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Remove item&quot;</span><span class="p">,</span>
+                                             <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onRemove</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moveTopAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;To top&quot;</span><span class="p">,</span>
+                                              <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;go-top&quot;</span><span class="p">),</span>
+                                              <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Move selected item to top&quot;</span><span class="p">,</span>
+                                              <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onMoveTop</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moveUpAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Move up&quot;</span><span class="p">,</span>
+                                             <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;go-up&quot;</span><span class="p">),</span>
+                                             <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Move selected item up one level&quot;</span><span class="p">,</span>
+                                             <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onMoveUp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moveDownAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Move down&quot;</span><span class="p">,</span>
+                                               <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                                                   <span class="s2">&quot;go-down&quot;</span><span class="p">),</span>
+                                               <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Move selected item down one level&quot;</span><span class="p">,</span>
+                                               <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onMoveDown</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moveBottomAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;To bottom&quot;</span><span class="p">,</span>
+                                                 <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                                                     <span class="s2">&quot;go-bottom&quot;</span><span class="p">),</span>
+                                                 <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Move selected item to bottom&quot;</span><span class="p">,</span>
+                                                 <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onMoveBottom</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_addAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_removeAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_moveTopAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_moveUpAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_moveDownAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_moveBottomAction</span><span class="p">)</span>
+        <span class="c1">#self.setStyleSheet(&quot;QWidget {background : red; }&quot;)</span>
+
+<div class="viewcode-block" id="EditorToolBar.onAdd"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_EditorToolBar.html#taurus.qt.qtgui.model.EditorToolBar.onAdd">[docs]</a>    <span class="k">def</span> <span class="nf">onAdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EditorToolBar.onRemove"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_EditorToolBar.html#taurus.qt.qtgui.model.EditorToolBar.onRemove">[docs]</a>    <span class="k">def</span> <span class="nf">onRemove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EditorToolBar.onMoveTop"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_EditorToolBar.html#taurus.qt.qtgui.model.EditorToolBar.onMoveTop">[docs]</a>    <span class="k">def</span> <span class="nf">onMoveTop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moveTopTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EditorToolBar.onMoveUp"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_EditorToolBar.html#taurus.qt.qtgui.model.EditorToolBar.onMoveUp">[docs]</a>    <span class="k">def</span> <span class="nf">onMoveUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moveUpTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EditorToolBar.onMoveDown"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_EditorToolBar.html#taurus.qt.qtgui.model.EditorToolBar.onMoveDown">[docs]</a>    <span class="k">def</span> <span class="nf">onMoveDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moveDownTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EditorToolBar.onMoveBottom"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_EditorToolBar.html#taurus.qt.qtgui.model.EditorToolBar.onMoveBottom">[docs]</a>    <span class="k">def</span> <span class="nf">onMoveBottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moveBottomTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="SelectionToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_SelectionToolBar.html#taurus.qt.qtgui.model.SelectionToolBar">[docs]</a><span class="k">class</span> <span class="nc">SelectionToolBar</span><span class="p">(</span><span class="n">BaseToolBar</span><span class="p">):</span>
+
+    <span class="n">selectAllTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">clearSelectionTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">BaseToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Taurus selection toolbar&quot;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+                             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="n">af</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selectAllAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Select All&quot;</span><span class="p">,</span>
+                                                <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                                                    <span class="s2">&quot;edit-select-all&quot;</span><span class="p">),</span>
+                                                <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Select all items&quot;</span><span class="p">,</span>
+                                                <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onSelectAll</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clearSelectionAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Clear selection&quot;</span><span class="p">,</span>
+                                                     <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                                                         <span class="s2">&quot;edit-clear&quot;</span><span class="p">),</span>
+                                                     <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Clears current selection&quot;</span><span class="p">,</span>
+                                                     <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onclearSelection</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_selectAllAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clearSelectionAction</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SelectionToolBar.onSelectAll"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_SelectionToolBar.html#taurus.qt.qtgui.model.SelectionToolBar.onSelectAll">[docs]</a>    <span class="k">def</span> <span class="nf">onSelectAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectAllTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SelectionToolBar.onclearSelection"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_SelectionToolBar.html#taurus.qt.qtgui.model.SelectionToolBar.onclearSelection">[docs]</a>    <span class="k">def</span> <span class="nf">onclearSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearSelectionTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="RefreshToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_RefreshToolBar.html#taurus.qt.qtgui.model.RefreshToolBar">[docs]</a><span class="k">class</span> <span class="nc">RefreshToolBar</span><span class="p">(</span><span class="n">BaseToolBar</span><span class="p">):</span>
+
+    <span class="n">refreshTriggered</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">BaseToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Taurus refresh toolbar&quot;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+                             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="n">af</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refreshAction</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Refresh&quot;</span><span class="p">,</span>
+                                              <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+                                                  <span class="s2">&quot;view-refresh&quot;</span><span class="p">),</span>
+                                              <span class="n">tip</span><span class="o">=</span><span class="s2">&quot;Refresh view&quot;</span><span class="p">,</span>
+                                              <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onRefresh</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_refreshAction</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RefreshToolBar.onRefresh"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_RefreshToolBar.html#taurus.qt.qtgui.model.RefreshToolBar.onRefresh">[docs]</a>    <span class="k">def</span> <span class="nf">onRefresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refreshTriggered</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="PerspectiveToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_PerspectiveToolBar.html#taurus.qt.qtgui.model.PerspectiveToolBar">[docs]</a><span class="k">class</span> <span class="nc">PerspectiveToolBar</span><span class="p">(</span><span class="n">BaseToolBar</span><span class="p">):</span>
+
+    <span class="n">perspectiveChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">BaseToolBar</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Taurus refresh toolbar&quot;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+                             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_perspective</span> <span class="o">=</span> <span class="n">perspective</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_perspective_button</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Perspective selection&quot;</span><span class="p">)</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">setPopupMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="o">.</span><span class="n">InstantPopup</span><span class="p">)</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">setToolButtonStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolButtonTextBesideIcon</span><span class="p">)</span>
+
+        <span class="n">menu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="s2">&quot;Perspective&quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
+        <span class="n">af</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">persp</span><span class="p">,</span> <span class="n">persp_data</span> <span class="ow">in</span> <span class="n">view</span><span class="o">.</span><span class="n">KnownPerspectives</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">persp_data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="n">persp_data</span><span class="p">[</span><span class="s2">&quot;icon&quot;</span><span class="p">])</span>
+            <span class="n">tip</span> <span class="o">=</span> <span class="n">persp_data</span><span class="p">[</span><span class="s2">&quot;tooltip&quot;</span><span class="p">]</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">createAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="n">icon</span><span class="p">,</span> <span class="n">tip</span><span class="o">=</span><span class="n">tip</span><span class="p">,</span>
+                                     <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onSwitchPerspective</span><span class="p">)</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">perspective</span> <span class="o">=</span> <span class="n">persp</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">persp</span> <span class="o">==</span> <span class="n">perspective</span><span class="p">:</span>
+                <span class="n">b</span><span class="o">.</span><span class="n">setDefaultAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_perspectiveAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PerspectiveToolBar.switchPerspectiveButton"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_PerspectiveToolBar.html#taurus.qt.qtgui.model.PerspectiveToolBar.switchPerspectiveButton">[docs]</a>    <span class="k">def</span> <span class="nf">switchPerspectiveButton</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the QToolButton that handles the switch perspective.</span>
+
+<span class="sd">        :return: (PyQt4.QtGui.QToolButton) the switch perspective tool button</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_perspective_button</span></div>
+
+<div class="viewcode-block" id="PerspectiveToolBar.onSwitchPerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_PerspectiveToolBar.html#taurus.qt.qtgui.model.PerspectiveToolBar.onSwitchPerspective">[docs]</a>    <span class="k">def</span> <span class="nf">onSwitchPerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_perspective</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">perspective</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_perspective_button</span><span class="o">.</span><span class="n">setDefaultAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspectiveChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">perspective</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PerspectiveToolBar.perspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_PerspectiveToolBar.html#taurus.qt.qtgui.model.PerspectiveToolBar.perspective">[docs]</a>    <span class="k">def</span> <span class="nf">perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_perspective</span></div></div>
+
+
+<div class="viewcode-block" id="QBaseModelWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget">[docs]</a><span class="k">class</span> <span class="nc">QBaseModelWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A pure Qt widget designed to display a Qt view widget (QTreeView for</span>
+<span class="sd">    example), envolved by optional toolbar and statusbar.</span>
+<span class="sd">    The Qt model associated with the internal Qt view widget should be a</span>
+<span class="sd">    :class:`taurus.qt.qtcore.model.TaurusBaseModel`&quot;&quot;&quot;</span>
+
+    <span class="n">KnownPerspectives</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">DftPerspective</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">itemClicked</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="n">itemDoubleClicked</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="n">itemSelectionChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">currentItemChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_filter_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">with_selection_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_refresh_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">perspective</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_baseQModel</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolBars</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">with_filter_widget</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">with_filter_widget</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_with_filter_widget</span> <span class="o">=</span> <span class="n">FilterToolBar</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_with_filter_widget</span> <span class="o">=</span> <span class="n">with_filter_widget</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_with_filter_widget</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">with_selection_widget</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">with_selection_widget</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_with_selection_widget</span> <span class="o">=</span> <span class="n">SelectionToolBar</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_with_selection_widget</span> <span class="o">=</span> <span class="n">with_selection_widget</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_with_selection_widget</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">with_refresh_widget</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">with_refresh_widget</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_with_refresh_widget</span> <span class="o">=</span> <span class="n">RefreshToolBar</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_with_refresh_widget</span> <span class="o">=</span> <span class="n">with_refresh_widget</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_with_refresh_widget</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_proxyModel</span> <span class="o">=</span> <span class="n">proxy</span>
+
+        <span class="n">toolBars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createToolArea</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_viewWidget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createViewWidget</span><span class="p">()</span>
+        <span class="n">statusbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createStatusBar</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">toolBar</span> <span class="ow">in</span> <span class="n">toolBars</span><span class="p">:</span>
+            <span class="c1"># toolBar.addSeparator()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="n">toolBar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_viewWidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStatusBar</span><span class="p">(</span><span class="n">statusbar</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">perspective</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftPerspective</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">KnownPerspectives</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">p_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_perspectiveBar</span> <span class="o">=</span> <span class="n">PerspectiveToolBar</span><span class="p">(</span>
+                <span class="n">perspective</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">p_bar</span><span class="o">.</span><span class="n">perspectiveChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSwitchPerspective</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="n">p_bar</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_perspectiveBar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setPerspective</span><span class="p">(</span><span class="n">perspective</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QBaseModelWidget.createViewWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.createViewWidget">[docs]</a>    <span class="k">def</span> <span class="nf">createViewWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.createStatusBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.createStatusBar">[docs]</a>    <span class="k">def</span> <span class="nf">createStatusBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sb</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStatusBar</span><span class="p">()</span>
+        <span class="n">sb</span><span class="o">.</span><span class="n">setSizeGripEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sb</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.createToolArea"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.createToolArea">[docs]</a>    <span class="k">def</span> <span class="nf">createToolArea</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tb</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># tb = self._toolArea = QToolArea(self)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_filter_widget</span><span class="p">:</span>
+            <span class="n">f_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filterBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_filter_widget</span><span class="p">(</span>
+                <span class="n">view</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">f_bar</span><span class="o">.</span><span class="n">filterChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onFilterChanged</span><span class="p">)</span>
+            <span class="n">tb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_bar</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filterBar</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_selection_widget</span><span class="p">:</span>
+            <span class="n">s_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectionBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_selection_widget</span><span class="p">(</span>
+                <span class="n">view</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">s_bar</span><span class="o">.</span><span class="n">selectAllTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSelectAll</span><span class="p">)</span>
+            <span class="n">s_bar</span><span class="o">.</span><span class="n">clearSelectionTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onClearSelection</span><span class="p">)</span>
+            <span class="n">tb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s_bar</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selectionBar</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_refresh_widget</span><span class="p">:</span>
+            <span class="n">r_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refreshBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_refresh_widget</span><span class="p">(</span>
+                <span class="n">view</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">r_bar</span><span class="o">.</span><span class="n">refreshTriggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onRefreshModel</span><span class="p">)</span>
+            <span class="n">tb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_bar</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_refreshBar</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">tb</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.getPerspectiveBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.getPerspectiveBar">[docs]</a>    <span class="k">def</span> <span class="nf">getPerspectiveBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_perspectiveBar</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.getFilterBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.getFilterBar">[docs]</a>    <span class="k">def</span> <span class="nf">getFilterBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filterBar</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.getSelectionBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.getSelectionBar">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectionBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectionBar</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.getRefreshBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.getRefreshBar">[docs]</a>    <span class="k">def</span> <span class="nf">getRefreshBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refreshBar</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.onRefreshModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.onRefreshModel">[docs]</a>    <span class="k">def</span> <span class="nf">onRefreshModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.onSelectAll"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.onSelectAll">[docs]</a>    <span class="k">def</span> <span class="nf">onSelectAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">selectAll</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.onClearSelection"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.onClearSelection">[docs]</a>    <span class="k">def</span> <span class="nf">onClearSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">clearSelection</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_onClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Emits an &quot;itemClicked&quot; signal with with the clicked item and column</span>
+<span class="sd">        as arguments&#39;&#39;&#39;</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapToSource</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemClicked</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_onDoubleClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Emits an &quot;itemDoubleClicked&quot; signal with the clicked item and column</span>
+<span class="sd">        as arguments&#39;&#39;&#39;</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapToSource</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemDoubleClicked</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span>
+
+<div class="viewcode-block" id="QBaseModelWidget.viewWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.viewWidget">[docs]</a>    <span class="k">def</span> <span class="nf">viewWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewWidget</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.getQModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.getQModel">[docs]</a>    <span class="k">def</span> <span class="nf">getQModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span><span class="o">.</span><span class="n">model</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.getBaseQModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.getBaseQModel">[docs]</a>    <span class="k">def</span> <span class="nf">getBaseQModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_baseQModel</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.usesProxyQModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.usesProxyQModel">[docs]</a>    <span class="k">def</span> <span class="nf">usesProxyQModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractProxyModel</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_mapToSource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">usesProxyQModel</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">index</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span>
+        <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractProxyModel</span><span class="p">):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">mapToSource</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">index</span>
+
+<div class="viewcode-block" id="QBaseModelWidget.setQModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.setQModel">[docs]</a>    <span class="k">def</span> <span class="nf">setQModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qmodel</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_baseQModel</span> <span class="o">=</span> <span class="n">qmodel</span>
+        <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_baseQModel</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractProxyModel</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_baseQModel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_baseQModel</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
+
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="n">old_selection_model</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span>
+        <span class="n">CC</span> <span class="o">=</span> <span class="s1">&#39;currentChanged(const QModelIndex &amp;,const QModelIndex &amp;)&#39;</span>
+        <span class="n">SC</span> <span class="o">=</span> <span class="s1">&#39;selectionChanged(QItemSelection &amp;, QItemSelection &amp;)&#39;</span>
+        <span class="k">if</span> <span class="n">old_selection_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">old_selection_model</span><span class="o">.</span><span class="n">currentChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">viewCurrentIndexChanged</span><span class="p">)</span>
+            <span class="n">old_selection_model</span><span class="o">.</span><span class="n">selectionChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">viewSelectionChanged</span><span class="p">)</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">qmodel</span><span class="p">)</span>
+        <span class="n">new_selection_model</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">new_selection_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_selection_model</span><span class="o">.</span><span class="n">currentChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">viewCurrentIndexChanged</span><span class="p">)</span>
+            <span class="n">new_selection_model</span><span class="o">.</span><span class="n">selectionChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">viewSelectionChanged</span><span class="p">)</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateToolBar</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.viewSelectionChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.viewSelectionChanged">[docs]</a>    <span class="k">def</span> <span class="nf">viewSelectionChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">deselected</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemSelectionChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.viewCurrentIndexChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.viewCurrentIndexChanged">[docs]</a>    <span class="k">def</span> <span class="nf">viewCurrentIndexChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">previous</span><span class="p">):</span>
+        <span class="c1"># if there is a proxy model we have to translate the selection</span>
+        <span class="n">base_current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapToSource</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+        <span class="n">base_previous</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapToSource</span><span class="p">(</span><span class="n">previous</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateToolBar</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">base_current</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">currentTaurusTreeItem</span> <span class="o">=</span> <span class="n">base_current</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">currentTaurusTreeItem</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">base_previous</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">previousTaurusTreeItem</span> <span class="o">=</span> <span class="n">base_previous</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">previousTaurusTreeItem</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentItemChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">currentTaurusTreeItem</span><span class="p">,</span>
+                  <span class="n">previousTaurusTreeItem</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_updateToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">previous</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="QBaseModelWidget.selectedItems"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.selectedItems">[docs]</a>    <span class="k">def</span> <span class="nf">selectedItems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of all selected non-hidden items</span>
+
+<span class="sd">        :return: (list&lt;TaurusTreeItem&gt;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_mapToSource</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">view</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.onFilterChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.onFilterChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onFilterChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">usesProxyQModel</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">proxy_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">filter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="s1">&#39;^&#39;</span> <span class="o">+</span> <span class="nb">filter</span>
+        <span class="n">proxy_model</span><span class="o">.</span><span class="n">setFilterRegExp</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span></div>
+        <span class="c1"># proxy_model.setFilterFixedString(filter)</span>
+        <span class="c1"># proxy_model.setFilterWildcard(filter)</span>
+        <span class="c1"># self.update()</span>
+
+<div class="viewcode-block" id="QBaseModelWidget.refresh"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Perspective handling</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="QBaseModelWidget.perspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.perspective">[docs]</a>    <span class="k">def</span> <span class="nf">perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_perspectiveBar</span><span class="o">.</span><span class="n">perspective</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.onSwitchPerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.onSwitchPerspective">[docs]</a>    <span class="k">def</span> <span class="nf">onSwitchPerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">):</span>
+        <span class="n">old_qmodel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setPerspective</span><span class="p">(</span><span class="n">perspective</span><span class="p">)</span>
+
+        <span class="c1"># set the selectables as they where in the previous model</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">old_qmodel</span><span class="p">,</span> <span class="s2">&quot;selectables&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectables</span><span class="p">(</span><span class="n">old_qmodel</span><span class="o">.</span><span class="n">selectables</span><span class="p">())</span>
+
+        <span class="c1"># set the taurus model (if any) to the qmodel</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;getModelObj&#39;</span><span class="p">):</span>
+            <span class="n">taurusModel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">taurusModel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span><span class="o">.</span><span class="n">setDataSource</span><span class="p">(</span><span class="n">taurusModel</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_setPerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">):</span>
+        <span class="n">qmodel_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">KnownPerspectives</span><span class="p">[</span><span class="n">perspective</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+        <span class="c1"># reversed</span>
+        <span class="n">qmodel_class</span><span class="p">,</span> <span class="n">qmodel_proxy_classes</span> <span class="o">=</span> <span class="n">qmodel_classes</span><span class="p">[</span>
+            <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">qmodel_classes</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">qmodel</span> <span class="o">=</span> <span class="n">qmodel_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">qmodel_source</span> <span class="o">=</span> <span class="n">qmodel</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxyModel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># applies the chain of proxies</span>
+            <span class="k">for</span> <span class="n">qmodel_proxy_class</span> <span class="ow">in</span> <span class="n">qmodel_proxy_classes</span><span class="p">:</span>
+                <span class="n">qproxy</span> <span class="o">=</span> <span class="n">qmodel_proxy_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">qproxy</span><span class="o">.</span><span class="n">setSourceModel</span><span class="p">(</span><span class="n">qmodel_source</span><span class="p">)</span>
+                <span class="n">qmodel_source</span> <span class="o">=</span> <span class="n">qproxy</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_proxyModel</span><span class="o">.</span><span class="n">setSourceModel</span><span class="p">(</span><span class="n">qmodel_source</span><span class="p">)</span>
+            <span class="n">qmodel_source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxyModel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setQModel</span><span class="p">(</span><span class="n">qmodel_source</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QMainWindow overwriting</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="QBaseModelWidget.addToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.addToolBar">[docs]</a>    <span class="k">def</span> <span class="nf">addToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toolbar</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toolbar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolBars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">toolbar</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseModelWidget.insertToolBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_QBaseModelWidget.html#taurus.qt.qtgui.model.QBaseModelWidget.insertToolBar">[docs]</a>    <span class="k">def</span> <span class="nf">insertToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">before</span><span class="p">,</span> <span class="n">toolbar</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">before</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolBar</span><span class="p">):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_toolBars</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">before</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">before</span>
+            <span class="n">before</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_toolBars</span><span class="p">[</span><span class="n">before</span><span class="p">]</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="o">.</span><span class="n">insertToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">before</span><span class="p">,</span> <span class="n">toolbar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolBars</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">toolbar</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusBaseModelWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_TaurusBaseModelWidget.html#taurus.qt.qtgui.model.TaurusBaseModelWidget">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseModelWidget</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A class:`taurus.qt.qtgui.base.TaurusBaseWidget` that connects to a</span>
+<span class="sd">    taurus model. It must be used together with</span>
+<span class="sd">    class:`~taurus.qt.qtgui.base.QBaseModelWidget`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># , perspective=None, proxy=None):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget overwriting</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusBaseModelWidget.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/model/_TaurusBaseModelWidget.html#taurus.qt.qtgui.model.TaurusBaseModelWidget.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+
+        <span class="n">view</span><span class="p">,</span> <span class="n">modelObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewWidget</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">setDataSource</span><span class="p">(</span><span class="n">modelObj</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT property definition</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="c1">#: This property holds the unique URI string representing the model name</span>
+    <span class="c1">#: with which this widget will get its data from. The convention used for</span>
+    <span class="c1">#: the string can be found :ref:`here &lt;model-concept&gt;`.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: In case the property :attr:`useParentModel` is set to True, the model</span>
+    <span class="c1">#: text must start with a &#39;/&#39; followed by the attribute name.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.getModel`</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.setModel`</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.resetModel`</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: .. seealso:: :ref:`model-concept`</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span> <span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

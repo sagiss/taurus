@@ -1,0 +1,899 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.taurusgui.paneldescriptionwizard &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.taurusgui.paneldescriptionwizard</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.taurusgui.paneldescriptionwizard</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">###########################################################################</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PanelDescriptionWizard&quot;</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">paneldescriptionwizard.py:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui.utils</span> <span class="k">import</span> <span class="n">PanelDescription</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getCachedPixmap</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="k">import</span> <span class="n">GraphicalChoiceWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusModelChooser</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.communication</span> <span class="k">import</span> <span class="n">SharedDataManager</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">TaurusWidgetFactory</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+
+<span class="k">class</span> <span class="nc">ExpertWidgetChooserDlg</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="n">CHOOSE_TYPE_TXT</span> <span class="o">=</span> <span class="s1">&#39;(choose type)&#39;</span>
+
+    <span class="n">memberSelected</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;Advanced panel type selection&#39;</span><span class="p">)</span>
+
+        <span class="n">layout1</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">layout2</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+
+        <span class="c1"># subwidgets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QRegExpValidator</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QRegExp</span><span class="p">(</span><span class="s1">&#39;[a-zA-Z0-9\.\_]*&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlgBox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlgBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># layout</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Select the module and widget to use in the panel:&#39;</span><span class="p">))</span>
+        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Module&#39;</span><span class="p">))</span>
+        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="p">)</span>
+        <span class="n">layout2</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Class (or widget)&#39;</span><span class="p">))</span>
+        <span class="n">layout2</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">layout1</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">layout2</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dlgBox</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+        <span class="c1"># connections</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">editingFinished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onModuleSelected</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">textEdited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onModuleEdited</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onMemberSelected</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlgBox</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlgBox</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onModuleEdited</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlgBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">onModuleSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">modulename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">__import__</span><span class="p">(</span><span class="n">modulename</span><span class="p">)</span>
+            <span class="c1"># We use this because __import__(&#39;x.y&#39;) returns x instead of y !!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">modulename</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;QLineEdit {color: green}&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;QLineEdit {color: red}&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="c1"># inspect the module to find the members we want (classes or widgets</span>
+        <span class="c1"># inheriting from QWidget)</span>
+        <span class="n">members</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="p">)</span>
+        <span class="n">classnames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">members</span> <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">)])</span>
+        <span class="n">widgetnames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">members</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CHOOSE_TYPE_TXT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">classnames</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">classnames</span> <span class="ow">and</span> <span class="n">widgetnames</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">InsertSeparator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">classnames</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onMemberSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHOOSE_TYPE_TXT</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlgBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># emit a signal with a dictionary that can be used to initialize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">memberSelected</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getMemberDescription</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">getMemberDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">membername</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+            <span class="n">member</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="p">,</span> <span class="n">membername</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;modulename&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">}</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot get member description: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">member</span><span class="p">):</span>
+            <span class="n">result</span><span class="p">[</span><span class="s1">&#39;classname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">membername</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s1">&#39;widgetname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">membername</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getDialog</span><span class="p">():</span>
+        <span class="n">dlg</span> <span class="o">=</span> <span class="n">ExpertWidgetChooserDlg</span><span class="p">()</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dlg</span><span class="o">.</span><span class="n">getMemberDescription</span><span class="p">(),</span> <span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="o">==</span> <span class="n">dlg</span><span class="o">.</span><span class="n">Accepted</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BlackListValidator</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="p">):</span>
+
+    <span class="n">stateChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackList</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">blackList</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">blackList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blackList</span> <span class="o">=</span> <span class="n">blackList</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_previousState</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># check the signature of the validate method (it changed from old to new versions)</span>
+        <span class="c1"># see</span>
+        <span class="c1"># :http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/python_v3.html#qvalidator</span>
+        <span class="n">dummyValidator</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_oldMode</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummyValidator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">3</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blackList</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Intermediate</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Acceptable</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_previousState</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_previousState</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_previousState</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oldMode</span><span class="p">:</span>  <span class="c1"># for backwards compatibility with older versions of PyQt</span>
+            <span class="k">return</span> <span class="n">state</span><span class="p">,</span> <span class="n">pos</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">state</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
+
+<span class="c1"># class NamePage(Qt.QWizardPage):</span>
+<span class="c1">#</span>
+<span class="c1">#    def __init__(self, parent = None):</span>
+<span class="c1">#        Qt.QWizardPage.__init__(self, parent)</span>
+<span class="c1">#</span>
+<span class="c1">#        self.setTitle(&#39;Name&#39;)</span>
+<span class="c1">#        self.setSubTitle(&#39;Choose a name for the new panel (it must not exist already)&#39;)</span>
+<span class="c1">#</span>
+<span class="c1">#        #contents</span>
+<span class="c1">#        self.nameLE = Qt.QLineEdit()</span>
+<span class="c1">#        self.registerField(&quot;panelname*&quot;,self.nameLE)</span>
+<span class="c1">#        self.diagnosticLabel = Qt.QLabel(&#39;&#39;)</span>
+<span class="c1">#</span>
+<span class="c1">#        layout = Qt.QHBoxLayout()</span>
+<span class="c1">#        layout.addWidget(Qt.QLabel(&quot;Panel Name&quot;))</span>
+<span class="c1">#        layout.addWidget(self.nameLE)</span>
+<span class="c1">#        layout.addWidget(self.diagnosticLabel)</span>
+<span class="c1">#        self.setLayout(layout)</span>
+<span class="c1">#</span>
+<span class="c1">#    def initializePage(self):</span>
+<span class="c1">#        gui = self.wizard().getGui()</span>
+<span class="c1">#        if hasattr(gui, &#39;getPanelNames&#39;):</span>
+<span class="c1">#            pnames = gui.getPanelNames()</span>
+<span class="c1">#            v = BlackListValidator(blackList=pnames, parent=self.nameLE)</span>
+<span class="c1">#            self.nameLE.setValidator(v)</span>
+<span class="c1">#            self.connect(v, Qt.SIGNAL(&#39;stateChanged&#39;),self._onValidatorStateChanged)</span>
+<span class="c1">#</span>
+<span class="c1">#    def _onValidatorStateChanged(self, state, previous):</span>
+<span class="c1">#        if state == Qt.QValidator.Acceptable:</span>
+<span class="c1">#            self.diagnosticLabel.setText(&#39;&#39;)</span>
+<span class="c1">#        else:</span>
+<span class="c1">#            self.diagnosticLabel.setText(&#39;&lt;b&gt;(Name already exists)&lt;/b&gt;&#39;)</span>
+<span class="c1">#</span>
+
+
+<span class="k">class</span> <span class="nc">WidgetPage</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWizardPage</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="n">OTHER_TXT</span> <span class="o">=</span> <span class="s1">&#39;Other...&#39;</span>
+    <span class="n">defaultCandidates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;TaurusForm&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusTrend&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusPlot&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;TaurusImageDialog&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusTrend2DDialog&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusNeXusBrowser&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;TaurusDbTreeWidget&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusArrayEditor&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;SardanaEditor&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusJDrawSynopticsView&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;TaurusDevicePanel&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">extraWidgets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWizardPage</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;WidgetPage&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">extraWidgets</span><span class="p">:</span>
+            <span class="n">customWidgets</span><span class="p">,</span> <span class="n">customWidgetScreenshots</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">extraWidgets</span><span class="p">)</span>
+            <span class="n">pixmaps</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">extraWidgets</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">pixmaps</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">pixmaps</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">getCachedPixmap</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">pixmaps</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+                            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid Pixmap&#39;</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not create pixmap from </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">s</span><span class="p">)</span>
+                        <span class="n">pixmaps</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">customWidgets</span><span class="p">,</span> <span class="n">customWidgetScreenshots</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="n">pixmaps</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFinalPage</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s1">&#39;Panel type&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSubTitle</span><span class="p">(</span><span class="s1">&#39;Choose a name and type for the new panel&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setButtonText</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWizard</span><span class="o">.</span><span class="n">NextButton</span><span class="p">,</span> <span class="s1">&#39;Advanced settings...&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgetDescription</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widgetname&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                                  <span class="s1">&#39;modulename&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;classname&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="c1"># name part</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nameLE</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerField</span><span class="p">(</span><span class="s2">&quot;panelname*&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nameLE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagnosticLabel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">nameLayout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">nameLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Panel Name&quot;</span><span class="p">))</span>
+        <span class="n">nameLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameLE</span><span class="p">)</span>
+        <span class="n">nameLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diagnosticLabel</span><span class="p">)</span>
+
+        <span class="c1"># contents</span>
+        <span class="n">available</span> <span class="o">=</span> <span class="n">TaurusWidgetFactory</span><span class="p">()</span><span class="o">.</span><span class="n">getWidgetClassNames</span><span class="p">()</span>
+        <span class="n">choices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultCandidates</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">customWidgets</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">available</span> <span class="ow">or</span> <span class="s1">&#39;.&#39;</span> <span class="ow">in</span> <span class="n">cname</span><span class="p">:</span>
+                <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cname</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pixmaps</span><span class="p">:</span>
+                    <span class="n">pixmaps</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span> <span class="o">=</span> <span class="n">getCachedPixmap</span><span class="p">(</span><span class="s1">&#39;snapshot:</span><span class="si">%s</span><span class="s1">.png&#39;</span> <span class="o">%</span> <span class="n">cname</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">choices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">OTHER_TXT</span><span class="p">)</span>
+        <span class="n">choices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="c1"># defaultPixmap=getPixmap(&#39;logos:taurus.png&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choiceWidget</span> <span class="o">=</span> <span class="n">GraphicalChoiceWidget</span><span class="p">(</span>
+            <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span> <span class="n">pixmaps</span><span class="o">=</span><span class="n">pixmaps</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgetTypeLB</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;&lt;b&gt;Widget Type:&lt;/b&gt;&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">choiceWidget</span><span class="o">.</span><span class="n">choiceMade</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onChoiceMade</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">nameLayout</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choiceWidget</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widgetTypeLB</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">initializePage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">gui</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">getGui</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gui</span><span class="p">,</span> <span class="s1">&#39;getPanelNames&#39;</span><span class="p">):</span>
+            <span class="n">pnames</span> <span class="o">=</span> <span class="n">gui</span><span class="o">.</span><span class="n">getPanelNames</span><span class="p">()</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">BlackListValidator</span><span class="p">(</span><span class="n">blackList</span><span class="o">=</span><span class="n">pnames</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nameLE</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nameLE</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onValidatorStateChanged</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validatePage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">paneldesc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">getPanelDescription</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">paneldesc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;You must choose a panel type&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;Choose a panel type by clicking on one of the proposed types&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">paneldesc</span><span class="o">.</span><span class="n">getWidget</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span>
+            <span class="c1"># set the name now because it might have changed since the</span>
+            <span class="c1"># PanelDescription was created</span>
+            <span class="n">paneldesc</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s1">&#39;panelname&#39;</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="c1"># allow the wizard to proceed</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Invalid panel&#39;</span><span class="p">,</span> <span class="s1">&#39;The requested panel cannot be created. </span><span class="se">\n</span><span class="s1">Reason:</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_onValidatorStateChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">previous</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Acceptable</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">diagnosticLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">diagnosticLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&lt;b&gt;(Name already exists)&lt;/b&gt;&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onChoiceMade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choice</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">OTHER_TXT</span><span class="p">:</span>
+            <span class="n">wdesc</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">ExpertWidgetChooserDlg</span><span class="o">.</span><span class="n">getDialog</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ok</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">widgetDescription</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">wdesc</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widgetDescription</span><span class="p">[</span><span class="s1">&#39;classname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">choice</span>
+
+        <span class="c1"># the name will be set in self.validatePage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">setPanelDescription</span><span class="p">(</span><span class="n">PanelDescription</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">widgetDescription</span><span class="p">))</span>
+        <span class="n">paneltype</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widgetDescription</span><span class="p">[</span>
+                        <span class="s1">&#39;widgetname&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgetDescription</span><span class="p">[</span><span class="s1">&#39;classname&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgetTypeLB</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&lt;b&gt;Widget Type:&lt;/b&gt; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">paneltype</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">AdvSettingsPage</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWizardPage</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWizardPage</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s1">&#39;Advanced settings&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSubTitle</span><span class="p">(</span><span class="s1">&#39;Fine-tune the behavior of the panel by assigning a Taurus model &#39;</span> <span class="o">+</span>
+                         <span class="s1">&#39;and/or defining the panel interactions with other parts of the GUI&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFinalPage</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+
+        <span class="c1">#----model---------------</span>
+        <span class="c1"># subwidgets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelGB</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelGB</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span>
+            <span class="s1">&#39;Choose a Taurus model to be assigned to the panel&#39;</span><span class="p">)</span>
+        <span class="c1"># @todo: add a regexp validator (it should return valid on TAURUS_MODEL_LIST_MIME_TYPE)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelLE</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelChooserBT</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelChooserBT</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;designer:devs_tree.png&#39;</span><span class="p">))</span>
+<span class="c1">#        self.modelChooser = TaurusModelChooser()</span>
+
+        <span class="c1"># connections</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelChooserBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">showModelChooser</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelLE</span><span class="o">.</span><span class="n">editingFinished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onModelEdited</span><span class="p">)</span>
+
+        <span class="c1"># layout</span>
+        <span class="n">layout1</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelLE</span><span class="p">)</span>
+        <span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelChooserBT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelGB</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout1</span><span class="p">)</span>
+
+        <span class="c1">#----communications------</span>
+        <span class="c1"># subwidgets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commGB</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s1">&#39;Communication&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commGB</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span>
+            <span class="s1">&#39;Define how the panel communicates with other panels and the GUI&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commLV</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commModel</span> <span class="o">=</span> <span class="n">CommTableModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commLV</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">commModel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commLV</span><span class="o">.</span><span class="n">setEditTriggers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">commLV</span><span class="o">.</span><span class="n">AllEditTriggers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectedComm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">commLV</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addBT</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addBT</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;list-add&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeBT</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeBT</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;list-remove&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeBT</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># layout</span>
+        <span class="n">layout2</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">layout3</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">layout2</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">commLV</span><span class="p">)</span>
+        <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addBT</span><span class="p">)</span>
+        <span class="n">layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removeBT</span><span class="p">)</span>
+        <span class="n">layout2</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">layout3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commGB</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout2</span><span class="p">)</span>
+
+        <span class="c1"># connections</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">commModel</span><span class="o">.</span><span class="n">insertRows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onRemoveRows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commLV</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">.</span><span class="n">currentRowChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onCommRowSelectionChanged</span><span class="p">)</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelGB</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">commGB</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">initializePage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">getPanelDescription</span><span class="p">()</span><span class="o">.</span><span class="n">getWidget</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># prevent the user from changing the model if it was already set</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">TaurusBaseComponent</span><span class="p">)</span> <span class="ow">and</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelLE</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;(already set by the chosen widget)&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelGB</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># try to get the SDM as if we were in a TaurusGui app</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="p">,</span> <span class="n">SharedDataManager</span><span class="p">):</span>
+                <span class="n">sdm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">sdm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#@todo set selection filter in modelChooser based on the widget&#39;s modelclass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemDelegate</span> <span class="o">=</span> <span class="n">CommItemDelegate</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">widget</span><span class="p">,</span> <span class="n">sdm</span><span class="o">=</span><span class="n">sdm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commLV</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">showModelChooser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">models</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">TaurusModelChooser</span><span class="o">.</span><span class="n">modelChooserDlg</span><span class="p">(</span>
+            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">asMimeData</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelLE</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">onModelEdited</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelLE</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">onRemoveRows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedComm</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">commModel</span><span class="o">.</span><span class="n">removeRows</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectedComm</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">onCommRowSelectionChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">previous</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectedComm</span> <span class="o">=</span> <span class="n">current</span>
+        <span class="n">enable</span> <span class="o">=</span> <span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">current</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+                  <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">commModel</span><span class="o">.</span><span class="n">rowCount</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeBT</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validatePage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">getPanelDescription</span><span class="p">()</span>
+        <span class="c1"># model</span>
+        <span class="n">desc</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span>
+        <span class="c1"># communications</span>
+        <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">slotname</span><span class="p">,</span> <span class="n">signalname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">commModel</span><span class="o">.</span><span class="n">dumpData</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">slotname</span><span class="p">:</span>
+                <span class="n">desc</span><span class="o">.</span><span class="n">sharedDataRead</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">slotname</span>
+            <span class="k">if</span> <span class="n">signalname</span><span class="p">:</span>
+                <span class="n">desc</span><span class="o">.</span><span class="n">sharedDataWrite</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">signalname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">setPanelDescription</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">class</span> <span class="nc">CommTableModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="p">):</span>
+    <span class="n">NUMCOLS</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">UID</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUMCOLS</span><span class="p">)</span>
+
+    <span class="n">dataChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__table</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">dumpData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">columnCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">NUMCOLS</span>
+
+    <span class="k">def</span> <span class="nf">headerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextAlignmentRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">!=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+        <span class="c1"># So this is DisplayRole...</span>
+        <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">section</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">UID</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;Data UID&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;Reader (slot)&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;Writer (signal)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">section</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="c1"># Display Role</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">UID</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;(enter UID)&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;(not registered)&#39;</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEditable</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsDragEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsDropEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsSelectable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">insertRows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">parentindex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">parentindex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parentindex</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginInsertRows</span><span class="p">(</span><span class="n">parentindex</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">position</span> <span class="o">+</span> <span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="nb">slice</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rowModel</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[:</span><span class="n">position</span><span class="p">]</span> <span class="o">+</span> \
+            <span class="nb">slice</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[</span><span class="n">position</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endInsertRows</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">removeRows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">parentindex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">parentindex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parentindex</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginRemoveRows</span><span class="p">(</span><span class="n">parentindex</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">position</span> <span class="o">+</span> <span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[:</span><span class="n">position</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[</span><span class="n">position</span> <span class="o">+</span> <span class="n">rows</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endRemoveRows</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">rowModel</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">slot</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">uid</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">signal</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">CommItemDelegate</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStyledItemDelegate</span><span class="p">):</span>
+    <span class="n">NUMCOLS</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">UID</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUMCOLS</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sdm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CommItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="n">widget</span>
+        <span class="k">if</span> <span class="n">sdm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sdm</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">sdm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sdm</span> <span class="o">=</span> <span class="n">sdm</span>
+
+    <span class="k">def</span> <span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="n">combobox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">combobox</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">UID</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sdm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">combobox</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sdm</span><span class="o">.</span><span class="n">activeDataUIDs</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">slotnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)]</span>
+            <span class="n">combobox</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">slotnames</span><span class="p">)</span>
+<span class="c1">#        elif column==self.W:</span>
+<span class="c1">#            if self._widget is not None:</span>
+<span class="c1">#                #@todo: if/when support for old signals style (Qt&lt;4.6) is dropped, we can inspect the methods in search of (new style) signals</span>
+<span class="c1">#                combobox.addItems([&#39;(Not registered)&#39;])</span>
+        <span class="k">return</span> <span class="n">combobox</span>
+
+    <span class="k">def</span> <span class="nf">setEditorData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">editor</span><span class="o">.</span><span class="n">setEditText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">editor</span><span class="o">.</span><span class="n">currentText</span><span class="p">()))</span>
+
+
+<div class="viewcode-block" id="PanelDescriptionWizard"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_PanelDescriptionWizard.html#taurus.qt.qtgui.taurusgui.PanelDescriptionWizard">[docs]</a><span class="k">class</span> <span class="nc">PanelDescriptionWizard</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWizard</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A wizard-style dialog for configuring a new TaurusGui panel.</span>
+<span class="sd">    Use :meth:`getDialog` for launching it</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extraWidgets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWizard</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;PanelDescriptionWizard&quot;</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_panelDescription</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">gui</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">gui</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="k">if</span> <span class="n">gui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gui</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">gui</span><span class="p">)</span>
+        <span class="c1">###self.setOption(self.HaveFinishButtonOnEarlyPages, True)</span>
+        <span class="c1">#self.namePG = NamePage()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgetPG</span> <span class="o">=</span> <span class="n">WidgetPage</span><span class="p">(</span><span class="n">extraWidgets</span><span class="o">=</span><span class="n">extraWidgets</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">advSettingsPG</span> <span class="o">=</span> <span class="n">AdvSettingsPage</span><span class="p">()</span>
+
+        <span class="c1"># self.addPage(self.namePG)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widgetPG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">advSettingsPG</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PanelDescriptionWizard.getGui"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_PanelDescriptionWizard.html#taurus.qt.qtgui.taurusgui.PanelDescriptionWizard.getGui">[docs]</a>    <span class="k">def</span> <span class="nf">getGui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns a reference to the GUI to which the dialog is associated&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui</span></div>
+
+<div class="viewcode-block" id="PanelDescriptionWizard.getPanelDescription"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_PanelDescriptionWizard.html#taurus.qt.qtgui.taurusgui.PanelDescriptionWizard.getPanelDescription">[docs]</a>    <span class="k">def</span> <span class="nf">getPanelDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the panel description with the choices made so far</span>
+
+<span class="sd">        :return: (PanelDescription) the panel description</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panelDescription</span></div>
+
+<div class="viewcode-block" id="PanelDescriptionWizard.setPanelDescription"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_PanelDescriptionWizard.html#taurus.qt.qtgui.taurusgui.PanelDescriptionWizard.setPanelDescription">[docs]</a>    <span class="k">def</span> <span class="nf">setPanelDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">desc</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Sets the Panel description</span>
+
+<span class="sd">        :param desc: (PanelDescription)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_panelDescription</span> <span class="o">=</span> <span class="n">desc</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="PanelDescriptionWizard.getDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_PanelDescriptionWizard.html#taurus.qt.qtgui.taurusgui.PanelDescriptionWizard.getDialog">[docs]</a>    <span class="k">def</span> <span class="nf">getDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">extraWidgets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Static method for launching a new Dialog.</span>
+
+<span class="sd">        :param parent: parent widget for the new dialog</span>
+
+<span class="sd">        :return: (tuple&lt;PanelDescription,bool&gt;) tuple of a description object</span>
+<span class="sd">                 and a state flag. The state is True if the dialog was accepted</span>
+<span class="sd">                 and False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dlg</span> <span class="o">=</span> <span class="n">PanelDescriptionWizard</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">extraWidgets</span><span class="o">=</span><span class="n">extraWidgets</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dlg</span><span class="o">.</span><span class="n">getPanelDescription</span><span class="p">(),</span> <span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="o">==</span> <span class="n">dlg</span><span class="o">.</span><span class="n">Accepted</span><span class="p">)</span></div></div>
+
+
+<span class="c1">#------------------------------------------------------------------------------</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">PanelDescriptionWizard</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">kk</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="n">d</span>
+    <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span> <span class="o">=</span> <span class="n">SharedDataManager</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+    <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s1">&#39;111111&#39;</span><span class="p">,</span> <span class="n">kk</span><span class="p">)</span>
+    <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">connectWriter</span><span class="p">(</span><span class="s1">&#39;222222&#39;</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="s1">&#39;thisisasignalname&#39;</span><span class="p">)</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">test2</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="n">ExpertWidgetChooserDlg</span><span class="o">.</span><span class="n">getDialog</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusMainWindow</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">kk</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="n">d</span>
+    <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span> <span class="o">=</span> <span class="n">SharedDataManager</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+    <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s1">&#39;someUID&#39;</span><span class="p">,</span> <span class="n">kk</span><span class="p">)</span>
+    <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">connectWriter</span><span class="p">(</span><span class="s1">&#39;anotherUID&#39;</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="s1">&#39;thisisasignalname&#39;</span><span class="p">)</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">paneldesc</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">PanelDescriptionWizard</span><span class="o">.</span><span class="n">getDialog</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">extraWidgets</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;PyQt4.Qt.QLineEdit&#39;</span><span class="p">,</span> <span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">),</span>
+                                                                         <span class="p">(</span><span class="s1">&#39;PyQt4.Qt.QTextEdit&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="n">ok</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">paneldesc</span><span class="o">.</span><span class="n">getWidget</span><span class="p">(</span><span class="n">sdm</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="p">)</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">paneldesc</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="c1"># test2()</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

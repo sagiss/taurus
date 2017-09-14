@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.evaluation &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="taurus.core" href="../core.html"/>
+        <link rel="next" title="EvaluationAttribute" href="evaluation/_EvaluationAttribute.html"/>
+        <link rel="prev" title="EpicsFactory" href="epics/_EpicsFactory.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../core.html"><code class="docutils literal"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">taurus.core.evaluation</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../_sources/devel/api/taurus/core/evaluation.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-taurus.core.evaluation">
+<span id="taurus-core-evaluation"></span><h1><a class="reference internal" href="#module-taurus.core.evaluation" title="taurus.core.evaluation"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.evaluation</span></code></a><a class="headerlink" href="#module-taurus.core.evaluation" title="Permalink to this headline">¶</a></h1>
+<p>Evaluation extension for taurus core model.</p>
+<p>The evaluation extension is a special extension that provides evaluation
+objects. The official scheme name is &#8216;eval&#8217;.</p>
+<p>The main usage for this extension is to provide a way of performing mathematical
+evaluations with data from other source, as well as allowing fast interfacing
+with sources of data not supported by specific schemes.</p>
+<p>The Evaluation Factory (<a class="reference internal" href="evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory" title="taurus.core.evaluation.EvaluationFactory"><code class="xref py py-class docutils literal"><span class="pre">EvaluationFactory</span></code></a>) uses the following object
+naming for referring to attributes (<a class="reference internal" href="evaluation/_EvaluationAttribute.html#taurus.core.evaluation.EvaluationAttribute" title="taurus.core.evaluation.EvaluationAttribute"><code class="xref py py-class docutils literal"><span class="pre">EvaluationAttribute</span></code></a>):</p>
+<blockquote>
+<div><cite>eval:[//&lt;authority&gt;][&#64;&lt;evaluator&gt;/][&lt;subst&gt;;]&lt;expr&gt;</cite></div></blockquote>
+<p>or the following for referring to evaluation devices
+(<a class="reference internal" href="evaluation/_EvaluationDevice.html#taurus.core.evaluation.EvaluationDevice" title="taurus.core.evaluation.EvaluationDevice"><code class="xref py py-class docutils literal"><span class="pre">EvaluationDevice</span></code></a>):</p>
+<blockquote>
+<div><cite>eval:[//&lt;authority&gt;]&#64;&lt;evaluator&gt;</cite></div></blockquote>
+<p>or the following for referring to an evaluation authority
+(<a class="reference internal" href="evaluation/_EvaluationAuthority.html#taurus.core.evaluation.EvaluationAuthority" title="taurus.core.evaluation.EvaluationAuthority"><code class="xref py py-class docutils literal"><span class="pre">EvaluationAuthority</span></code></a>):</p>
+<blockquote>
+<div><cite>eval://&lt;authority&gt;</cite></div></blockquote>
+<p>where:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The <cite>&lt;authority&gt;</cite> segment is optional (except when referring to an
+EvaluationAuthority). At this point, only <cite>//localhost</cite> is supported.</li>
+<li>The <cite>&#64;&lt;evaluator&gt;</cite> is optional (except when referring to an
+EvaluationDevice). If not given, it defaults to <cite>DefaultEvaluator</cite>. See
+below for further details</li>
+<li><cite>&lt;expr&gt;</cite> is a mathematical expression (using python syntax)
+that may have references to other taurus <strong>attributes</strong> by enclosing them
+between <cite>{</cite> and <cite>}</cite>. Expressions will be evaluated by the evaluator device
+to which the attribute is assigned.</li>
+<li>The optional <cite>&lt;subst&gt;</cite> segment is used to provide substitution symbols.
+<cite>&lt;subst&gt;</cite> is a semicolon-separated string of <cite>&lt;key&gt;=&lt;value&gt;</cite> strings.</li>
+</ul>
+</div></blockquote>
+<p>The evaluator device inherits from <code class="xref py py-class docutils literal"><span class="pre">SafeEvaluator</span></code> which by default
+includes a large subset of mathematical functions from the <code class="xref py py-mod docutils literal"><span class="pre">numpy</span></code>
+module. If access to other symbols are required, a custom evaluator can
+be used. <cite>&lt;evaluator&gt;</cite> is a unique identification name for the evaluator
+device object and may define a source of additional symbols to be present
+for the evaluation. The supported syntax for <cite>&#64;&lt;evaluator&gt;</cite> is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>&#64;&lt;ID&gt;</cite> (cannot contain dots or any of <cite>/</cite> <cite>?</cite> <cite>#</cite> <cite>:</cite> <cite>=</cite>). This
+indicates just an alternative name for the EvaluationDevice, It does not
+add any extra symbol to the evaluation context.</li>
+<li><cite>&#64;&lt;modulename&gt;.*</cite> (&lt;modulename&gt; may include dots for submodules). It
+will make all symbols found in the given module available during the
+evaluation (i.e., it emulates doing <cite>from &lt;modulename&gt; import *</cite> in the
+evaluation context).</li>
+<li><cite>&#64;&lt;modulename&gt;.&lt;customdeviceclass&gt;</cite>. Use your own custom EvaluationDevice
+based class. This allows to define custom symbols see
+<code class="file docutils literal"><span class="pre">&lt;taurus&gt;/core/evaluation/test/res/dev_example.py</span></code>, <strong>but</strong> note
+that this syntax is is now superseded by the &#8220;instance-based&#8221; one
+(see below), which is easier to use and provides write attribute support.</li>
+<li><cite>&#64;&lt;inst&gt;=&lt;modulename&gt;.&lt;class&gt;()</cite> (e.g. <cite>&#64;c=mymod.MyClass()</cite> ). This
+will import a class from a module, then instantiate it and then
+make the instance available for evaluation with the given name. Note that
+the <cite>&lt;inst&gt;=</cite> part may be omitted, in which case the instance will be
+available for evaluation as <cite>self</cite>. <strong>IMPORTANT:</strong> If the given class
+declares writable properties, EvaluationAttributes that access one such
+property will automatically be considered writable. See examples of usage
+in <code class="file docutils literal"><span class="pre">&lt;taurus&gt;/core/evaluation/test/res/mymod.py</span></code> and in
+<code class="file docutils literal"><span class="pre">&lt;taurus&gt;/core/evaluation/test/res/ipap_example.py</span></code></li>
+</ul>
+</div></blockquote>
+<p>Some examples of valid evaluation models are:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">An attribute that multiplies a tango attribute by 2:</p>
+<blockquote>
+<div><p><cite>eval:2*{tango:a/b/c/d}</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">Same as above, but using substitutions:</p>
+<blockquote>
+<div><p><cite>eval:k=2;a={tango:a/b/c/d};k*a</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">An attribute that adds two tango attributes together (assuming that tango
+is set as the default scheme)</p>
+<blockquote>
+<div><p><cite>eval:{a/b/c/d}+{f/g/h/i}</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">An attribute that generates an array of random values:</p>
+<blockquote>
+<div><p><cite>eval:rand(256)</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">Same as above, but with units:</p>
+<blockquote>
+<div><p><cite>eval:Q(rand(256),&#8217;V&#8217;)</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">An attribute that adds noise to a tango image attribute:</p>
+<blockquote>
+<div><p><cite>eval:img={tango:sys/tg_test/1/short_image_ro};img+10*rand(*img.shape)</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">An attribute that accesses a method from a given module (in this
+case to use os.path.exists):</p>
+<blockquote>
+<div><p><cite>eval:&#64;os.*/path.exists(&#8220;/some/file&#8221;)</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">Same as before, for getting today&#8217;s date as an attribute:</p>
+<blockquote>
+<div><p>&#8216;eval:&#64;datetime.*/date.today().isoformat()&#8217;</p>
+</div></blockquote>
+</li>
+<li><p class="first">A default evaluator device named <cite>foo</cite>:</p>
+<blockquote>
+<div><p><cite>eval:&#64;foo</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">A custom evaluator device (implemented as class <cite>MyEvalDev</cite> in the <cite>mymod</cite>
+module):</p>
+<blockquote>
+<div><p><cite>eval:&#64;mymod.MyEvalDev</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">A custom evaluator device (implemented as class <cite>MyEvalDev</cite> in the <cite>mymod</cite>
+module):</p>
+<blockquote>
+<div><p><cite>eval:&#64;mymod.MyEvalDev</cite></p>
+</div></blockquote>
+</li>
+<li><p class="first">A writable attribute foo (implemented as a writable property of the
+<cite>MyClass</cite> class from the <cite>mymod</cite> module):</p>
+<blockquote>
+<div><p><cite>eval:&#64;c=mymod.MyClass()/c.foo</cite></p>
+<p>assuming that the <cite>mymod</cite> module defines <cite>MyClass</cite> as:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>class MyClass(object):</dt>
+<dd><p class="first">(...)
+get_foo(self):</p>
+<blockquote>
+<div><p>(...)</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>set_foo(self, value):</dt>
+<dd><p class="first last">(...)</p>
+</dd>
+</dl>
+<p class="last">foo = property(get_foo, set_foo)
+(...)</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Previous to SEP3, a RFC3986 non-compliant syntax was used for the
+evaluation scheme (e.g., allowing names such as
+<code class="docutils literal"><span class="pre">eval://db=foo;dev=bar;a*b?k=2;a={tango:a/b/c/d}</span></code>).
+This syntax is now deprecated and should not be used. Taurus will
+issue warnings if detected.</p>
+</div>
+<p class="rubric">Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="hlist"><tr><td><ul class="simple">
+<li><a class="reference internal" href="evaluation/_EvaluationAttribute.html#taurus.core.evaluation.EvaluationAttribute" title="taurus.core.evaluation.EvaluationAttribute"><code class="xref py py-class docutils literal"><span class="pre">EvaluationAttribute</span></code></a></li>
+<li><a class="reference internal" href="evaluation/_EvaluationAuthority.html#taurus.core.evaluation.EvaluationAuthority" title="taurus.core.evaluation.EvaluationAuthority"><code class="xref py py-class docutils literal"><span class="pre">EvaluationAuthority</span></code></a></li>
+</ul>
+</td><td><ul class="simple">
+<li><a class="reference internal" href="evaluation/_EvaluationDevice.html#taurus.core.evaluation.EvaluationDevice" title="taurus.core.evaluation.EvaluationDevice"><code class="xref py py-class docutils literal"><span class="pre">EvaluationDevice</span></code></a></li>
+<li><a class="reference internal" href="evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory" title="taurus.core.evaluation.EvaluationFactory"><code class="xref py py-class docutils literal"><span class="pre">EvaluationFactory</span></code></a></li>
+</ul>
+</td></tr></table>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="evaluation/_EvaluationAttribute.html" class="btn btn-neutral float-right" title="EvaluationAttribute" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="epics/_EpicsFactory.html" class="btn btn-neutral" title="EpicsFactory" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

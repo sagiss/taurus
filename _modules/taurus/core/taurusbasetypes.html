@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.taurusbasetypes &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.taurusbasetypes</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.taurusbasetypes</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">a misc collection of basic types</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusSWDevState&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusSWDevHealth&quot;</span><span class="p">,</span> <span class="s2">&quot;OperationMode&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusSerializationMode&quot;</span><span class="p">,</span> <span class="s2">&quot;SubscriptionState&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusEventType&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;MatchLevel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusElementType&quot;</span><span class="p">,</span> <span class="s2">&quot;LockStatus&quot;</span><span class="p">,</span> <span class="s2">&quot;DataFormat&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;AttrQuality&quot;</span><span class="p">,</span> <span class="s2">&quot;AttrAccess&quot;</span><span class="p">,</span> <span class="s2">&quot;DisplayLevel&quot;</span><span class="p">,</span> <span class="s2">&quot;ManagerState&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusTimeVal&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusAttrValue&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusConfigValue&quot;</span><span class="p">,</span> <span class="s2">&quot;DataType&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusLockInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevState&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusModelValue&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">taurus4_deprecation</span>
+<span class="kn">from</span> <span class="nn">taurus.external.enum</span> <span class="k">import</span> <span class="n">IntEnum</span>
+
+
+<div class="viewcode-block" id="TaurusDevState"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevState.html#taurus.core.TaurusDevState">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevState</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumeration of possible states of :class:`taurus.core.TaurusDevice`</span>
+<span class="sd">    objects. This is returned, e.g. by :meth:`TaurusDevice.state`.</span>
+
+<span class="sd">    The description of the values of this enumeration is:</span>
+
+<span class="sd">    - Ready: the device can be operated by the user and could even be</span>
+<span class="sd">      involved in some operation.</span>
+<span class="sd">    - NotReady: the device can not be operated by the user (e.g. due to</span>
+<span class="sd">      still being initialized, or due to a device failure,...)</span>
+<span class="sd">    - Undefined: it is not possible to retrieve a coherent state from the</span>
+<span class="sd">      device (e.g. due to communication, or to contradictory internal</span>
+<span class="sd">      states, ...)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: it could be extended for more detailed description using bit masks</span>
+    <span class="n">Ready</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">NotReady</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">Undefined</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+<span class="c1"># Deprecated enumeration.</span>
+<span class="c1"># According with TEP3, the logic of the OperationMode should be in the widgets</span>
+<span class="n">OperationMode</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;OperationMode&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;OFFLINE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ONLINE&#39;</span>
+    <span class="p">))</span>
+
+<span class="n">TaurusSerializationMode</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;TaurusSerializationMode&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;Serial&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Concurrent&#39;</span>
+    <span class="p">))</span>
+
+<span class="n">TaurusEventType</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;TaurusEventType&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;Change&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Config&#39;</span><span class="p">,</span>  <span class="c1"># Deprecated in Taurus &gt;=4</span>
+        <span class="s1">&#39;Periodic&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Error&#39;</span>
+    <span class="p">))</span>
+
+<span class="n">MatchLevel</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;MatchLevel&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;ANY&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SHORT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NORMAL&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;COMPLETE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SHORT_NORMAL&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NORMAL_COMPLETE&#39;</span>
+    <span class="p">))</span>
+
+<span class="n">TaurusElementType</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;TaurusElementType&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;Unknown&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DeviceClass&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Device&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DeviceAlias&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Domain&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Family&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Member&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Server&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ServerName&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ServerInstance&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Exported&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Host&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Attribute&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AttributeAlias&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Command&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Property&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Configuration&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Authority&#39;</span>
+    <span class="p">))</span>
+
+<span class="n">LockStatus</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;LockStatus&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;Unlocked&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Locked&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;LockedMaster&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Unknown&#39;</span>
+    <span class="p">))</span>
+
+<span class="n">DataFormat</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;DataFormat&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;_0D&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_1D&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_2D&#39;</span>
+    <span class="p">))</span>
+
+<span class="c1"># TODO: Consider adding  Enum and Quantity to DataType enumeration ...</span>
+<span class="c1"># TODO: ... and also to __PYTHON_TYPE_TO_TAURUS_DATATYPE</span>
+
+<span class="n">DataType</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;DataType&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;Integer&#39;</span><span class="p">,</span>  <span class="c1"># Can be used in scheme-agnostic code</span>
+        <span class="s1">&#39;Float&#39;</span><span class="p">,</span>  <span class="c1"># Can be used in scheme-agnostic code</span>
+        <span class="s1">&#39;String&#39;</span><span class="p">,</span>  <span class="c1"># Can be used in scheme-agnostic code</span>
+        <span class="s1">&#39;Boolean&#39;</span><span class="p">,</span>  <span class="c1"># Can be used in scheme-agnostic code</span>
+        <span class="s1">&#39;Bytes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DevState&#39;</span><span class="p">,</span>  <span class="c1"># This type is for Tango backwards-compat. Avoid using it</span>
+        <span class="s1">&#39;DevEncoded&#39;</span><span class="p">,</span>  <span class="c1"># This type is for Tango backwards-compat. Avoid using it</span>
+        <span class="s1">&#39;Object&#39;</span>  <span class="c1"># use this for opaque py objects not described by any of the above</span>
+    <span class="p">))</span>
+<span class="c1"># monkey-patch DataType to provide from_python_type()</span>
+<span class="n">__PYTHON_TYPE_TO_TAURUS_DATATYPE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nb">str</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">String</span><span class="p">,</span>
+    <span class="nb">int</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span>
+    <span class="n">long</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span>
+    <span class="nb">float</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span>
+    <span class="nb">bool</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Boolean</span><span class="p">,</span>
+    <span class="c1"># bytes : DataType.Bytes, # see below...</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="nb">str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">bytes</span><span class="p">:</span>  <span class="c1"># Python &gt;=3</span>
+    <span class="n">__PYTHON_TYPE_TO_TAURUS_DATATYPE</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Bytes</span>
+<span class="c1"># Note: in Python2, DataType.from_python_type(bytes) --&gt; DataType.String</span>
+<span class="n">DataType</span><span class="o">.</span><span class="n">from_python_type</span> <span class="o">=</span> <span class="n">__PYTHON_TYPE_TO_TAURUS_DATATYPE</span><span class="o">.</span><span class="n">get</span>
+
+<span class="n">SubscriptionState</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s2">&quot;SubscriptionState&quot;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;Unsubscribed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Subscribing&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Subscribed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;PendingSubscribe&quot;</span>
+    <span class="p">))</span>
+
+
+<div class="viewcode-block" id="AttrQuality"><a class="viewcode-back" href="../../../devel/api/taurus/core/_AttrQuality.html#taurus.core.AttrQuality">[docs]</a><span class="k">class</span> <span class="nc">AttrQuality</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumeration of quality states for Taurus attributes. based on</span>
+<span class="sd">    This is the Taurus equivalent to PyTango.AttrQuality.</span>
+<span class="sd">    The members present in PyTango are also defined here with the same values,</span>
+<span class="sd">    allowing equality comparisons with :class:`PyTango.AttrQuality` (but not</span>
+<span class="sd">    identity checks!)::</span>
+
+<span class="sd">        from taurus.core import AttrQuality as Q1</span>
+<span class="sd">        from PyTango import AttrQuality as Q2</span>
+
+<span class="sd">        Q1.ATTR_ALARM == Q2.ATTR_ALARM                  # --&gt; True</span>
+<span class="sd">        Q1.ATTR_ALARM in (Q2.ATTR_ALARM, Q2.ATTR_ALARM) # --&gt; True</span>
+<span class="sd">        Q1.ATTR_ALARM == 2                              # --&gt; True</span>
+<span class="sd">        Q1.ATTR_ALARM is 2                              # --&gt; False</span>
+<span class="sd">        Q1.ATTR_ALARM is Q2.ATTR_ALARM                  # --&gt; False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ATTR_VALID</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ATTR_INVALID</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ATTR_ALARM</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ATTR_CHANGING</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">ATTR_WARNING</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Todo: BEWARE!! This alters the usual behaviour of IntEnum!</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+<span class="n">AttrAccess</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;AttrAccess&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;READ&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;READ_WITH_WRITE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;WRITE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;READ_WRITE&#39;</span>
+    <span class="p">))</span>
+
+<span class="n">DisplayLevel</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;DisplayLevel&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;OPERATOR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;EXPERT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DEVELOPER&#39;</span>
+    <span class="p">))</span>
+
+<span class="n">ManagerState</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
+    <span class="s1">&#39;ManagerState&#39;</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s1">&#39;UNINITIALIZED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;INITED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;CLEANED&#39;</span>
+    <span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">DeprecatedEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">alt</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__alt</span> <span class="o">=</span> <span class="n">alt</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> enumeration was removed. Use </span><span class="si">%s</span><span class="s1"> instead&#39;</span> <span class="o">%</span>
+                           <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__alt</span><span class="p">))</span>
+
+
+<span class="n">TaurusSWDevState</span> <span class="o">=</span> <span class="n">DeprecatedEnum</span><span class="p">(</span><span class="s1">&#39;TaurusSWDevState&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusDevState&#39;</span><span class="p">)</span>
+<span class="n">TaurusSWDevHealth</span> <span class="o">=</span> <span class="n">DeprecatedEnum</span><span class="p">(</span><span class="s1">&#39;TaurusSWDevHealth&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusDevState&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TaurusTimeVal"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal">[docs]</a><span class="k">class</span> <span class="nc">TaurusTimeVal</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tv_sec</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tv_usec</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tv_nsec</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(tv_sec=</span><span class="si">%i</span><span class="s2">, tv_usec=</span><span class="si">%i</span><span class="s2">, tv_nsec=</span><span class="si">%i</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_sec</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_usec</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_nsec</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">totime</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaurusTimeVal.totime"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.totime">[docs]</a>    <span class="k">def</span> <span class="nf">totime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_nsec</span> <span class="o">*</span> <span class="mf">1e-9</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_usec</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_sec</span></div>
+
+<div class="viewcode-block" id="TaurusTimeVal.todatetime"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.todatetime">[docs]</a>    <span class="k">def</span> <span class="nf">todatetime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">totime</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusTimeVal.isoformat"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.isoformat">[docs]</a>    <span class="k">def</span> <span class="nf">isoformat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">todatetime</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TaurusTimeVal.fromtimestamp"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.fromtimestamp">[docs]</a>    <span class="k">def</span> <span class="nf">fromtimestamp</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+        <span class="n">tv</span> <span class="o">=</span> <span class="n">TaurusTimeVal</span><span class="p">()</span>
+        <span class="n">tv</span><span class="o">.</span><span class="n">tv_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">usec</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">-</span> <span class="n">tv</span><span class="o">.</span><span class="n">tv_sec</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000000</span>
+        <span class="n">tv</span><span class="o">.</span><span class="n">tv_usec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">usec</span><span class="p">)</span>
+        <span class="n">tv</span><span class="o">.</span><span class="n">tv_nsec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">usec</span> <span class="o">-</span> <span class="n">tv</span><span class="o">.</span><span class="n">tv_usec</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tv</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TaurusTimeVal.fromdatetime"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.fromdatetime">[docs]</a>    <span class="k">def</span> <span class="nf">fromdatetime</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">time</span>
+        <span class="n">tv</span> <span class="o">=</span> <span class="n">TaurusTimeVal</span><span class="p">()</span>
+        <span class="n">tv</span><span class="o">.</span><span class="n">tv_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+        <span class="n">tv</span><span class="o">.</span><span class="n">tv_usec</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">microsecond</span>
+        <span class="n">tv</span><span class="o">.</span><span class="n">tv_nsec</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># datetime does not provide ns info</span>
+        <span class="k">return</span> <span class="n">tv</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TaurusTimeVal.now"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.now">[docs]</a>    <span class="k">def</span> <span class="nf">now</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">TaurusTimeVal</span><span class="o">.</span><span class="n">fromdatetime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusModelValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModelValue.html#taurus.core.TaurusModelValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelValue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rvalue</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TaurusAttrValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttrValue.html#taurus.core.TaurusAttrValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusAttrValue</span><span class="p">(</span><span class="n">TaurusModelValue</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">TaurusModelValue</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wvalue</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quality</span> <span class="o">=</span> <span class="n">AttrQuality</span><span class="o">.</span><span class="n">ATTR_VALID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="TaurusConfigValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfigValue.html#taurus.core.TaurusConfigValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfigValue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;TaurusAttrValue&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TaurusLockInfo"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusLockInfo.html#taurus.core.TaurusLockInfo">[docs]</a><span class="k">class</span> <span class="nc">TaurusLockInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">LOCK_STATUS_UNKNOWN</span> <span class="o">=</span> <span class="s1">&#39;Lock status unknown&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">LockStatus</span><span class="o">.</span><span class="n">Unknown</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOCK_STATUS_UNKNOWN</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">klass</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_msg</span></div>
+
+
+<span class="c1">#del time</span>
+<span class="c1">#del datetime</span>
+<span class="c1">#del Enumeration</span>
+<span class="c1">#del AttrQuality, AttrAccess, DataFormat, LockStatus</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

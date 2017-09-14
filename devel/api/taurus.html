@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../index.html"/>
+        <link rel="up" title="Developer’s Guide" href="../index.html"/>
+        <link rel="next" title="taurus.console" href="taurus/console.html"/>
+        <link rel="prev" title="Examples" href="../examples.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="taurus/console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="taurus/core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="taurus/qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="taurus/_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">taurus</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/devel/api/taurus.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-taurus">
+<span id="taurus"></span><h1><a class="reference internal" href="#module-taurus" title="taurus"><code class="xref py py-mod docutils literal"><span class="pre">taurus</span></code></a><a class="headerlink" href="#module-taurus" title="Permalink to this headline">¶</a></h1>
+<p>The main taurus module. It contains a reduced set of wrappers around the
+real taurus model classes and information regarding the current release.</p>
+<p class="rubric">Modules</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="taurus/console.html">console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taurus/core.html">core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taurus/qt.html">qt</a></li>
+</ul>
+</div>
+<p class="rubric">Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="hlist"><tr><td><ul class="simple">
+<li><a class="reference internal" href="taurus/_Logger.html#taurus.Logger" title="taurus.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</td><td><ul class="simple">
+</ul>
+</td></tr></table>
+<p class="rubric">Functions</p>
+<dl class="function">
+<dt id="taurus.Attribute">
+<code class="descname">Attribute</code><span class="sig-paren">(</span><em>dev_or_attr_name</em>, <em>attr_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#Attribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.Attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the taurus attribute for either the pair (device name, attribute name)
+or full attribute name</p>
+<ul class="simple">
+<li>Attribute(full_attribute_name)</li>
+<li>Attribute(device_name, attribute_name)</li>
+</ul>
+<p>It is a shortcut to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core.taurusmanager</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getFactory</span><span class="p">()</span>
+<span class="n">attribute</span>  <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">full_attribute_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core.taurusmanager</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getFactory</span><span class="p">()</span>
+<span class="n">device</span>  <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">device_name</span><span class="p">)</span>
+<span class="n">attribute</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">attribute_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dev_or_attr_name</strong> (<em>str or TaurusDevice</em>) &#8211; the device name or full attribute name</li>
+<li><strong>attr_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; attribute name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a taurus attribute</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusattribute.TaurusAttribute</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.Authority">
+<code class="descname">Authority</code><span class="sig-paren">(</span><em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#Authority"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.Authority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a taurus authority</p>
+<p>It is a shortcut to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core.taurusmanager</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getFactory</span><span class="p">()</span>
+<span class="n">db</span>  <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">(</span><span class="n">dname</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str or None</em>) &#8211; authority name. If None (default) it will return the default
+authority of the default scheme. For example, if the default
+scheme is tango, it will return the default TANGO_HOST database</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a taurus authority</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusauthority.TaurusAuthority</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.Configuration">
+<code class="descname">Configuration</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.Configuration" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Returns the taurus configuration for either the pair</dt>
+<dd><p class="first">(attribute name, conf name) or full conf name</p>
+<ul class="simple">
+<li>Configuration(full_conf_name)</li>
+<li>Configuration(attribute_name, conf_name)</li>
+</ul>
+<p>It is a shortcut to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core.taurusmanager</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getFactory</span><span class="p">()</span>
+<span class="n">conf</span>  <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getConfiguration</span><span class="p">(</span><span class="n">attr_or_conf_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core.taurusmanager</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getFactory</span><span class="p">()</span>
+<span class="n">attribute</span>  <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">attribute_name</span><span class="p">)</span>
+<span class="n">conf</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getConfig</span><span class="p">(</span><span class="n">conf_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param attr_or_conf_name:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">the full attribute name or full conf name</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type attr_or_conf_name:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">str</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param conf_name:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">conf name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type conf_name:</th><td class="field-body">str or None</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a taurus configuration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusconfiguration.TaurusConfiguration</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use Attribute instead</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.Database">
+<code class="descname">Database</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.Database" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use Authority instead</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.Device">
+<code class="descname">Device</code><span class="sig-paren">(</span><em>device_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#Device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.Device" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the taurus device for the given device name</p>
+<p>It is a shortcut to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core.taurusmanager</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getFactory</span><span class="p">()</span>
+<span class="n">device</span>  <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">device_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>device_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; the device name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a taurus device</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusdevice.TaurusDevice</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.Factory">
+<code class="descname">Factory</code><span class="sig-paren">(</span><em>scheme=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#Factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.Factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the one and only Factory for the given scheme</p>
+<p>It is a shortcut to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core.taurusmanager</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getFactory</span><span class="p">(</span><span class="n">scheme</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scheme</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; a string representing the scheme. Default value is None meaning <code class="docutils literal"><span class="pre">tango</span></code> scheme</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a taurus factory</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusfactory.TaurusFactory</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.Manager">
+<code class="descname">Manager</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#Manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.Manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the one and only TaurusManager</p>
+<p>It is a shortcut to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the TaurusManager</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusmanager.TaurusManager</span></code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusmanager.TaurusManager</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.Object">
+<code class="descname">Object</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#Object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.Object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an taurus object of given class for the given name</p>
+<p>Can be called as:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Object(name)</li>
+<li>Object(cls, name)</li>
+</ul>
+</div></blockquote>
+<p>Where:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>name</cite> is a model name (str)</li>
+<li><cite>cls</cite> is a class derived from TaurusModel</li>
+</ul>
+</div></blockquote>
+<p>If <cite>cls</cite> is not given, Object() will try to guess it from <cite>name</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a taurus object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusmodel.TaurusModel</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.changeDefaultPollingPeriod">
+<code class="descname">changeDefaultPollingPeriod</code><span class="sig-paren">(</span><em>period</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#changeDefaultPollingPeriod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.changeDefaultPollingPeriod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.check_dependencies">
+<code class="descname">check_dependencies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#check_dependencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.check_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a check-list of requirements and marks those that are fulfilled</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.critical">
+<code class="descname">critical</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/util/log.html#critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.critical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/util/log.html#debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.debug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.deprecated">
+<code class="descname">deprecated</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/util/log.html#deprecated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.deprecated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/util/log.html#error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.fatal">
+<code class="descname">fatal</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/util/log.html#fatal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.fatal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.getSchemeFromName">
+<code class="descname">getSchemeFromName</code><span class="sig-paren">(</span><em>name</em>, <em>implicit=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#getSchemeFromName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.getSchemeFromName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the scheme from a taurus name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; taurus model name URI.</li>
+<li><strong>implicit</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; controls whether to return the default scheme
+(if implicit is True -default-) or None (if implicit is
+False) in case <cite>model</cite> does not contain the scheme name
+explicitly. The default scheme may be defined in
+<a class="reference internal" href="../tauruscustomsettings.html#tauruscustomsettings"><span class="std std-ref">Taurus custom settings</span></a> (&#8216;tango&#8217; is assumed if
+not defined)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.getValidTypesForName">
+<code class="descname">getValidTypesForName</code><span class="sig-paren">(</span><em>name</em>, <em>strict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#getValidTypesForName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.getValidTypesForName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all Taurus element types for which <cite>name</cite> is a valid
+model name (while in many cases a name may only be valid for one
+element type, this is not necessarily true in general)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; taurus model name</li>
+<li><strong>strict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, names that are not RFC3986-compliant but
+which would be accepted for backwards compatibility are
+considered valid.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<code class="xref py py-class docutils literal"><span class="pre">element</span></code>&gt;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">where element can be one of:
+<cite>Attribute</cite>, <cite>Device</cite> or <cite>Authority</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/util/log.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.isValidName">
+<code class="descname">isValidName</code><span class="sig-paren">(</span><em>name</em>, <em>etypes=None</em>, <em>strict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#isValidName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.isValidName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True is the given name is a valid Taurus model name. If
+<cite>etypes</cite> is passed, it returns True only if name is valid for at least
+one of the given the element types. Otherwise it returns False.
+For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">isValidName</span><span class="p">(</span><span class="s1">&#39;tango:foo&#39;</span><span class="p">)</span><span class="o">--&gt;</span> <span class="kc">True</span>
+<span class="n">isValidName</span><span class="p">(</span><span class="s1">&#39;tango:a/b/c&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">])</span> <span class="o">--&gt;</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the string to be checked for validity</li>
+<li><strong>etypes</strong> (<code class="xref py py-class docutils literal"><span class="pre">seq</span></code> &lt;<code class="xref py py-class docutils literal"><span class="pre">TaurusElementType</span></code>&gt;) &#8211; if given, names will only be
+considered valid if they represent one of the given
+element types. Supported element types are:
+<cite>Attribute</cite>, <cite>Device</cite> and <cite>Authority</cite></li>
+<li><strong>strict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, names that are not RFC3986-compliant but
+which would be accepted for backwards compatibility are
+considered valid.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>level</em>, <em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.log_dependencies">
+<code class="descname">log_dependencies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#log_dependencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.log_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>deprecated since &#8216;4.0.4&#8217;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.makeSchemeExplicit">
+<code class="descname">makeSchemeExplicit</code><span class="sig-paren">(</span><em>name</em>, <em>default=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/taurushelper.html#makeSchemeExplicit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.makeSchemeExplicit" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the name guaranteeing that the scheme is present. If name already
+contains the scheme, it is returned unchanged.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; taurus model name URI.</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The default scheme to use. If no default is passed,
+the one defined in tauruscustomsettings.DEFAULT_SCHEME is
+used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the name with the explicit scheme.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.trace">
+<code class="descname">trace</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/util/log.html#trace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.trace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.warning">
+<code class="descname">warning</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/taurus/core/util/log.html#warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="taurus/console.html" class="btn btn-neutral float-right" title="taurus.console" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../examples.html" class="btn btn-neutral" title="Examples" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

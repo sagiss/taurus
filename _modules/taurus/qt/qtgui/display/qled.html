@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.display.qled &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.display.qled</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.display.qled</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;A pure Qt led widget&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LedColor&quot;</span><span class="p">,</span> <span class="s2">&quot;LedStatus&quot;</span><span class="p">,</span> <span class="s2">&quot;LedSize&quot;</span><span class="p">,</span> <span class="s2">&quot;QLed&quot;</span><span class="p">,</span> <span class="s2">&quot;QLedOld&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getCachedPixmap</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display.qpixmapwidget</span> <span class="k">import</span> <span class="n">QPixmapWidget</span>
+
+<span class="n">LedColor</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span><span class="s2">&quot;LedColor&quot;</span><span class="p">,</span>  <span class="p">[</span>
+                       <span class="s2">&quot;BLUE&quot;</span><span class="p">,</span> <span class="s2">&quot;GREEN&quot;</span><span class="p">,</span> <span class="s2">&quot;RED&quot;</span><span class="p">,</span> <span class="s2">&quot;YELLOW&quot;</span><span class="p">,</span> <span class="s2">&quot;ORANGE&quot;</span><span class="p">,</span> <span class="s2">&quot;MAGENTA&quot;</span><span class="p">,</span> <span class="s2">&quot;GRENOBLE&quot;</span><span class="p">,</span> <span class="s2">&quot;BLACK&quot;</span><span class="p">,</span> <span class="s2">&quot;WHITE&quot;</span><span class="p">])</span>
+<span class="n">LedStatus</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span><span class="s2">&quot;LedStatus&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ON&quot;</span><span class="p">,</span> <span class="s2">&quot;OFF&quot;</span><span class="p">])</span>
+<span class="n">LedSize</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span><span class="s2">&quot;LedSize&quot;</span><span class="p">,</span>   <span class="p">[(</span><span class="s2">&quot;SMALL&quot;</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;LARGE&quot;</span><span class="p">,</span> <span class="mi">48</span><span class="p">)])</span>
+
+
+<div class="viewcode-block" id="QLed"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed">[docs]</a><span class="k">class</span> <span class="nc">QLed</span><span class="p">(</span><span class="n">QPixmapWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Led&quot;&quot;&quot;</span>
+    <span class="n">DefaultLedPattern</span> <span class="o">=</span> <span class="s2">&quot;leds_images256:led_</span><span class="si">{color}</span><span class="s2">_</span><span class="si">{status}</span><span class="s2">.png&quot;</span>
+    <span class="n">DefaultLedColor</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
+    <span class="n">DefaultLedStatus</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">DefaultLedInverted</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">DefaultBlinkingInterval</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledStatus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedStatus</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedColor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledPatternName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedPattern</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledInverted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedInverted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toLedName</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">QPixmapWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span>
+
+<div class="viewcode-block" id="QLed.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">QPixmapWidget</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLed.minimumSizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.minimumSizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overwrite the default minimum size hint (0,0) to be (16,16)</span>
+<span class="sd">        :return: the minimum size hint 16,16</span>
+<span class="sd">        :rtype: PyQt4.Qt.QSize&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLed.toLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.toLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gives the led name for the given status and color. If status or</span>
+<span class="sd">        color are not given, the current led status or color are used.</span>
+
+<span class="sd">        :param status: the status</span>
+<span class="sd">        :type  status: bool</span>
+<span class="sd">        :param color: the color</span>
+<span class="sd">        :type  color: str</span>
+<span class="sd">        :return: string containing the led name</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledStatus</span>
+        <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledColor</span>
+        <span class="k">if</span> <span class="n">inverted</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">inverted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledInverted</span>
+        <span class="k">if</span> <span class="n">inverted</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">status</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">status</span> <span class="ow">and</span> <span class="s2">&quot;on&quot;</span> <span class="ow">or</span> <span class="s2">&quot;off&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledPatternName</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLed.isLedColorValid"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.isLedColorValid">[docs]</a>    <span class="k">def</span> <span class="nf">isLedColorValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determines if the given color name is valid.</span>
+<span class="sd">        :param color: the color</span>
+<span class="sd">        :type  color: str</span>
+<span class="sd">        :return: True is the given color name is valid or False otherwise</span>
+<span class="sd">        :rtype: bool&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LedColor</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span></div>
+
+    <span class="k">def</span> <span class="nf">_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;internal usage only&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toLedName</span><span class="p">()</span>
+        <span class="n">pixmap</span> <span class="o">=</span> <span class="n">getCachedPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ledName</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="QLed.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.display&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Display&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s2">&quot;designer:ledred.png&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT property definition</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="QLed.getLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">getLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current led pattern name</span>
+<span class="sd">        :return: led pattern name</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledPatternName</span></div>
+
+<div class="viewcode-block" id="QLed.setLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">setLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the led pattern name. Should be a string containing a path</span>
+<span class="sd">        to valid images. The string can contain the keywords:</span>
+
+<span class="sd">            1. {status} - transformed to &#39;on&#39; of &#39;off&#39; according to the status</span>
+<span class="sd">            2. {color} - transformed to the current led color</span>
+
+<span class="sd">        Example: **:leds/images256/led_{color}_{status}.png** will be transformed</span>
+<span class="sd">        to **:leds/images256/led_red_on.png** when the led status is True and</span>
+<span class="sd">        the led color is red.</span>
+
+<span class="sd">        :param name: new pattern</span>
+<span class="sd">        :type  name: str&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledPatternName</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QLed.resetLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets the led pattern to **:leds/images256/led_{color}_{status}.png**.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedPattern</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLed.getLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">getLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the led status</span>
+<span class="sd">        :return: led status</span>
+<span class="sd">        :rtype: bool&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledStatus</span></div>
+
+<div class="viewcode-block" id="QLed.setLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">setLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the led status</span>
+<span class="sd">        :param status: the new status</span>
+<span class="sd">        :type  status: bool&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledStatus</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QLed.resetLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets the led status&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedStatus</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLed.toggleLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.toggleLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">toggleLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;toggles the current status of the led&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLedStatus</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLedStatus</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="QLed.getLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">getLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns if the led is inverted.</span>
+<span class="sd">        :return: inverted mode</span>
+<span class="sd">        :rtype: bool&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledInverted</span></div>
+
+<div class="viewcode-block" id="QLed.setLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">setLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inverted</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the led inverted mode</span>
+<span class="sd">        :param status: the new inverted mode</span>
+<span class="sd">        :type  status: bool&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledInverted</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">inverted</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QLed.resetLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets the led inverted mode&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedInverted</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLed.getLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">getLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the led color</span>
+<span class="sd">        :return: led color</span>
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledColor</span></div>
+
+<div class="viewcode-block" id="QLed.setLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">setLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the led color</span>
+<span class="sd">        :param status: the new color</span>
+<span class="sd">        :type  status: str&quot;&quot;&quot;</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isLedColorValid</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Invalid color &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">color</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ledColor</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QLed.resetLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets the led color&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLedColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedColor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLed.setBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">setBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sets the blinking interval (the time between status switching).</span>
+<span class="sd">        Set to a nonpositive number for disabling blinking</span>
+
+<span class="sd">        :param interval: (int) the blinking interval in millisecs. Set to 0 for disabling blinking</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">interval</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTimer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggleLedStatus</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="QLed.getBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">getBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns the blinking interval</span>
+
+<span class="sd">        :return: (int) blinking interval or 0 if blinking is not enabled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">interval</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QLed.resetBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">resetBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;resets the blinking interval&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">DefaultBlinkingInterval</span><span class="p">)</span></div>
+
+    <span class="c1">#: This property holds the led status: False means OFF, True means ON</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QLed.getLedStatus`</span>
+    <span class="c1">#:     * :meth:`QLed.setLedStatus`</span>
+    <span class="c1">#:     * :meth:`QLed.resetLedStatus`</span>
+    <span class="n">ledStatus</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getLedStatus</span><span class="p">,</span> <span class="n">setLedStatus</span><span class="p">,</span>
+                                <span class="n">resetLedStatus</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;led status&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the led color</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QLed.getLedColor`</span>
+    <span class="c1">#:     * :meth:`QLed.setLedColor`</span>
+    <span class="c1">#:     * :meth:`QLed.resetLedColor`</span>
+    <span class="n">ledColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getLedColor</span><span class="p">,</span> <span class="n">setLedColor</span><span class="p">,</span>
+                               <span class="n">resetLedColor</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;led color&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the led inverted: False means do not invert the</span>
+    <span class="c1">#. status, True means invert the status</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QLed.getLedInverted`</span>
+    <span class="c1">#:     * :meth:`QLed.setLedInverted`</span>
+    <span class="c1">#:     * :meth:`QLed.resetLedInverted`</span>
+    <span class="n">ledInverted</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getLedInverted</span><span class="p">,</span> <span class="n">setLedInverted</span><span class="p">,</span>
+                                  <span class="n">resetLedInverted</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;led inverted mode&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the led pattern name</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QLed.getLedPatternName`</span>
+    <span class="c1">#:     * :meth:`QLed.setLedPatternName`</span>
+    <span class="c1">#:     * :meth:`QLed.resetLedPatternName`</span>
+    <span class="n">ledPattern</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getLedPatternName</span><span class="p">,</span> <span class="n">setLedPatternName</span><span class="p">,</span>
+                                 <span class="n">resetLedPatternName</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;led pattern name&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the blinking interval in millisecs. 0 means no blinking</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QLed.getBlinkingInterval`</span>
+    <span class="c1">#:     * :meth:`QLed.setBlinkingInterval`</span>
+    <span class="c1">#:     * :meth:`QLed.resetBlinkingInterval`</span>
+    <span class="n">blinkingInterval</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getBlinkingInterval</span><span class="p">,</span> <span class="n">setBlinkingInterval</span><span class="p">,</span>
+                                       <span class="n">resetBlinkingInterval</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;blinking interval&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="QLedOld"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld">[docs]</a><span class="k">class</span> <span class="nc">QLedOld</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+    <span class="n">ledDirPattern</span> <span class="o">=</span> <span class="s2">&quot;:leds/images</span><span class="si">%(size)d</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ledsize</span><span class="o">=</span><span class="n">LedSize</span><span class="o">.</span><span class="n">SMALL</span><span class="p">,</span> <span class="n">ledcolor</span><span class="o">=</span><span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">):</span>
+
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ledsize</span> <span class="o">=</span> <span class="n">ledsize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ledcolor</span> <span class="o">=</span> <span class="n">ledcolor</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;Led&quot;</span><span class="p">)</span>
+        <span class="n">sizePolicy</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">sizePolicy</span><span class="o">.</span><span class="n">setHorizontalStretch</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">sizePolicy</span><span class="o">.</span><span class="n">setVerticalStretch</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">sizePolicy</span><span class="o">.</span><span class="n">setHeightForWidth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sizePolicy</span><span class="p">()</span><span class="o">.</span><span class="n">hasHeightForWidth</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">sizePolicy</span><span class="p">)</span>
+
+        <span class="c1"># no need to call changeColor. changeSize calls it for us</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeSize</span><span class="p">(</span><span class="n">ledsize</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QLedOld.toLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.toLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;led&quot;</span> <span class="o">+</span> <span class="n">LedColor</span><span class="o">.</span><span class="n">whatis</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">+=</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">whatis</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">name</span></div>
+
+<div class="viewcode-block" id="QLedOld.toCompleteLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.toCompleteLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toCompleteLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledDirPattern</span> <span class="o">%</span> <span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">size</span><span class="p">}</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">toLedName</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="QLedOld.tr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.tr">[docs]</a>    <span class="k">def</span> <span class="nf">tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;Led&quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLedOld.retranslateUi"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.retranslateUi">[docs]</a>    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Led</span><span class="p">):</span>
+        <span class="n">Led</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Form&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="QLedOld.on"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.on">[docs]</a>    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onled</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLedOld.off"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.off">[docs]</a>    <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offled</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLedOld.changeSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.changeSize">[docs]</a>    <span class="k">def</span> <span class="nf">changeSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ledSize</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ledsize</span> <span class="o">=</span> <span class="n">ledSize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">ledSize</span><span class="p">,</span> <span class="n">ledSize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">ledSize</span><span class="p">,</span> <span class="n">ledSize</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">ledSize</span><span class="p">,</span> <span class="n">ledSize</span><span class="p">))</span>
+
+        <span class="c1"># force a call to led color to change the place from which the images</span>
+        <span class="c1"># are fetched</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ledcolor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QLedOld.changeColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.changeColor">[docs]</a>    <span class="k">def</span> <span class="nf">changeColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ledColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ledcolor</span> <span class="o">=</span> <span class="n">ledColor</span>
+
+        <span class="n">off_pixmap_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toCompleteLedName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ledsize</span><span class="p">,</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">,</span> <span class="n">ledColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offled</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">off_pixmap_name</span><span class="p">)</span>
+        <span class="n">on_pixmap_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toCompleteLedName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ledsize</span><span class="p">,</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span> <span class="n">ledColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">onled</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">on_pixmap_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offled</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onled</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_setProblemsBackground</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doIt</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">doIt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">bg_brush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">()</span>
+            <span class="n">bg_brush</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BDiagPattern</span><span class="p">)</span>
+            <span class="n">palette</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span>
+            <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Window</span><span class="p">,</span> <span class="n">bg_brush</span><span class="p">)</span>
+            <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span> <span class="n">bg_brush</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;hello&quot;&quot;&quot;</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">LedColor</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="n">led</span> <span class="o">=</span> <span class="n">QLed</span><span class="p">()</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">ledColor</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">ledStatus</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">led</span> <span class="o">=</span> <span class="n">QLed</span><span class="p">()</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">ledColor</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">ledStatus</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">led</span> <span class="o">=</span> <span class="n">QLed</span><span class="p">()</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">ledColor</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">blinkingInterval</span> <span class="o">=</span> <span class="mi">500</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">w</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

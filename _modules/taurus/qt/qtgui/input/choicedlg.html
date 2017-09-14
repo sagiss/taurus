@@ -1,0 +1,465 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.input.choicedlg &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.input.choicedlg</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.input.choicedlg</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">###########################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This package provides a dialog for graphically choosing a Taurus class&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GraphicalChoiceDlg&quot;</span><span class="p">,</span> <span class="s2">&quot;GraphicalChoiceWidget&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+
+<div class="viewcode-block" id="GraphicalChoiceDlg"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceDlg.html#taurus.qt.qtgui.input.GraphicalChoiceDlg">[docs]</a><span class="k">class</span> <span class="nc">GraphicalChoiceDlg</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A generic dialog for choosing among a set of choices which are presented as</span>
+<span class="sd">    an array of, each with a given pixmap.</span>
+
+<span class="sd">    The :meth:`getChoice` static method is provided for convenience so that the</span>
+<span class="sd">    dialog can be invoked wit a single line::</span>
+
+<span class="sd">        chosen,ok = GraphicalChoiceDlg.getChoice(parent, title, msg, choices, pixmaps, size, defpixmap, horizontalScrollBarPolicy, verticalScrollBarPolicy)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pixmaps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iconSize</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">defaultPixmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">horizontalScrollBarPolicy</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ScrollBarAsNeeded</span><span class="p">,</span> <span class="n">verticalScrollBarPolicy</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ScrollBarAsNeeded</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chosen</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Click on your choice:&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iconsArea</span> <span class="o">=</span> <span class="n">GraphicalChoiceWidget</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span>
+                                                <span class="n">pixmaps</span><span class="o">=</span><span class="n">pixmaps</span><span class="p">,</span> <span class="n">iconSize</span><span class="o">=</span><span class="n">iconSize</span><span class="p">,</span> <span class="n">defaultPixmap</span><span class="o">=</span><span class="n">defaultPixmap</span><span class="p">,</span>
+                                                <span class="n">horizontalScrollBarPolicy</span><span class="o">=</span><span class="n">horizontalScrollBarPolicy</span><span class="p">,</span>
+                                                <span class="n">verticalScrollBarPolicy</span><span class="o">=</span><span class="n">verticalScrollBarPolicy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iconsArea</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iconsArea</span><span class="o">.</span><span class="n">choiceMade</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onChoiceMade</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GraphicalChoiceDlg.setHorizontalScrollBarPolicy"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceDlg.html#taurus.qt.qtgui.input.GraphicalChoiceDlg.setHorizontalScrollBarPolicy">[docs]</a>    <span class="k">def</span> <span class="nf">setHorizontalScrollBarPolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets horizontal scrollbar policy of scrollArea&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iconsArea</span><span class="o">.</span><span class="n">setHorizontalScrollBarPolicy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphicalChoiceDlg.setVerticalScrollBarPolicy"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceDlg.html#taurus.qt.qtgui.input.GraphicalChoiceDlg.setVerticalScrollBarPolicy">[docs]</a>    <span class="k">def</span> <span class="nf">setVerticalScrollBarPolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets vertical scrollbar policy of scrollArea&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iconsArea</span><span class="o">.</span><span class="n">setVerticalScrollBarPolicy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphicalChoiceDlg.setMessage"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceDlg.html#taurus.qt.qtgui.input.GraphicalChoiceDlg.setMessage">[docs]</a>    <span class="k">def</span> <span class="nf">setMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;sets the text which is shown to the user in the dialog&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphicalChoiceDlg.onChoiceMade"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceDlg.html#taurus.qt.qtgui.input.GraphicalChoiceDlg.onChoiceMade">[docs]</a>    <span class="k">def</span> <span class="nf">onChoiceMade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot called when the user chooses an option&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GraphicalChoiceDlg.getChosen"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceDlg.html#taurus.qt.qtgui.input.GraphicalChoiceDlg.getChosen">[docs]</a>    <span class="k">def</span> <span class="nf">getChosen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        returns the choice</span>
+<span class="sd">        :return: (str)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iconsArea</span><span class="o">.</span><span class="n">getChosen</span><span class="p">()</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="GraphicalChoiceDlg.getChoice"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceDlg.html#taurus.qt.qtgui.input.GraphicalChoiceDlg.getChoice">[docs]</a>    <span class="k">def</span> <span class="nf">getChoice</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pixmaps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iconSize</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">defaultPixmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">horizontalScrollBarPolicy</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ScrollBarAsNeeded</span><span class="p">,</span> <span class="n">verticalScrollBarPolicy</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ScrollBarAsNeeded</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Static method which launches a GraphicalChoiceDlg with the given options</span>
+<span class="sd">        and returns the result</span>
+
+<span class="sd">        :param parent: (QWidget) The parent of the dialog (it will be centered on it)</span>
+<span class="sd">        :param title: (str) the text which is displayed in the title bar of the dialog</span>
+<span class="sd">        :param msg: (str) the text which is shown to the user in the dialog,</span>
+<span class="sd">                    above the choices.</span>
+<span class="sd">        :param choices: (list&lt;list&gt;) a list of lists of strings to be used as</span>
+<span class="sd">                        choices names. The (possibly sparse) 2D array defined by</span>
+<span class="sd">                        the nested lists will be used to present the choices in</span>
+<span class="sd">                        a grid. The choice names will be used as keys for pixmaps</span>
+<span class="sd">        :param pixmaps: (dict&lt;str,QPixmap&gt;) dictionary mapping the choices text to</span>
+<span class="sd">                        corresponding pixmap. If no valid pixmap is provided for</span>
+<span class="sd">                        a given choice, the defaultPixmap will be used</span>
+<span class="sd">        :param iconSize: (int) size of the icons to be displayed (128px by default)</span>
+<span class="sd">        :param defaultPixmap: (QPixmap) Default Pixmap to use if none passed for a</span>
+<span class="sd">                              given choice. No Pixmap will be used if None passed.</span>
+<span class="sd">        :param horizontalScrollBarPolicy: (enum Qt.ScrollBarPolicy) defines the mode of the horizontal scroll bar.</span>
+<span class="sd">                                          The default mode is ScrollBarAsNeeded.</span>
+<span class="sd">        :param verticalScrollBarPolicy: (enum Qt.ScrollBarPolicy) defines the mode of the vertical scroll bar.</span>
+<span class="sd">                                        The default mode is ScrollBarAsNeeded</span>
+<span class="sd">        :return: (tuple&lt;str,bool&gt;) A tuple containing choice,ok. choice is the name of</span>
+<span class="sd">                 the chosen option. ok is true if the user pressed OK and false</span>
+<span class="sd">                 if the user pressed Cancel.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">dlg</span> <span class="o">=</span> <span class="n">GraphicalChoiceDlg</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span> <span class="n">pixmaps</span><span class="o">=</span><span class="n">pixmaps</span><span class="p">,</span> <span class="n">iconSize</span><span class="o">=</span><span class="n">iconSize</span><span class="p">,</span>
+                                 <span class="n">defaultPixmap</span><span class="o">=</span><span class="n">defaultPixmap</span><span class="p">,</span> <span class="n">horizontalScrollBarPolicy</span><span class="o">=</span><span class="n">horizontalScrollBarPolicy</span><span class="p">,</span>
+                                 <span class="n">verticalScrollBarPolicy</span><span class="o">=</span><span class="n">verticalScrollBarPolicy</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dlg</span><span class="o">.</span><span class="n">getChosen</span><span class="p">(),</span> <span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="o">==</span> <span class="n">dlg</span><span class="o">.</span><span class="n">Accepted</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GraphicalChoiceWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceWidget.html#taurus.qt.qtgui.input.GraphicalChoiceWidget">[docs]</a><span class="k">class</span> <span class="nc">GraphicalChoiceWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QScrollArea</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A widget that presents a 2D grid of buttons&#39;&#39;&#39;</span>
+
+    <span class="n">choiceMade</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pixmaps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iconSize</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+                 <span class="n">defaultPixmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">horizontalScrollBarPolicy</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ScrollBarAsNeeded</span><span class="p">,</span>
+                 <span class="n">verticalScrollBarPolicy</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ScrollBarAsNeeded</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QScrollArea</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chosen</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iconSize</span> <span class="o">=</span> <span class="n">iconSize</span>
+        <span class="k">if</span> <span class="n">defaultPixmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">defaultPixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_defaultPixmap</span> <span class="o">=</span> <span class="n">defaultPixmap</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFrameShape</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">NoFrame</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidgetResizable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHorizontalScrollBarPolicy</span><span class="p">(</span><span class="n">horizontalScrollBarPolicy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setVerticalScrollBarPolicy</span><span class="p">(</span><span class="n">verticalScrollBarPolicy</span><span class="p">)</span>
+
+        <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">choices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setChoices</span><span class="p">(</span><span class="n">choices</span><span class="p">,</span> <span class="n">pixmaps</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">designMode</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getCachedPixmap</span>
+            <span class="n">pm</span> <span class="o">=</span> <span class="n">getCachedPixmap</span><span class="p">(</span><span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setChoices</span><span class="p">([[</span><span class="s1">&#39;choice1&#39;</span><span class="p">,</span> <span class="s1">&#39;choice2&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;choice3&#39;</span><span class="p">,</span> <span class="s1">&#39;choice4&#39;</span><span class="p">]],</span>
+                            <span class="nb">dict</span><span class="p">(</span><span class="n">choice1</span><span class="o">=</span><span class="n">pm</span><span class="p">,</span> <span class="n">choice2</span><span class="o">=</span><span class="n">pm</span><span class="p">,</span> <span class="n">choice3</span><span class="o">=</span><span class="n">pm</span><span class="p">,</span>
+                                 <span class="n">choice4</span><span class="o">=</span><span class="n">pm</span><span class="p">))</span>
+
+<div class="viewcode-block" id="GraphicalChoiceWidget.setChoices"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceWidget.html#taurus.qt.qtgui.input.GraphicalChoiceWidget.setChoices">[docs]</a>    <span class="k">def</span> <span class="nf">setChoices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">pixmaps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        sets the available options</span>
+
+<span class="sd">        :param choices: (list&lt;list&gt;) a list of lists of strings to be used as</span>
+<span class="sd">                        choices names. The (possibly sparse) 2D array defined by</span>
+<span class="sd">                        the nested lists will be used to present the choices in</span>
+<span class="sd">                        a grid. The choice names will be used as keys for pixmaps</span>
+<span class="sd">        :param pixmaps: (dict&lt;str,QPixmap&gt;) dictionary mapping the choices text to</span>
+<span class="sd">                        corresponding pixmap. If no valid pixmap is provided for</span>
+<span class="sd">                        a given choice, a default pixmap will be used</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">pixmaps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pixmaps</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">rowlist</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">choices</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">choice</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rowlist</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setChoice</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">choice</span><span class="p">),</span>
+                               <span class="n">pixmap</span><span class="o">=</span><span class="n">pixmaps</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="GraphicalChoiceWidget.setChoice"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceWidget.html#taurus.qt.qtgui.input.GraphicalChoiceWidget.setChoice">[docs]</a>    <span class="k">def</span> <span class="nf">setChoice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">pixmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        sets the option for a given row,column coordinate in the grid</span>
+
+<span class="sd">        :param row: (int) row in the grid for this option</span>
+<span class="sd">        :param col: (int) column in the grid for this option</span>
+<span class="sd">        :param text: (str) name for this option</span>
+<span class="sd">        :param pixmap: (QPixmap or None) If no valid pixmap is provided for</span>
+<span class="sd">                        a given choice, the default one will be used</span>
+<span class="sd">        :param tooltip: (str) tooltip for this option (if None given, the `text` is used)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pixmap</span> <span class="ow">or</span> <span class="n">pixmap</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+            <span class="n">pixmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_defaultPixmap</span>
+        <span class="k">if</span> <span class="n">tooltip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tooltip</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="n">button</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">pixmap</span><span class="p">))</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iconSize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iconSize</span><span class="p">))</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">tooltip</span><span class="p">)</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onClick</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphicalChoiceWidget.onClick"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceWidget.html#taurus.qt.qtgui.input.GraphicalChoiceWidget.onClick">[docs]</a>    <span class="k">def</span> <span class="nf">onClick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot called when a button is clicked&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chosen</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choiceMade</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chosen</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphicalChoiceWidget.getChosen"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceWidget.html#taurus.qt.qtgui.input.GraphicalChoiceWidget.getChosen">[docs]</a>    <span class="k">def</span> <span class="nf">getChosen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        returns the choice</span>
+<span class="sd">        :return: (str)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chosen</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="GraphicalChoiceWidget.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceWidget.html#taurus.qt.qtgui.input.GraphicalChoiceWidget.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns pertinent information in order to be able to build a valid</span>
+<span class="sd">        QtDesigner widget plugin</span>
+
+<span class="sd">        The dictionary returned by this method should contain *at least* the</span>
+<span class="sd">        following keys and values:</span>
+<span class="sd">        - &#39;module&#39; : a string representing the full python module name (ex.: &#39;taurus.qt.qtgui.base&#39;)</span>
+<span class="sd">        - &#39;icon&#39; : a string representing valid resource icon (ex.: &#39;designer:combobox.png&#39;)</span>
+<span class="sd">        - &#39;container&#39; : a bool telling if this widget is a container widget or not.</span>
+
+<span class="sd">        This default implementation returns the following dictionary::</span>
+
+<span class="sd">            { &#39;group&#39;     : &#39;Taurus Widgets&#39;,</span>
+<span class="sd">              &#39;icon&#39;      : &#39;logos:taurus.png&#39;,</span>
+<span class="sd">              &#39;container&#39; : False }</span>
+
+<span class="sd">        :return: (dict) a map with pertinent designer information&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.input&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Input&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span></div></div>
+
+
+<span class="c1">#------------------------------------------------------------------------------</span>
+
+<span class="k">def</span> <span class="nf">testWidget</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">GraphicalChoiceWidget</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getCachedPixmap</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+    <span class="n">pixmaps</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">choices</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;TaurusForm&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusTrend&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;TaurusPlot&#39;</span><span class="p">,</span> <span class="s1">&#39;Qub&#39;</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">pixmaps</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">getCachedPixmap</span><span class="p">(</span><span class="s1">&#39;snapshot:</span><span class="si">%s</span><span class="s1">.png&#39;</span> <span class="o">%</span> <span class="n">k</span><span class="p">)</span>
+
+    <span class="nb">print</span> <span class="n">GraphicalChoiceDlg</span><span class="o">.</span><span class="n">getChoice</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Panel chooser&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Choose the type of Panel:&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span> <span class="n">pixmaps</span><span class="o">=</span><span class="n">pixmaps</span><span class="p">)</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+    <span class="c1"># testWidget()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

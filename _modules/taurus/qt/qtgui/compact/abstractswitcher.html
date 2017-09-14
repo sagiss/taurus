@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.compact.abstractswitcher &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.compact.abstractswitcher</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.compact.abstractswitcher</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2013 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides base classes from which the compact widgets should inherit</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusReadWriteSwitcher&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWritableWidget</span>
+
+
+<div class="viewcode-block" id="TaurusReadWriteSwitcher"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.html#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher">[docs]</a><span class="k">class</span> <span class="nc">TaurusReadWriteSwitcher</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This is a base class for creating widgets that can switch</span>
+<span class="sd">    beetween read and write mode by combining a Taurus widget for reading</span>
+<span class="sd">    and a Taurus Widget for writing.</span>
+
+<span class="sd">    For example, if you want to combine a TaurusLabel with a</span>
+<span class="sd">    TaurusValueLineEdit, you can implement it as follows::</span>
+
+<span class="sd">        class MyRWSwitcher(TaurusReadWriteSwitcher):</span>
+<span class="sd">            readWClass = TaurusLabel</span>
+<span class="sd">            writeWClass = TaurusValueLineEdit</span>
+
+<span class="sd">    Alternatively, you can instantiate the TaurusReadWriteSwitcher class</span>
+<span class="sd">    directly and pass the read and write classes to the constructor::</span>
+
+<span class="sd">        w = TaurusReadWriteSwitcher(readWClass=TaurusLabel,</span>
+<span class="sd">                                    writeWClass=TaurusValueLineEdit)</span>
+
+<span class="sd">    Or you can even set the read and write widgets (instead of classes)</span>
+<span class="sd">    after instantiation::</span>
+
+<span class="sd">        w = TaurusReadWriteSwitcher()</span>
+<span class="sd">        a = TaurusLabel()</span>
+<span class="sd">        b = TaurusValueLineEdit()</span>
+<span class="sd">        w.setReadWidget(a)</span>
+<span class="sd">        w.setWriteWidget(b)</span>
+
+<span class="sd">    TaurusReadWriteSwitcher will normally show the read widget by default,</span>
+<span class="sd">    but it will allow to switch to &quot;edit mode&quot; (where the write widget</span>
+<span class="sd">    is shown instead). Enetering and exiting the edit mode is controlled</span>
+<span class="sd">    by &quot;triggers&quot;. Triggers can be key presses, QEvents or signals.</span>
+
+<span class="sd">    The default implementation sets pressing F2 or doubleclicking the read</span>
+<span class="sd">    widget as the triggers for entering edit mode, and pressing Escape,</span>
+<span class="sd">    losing the focus or applying the value on the write widget as the</span>
+<span class="sd">    triggers for leaving the edit mode. This can be customized by changing</span>
+<span class="sd">    `enterEditTriggers` and `exitEditTriggers` class members or by passing</span>
+<span class="sd">    `enterEditTriggers` and `exitEditTriggers` keyword parameters to the</span>
+<span class="sd">    constructor of TaurusReadWriteSwitcher:</span>
+
+<span class="sd">        - `enterEditTriggers` is a tuple containing one or more of the following:</span>
+
+<span class="sd">            - key shortcut (either a Qt.Qt.Key or a QKeySequence)</span>
+<span class="sd">            - event type on the read widget (a Qt.QEvent.Type)</span>
+<span class="sd">            - signal from the read widget (a str representing a Signal signature)</span>
+
+<span class="sd">        - `exitEditTriggers` is a tuple containing one or more of the following:</span>
+
+<span class="sd">            - key shortcut (either a Qt.Qt.Key or a QKeySequence)</span>
+<span class="sd">            - event type on the write widget (a Qt.QEvent.Type)</span>
+<span class="sd">            - signal from the write widget (a str representing a Signal signature)</span>
+
+<span class="sd">    #@todo: check integration with designer</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">readWClass</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">writeWClass</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">enterEditTriggers</span> <span class="o">=</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_F2</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">MouseButtonDblClick</span><span class="p">)</span>
+    <span class="n">exitEditTriggers</span> <span class="o">=</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">FocusOut</span><span class="p">,</span> <span class="s1">&#39;applied&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">readWClass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">writeWClass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">enterEditTriggers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exitEditTriggers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">StrongFocus</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStackedLayout</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Use parameters from constructor args or defaults from class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readWClass</span> <span class="o">=</span> <span class="n">readWClass</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWClass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writeWClass</span> <span class="o">=</span> <span class="n">writeWClass</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWClass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditTriggers</span> <span class="o">=</span> <span class="n">enterEditTriggers</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">enterEditTriggers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditTriggers</span> <span class="o">=</span> <span class="n">exitEditTriggers</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">exitEditTriggers</span>
+
+        <span class="c1"># classify the triggers</span>
+        <span class="n">sc</span><span class="p">,</span> <span class="n">et</span><span class="p">,</span> <span class="n">sig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_classifyTriggers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enterEditTriggers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditShortCuts</span> <span class="o">=</span> <span class="n">sc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditEventTypes</span> <span class="o">=</span> <span class="n">et</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditSignals</span> <span class="o">=</span> <span class="n">sig</span>
+        <span class="n">sc</span><span class="p">,</span> <span class="n">et</span><span class="p">,</span> <span class="n">sig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_classifyTriggers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exitEditTriggers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditShortCuts</span> <span class="o">=</span> <span class="n">sc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditEventTypes</span> <span class="o">=</span> <span class="n">et</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditSignals</span> <span class="o">=</span> <span class="n">sig</span>
+
+        <span class="c1"># Actions for entering and exiting the edit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Start Editing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditAction</span><span class="o">.</span><span class="n">setShortcuts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enterEditShortCuts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditAction</span><span class="o">.</span><span class="n">setShortcutContext</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WidgetWithChildrenShortcut</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enterEditAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Abort Editing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditAction</span><span class="o">.</span><span class="n">setShortcuts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exitEditShortCuts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditAction</span><span class="o">.</span><span class="n">setShortcutContext</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WidgetWithChildrenShortcut</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exitEditAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onEnterEditActionTriggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onExitEditActionTriggered</span><span class="p">)</span>
+
+        <span class="c1"># add read and write widgets</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWClass</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setReadWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readWClass</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWClass</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setWriteWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeWClass</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_classifyTriggers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">triggers</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;classifies the diferent types of triggers</span>
+
+<span class="sd">        :return: (tuple) a tuple of 3 lists: shortcuts,enventypes,signals</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">shortcuts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">eventTypes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">signals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">triggers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">)):</span>
+                <span class="n">shortcuts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Type</span><span class="p">):</span>
+                <span class="n">eventTypes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">)):</span>
+                <span class="n">signals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Unsupported trigger type: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">shortcuts</span><span class="p">,</span> <span class="n">eventTypes</span><span class="p">,</span> <span class="n">signals</span>
+
+<div class="viewcode-block" id="TaurusReadWriteSwitcher.eventFilter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.html#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.eventFilter">[docs]</a>    <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;reimplemented to intercept events from the read and write widgets&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span> <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enterEditEventTypes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enterEdit</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Note that we do not let it propagate further!</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span> <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exitEditEventTypes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exitEdit</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Note that we do not let it propagate further!</span>
+        <span class="c1"># default fallback</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">eventFilter</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusReadWriteSwitcher.setReadWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.html#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setReadWidget">[docs]</a>    <span class="k">def</span> <span class="nf">setReadWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set the read Widget to be used. You can reimplement this</span>
+<span class="sd">        method to tweak the read widget.</span>
+
+<span class="sd">        :param widget: (QWidget) This should be Taurus widget</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># @todo: relax this limitation</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;ReadWidget already set&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span> <span class="o">=</span> <span class="n">widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">IBeamCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">())</span>
+        <span class="c1"># setup EnterEdit triggers</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enterEditEventTypes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sig</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enterEditSignals</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">,</span> <span class="n">sig</span><span class="p">)</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enterEdit</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot connect signal. Reason: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="c1"># update size policy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateSizePolicy</span><span class="p">()</span>
+        <span class="c1"># register configuration (we use the class name to avoid mixing configs</span>
+        <span class="c1"># in the future)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;_R_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusReadWriteSwitcher.setWriteWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.html#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setWriteWidget">[docs]</a>    <span class="k">def</span> <span class="nf">setWriteWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set the write Widget to be used You can reimplement this</span>
+<span class="sd">        method to tweak the write widget.</span>
+
+<span class="sd">        :param widget: (Qt.QWidget) This should be Taurus widget</span>
+<span class="sd">                       (typically a TaurusBaseWritableWidget)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># @todo: relax this limitation</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;WriteWidget already set&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span> <span class="o">=</span> <span class="n">widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exitEditEventTypes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sig</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exitEditSignals</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="p">,</span> <span class="n">sig</span><span class="p">)</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exitEdit</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Qt</span><span class="p">,</span> <span class="s2">&quot;SIGNAL&quot;</span><span class="p">):</span>
+                    <span class="c1"># Support old-style signal</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">sig</span><span class="p">),</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">exitEdit</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot connect </span><span class="si">%s</span><span class="s1"> using new style signal.&#39;</span> <span class="o">+</span>
+                               <span class="s1">&#39;Falling back to old style&#39;</span><span class="p">,</span> <span class="n">sig</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot connect signal. Reason: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># update size policy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateSizePolicy</span><span class="p">()</span>
+        <span class="c1"># register configuration (we use the class name to avoid mixing configs</span>
+        <span class="c1"># in the future)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;_W_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusReadWriteSwitcher.enterEdit"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.html#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.enterEdit">[docs]</a>    <span class="k">def</span> <span class="nf">enterEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Slot for entering Edit mode</span>
+
+<span class="sd">        .. note:: args and kwargs are ignored</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enterEditAction</span><span class="o">.</span><span class="n">trigger</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusReadWriteSwitcher.exitEdit"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.html#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.exitEdit">[docs]</a>    <span class="k">def</span> <span class="nf">exitEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Slot for entering Edit mode</span>
+
+<span class="sd">        .. note:: args and kwargs are ignored</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exitEditAction</span><span class="o">.</span><span class="n">trigger</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_onEnterEditActionTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_onExitEditActionTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_updateSizePolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Update the size policy of the switcher widget to the most restrictive</span>
+<span class="sd">        combination of the policies of the read and write widgets&#39;&#39;&#39;</span>
+        <span class="n">policy</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">sizePolicy</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">policy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">policy</span> <span class="o">=</span> <span class="n">p</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">h</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">horizontalPolicy</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">p</span><span class="o">.</span><span class="n">horizontalPolicy</span><span class="p">()</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">verticalPolicy</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">p</span><span class="o">.</span><span class="n">verticalPolicy</span><span class="p">()</span>
+                    <span class="n">policy</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="p">(</span><span class="n">h</span><span class="p">),</span>
+                                            <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">policy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusReadWriteSwitcher.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.html#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This implementation propagates the model to the read and write widgets.</span>
+<span class="sd">        You may reimplement it to do things like passing different models to each.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusReadWriteSwitcher.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.html#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.compact&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus R+W&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:frame.png&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">readWClass</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">readWClass</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;container&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># for base classes</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># for classes which already define the subwidgets</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;container&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span></div>
+
+<span class="c1">######################################</span>
+<span class="c1"># This block (and something more would be needed if we decide</span>
+<span class="c1"># to implement TaurusReadWriteSwitcher as a TaurusBaseWritableWidget</span>
+<span class="c1">######################################</span>
+<span class="c1">#</span>
+<span class="c1">#    def setDangerMessage(self, dangerMessage=None):</span>
+<span class="c1">#        &#39;&#39;&#39;propagate to writeWidget&#39;&#39;&#39;</span>
+<span class="c1">#        TaurusWidget.setDangerMessage(self, dangerMessage)</span>
+<span class="c1">#        try:</span>
+<span class="c1">#            return self.writeWidget.setDangerMessage(dangerMessage)</span>
+<span class="c1">#        except AttributeError:</span>
+<span class="c1">#            pass</span>
+<span class="c1">#</span>
+<span class="c1">#    def setForceDangerousOperations(self, yesno):</span>
+<span class="c1">#        &#39;&#39;&#39;propagate to writeWidget&#39;&#39;&#39;</span>
+<span class="c1">#        TaurusWidget.setForceDangerousOperations(self, yesno)</span>
+<span class="c1">#        try:</span>
+<span class="c1">#            return self.writeWidget.setForceDangerousOperations(yesno)</span>
+<span class="c1">#        except AttributeError:</span>
+<span class="c1">#            pass</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1">#######################################</span>
+
+
+<span class="k">def</span> <span class="nf">demo1</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;Simple demo&#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="k">import</span> <span class="n">TaurusValueLineEdit</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusReadWriteSwitcher</span><span class="p">(</span><span class="n">readWClass</span><span class="o">=</span><span class="n">TaurusLabel</span><span class="p">,</span>
+                                <span class="n">writeWClass</span><span class="o">=</span><span class="n">TaurusValueLineEdit</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;sys/tg_test/1/long_scalar&quot;</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">demo2</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;demo of integrability in a form&#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusForm</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="k">import</span> <span class="n">TaurusValueLineEdit</span>
+
+    <span class="k">class</span> <span class="nc">DemoSwitcher</span><span class="p">(</span><span class="n">TaurusReadWriteSwitcher</span><span class="p">):</span>
+        <span class="n">readWClass</span> <span class="o">=</span> <span class="n">TaurusLabel</span>
+        <span class="n">writeWClass</span> <span class="o">=</span> <span class="n">TaurusValueLineEdit</span>
+        <span class="n">exitEditTriggers</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;editingFinished()&#39;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">)</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">TaurusForm</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sys/tg_test/1/long_scalar&#39;</span><span class="p">,</span> <span class="s1">&#39;sys/tg_test/1/long_scalar&#39;</span><span class="p">]</span>
+
+    <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setReadWidgetClass</span><span class="p">(</span><span class="n">DemoSwitcher</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">setWriteWidgetClass</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">demo3</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;simple demo including more than one widget&#39;&#39;&#39;</span>
+
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span><span class="p">,</span> <span class="n">TaurusLed</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="k">import</span> <span class="n">TaurusValueLineEdit</span><span class="p">,</span> <span class="n">TaurusValueCheckBox</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+
+    <span class="n">w1</span> <span class="o">=</span> <span class="n">TaurusReadWriteSwitcher</span><span class="p">(</span><span class="n">readWClass</span><span class="o">=</span><span class="n">TaurusLabel</span><span class="p">,</span>
+                                 <span class="n">writeWClass</span><span class="o">=</span><span class="n">TaurusValueLineEdit</span><span class="p">)</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;sys/tg_test/1/long_scalar&quot;</span>
+
+    <span class="n">w2</span> <span class="o">=</span> <span class="n">TaurusReadWriteSwitcher</span><span class="p">(</span><span class="n">readWClass</span><span class="o">=</span><span class="n">TaurusLed</span><span class="p">,</span>
+                                 <span class="n">writeWClass</span><span class="o">=</span><span class="n">TaurusValueCheckBox</span><span class="p">)</span>
+    <span class="n">w2</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;sys/tg_test/1/boolean_scalar&quot;</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">w1</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">w2</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">TaurusReadWriteSwitcher</span><span class="p">())</span>  <span class="c1"># add non-initialized switcher</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># demo1()</span>
+    <span class="c1"># demo2()</span>
+    <span class="n">demo3</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

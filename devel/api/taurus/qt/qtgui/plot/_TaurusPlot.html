@@ -1,0 +1,2443 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusPlot &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtgui.plot" href="../plot.html"/>
+        <link rel="next" title="TaurusPlotConfigDialog" href="_TaurusPlotConfigDialog.html"/>
+        <link rel="prev" title="TaurusMonitorTiny" href="_TaurusMonitorTiny.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+      
+          <li><a href="../plot.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui.plot</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">TaurusPlot</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/plot/_TaurusPlot.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusplot">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot" title="taurus.qt.qtgui.plot.TaurusPlot"><code class="xref py py-class docutils literal"><span class="pre">TaurusPlot</span></code></a><a class="headerlink" href="#taurusplot" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-d5aa881a01fbfca24514ca9ce4ceb5c20d1129af.png" alt="Inheritance diagram of TaurusPlot" usemap="#inheritance487fc7f3f8" class="inheritance"/>
+<map id="inheritance487fc7f3f8" name="inheritance487fc7f3f8">
+<area shape="rect" id="node1" title="A base class defining the API for configurable objects." alt="" coords="5,293,173,341"/>
+<area shape="rect" id="node12" title="A generic Taurus component." alt="" coords="137,389,308,437"/>
+<area shape="rect" id="node2" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="219,197,291,245"/>
+<area shape="rect" id="node13" title="TaurusListener Interface" alt="" coords="197,293,312,341"/>
+<area shape="rect" id="node15" title="TaurusPlot is a general widget for plotting 1D data sets. It is an extended" alt="" coords="265,581,351,629"/>
+<area shape="rect" id="node14" title="The base class for all Qt Taurus widgets." alt="" coords="167,485,305,533"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot">
+<em class="property">class </em><code class="descname">TaurusPlot</code><span class="sig-paren">(</span><em>parent=None</em>, <em>designMode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.Qwt5.Qwt.QwtPlot</span></code>, <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.base.taurusbase.TaurusBaseWidget</span></code></p>
+<p>TaurusPlot is a general widget for plotting 1D data sets. It is an extended
+taurus-aware version of <code class="xref py py-class docutils literal"><span class="pre">QwtPlot</span></code>.</p>
+<img alt="../../../../../../_images/taurusplot04.png" class="align-center" src="../../../../../../_images/taurusplot04.png" />
+<p>TaurusPlot already incorporates by default many features that can be added to a
+regular QwtPlot:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Zoomming, panning, and magnifier are enabled by default</li>
+<li>Autoscaling is enabled and associated to the ESC key</li>
+<li>Methods are available to add new curves which can either be associated
+to taurus attributes or be &#8220;raw data&#8221; (i.e., values that are not directly
+aware of control system events)</li>
+<li>Context menu offers access to many options</li>
+<li>A plot configuration dialog, and save/restore configuration facilities</li>
+<li>Date-time scales and linear/log scales support</li>
+<li>Methods for importing/exporting curves from/to ASCII data</li>
+<li>Methods for printing and exporting the plot to PDF</li>
+<li>Methods for creating curves from arbitrary functions</li>
+<li>Data inspection facilities</li>
+<li>...</li>
+</ul>
+</div></blockquote>
+<p>For an overview of the features from an user point of view, see the
+<a class="reference internal" href="../../../../../../users/ui/plot.html#taurusplot-ui"><span class="std std-ref">TaurusPlot User&#8217;s Interface Guide</span></a>.</p>
+<p>You can also see some code that exemplifies the use of TaurusPlot in <a class="reference internal" href="../../../../../examples.html#examples-taurusplot"><span class="std std-ref">the
+TaurusPlot coding examples</span></a></p>
+<p><strong>Important</strong>: although TaurusPlot subclasses QwtPlot and therefore it is
+possible to use QwtPlot&#8217;s lower level methods for attaching QwtPlotItems
+(such as QwtPlotCurves) to the plot, it is <em>highly</em> recommended to use the
+higher-level methods provided by TaurusPlot to interact with the datasets
+attached to a TaurusPlot (e.g., <cite>addModels()</cite>, <cite>attachRawData()</cite>).
+This is because TaurusPlot keeps records of the items attached via its own
+methods.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="_TaurusTrend.html#taurus.qt.qtgui.plot.TaurusTrend" title="taurus.qt.qtgui.plot.TaurusTrend"><code class="xref py py-class docutils literal"><span class="pre">TaurusTrend</span></code></a>,
+<a class="reference internal" href="../../../../../../users/ui/plot.html#taurusplot-ui"><span class="std std-ref">TaurusPlot User&#8217;s Interface Guide</span></a>,
+<a class="reference internal" href="../../../../../examples.html#examples-taurusplot"><span class="std std-ref">The TaurusPlot coding examples</span></a></p>
+</div>
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.CurvesYAxisChanged">
+<code class="descname">CurvesYAxisChanged</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.CurvesYAxisChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.addModels">
+<code class="descname">addModels</code><span class="sig-paren">(</span><em>modelNames</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.addModels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.addModels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds models to the existing ones:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>modelNames</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; the names of the models to be added
+to the plot.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">setModels()</span></code>, <a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.removeModels" title="taurus.qt.qtgui.plot.TaurusPlot.removeModels"><code class="xref py py-meth docutils literal"><span class="pre">removeModels()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.allowZoomers">
+<code class="descname">allowZoomers</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.allowZoomers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the Zoomers are enabled for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setAllowZoomers" title="taurus.qt.qtgui.plot.TaurusPlot.setAllowZoomers"><code class="xref py py-meth docutils literal"><span class="pre">setAllowZoomers()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.applyAxesConfig">
+<code class="descname">applyAxesConfig</code><span class="sig-paren">(</span><em>axes</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.applyAxesConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.applyAxesConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the axes according to settings stored in the axes dict,
+which can be generated with _createAxesDict()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; contains axes properties</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.applyConfig">
+<code class="descname">applyConfig</code><span class="sig-paren">(</span><em>configdict</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.applyConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.applyConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>implemented as in <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.applyConfig()</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>&gt;) &#8211; </td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.createConfig" title="taurus.qt.qtgui.plot.TaurusPlot.createConfig"><code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code></a>, <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.applyConfig()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.applyMiscConfig">
+<code class="descname">applyMiscConfig</code><span class="sig-paren">(</span><em>miscdict</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.applyMiscConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.applyMiscConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the configurations according to settings stored in the misc dict,
+which can be generated with _createMiscDict()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>miscdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; Dictionary of properties</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.attachRawData">
+<code class="descname">attachRawData</code><span class="sig-paren">(</span><em>rawdata</em>, <em>properties=None</em>, <em>id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.attachRawData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.attachRawData" title="Permalink to this definition">¶</a></dt>
+<dd><p>attaches a curve to the plot formed from raw data that comes in a dict</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rawdata</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; <p>A dictionary defining a rawdata curve. It has the
+following structure (all keys are optional, but either
+&#8220;y&#8221; or &#8220;f(x)&#8221; must be present. Also, the value of x, y
+and f(x) can be None):</p>
+<p>{&#8220;title&#8221;:&lt;str&gt;, &#8220;x&#8221;:list&lt;float&gt;, &#8220;y&#8221;:list&lt;float&gt;,
+&#8220;f(x)&#8221;: &lt;str (an expression to evaluate on the x values)&gt;}</p>
+</li>
+<li><strong>properties</strong> (<a class="reference internal" href="_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties" title="taurus.qt.qtgui.plot.CurveAppearanceProperties"><code class="xref py py-class docutils literal"><span class="pre">CurveAppearanceProperties</span></code></a>) &#8211; appearance properties for
+the curve</li>
+<li><strong>id</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; This will be the internal name identifier used for the
+curve. If not given, it defaults to the title or to &#8220;rawdata&#8221;
+if no title is given.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal"><span class="pre">QwtPlotCurve</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the attached curve</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note</em>: every member of the rawdata dictionary is optional except for the y values (or, alternatively, f(x) AND x)</p>
+<p><em>Note</em>: using &#8220;name&#8221; in the rawdata dictionary is a still-supported-but-deprecated synonim of &#8220;title&#8221;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.autoScaleAllAxes">
+<code class="descname">autoScaleAllAxes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.autoScaleAllAxes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.autoScaleAllAxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimized autoscale of whole plot</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.autoShowYAxes">
+<code class="descname">autoShowYAxes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.autoShowYAxes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.autoShowYAxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>shows/hides Y1 and Y2 depending of whether there are curves
+associated to them. Also takes care of changing the zoomer if needed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.axisScaleDiv">
+<code class="descname">axisScaleDiv</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.axisScaleDiv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.axisScaleDiv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the scale division of a specified axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">QwtScaleDiv</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">scale division</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.changeCurvesTitlesDialog">
+<code class="descname">changeCurvesTitlesDialog</code><span class="sig-paren">(</span><em>curveNamesList=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.changeCurvesTitlesDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.changeCurvesTitlesDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a dialog to set the curves titles (it will change the current
+curves titles and the default curves titles)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>curveNamesList</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt; or <code class="xref py py-class docutils literal"><span class="pre">iterator</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; names of the
+curves to which the title will be changed (if
+None given , it will apply to all the curves
+except the raw data ones and it will also be used
+as default for newly created ones)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">caselessDict</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary with key=curvename and value=newtitle</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setCurvesTitle" title="taurus.qt.qtgui.plot.TaurusPlot.setCurvesTitle"><code class="xref py py-meth docutils literal"><span class="pre">setCurvesTitle()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setDefaultCurvesTitle" title="taurus.qt.qtgui.plot.TaurusPlot.setDefaultCurvesTitle"><code class="xref py py-meth docutils literal"><span class="pre">setDefaultCurvesTitle()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.checkConfigVersion">
+<code class="descname">checkConfigVersion</code><span class="sig-paren">(</span><em>configdict</em>, <em>showDialog=False</em>, <em>supportedVersions=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.checkConfigVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.checkConfigVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the version of configdict is supported.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>configdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; configuration dictionary to check</li>
+<li><strong>showDialog</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether to show a QtWarning dialog if check
+failed (false by default)</li>
+<li><strong>supportedVersions</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt; or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; supported version
+numbers, if None given, the versions supported
+by this widget will be used (i.e., those
+defined in self._supportedConfigVersions)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">returns True if the configdict is of the right version</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.checkConfigVersion()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.clearAllRawData">
+<code class="descname">clearAllRawData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.clearAllRawData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.clearAllRawData" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes all rawdata curves from the plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the list of removed curve names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.closeEvent">
+<code class="descname">closeEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.closeEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal"><span class="pre">Qwidget.closeEvent()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.contextMenuEvent">
+<code class="descname">contextMenuEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.contextMenuEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called when there is context menu event. See
+<code class="xref py py-meth docutils literal"><span class="pre">Qwidget.closeEvent()</span></code> A pop up menu will be shown with the
+available options. Different parts of the plot (canvas, axes,...) behave
+differently</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.createConfig">
+<code class="descname">createConfig</code><span class="sig-paren">(</span><em>allowUnpickable=False</em>, <em>curvenames=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.createConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.createConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a pickable dictionary containing all relevant information
+about the current plot. Implemented as in <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.createConfig()</span></code>
+For Tango attributes it stores the attribute name and the curve properties
+For raw data curves, it stores the data as well.</p>
+<p>Hint: The following code allows you to serialize the configuration
+dictionary as a string (which you can store as a QSetting, or as a Tango
+Attribute):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">taurusplot</span><span class="o">.</span><span class="n">createConfig</span><span class="p">())</span>  <span class="c1">#c is a string that can be stored</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>curvenames</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; a sequence of curve names for which the
+configuration will be stored (all by default).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">configurations (which can be loaded with applyConfig)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.createConfig" title="taurus.qt.qtgui.plot.TaurusPlot.createConfig"><code class="xref py py-meth docutils literal"><span class="pre">createConfig()</span></code></a>, <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.createConfig()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.createConfigDict">
+<code class="descname">createConfigDict</code><span class="sig-paren">(</span><em>allowUnpickable=False</em>, <em>curvenames=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.createConfigDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.createConfigDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.curveDataChanged">
+<code class="descname">curveDataChanged</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.curveDataChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.curveDataChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>slot that is called whenever a curve emits a dataChanged signal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Emits:</th><td class="field-body">&#8220;dataChanged(const QString &amp;)&#8221;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; curve name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.dataChanged">
+<code class="descname">dataChanged</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.dataChanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.defaultCurvesTitle">
+<code class="descname">defaultCurvesTitle</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.defaultCurvesTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>See setDefaultCurvesTitle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.detachRawData">
+<code class="descname">detachRawData</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.detachRawData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.detachRawData" title="Permalink to this definition">¶</a></dt>
+<dd><p>dettaches a raw data curve</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; name (identifier) of the curve to dettach</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.dropEvent">
+<code class="descname">dropEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.dropEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.dropEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented to support dropping of modelnames in taurusplots</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.enableMagnifier">
+<code class="descname">enableMagnifier</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.enableMagnifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the magnifier is enabled for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setMagnifierEnabled" title="taurus.qt.qtgui.plot.TaurusPlot.setMagnifierEnabled"><code class="xref py py-meth docutils literal"><span class="pre">setMagnifierEnabled()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.enableOptimization">
+<code class="descname">enableOptimization</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.enableOptimization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether painting optimization is enabled for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.enablePanner">
+<code class="descname">enablePanner</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.enablePanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the Panner is enabled for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setPannerEnabled" title="taurus.qt.qtgui.plot.TaurusPlot.setPannerEnabled"><code class="xref py py-meth docutils literal"><span class="pre">setPannerEnabled()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.exportAscii">
+<code class="descname">exportAscii</code><span class="sig-paren">(</span><em>curves=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.exportAscii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.exportAscii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a dialog for exporting curves to ASCII files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>curves</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; the curves curves that will be
+exportable. if None given, all curves are offered for
+export.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.exportPdf">
+<code class="descname">exportPdf</code><span class="sig-paren">(</span><em>fileName=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.exportPdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.exportPdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export the plot to a PDF. slot for the _exportPdfAction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fileName</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name of the file to which the plot will be
+exported. If None given, the user will be prompted for
+a file name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.exportPrint">
+<code class="descname">exportPrint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.exportPrint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.exportPrint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launches a QPrintDialog for printing the plot</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getAllowZoomers">
+<code class="descname">getAllowZoomers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getAllowZoomers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getAllowZoomers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the Zoomers are enabled for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setAllowZoomers" title="taurus.qt.qtgui.plot.TaurusPlot.setAllowZoomers"><code class="xref py py-meth docutils literal"><span class="pre">setAllowZoomers()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getAxisLabelFormat">
+<code class="descname">getAxisLabelFormat</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getAxisLabelFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getAxisLabelFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the label format for the given axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxisLabelFormat" title="taurus.qt.qtgui.plot.TaurusPlot.setAxisLabelFormat"><code class="xref py py-meth docutils literal"><span class="pre">setAxisLabelFormat()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getAxisName">
+<code class="descname">getAxisName</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getAxisName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getAxisName" title="Permalink to this definition">¶</a></dt>
+<dd><p>If set, it returns the axis title text, otherwise returns the default
+axis name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getAxisScale">
+<code class="descname">getAxisScale</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getAxisScale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getAxisScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the lower and higher bounds for the given axis, or None,None
+if the axis is in autoscale mode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">float,float</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">atuple of floats (or None,None)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getAxisTransformationType">
+<code class="descname">getAxisTransformationType</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getAxisTransformationType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getAxisTransformationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the transformation type for a given axis (cached)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">Type</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">this method helps to avoid a memory leak in Qwt (see
+<a class="reference external" href="http://sf.net/p/tauruslib/tickets/171">http://sf.net/p/tauruslib/tickets/171</a> )</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getCurve">
+<code class="descname">getCurve</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets a curve object by name.</p>
+<p><strong>Important</strong>: Note that the curve object is not thread safe. Therefore,
+if you access to the curve object you must do it protected by the
+TaurusPlot.curves_lock reentrant lock.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the curve name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="_TaurusCurve.html#taurus.qt.qtgui.plot.TaurusCurve" title="taurus.qt.qtgui.plot.TaurusCurve"><code class="xref py py-class docutils literal"><span class="pre">TaurusCurve</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the curve object corresponding to name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getCurveAppearancePropertiesDict">
+<code class="descname">getCurveAppearancePropertiesDict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getCurveAppearancePropertiesDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveAppearancePropertiesDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the appearance properties of all curves in the plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference internal" href="_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties" title="taurus.qt.qtgui.plot.CurveAppearanceProperties"><code class="xref py py-class docutils literal"><span class="pre">CurveAppearanceProperties</span></code></a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dictionary whose keys
+are the curve names and whose values are the corresponding
+CurveAppearanceProperties object</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setCurveAppearanceProperties" title="taurus.qt.qtgui.plot.TaurusPlot.setCurveAppearanceProperties"><code class="xref py py-meth docutils literal"><span class="pre">setCurveAppearanceProperties()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getCurveData">
+<code class="descname">getCurveData</code><span class="sig-paren">(</span><em>curvename</em>, <em>numpy=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getCurveData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveData" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the data in the curve as two lists (x,y) of values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>curvename</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the curve name</li>
+<li><strong>numpy</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the result is returned as numpy arrays instead of lists</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>&gt;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tuple of two lists (x,y) containing the curve data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getCurveNames">
+<code class="descname">getCurveNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getCurveNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the names of all TaurusCurves attached to the plot (in arbitrary
+order, if you need a sorted list, see <a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveNamesSorted" title="taurus.qt.qtgui.plot.TaurusPlot.getCurveNamesSorted"><code class="xref py py-meth docutils literal"><span class="pre">getCurveNamesSorted()</span></code></a>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a copy of self.curves.keys()</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveNamesSorted" title="taurus.qt.qtgui.plot.TaurusPlot.getCurveNamesSorted"><code class="xref py py-meth docutils literal"><span class="pre">getCurveNamesSorted()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getCurveNamesSorted">
+<code class="descname">getCurveNamesSorted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getCurveNamesSorted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveNamesSorted" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the names of the curves in z order (which is the one used in
+the legend, and in showing the curves).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">curve names</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveNames" title="taurus.qt.qtgui.plot.TaurusPlot.getCurveNames"><code class="xref py py-meth docutils literal"><span class="pre">getCurveNames()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getCurveStats">
+<code class="descname">getCurveStats</code><span class="sig-paren">(</span><em>limits=None</em>, <em>curveNames=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getCurveStats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a dialog containing descriptive statistics on curves</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>limits</strong> (<code class="xref py py-class docutils literal"><span class="pre">None</span></code> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>&gt;) &#8211; tuple containing (min,max) limits.
+Points of the curve whose abscisa value is outside of
+these limits are ignored. If None is passed, the limit is not enforced</li>
+<li><strong>curveNames</strong> (<code class="xref py py-class docutils literal"><span class="pre">seq</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; sequence of curve names for which
+statistics are requested. If None passed (default), all curves are
+considered</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Returns a dictionary whose keys are the curve names and
+whose values are the dictionaries returned by
+<a class="reference internal" href="_TaurusCurve.html#taurus.qt.qtgui.plot.TaurusCurve.getStats" title="taurus.qt.qtgui.plot.TaurusCurve.getStats"><code class="xref py py-meth docutils literal"><span class="pre">TaurusCurve.getStats()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getCurveTitle">
+<code class="descname">getCurveTitle</code><span class="sig-paren">(</span><em>curvename</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getCurveTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the current title associated to a given curve name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>curvename</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the name of the curve</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getDefaultAxisLabelsAlignment">
+<code class="descname">getDefaultAxisLabelsAlignment</code><span class="sig-paren">(</span><em>axis</em>, <em>rotation</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getDefaultAxisLabelsAlignment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getDefaultAxisLabelsAlignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a &#8220;smart&#8221; alignment for the axis labels depending on the axis
+and the label rotation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</li>
+<li><strong>rotation</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>) &#8211; The rotation (in degrees, clockwise-positive)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal"><span class="pre">Alignment</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">an alignment</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getDefaultCurvesTitle">
+<code class="descname">getDefaultCurvesTitle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getDefaultCurvesTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getDefaultCurvesTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>See setDefaultCurvesTitle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getGrid">
+<code class="descname">getGrid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the grid of the plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">QwtPlotGrid</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getGridColor">
+<code class="descname">getGridColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getGridColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getGridColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the color of the plot grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">QColor</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getGridWidth">
+<code class="descname">getGridWidth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getGridWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getGridWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the width of the grid lines</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">with of the gridlines (in pixels)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getLegend">
+<code class="descname">getLegend</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getLegend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getLegend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the legend object of this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">QwtLegend</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getLegendPosition">
+<code class="descname">getLegendPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getLegendPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getLegendPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the current legend position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">LegendPosition</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getModel">
+<code class="descname">getModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the list of model names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">CaselessList</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setModel" title="taurus.qt.qtgui.plot.TaurusPlot.setModel"><code class="xref py py-meth docutils literal"><span class="pre">setModel()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getModelObj">
+<code class="descname">getModelObj</code><span class="sig-paren">(</span><em>idx</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getModelObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getModelObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.getModelObj()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getParentTaurusComponent">
+<code class="descname">getParentTaurusComponent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getParentTaurusComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getParentTaurusComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.getParentTaurusComponent()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getPickedMarker">
+<code class="descname">getPickedMarker</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getPickedMarker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getPickedMarker" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the marker for the picked points for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="_TaurusCurveMarker.html#taurus.qt.qtgui.plot.TaurusCurveMarker" title="taurus.qt.qtgui.plot.TaurusCurveMarker"><code class="xref py py-class docutils literal"><span class="pre">TaurusCurveMarker</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getPlot">
+<code class="descname">getPlot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>deprecated method . Only here for backwards compatibility. It will be
+removed, eventually. Now you should use the TaurusPlot instance instead of
+TaurusPlot.getPlot()</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pertinent information in order to be able to build a valid
+QtDesigner widget plugin</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a map with pertinent designer information</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getUseParentModel">
+<code class="descname">getUseParentModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getUseParentModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getUseParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>See: <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.getParentModel()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getXAxisRange">
+<code class="descname">getXAxisRange</code><span class="sig-paren">(</span><em>axis=2</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getXAxisRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getXAxisRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as self.axisScaleDiv(axis).range()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the (X) axis. (default=Qwt5.QwtPlot.xBottom)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the absolute difference between the higher and lower limits of the axis scale</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getXDynScale">
+<code class="descname">getXDynScale</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getXDynScale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getXDynScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the current X scale is in Dynamic scaling mode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setXDynScale" title="taurus.qt.qtgui.plot.TaurusPlot.setXDynScale"><code class="xref py py-meth docutils literal"><span class="pre">setXDynScale()</span></code></a>, meth:<cite>isXDynScaleSupported</cite></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getXIsTime">
+<code class="descname">getXIsTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getXIsTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getXIsTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the X axis is in &#8220;Time mode&#8221;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True means the X axis is in Time mode, False</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setXIsTime" title="taurus.qt.qtgui.plot.TaurusPlot.setXIsTime"><code class="xref py py-meth docutils literal"><span class="pre">setXIsTime()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.getZoomers">
+<code class="descname">getZoomers</code><span class="sig-paren">(</span><em>axis=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.getZoomers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.getZoomers" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a list of the zoomer(s) associated to the given axis.
+If None is passed, it returns a list containing the current zoomer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.gridColor">
+<code class="descname">gridColor</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.gridColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the color of the plot grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">QColor</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.gridWidth">
+<code class="descname">gridWidth</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.gridWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the width of the grid lines</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">with of the gridlines (in pixels)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.importAscii">
+<code class="descname">importAscii</code><span class="sig-paren">(</span><em>filenames=None</em>, <em>xcol=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.importAscii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.importAscii" title="Permalink to this definition">¶</a></dt>
+<dd><p>imports curves from ASCII files. It uses :meth:numpy.loadtxt
+The data in the file(s) must be formatted in columns, with possibly a
+header and/or commented lines. Each column in a file will be imported as
+an independent RawData curve (except for the column whose index is
+passed in xcol)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filenames</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt; or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the names of the files to be read. If
+None passed, the user will be allowed to select them
+from a dialog. (default=None)</li>
+<li><strong>xcol</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; index of the column (starting at 0)
+containing the abscissas data. If None passed, the abcissa
+is generated as indexes starting from 0.</li>
+<li><strong>**kwargs</strong> &#8211; <dl class="docutils">
+<dt>Other keyword arguments can be passed to this method,</dt>
+<dd>which will be passed to <code class="xref py py-meth docutils literal"><span class="pre">numpy.loadtxt()</span></code> when
+reading each file. Accepted keywords are:</dd>
+</dl>
+<ul>
+<li>dtype=&lt;type &#8216;float&#8217;&gt;</li>
+<li>comments=&#8217;#&#8217;</li>
+<li>delimiter=None</li>
+<li>converters=None</li>
+<li>skiprows=0</li>
+<li>usecols=None</li>
+<li>unpack=False</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">numpy.loadtxt()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.isMagnifierEnabled">
+<code class="descname">isMagnifierEnabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.isMagnifierEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.isMagnifierEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the magnifier is enabled for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setMagnifierEnabled" title="taurus.qt.qtgui.plot.TaurusPlot.setMagnifierEnabled"><code class="xref py py-meth docutils literal"><span class="pre">setMagnifierEnabled()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.isOptimizationEnabled">
+<code class="descname">isOptimizationEnabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.isOptimizationEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.isOptimizationEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether painting optimization is enabled for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.isPannerEnabled">
+<code class="descname">isPannerEnabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.isPannerEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.isPannerEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the Panner is enabled for this plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setPannerEnabled" title="taurus.qt.qtgui.plot.TaurusPlot.setPannerEnabled"><code class="xref py py-meth docutils literal"><span class="pre">setPannerEnabled()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.isPaused">
+<code class="descname">isPaused</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.isPaused"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.isPaused" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the pause state</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.isXDynScaleSupported">
+<code class="descname">isXDynScaleSupported</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.isXDynScaleSupported"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.isXDynScaleSupported" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this widget offers xDynScale-related options. Useful for
+showing-hiding them in menus and dialogs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setXDynScaleSupported" title="taurus.qt.qtgui.plot.TaurusPlot.setXDynScaleSupported"><code class="xref py py-meth docutils literal"><span class="pre">setXDynScaleSupported()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.getXDynScale" title="taurus.qt.qtgui.plot.TaurusPlot.getXDynScale"><code class="xref py py-meth docutils literal"><span class="pre">getXDynScale()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.legendPosition">
+<code class="descname">legendPosition</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.legendPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the current legend position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">LegendPosition</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.loadConfig">
+<code class="descname">loadConfig</code><span class="sig-paren">(</span><em>ifile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.loadConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.loadConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a file stored by saveConfig() and applies the settings</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ifile</strong> (<code class="xref py py-class docutils literal"><span class="pre">file</span></code> or <code class="xref py py-class docutils literal"><span class="pre">string</span></code>) &#8211; file or filename from where to read the configuration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">file name used</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.minimumSizeHint">
+<code class="descname">minimumSizeHint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.minimumSizeHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.minimumSizeHint" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal"><span class="pre">QWidget.minimumSizeHint()</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.model">
+<code class="descname">model</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the list of model names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">CaselessList</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setModel" title="taurus.qt.qtgui.plot.TaurusPlot.setModel"><code class="xref py py-meth docutils literal"><span class="pre">setModel()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.modelChanged">
+<code class="descname">modelChanged</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.modelChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the default modelChanged(&#8216;QString&#8217;) signal</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.onCurveAppearanceChanged">
+<code class="descname">onCurveAppearanceChanged</code><span class="sig-paren">(</span><em>prop</em>, <em>names</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.onCurveAppearanceChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.onCurveAppearanceChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the properties given in prop to all the curves named in names.
+This functions is called from the config dialog when changes are applied.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prop</strong> (<a class="reference internal" href="_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties" title="taurus.qt.qtgui.plot.CurveAppearanceProperties"><code class="xref py py-class docutils literal"><span class="pre">CurveAppearanceProperties</span></code></a>) &#8211; the properties object</li>
+<li><strong>names</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; a sequence of names of curves to which the
+properties should be applied</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.onCurveStatsAction">
+<code class="descname">onCurveStatsAction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.onCurveStatsAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.onCurveStatsAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>slot for the curveStatsAction. Allows the user to select a range and
+then shows curve statistics on that range.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.parentModelChanged">
+<code class="descname">parentModelChanged</code><span class="sig-paren">(</span><em>parentmodel_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.parentModelChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.parentModelChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.parentModelChanged()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.pickDataPoint">
+<code class="descname">pickDataPoint</code><span class="sig-paren">(</span><em>pos</em>, <em>scope=20</em>, <em>showMarker=True</em>, <em>targetCurveNames=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.pickDataPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.pickDataPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the pyxel-wise closest data point to the given position. The
+valid search space is constrained by the scope and targetCurveNames
+parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pos</strong> (<code class="xref py py-class docutils literal"><span class="pre">QPoint</span></code> or <code class="xref py py-class docutils literal"><span class="pre">QPolygon</span></code>) &#8211; the position around which to look
+for a data point. The position should be passed as a
+Qt.QPoint (if a Qt.QPolygon is given, the first point of the
+polygon is used). The position is expected in pixel units,
+with (0,0) being the top-left corner of the plot
+canvas.</li>
+<li><strong>scope</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; defines the area around the given position to be
+considered when searching for data points. A data point is
+considered within scope if its manhattan distance to
+position (in pixels) is less than the value of the scope
+parameter. (default=20)</li>
+<li><strong>showMarker</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, a marker will be put on the picked
+data point. (default=True)</li>
+<li><strong>targetCurveNames</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; the names of the curves to be
+searched. If None passed, all curves will be
+searched</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> &lt;<code class="xref py py-class docutils literal"><span class="pre">QPointF</span></code>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>&gt; or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a> &lt;<code class="xref py py-class docutils literal"><span class="pre">None</span></code>, <code class="xref py py-class docutils literal"><span class="pre">None</span></code>, <code class="xref py py-class docutils literal"><span class="pre">None</span></code>&gt;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">if a point
+was picked within the scope, it returns a tuple containing the
+picked point (as a Qt.QPointF), the curve name and the index of
+the picked point in the curve data. If no point was found
+within the scope, it returns None,None,None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.readFromFiles">
+<code class="descname">readFromFiles</code><span class="sig-paren">(</span><em>xcol</em>, <em>skiprows</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.readFromFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.readFromFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>helper slot. Calls self.importAscii(xcol=xcol, skiprows=skiprows )
+See meth:<cite>importAscii</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.removeModels">
+<code class="descname">removeModels</code><span class="sig-paren">(</span><em>modelNames</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.removeModels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.removeModels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes models from those already in the plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>modelNames</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; the names of the models to be added
+to the plot.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">setModels()</span></code>, <a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.addModels" title="taurus.qt.qtgui.plot.TaurusPlot.addModels"><code class="xref py py-meth docutils literal"><span class="pre">addModels()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetAllowZoomers">
+<code class="descname">resetAllowZoomers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetAllowZoomers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetAllowZoomers" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as setAllowZoomers(True)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetAxisLabelFormat">
+<code class="descname">resetAxisLabelFormat</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetAxisLabelFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetAxisLabelFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>equivalent to setAxisLabelFormat(axis, None)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</td>
+</tr>
+</tbody>
+</table>
+<p>See also:setAxisLabelFormat</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetDefaultCurvesTitle">
+<code class="descname">resetDefaultCurvesTitle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetDefaultCurvesTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetDefaultCurvesTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>resets the defaultCurvesTitle property to &#8216;&lt;label&gt;&#8217;</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setDefaultCurvesTitle" title="taurus.qt.qtgui.plot.TaurusPlot.setDefaultCurvesTitle"><code class="xref py py-meth docutils literal"><span class="pre">setDefaultCurvesTitle()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetGridColor">
+<code class="descname">resetGridColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetGridColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetGridColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>equivalent to self.setGridColor(Qt.Qt.gray)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetGridWidth">
+<code class="descname">resetGridWidth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetGridWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetGridWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>equivalent to self.setGridWidth(1)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetLegendPosition">
+<code class="descname">resetLegendPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetLegendPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetLegendPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>equivalent to setLegendPosition(Qwt5.QwtPlot.RightLegend)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetMagnifierEnabled">
+<code class="descname">resetMagnifierEnabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetMagnifierEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetMagnifierEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as <cite>setMagnifierEnabled(True)</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetModel">
+<code class="descname">resetModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>equivalent to setModel([])</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetOptimizationEnabled">
+<code class="descname">resetOptimizationEnabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetOptimizationEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetOptimizationEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <cite>setOptimizationEnabled(True)</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetPannerEnabled">
+<code class="descname">resetPannerEnabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetPannerEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetPannerEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as setPannerEnabled(True)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetUseParentModel">
+<code class="descname">resetUseParentModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetUseParentModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetUseParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>equivalent to setUseParentModel(False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.resetXIsTime">
+<code class="descname">resetXIsTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.resetXIsTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.resetXIsTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>equivalent to setXIsTime(False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.saveConfig">
+<code class="descname">saveConfig</code><span class="sig-paren">(</span><em>ofile=None</em>, <em>curvenames=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.saveConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.saveConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the current curves and their display properties in a file for
+later retrieval.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ofile</strong> (<code class="xref py py-class docutils literal"><span class="pre">file</span></code> or <code class="xref py py-class docutils literal"><span class="pre">string</span></code>) &#8211; file or filename to store the configuration. If None passed,</li>
+<li><strong>curvenames</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; a list of curve names for which the
+configuration will be stored (all by default).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">file name used</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.selectXRegion">
+<code class="descname">selectXRegion</code><span class="sig-paren">(</span><em>axis=2</em>, <em>callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.selectXRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.selectXRegion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the input mode to allow the user to select a region of the X axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">xBottom</span></code> or <code class="xref py py-class docutils literal"><span class="pre">xTop</span></code>) &#8211; on which the
+region will be defined (Default=Qwt5.QwtPlot.xBottom)</li>
+<li><strong>callback</strong> (<code class="xref py py-class docutils literal"><span class="pre">method</span></code>) &#8211; a function that will be called when the user
+finishes selecting the region. If None passed (default)
+nothing is done</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setAllowZoomers">
+<code class="descname">setAllowZoomers</code><span class="sig-paren">(</span><em>allow</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setAllowZoomers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setAllowZoomers" title="Permalink to this definition">¶</a></dt>
+<dd><p>enable/disable the zoomers for the plot. (The zoomers provide zooming
+by selecting a region of the plot)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>allow</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, zoomers are enabled, otherwise, they are disabled</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setAxesLabelFormat">
+<code class="descname">setAxesLabelFormat</code><span class="sig-paren">(</span><em>format=None</em>, <em>xformat=None</em>, <em>y1format=None</em>, <em>y2format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setAxesLabelFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxesLabelFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method for setting the format of any or all axes
+if format=None, specific formats for x, y1 and y2 can be explicitly set,
+e.g:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">setAxesLabelFormat</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%6.2f</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1">#&lt;--sets the &quot;%6.2f&quot; format for all axes</span>
+<span class="n">setAxesLabelFormat</span><span class="p">(</span><span class="n">xformat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y1format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1">#&lt;--sets the default format for x and an integer format fotr y1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>format</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; format string to be applied to all axes. If None, the default format is used</li>
+<li><strong>xformat</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; format string to be applied to the X axis. If None, the default format is used</li>
+<li><strong>y1format</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; format string to be applied to the Y1 axis. If None, the default format is used</li>
+<li><strong>y2format</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; format string to be applied to the Y2 axis. If None, the default format is used</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxisLabelFormat" title="taurus.qt.qtgui.plot.TaurusPlot.setAxisLabelFormat"><code class="xref py py-meth docutils literal"><span class="pre">setAxisLabelFormat()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setAxisAutoScale">
+<code class="descname">setAxisAutoScale</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setAxisAutoScale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxisAutoScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the axis to autoscale and resets the zoomer for that axis if needed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.autoScaleAllAxes" title="taurus.qt.qtgui.plot.TaurusPlot.autoScaleAllAxes"><code class="xref py py-meth docutils literal"><span class="pre">autoScaleAllAxes()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setAxisCustomLabels">
+<code class="descname">setAxisCustomLabels</code><span class="sig-paren">(</span><em>axis</em>, <em>pos_and_labels</em>, <em>rotation=0</em>, <em>alignment=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setAxisCustomLabels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxisCustomLabels" title="Permalink to this definition">¶</a></dt>
+<dd><p>By calling this method, the scale vaues can be substituted  by custom
+labels at arbitrary positions. In general, it is a good idea to let the
+alignment to be autocalculated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</li>
+<li><strong>pos_and_labels</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">tuple</span></code></a>&gt;) &#8211; a sequence of
+position(&lt;float&gt;),label(&lt;str&gt;) tuples</li>
+<li><strong>rotation</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a>) &#8211; rotation value for the labels (in degrees,
+clockwise-positive, by default it is 0)</li>
+<li><strong>alignment</strong> (<code class="xref py py-class docutils literal"><span class="pre">Alignment</span></code>) &#8211; an alignment for the labels.
+If None given, it will be autocalculated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setAxisLabelFormat">
+<code class="descname">setAxisLabelFormat</code><span class="sig-paren">(</span><em>axis</em>, <em>format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setAxisLabelFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxisLabelFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>changes the format of an axis label. format is a python format string
+(e.g., &#8220;%6.2f&#8221;), . If format=None, the default behaviour is set
+(which uses QLocale.system().toString(value))</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</li>
+<li><strong>format</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; format string to be applied to all axes. If None, the default format is used</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setAxisScale">
+<code class="descname">setAxisScale</code><span class="sig-paren">(</span><em>axis</em>, <em>min</em>, <em>max</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setAxisScale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxisScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rescales the given axis to the range defined by min and max. If min
+and max are None, autoscales. It also takes care of resetting the
+affected zoomer(s)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</li>
+<li><strong>min</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; minimum value for the axis</li>
+<li><strong>max</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">float</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; maximum value for the axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tt</span><span class="o">=</span><span class="n">TaurusTrend</span><span class="p">()</span>
+<span class="n">tt</span><span class="o">.</span><span class="n">setAxisScale</span><span class="p">(</span><span class="n">tt</span><span class="o">.</span><span class="n">yLeft</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c1">#this will set the Y1 axis range from 0 to 10</span>
+<span class="n">tt</span><span class="o">.</span><span class="n">setAxisScale</span><span class="p">(</span><span class="n">tt</span><span class="o">.</span><span class="n">xBottom</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="c1">#This will autoscale the X axis</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setAxisScaleEngine">
+<code class="descname">setAxisScaleEngine</code><span class="sig-paren">(</span><em>axis</em>, <em>scaleEngine</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setAxisScaleEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxisScaleEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <code class="xref py py-meth docutils literal"><span class="pre">Qwt5.QwtPlot.setAxisScaleEngine()</span></code> to store
+a cache of the transformation type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setAxisScaleType">
+<code class="descname">setAxisScaleType</code><span class="sig-paren">(</span><em>axis</em>, <em>scale=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setAxisScaleType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setAxisScaleType" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the type of scale, (log or linear) for a given axis, If scale is None, the scale
+type will be toggled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</li>
+<li><strong>scale</strong> (<code class="xref py py-class docutils literal"><span class="pre">Type</span></code>) &#8211; the scale
+transformation. For convenience, the strings &#8220;Linear&#8221;
+and &#8220;Logarithmic&#8221; can be used as well</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setCurveAppearanceProperties">
+<code class="descname">setCurveAppearanceProperties</code><span class="sig-paren">(</span><em>propDict</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setCurveAppearanceProperties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setCurveAppearanceProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>It gets a dictionary of namecurvenames,properties and applies the
+properties to the corresponding curves.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>propDict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference internal" href="_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties" title="taurus.qt.qtgui.plot.CurveAppearanceProperties"><code class="xref py py-class docutils literal"><span class="pre">CurveAppearanceProperties</span></code></a>&gt;) &#8211; a dictionary whose keys
+are the curve names and whose values are the corresponding
+CurveAppearanceProperties object</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.getCurveAppearancePropertiesDict" title="taurus.qt.qtgui.plot.TaurusPlot.getCurveAppearancePropertiesDict"><code class="xref py py-meth docutils literal"><span class="pre">getCurveAppearancePropertiesDict()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setCurvesTitle">
+<code class="descname">setCurvesTitle</code><span class="sig-paren">(</span><em>titletext</em>, <em>curveNamesList=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setCurvesTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setCurvesTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the titles of current curves.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>titletext</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; string to use as title for the curves. It may
+include placeholders as those defined in TaurusCurve.compileTitleText()</li>
+<li><strong>curveNamesList</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt; or <code class="xref py py-class docutils literal"><span class="pre">iterator</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; names of the
+curves to which the title will be changed (if None given , it will apply
+to all the curves except the raw data ones)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal"><span class="pre">caselessDict</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary with key=curvename and value=newtitle</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.changeCurvesTitlesDialog" title="taurus.qt.qtgui.plot.TaurusPlot.changeCurvesTitlesDialog"><code class="xref py py-meth docutils literal"><span class="pre">changeCurvesTitlesDialog()</span></code></a>,
+<a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setDefaultCurvesTitle" title="taurus.qt.qtgui.plot.TaurusPlot.setDefaultCurvesTitle"><code class="xref py py-meth docutils literal"><span class="pre">setDefaultCurvesTitle()</span></code></a>, <a class="reference internal" href="_TaurusCurve.html#taurus.qt.qtgui.plot.TaurusCurve.setTitleText" title="taurus.qt.qtgui.plot.TaurusCurve.setTitleText"><code class="xref py py-meth docutils literal"><span class="pre">TaurusCurve.setTitleText()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setCurvesYAxis">
+<code class="descname">setCurvesYAxis</code><span class="sig-paren">(</span><em>curvesNamesList</em>, <em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setCurvesYAxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setCurvesYAxis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the Y axis of the given curves to the given axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>curvesNamesList</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; the names of the curves whose Y axis
+is to be changed</li>
+<li><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code>) &#8211; the axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setDefaultCurvesTitle">
+<code class="descname">setDefaultCurvesTitle</code><span class="sig-paren">(</span><em>titletext</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setDefaultCurvesTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setDefaultCurvesTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the default title to be used for curves attached to this plot
+(the title is used, for example in the legend). Note that this does not
+affect to already existing curves. If you want that, see setCurvesTitle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>titletext</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the default text to be used for the titles of curves. It may contain any of the placeholders described in TaurusCurve.setTitleText</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setCurvesTitle" title="taurus.qt.qtgui.plot.TaurusPlot.setCurvesTitle"><code class="xref py py-meth docutils literal"><span class="pre">setCurvesTitle()</span></code></a>, <a class="reference internal" href="_TaurusCurve.html#taurus.qt.qtgui.plot.TaurusCurve.setTitleText" title="taurus.qt.qtgui.plot.TaurusCurve.setTitleText"><code class="xref py py-meth docutils literal"><span class="pre">TaurusCurve.setTitleText()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setEventFilters">
+<code class="descname">setEventFilters</code><span class="sig-paren">(</span><em>filters=None</em>, <em>curvenames=None</em>, <em>preqt=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setEventFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setEventFilters" title="Permalink to this definition">¶</a></dt>
+<dd><p>propagates a list of taurus filters to the curves given by curvenames.
+See <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.setEventFilters()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setGridColor">
+<code class="descname">setGridColor</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setGridColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setGridColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the color of the plot grid and refreshes the plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<code class="xref py py-class docutils literal"><span class="pre">QColor</span></code>) &#8211; the new color for the grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setGridWidth">
+<code class="descname">setGridWidth</code><span class="sig-paren">(</span><em>width</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setGridWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setGridWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the width of the plot grid lines and refreshes the plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>width</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a>) &#8211; with in pixels for the grid lines</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setLegendPosition">
+<code class="descname">setLegendPosition</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setLegendPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setLegendPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the position of the legend relative to the plot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pos</strong> (<code class="xref py py-class docutils literal"><span class="pre">LegendPosition</span></code>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">Qwt5.QwtPlot.LegendPosition()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setMagnifierEnabled">
+<code class="descname">setMagnifierEnabled</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setMagnifierEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setMagnifierEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify whether the plot can be magnified (i.e. zoomed in and out
+with the mousewheel)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, magnifying is enabled, otherwise, it is disabled</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setModel">
+<code class="descname">setModel</code><span class="sig-paren">(</span><em>modelNames</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the models of the Tango attributes that should be displayed in
+this TaurusPlot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>modelNames</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt; or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the names of the models to be
+plotted. For convenience, strings are also accepted
+(instead of a sequence of strings), in which case the
+string will be internally converted to a sequence by
+splitting it on whitespace.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.addModels" title="taurus.qt.qtgui.plot.TaurusPlot.addModels"><code class="xref py py-meth docutils literal"><span class="pre">addModels()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.removeModels" title="taurus.qt.qtgui.plot.TaurusPlot.removeModels"><code class="xref py py-meth docutils literal"><span class="pre">removeModels()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setOptimizationEnabled">
+<code class="descname">setOptimizationEnabled</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setOptimizationEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setOptimizationEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify whether the plot should use paint optimizations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, optimization is enabled, otherwise, it is disabled</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setPannerEnabled">
+<code class="descname">setPannerEnabled</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setPannerEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setPannerEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify whether the plot can be panned (i.e., dragged around to navigate it)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, panning is enabled, otherwise, it is disabled</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setPaused">
+<code class="descname">setPaused</code><span class="sig-paren">(</span><em>paused=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setPaused"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setPaused" title="Permalink to this definition">¶</a></dt>
+<dd><p>delegates the pausing to the curves</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>paused</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the plot will be paused</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setUseParentModel">
+<code class="descname">setUseParentModel</code><span class="sig-paren">(</span><em>yesno</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setUseParentModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setUseParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether the TaurusCurves of this plot should use the plot&#8217;s parent model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>yesno</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the curves in the plot will use the Plot&#8217;s
+parent model</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.setParentModel()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setXDynScale">
+<code class="descname">setXDynScale</code><span class="sig-paren">(</span><em>enabled=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setXDynScale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setXDynScale" title="Permalink to this definition">¶</a></dt>
+<dd><p>it enables/disables the Dynamic scaling feature (also known as
+Fixed-range X scale, or &#8220;auto-scroll mode&#8221;). The Dynamic scaling
+consists in ensuring that:</p>
+<ul class="simple">
+<li>the range (=max-min) is always constant</li>
+<li>the latest point plotted is always within range.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the Dynamic scaling is enabled for the
+X axis. Otherwise it is disabled. (Default=True)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.getXDynScale" title="taurus.qt.qtgui.plot.TaurusPlot.getXDynScale"><code class="xref py py-meth docutils literal"><span class="pre">getXDynScale()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setXDynScaleSupported" title="taurus.qt.qtgui.plot.TaurusPlot.setXDynScaleSupported"><code class="xref py py-meth docutils literal"><span class="pre">setXDynScaleSupported()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setXDynScaleSupported">
+<code class="descname">setXDynScaleSupported</code><span class="sig-paren">(</span><em>supported</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setXDynScaleSupported"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setXDynScaleSupported" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this widget should offer xDynScale-related options in menus
+and dialogs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>supported</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the options related to xDynScale will
+be shown</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.isXDynScaleSupported" title="taurus.qt.qtgui.plot.TaurusPlot.isXDynScaleSupported"><code class="xref py py-meth docutils literal"><span class="pre">isXDynScaleSupported()</span></code></a>, <a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.getXDynScale" title="taurus.qt.qtgui.plot.TaurusPlot.getXDynScale"><code class="xref py py-meth docutils literal"><span class="pre">getXDynScale()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.setXIsTime">
+<code class="descname">setXIsTime</code><span class="sig-paren">(</span><em>enable</em>, <em>axis=2</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.setXIsTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.setXIsTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies whether we the plot is in Time or in normal mode (i.e,
+whether the abscissas should be interpreted as unix epoch values or not)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the plot will be in Time Mode</li>
+<li><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">xBottom</span></code> or <code class="xref py py-class docutils literal"><span class="pre">xTop</span></code>) &#8211; the X axis to
+which this setting applies. (Default=Qwt5.QwtPlot.xBottom)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../../../../../../users/ui/plot.html#taurusplottime"><span class="std std-ref">TaurusPlot user manual</span></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.showConfigDialog">
+<code class="descname">showConfigDialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.showConfigDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.showConfigDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot for the showConfigMenuAction. Launches the plot configuration
+dialog.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.showCurve">
+<code class="descname">showCurve</code><span class="sig-paren">(</span><em>curve</em>, <em>on</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.showCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.showCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>switch visibility of a curve (as well as any markers associated to
+it) on/off</p>
+<p><strong>Important</strong>: This is a non-thread safe method. Do not manipulate curve
+objects without protecting the access with Taurusplot.curves_lock</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>curve</strong> (<a class="reference internal" href="_TaurusCurve.html#taurus.qt.qtgui.plot.TaurusCurve" title="taurus.qt.qtgui.plot.TaurusCurve"><code class="xref py py-class docutils literal"><span class="pre">TaurusCurve</span></code></a>) &#8211; the curve object</li>
+<li><strong>on</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the curve will be shown otherwise it will be
+hidden</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.showDataImportDlg">
+<code class="descname">showDataImportDlg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.showDataImportDlg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.showDataImportDlg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launches the data import dialog. This dialog lets the user manage
+which attributes are attached to the plot (using
+<code class="xref py py-class docutils literal"><span class="pre">TaurusModelChooser</span></code>) and also to generate raw data or import it
+from files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.showLegend">
+<code class="descname">showLegend</code><span class="sig-paren">(</span><em>show</em>, <em>forever=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.showLegend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.showLegend" title="Permalink to this definition">¶</a></dt>
+<dd><p>whether to show or not the legend.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>show</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the legend will be shown</li>
+<li><strong>forever</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the setting will be permant (e.g., the
+legend won&#8217;t be hidden even if only one curve is
+plotted) (default=True)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.showMaxPeaks">
+<code class="descname">showMaxPeaks</code><span class="sig-paren">(</span><em>show</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.showMaxPeaks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.showMaxPeaks" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will set the showMaxPeak flag of all the curves in the
+plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>show</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the max values of the displayed curve(s)
+will be shown on the plot. Otherwise, they will be hidden.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.showMinPeaks">
+<code class="descname">showMinPeaks</code><span class="sig-paren">(</span><em>show</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.showMinPeaks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.showMinPeaks" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will set the showMinPeak flag of all the curves in the plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>show</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the min values of the displayed curve(s)
+will be shown on the plot. Otherwise, they will be hidden.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.sizeHint">
+<code class="descname">sizeHint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.sizeHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal"><span class="pre">QWidget.sizeHint()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.sortCurves">
+<code class="descname">sortCurves</code><span class="sig-paren">(</span><em>ordered=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.sortCurves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.sortCurves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts the attached curves in a given z order. This affects both the
+ordering in the legend and the visibility order when curves overlap in
+the plotting area. The order is governed by the <cite>ordered</cite> parameter (or
+alphabetically if no parameter is passed).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ordered</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt; or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; A list of curve names in the desired
+order. If None passed, the items will be ordered
+alphabetically according to their title.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.toggleCurveState">
+<code class="descname">toggleCurveState</code><span class="sig-paren">(</span><em>curve</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.toggleCurveState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.toggleCurveState" title="Permalink to this definition">¶</a></dt>
+<dd><p>cycles through 3 possible states for a curve:</p>
+<blockquote>
+<div><ul class="simple">
+<li>invisible</li>
+<li>attached to Y1</li>
+<li>attached to Y2</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>curve</strong> (<a class="reference internal" href="_TaurusCurve.html#taurus.qt.qtgui.plot.TaurusCurve" title="taurus.qt.qtgui.plot.TaurusCurve"><code class="xref py py-class docutils literal"><span class="pre">TaurusCurve</span></code></a>) &#8211; the curve object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.toggleDataInspectorMode">
+<code class="descname">toggleDataInspectorMode</code><span class="sig-paren">(</span><em>enable=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.toggleDataInspectorMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.toggleDataInspectorMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables/Disables the Inspector Mode. When &#8220;Inspector Mode&#8221; is
+enabled, the zoomer is disabled and clicking on the canvas triggers a
+search of a nearby data point using pickDataPoint (the cursor changes to
+indicate the mode).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; If True, it enables the Inspector Mode. If
+False, it disables it. If None passed, it toggles the
+mode.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">whether the inspector mode has been enabled (True) or
+disabled (False)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.toggleZoomer">
+<code class="descname">toggleZoomer</code><span class="sig-paren">(</span><em>axis=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.toggleZoomer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.toggleZoomer" title="Permalink to this definition">¶</a></dt>
+<dd><p>changes the current zoomer to that associated to the given axis
+(zoomer1 is attached to Y1 and zoomer2 to Y2).
+If no axis is passed, the zoomers are toggled.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<code class="xref py py-class docutils literal"><span class="pre">Axis</span></code> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; axis to activate for zooming. If None passed, the zoomers are toggled.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">Axis</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the Y axis of the enabled zoomer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.updateCurves">
+<code class="descname">updateCurves</code><span class="sig-paren">(</span><em>names</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.updateCurves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.updateCurves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the TaurusCurves being plotted. It adds a new curve for each new
+curve model passed and removes curves if they are not in the names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>names</strong> (<code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; a sequence of curve models. One curve
+will be created for each element of names.
+Each  curve model can consist of a single attribute name
+(which will be used for the Y values) or by two
+attribute names separated by a &#8216;|&#8217; (in which case, the
+left-hand attribute is used for the X values and the
+right hand value for the Y values)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.updateLegend">
+<code class="descname">updateLegend</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#TaurusPlot.updateLegend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.updateLegend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the legend object of the plot (if it does not exist, it may
+create a fresh one)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>force</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the legend will be updated even if it is
+not being shown. (default=False)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.useParentModel">
+<code class="descname">useParentModel</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.useParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>See: <code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseComponent.getParentModel()</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.plot.TaurusPlot.xIsTime">
+<code class="descname">xIsTime</code><a class="headerlink" href="#taurus.qt.qtgui.plot.TaurusPlot.xIsTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the X axis is in &#8220;Time mode&#8221;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True means the X axis is in Time mode, False</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#taurus.qt.qtgui.plot.TaurusPlot.setXIsTime" title="taurus.qt.qtgui.plot.TaurusPlot.setXIsTime"><code class="xref py py-meth docutils literal"><span class="pre">setXIsTime()</span></code></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusPlotConfigDialog.html" class="btn btn-neutral float-right" title="TaurusPlotConfigDialog" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusMonitorTiny.html" class="btn btn-neutral" title="TaurusMonitorTiny" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

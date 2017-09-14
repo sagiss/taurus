@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.editor.tauruseditor &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.editor.tauruseditor</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.editor.tauruseditor</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains a taurus text editor widget.&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseEditor&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">from</span> <span class="nn">spyder.utils.qthelpers</span> <span class="k">import</span> <span class="n">create_toolbutton</span>
+<span class="kn">from</span> <span class="nn">spyder.widgets.findreplace</span> <span class="k">import</span> <span class="n">FindReplace</span>
+<span class="kn">from</span> <span class="nn">spyder.widgets.editortools</span> <span class="k">import</span> <span class="n">OutlineExplorerWidget</span>
+<span class="kn">from</span> <span class="nn">spyder.widgets.editor</span> <span class="k">import</span> <span class="n">EditorMainWindow</span><span class="p">,</span> <span class="n">EditorSplitter</span>
+<span class="kn">from</span> <span class="nn">spyder.py3compat</span> <span class="k">import</span> <span class="n">to_text_string</span>
+<span class="kn">from</span> <span class="nn">spyder.utils.introspection.manager</span> <span class="k">import</span> <span class="n">IntrospectionManager</span>
+
+<div class="viewcode-block" id="TaurusBaseEditor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseEditor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSplitter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QSplitter</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">editorstacks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editorwindows</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_actions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createMenuActions</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">find_widget</span> <span class="o">=</span> <span class="n">FindReplace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable_replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outlineexplorer</span> <span class="o">=</span> <span class="n">OutlineExplorerWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_fullpath</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                     <span class="n">show_all_files</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outlineexplorer</span><span class="o">.</span><span class="n">edit_goto</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">go_to_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editor_splitter</span> <span class="o">=</span> <span class="n">EditorSplitter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_actions</span><span class="p">,</span>
+                                              <span class="n">first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">editor_widgets</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">editor_layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">editor_layout</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">editor_widgets</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">editor_layout</span><span class="p">)</span>
+        <span class="n">editor_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editor_splitter</span><span class="p">)</span>
+        <span class="n">editor_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">find_widget</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">editor_widgets</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outlineexplorer</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStretchFactor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStretchFactor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_window</span><span class="p">([],</span> <span class="p">[])</span>
+
+        <span class="c1"># Set introspector</span>
+        <span class="n">introspector</span> <span class="o">=</span> <span class="n">IntrospectionManager</span><span class="p">()</span>
+        <span class="n">editorstack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">editor_splitter</span><span class="o">.</span><span class="n">editorstack</span>
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">set_introspector</span><span class="p">(</span><span class="n">introspector</span><span class="p">)</span>
+        <span class="n">introspector</span><span class="o">.</span><span class="n">set_editor_widget</span><span class="p">(</span><span class="n">editorstack</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusBaseEditor.createMenuActions"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.createMenuActions">[docs]</a>    <span class="k">def</span> <span class="nf">createMenuActions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of menu actions and a list of IO actions.</span>
+<span class="sd">        Reimplement in derived classes.</span>
+<span class="sd">        This Base (dummy) implementation creates empty menu actions and </span>
+<span class="sd">        a list of 5 dummy actions for the IO actions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dummyaction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[],</span> <span class="p">[</span><span class="n">dummyaction</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.go_to_file"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.go_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">go_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="n">editorstack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">editorstacks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">set_current_filename</span><span class="p">(</span><span class="n">to_text_string</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
+        <span class="n">editor</span> <span class="o">=</span> <span class="n">editorstack</span><span class="o">.</span><span class="n">get_current_editor</span><span class="p">()</span>
+        <span class="n">editor</span><span class="o">.</span><span class="n">go_to_line</span><span class="p">(</span><span class="n">lineno</span><span class="p">,</span> <span class="n">word</span><span class="o">=</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.closeEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">win</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">editorwindows</span><span class="p">[:]:</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.load"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">goto</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>
+        <span class="n">editorstack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">editorStack</span><span class="p">()</span>
+        <span class="n">fileinfo</span> <span class="o">=</span> <span class="n">editorstack</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">analyze_script</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">goto</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fileinfo</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">go_to_line</span><span class="p">(</span><span class="n">goto</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.reload"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">goto</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_file_opened</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">editorstack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">editorStack</span><span class="p">()</span>
+            <span class="n">editorstack</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+            <span class="n">editorstack</span><span class="o">.</span><span class="n">analyze_script</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">goto</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">editorstack</span><span class="o">.</span><span class="n">set_current_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">editorstack</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">go_to_line</span><span class="p">(</span><span class="n">goto</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.set_current_filename"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.set_current_filename">[docs]</a>    <span class="k">def</span> <span class="nf">set_current_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editorStack</span><span class="p">()</span><span class="o">.</span><span class="n">set_current_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.is_file_opened"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.is_file_opened">[docs]</a>    <span class="k">def</span> <span class="nf">is_file_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dummy implementation that always returns None. Reimplement </span>
+<span class="sd">        in derived classes to return the index of already-open files </span>
+<span class="sd">        in the editor_stack, or None if the file is not already open.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.register_editorstack"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.register_editorstack">[docs]</a>    <span class="k">def</span> <span class="nf">register_editorstack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editorstack</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editorstacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">editorstack</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isAncestorOf</span><span class="p">(</span><span class="n">editorstack</span><span class="p">):</span>
+            <span class="c1"># editorstack is a child of the Editor plugin</span>
+            <span class="n">editorstack</span><span class="o">.</span><span class="n">set_fullpath_sorting_enabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">editorstack</span><span class="o">.</span><span class="n">set_closable</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editorstacks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">)</span>
+            <span class="n">editorstack</span><span class="o">.</span><span class="n">set_outlineexplorer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outlineexplorer</span><span class="p">)</span>
+            <span class="n">editorstack</span><span class="o">.</span><span class="n">set_find_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">find_widget</span><span class="p">)</span>
+            <span class="n">oe_btn</span> <span class="o">=</span> <span class="n">create_toolbutton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">oe_btn</span><span class="o">.</span><span class="n">setDefaultAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outlineexplorer</span><span class="o">.</span><span class="n">visibility_action</span><span class="p">)</span>
+            <span class="n">editorstack</span><span class="o">.</span><span class="n">add_corner_widgets_to_tabbar</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="n">oe_btn</span><span class="p">])</span>
+
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">set_io_actions</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">io_actions</span><span class="p">)</span>
+        <span class="n">font</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Monospace&quot;</span><span class="p">)</span>
+        <span class="n">font</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">set_default_font</span><span class="p">(</span><span class="n">font</span><span class="p">,</span> <span class="n">color_scheme</span><span class="o">=</span><span class="s1">&#39;Spyder&#39;</span><span class="p">)</span>
+
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">sig_close_file</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">close_file_in_all_editorstacks</span><span class="p">)</span>
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">create_new_window</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">create_new_window</span><span class="p">)</span>
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">plugin_load</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.unregister_editorstack"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.unregister_editorstack">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_editorstack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editorstack</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editorstacks</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editorstacks</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">editorstack</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.clone_editorstack"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.clone_editorstack">[docs]</a>    <span class="k">def</span> <span class="nf">clone_editorstack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editorstack</span><span class="p">):</span>
+        <span class="n">editorstack</span><span class="o">.</span><span class="n">clone_from</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editorStack</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.setup_window"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.setup_window">[docs]</a>    <span class="k">def</span> <span class="nf">setup_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toolbar_list</span><span class="p">,</span> <span class="n">menu_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar_list</span> <span class="o">=</span> <span class="n">toolbar_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_list</span> <span class="o">=</span> <span class="n">menu_list</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.create_new_window"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.create_new_window">[docs]</a>    <span class="k">def</span> <span class="nf">create_new_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">EditorMainWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_actions</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">toolbar_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_list</span><span class="p">,</span>
+                                  <span class="n">show_fullpath</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fullpath_sorting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">show_all_files</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_comments</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_editorwindow</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">destroyed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">unregister_editorwindow</span><span class="p">(</span><span class="n">window</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.register_editorwindow"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.register_editorwindow">[docs]</a>    <span class="k">def</span> <span class="nf">register_editorwindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editorwindows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">window</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.unregister_editorwindow"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.unregister_editorwindow">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_editorwindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editorwindows</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editorwindows</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">window</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.get_focus_widget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.get_focus_widget">[docs]</a>    <span class="k">def</span> <span class="nf">get_focus_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.editorStack"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.editorStack">[docs]</a>    <span class="k">def</span> <span class="nf">editorStack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">editorstacks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">Slot</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusBaseEditor.close_file_in_all_editorstacks"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.close_file_in_all_editorstacks">[docs]</a>    <span class="k">def</span> <span class="nf">close_file_in_all_editorstacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editorstack_id_str</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">editorstack</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">editorstacks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">editorstack</span><span class="p">))</span> <span class="o">!=</span> <span class="n">editorstack_id_str</span><span class="p">:</span>
+                <span class="n">editorstack</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">editorstack</span><span class="o">.</span><span class="n">close_file</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">editorstack</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.register_widget_shortcuts"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.register_widget_shortcuts">[docs]</a>    <span class="k">def</span> <span class="nf">register_widget_shortcuts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fake!&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TaurusBaseEditor.refresh_save_all_action"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/editor/_TaurusBaseEditor.html#taurus.qt.qtgui.editor.TaurusBaseEditor.refresh_save_all_action">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_save_all_action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">TaurusBaseEditor</span><span class="p">()</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">800</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">test</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">test</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+    <span class="n">Application</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">usage</span> <span class="o">=</span> <span class="s2">&quot;%prog [options] &lt;file names&gt;&quot;</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+                          <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus text editor demo&quot;</span><span class="p">,</span> <span class="n">app_version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                          <span class="n">org_domain</span><span class="o">=</span><span class="s2">&quot;Taurus&quot;</span><span class="p">,</span> <span class="n">org_name</span><span class="o">=</span><span class="s2">&quot;Tango community&quot;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">demo</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusBaseEditor</span><span class="p">()</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">800</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">w</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

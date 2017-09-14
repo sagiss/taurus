@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtcore.model.taurusmodel &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtcore.model.taurusmodel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtcore.model.taurusmodel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides base taurus tree item and a base tree model&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseTreeItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusBaseModel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusBaseProxyModel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+
+<span class="n">QtQt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span>
+
+
+<div class="viewcode-block" id="TaurusBaseTreeItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseTreeItem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A generic node&quot;&quot;&quot;</span>
+
+    <span class="n">DisplayFunc</span> <span class="o">=</span> <span class="nb">str</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parentItem</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_childItems</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calcDepth</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.itemData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.itemData">[docs]</a>    <span class="k">def</span> <span class="nf">itemData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The internal itemData object</span>
+
+<span class="sd">        :return: (object) object holding the data of this item</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.depth"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.depth">[docs]</a>    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Depth of the node in the hierarchy</span>
+
+<span class="sd">        :return: (int) the node depth</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.appendChild"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.appendChild">[docs]</a>    <span class="k">def</span> <span class="nf">appendChild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a new child node</span>
+
+<span class="sd">        :param child: (TaurusTreeBaseItem) child to be added</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_childItems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.child"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.child">[docs]</a>    <span class="k">def</span> <span class="nf">child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the child in the given row</span>
+
+<span class="sd">        :return: (TaurusTreeBaseItem) the child node for the given row&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_childItems</span><span class="p">[</span><span class="n">row</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.childCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.childCount">[docs]</a>    <span class="k">def</span> <span class="nf">childCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the number of childs for this node</span>
+
+<span class="sd">        :return: (int) number of childs for this node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_childItems</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.hasChildren"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.hasChildren">[docs]</a>    <span class="k">def</span> <span class="nf">hasChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_childItems</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the data of this node for the given index</span>
+
+<span class="sd">        :return: (object) the data for the given index</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.icon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.icon">[docs]</a>    <span class="k">def</span> <span class="nf">icon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.toolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.toolTip">[docs]</a>    <span class="k">def</span> <span class="nf">toolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.setData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.setData">[docs]</a>    <span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the node data</span>
+
+<span class="sd">        :param data: (object) the data to be associated with this node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span> <span class="o">=</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.parent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.parent">[docs]</a>    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the parent node or None if no parent exists</span>
+
+<span class="sd">        :return: (TaurusTreeBaseItem) the parent node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parentItem</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.row"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.row">[docs]</a>    <span class="k">def</span> <span class="nf">row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the row for this node</span>
+
+<span class="sd">        :return: (int) row number for this node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parentItem</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parentItem</span><span class="o">.</span><span class="n">_childItems</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_calcDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+            <span class="n">d</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.display"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the display string for this node</span>
+
+<span class="sd">        :return: (str) the node&#39;s display string&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_display&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_display</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DisplayFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.qdisplay"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.qdisplay">[docs]</a>    <span class="k">def</span> <span class="nf">qdisplay</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the display QString for this node</span>
+
+<span class="sd">        :return: (Qt.QString) the node&#39;s display string&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_qdisplay&quot;</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_qdisplay</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qdisplay</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.mimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.mimeData">[docs]</a>    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseTreeItem.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the prefered role for the item.</span>
+<span class="sd">        This implementation returns taurus.core.taurusbasetypes.TaurusElementType.Unknown</span>
+
+<span class="sd">        This method should be able to return any kind of python object as long</span>
+<span class="sd">        as the model that is used is compatible.</span>
+
+<span class="sd">        :return: (taurus.core.taurusbasetypes.TaurusElementType) the role in form of element type&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Unknown</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">display</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TaurusBaseModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemModel</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The base class for all Taurus Qt models.&quot;&quot;&quot;</span>
+
+    <span class="n">ColumnNames</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(),</span>
+
+    <span class="n">DftFont</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Mono&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemModel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c1"># if qt &lt; 4.6, beginResetModel and endResetModel don&#39;t exist. In this</span>
+        <span class="c1"># case we set beginResetModel to be an empty function and endResetModel</span>
+        <span class="c1"># to be reset.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemModel</span><span class="p">,</span> <span class="s2">&quot;beginResetModel&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_src</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selectables</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnRoles</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDataSource</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataSource</span><span class="p">(),</span> <span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusBaseModel.createNewRootItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.createNewRootItem">[docs]</a>    <span class="k">def</span> <span class="nf">createNewRootItem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusBaseTreeItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ColumnNames</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.refresh"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">refresh_source</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createNewRootItem</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataSource</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;setupModelData must be implemented &quot;</span>
+                                  <span class="s2">&quot;in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.roleIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.roleIcon">[docs]</a>    <span class="k">def</span> <span class="nf">roleIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;roleIcon must be implemented &quot;</span>
+                                  <span class="s2">&quot;in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.roleSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.roleSize">[docs]</a>    <span class="k">def</span> <span class="nf">roleSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;roleSize must be implemented &quot;</span>
+                                  <span class="s2">&quot;in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.roleToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.roleToolTip">[docs]</a>    <span class="k">def</span> <span class="nf">roleToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;roleToolTip must be implemented &quot;</span>
+                                  <span class="s2">&quot;in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.setDataSource"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.setDataSource">[docs]</a>    <span class="k">def</span> <span class="nf">setDataSource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_src</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_src</span> <span class="o">=</span> <span class="n">data_src</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.dataSource"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.dataSource">[docs]</a>    <span class="k">def</span> <span class="nf">dataSource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_src</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.setSelectables"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.setSelectables">[docs]</a>    <span class="k">def</span> <span class="nf">setSelectables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq_elem_types</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selectables</span> <span class="o">=</span> <span class="n">seq_elem_types</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.selectables"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.selectables">[docs]</a>    <span class="k">def</span> <span class="nf">selectables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectables</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.role"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.role">[docs]</a>    <span class="k">def</span> <span class="nf">role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">cr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ColumnRoles</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cr</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">depth</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ColumnRoles</span><span class="p">[</span><span class="n">column</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.columnCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.columnCount">[docs]</a>    <span class="k">def</span> <span class="nf">columnCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ColumnRoles</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.columnIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.columnIcon">[docs]</a>    <span class="k">def</span> <span class="nf">columnIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roleIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.columnToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.columnToolTip">[docs]</a>    <span class="k">def</span> <span class="nf">columnToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roleToolTip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.columnSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.columnSize">[docs]</a>    <span class="k">def</span> <span class="nf">columnSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roleSize</span><span class="p">(</span><span class="n">role</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.pyData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.pyData">[docs]</a>    <span class="k">def</span> <span class="nf">pyData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">QtQt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">DisplayRole</span> <span class="ow">or</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="c1">#        elif role == QtQt.CheckStateRole:</span>
+<span class="c1">#            data = item.data(index)</span>
+<span class="c1">#            if type(data) != bool:</span>
+<span class="c1">#                data = str(data).lower() == &#39;true&#39;</span>
+<span class="c1">#            ret = QtQt.Unchecked</span>
+<span class="c1">#            if data == True:</span>
+<span class="c1">#                ret = QtQt.Checked</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">icon</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">toolTip</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="c1"># elif role == QtQt.SizeHintRole:</span>
+        <span class="c1">#    ret = self.columnSize(column)</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftFont</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">QtQt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+    <span class="k">def</span> <span class="nf">_setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">qvalue</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">QtQt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="n">pyobj</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">qvalue</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pyobj</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Failed attempt to convert a QValue. Maybe it is due to Qt&lt;4.6&quot;</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">pyobj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="TaurusBaseModel.flags"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.flags">[docs]</a>    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">ItemIsDragEnabled</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="n">column</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">(),</span> <span class="n">item</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span>
+        <span class="n">taurus_role</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">taurus_role</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectables</span><span class="p">():</span>
+            <span class="n">ret</span> <span class="o">|=</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">ItemIsSelectable</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.headerData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.headerData">[docs]</a>    <span class="k">def</span> <span class="nf">headerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">QtQt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">TextAlignmentRole</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">QtQt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ColumnNames</span><span class="p">[</span><span class="n">section</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">SizeHintRole</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columnSize</span><span class="p">(</span><span class="n">section</span><span class="p">))</span>
+                <span class="n">ret</span><span class="o">.</span><span class="n">setHeight</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columnToolTip</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columnIcon</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.index"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasIndex</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">parentItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parentItem</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="n">childItem</span> <span class="o">=</span> <span class="n">parentItem</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">childItem</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">childItem</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.parent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.parent">[docs]</a>    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+
+        <span class="n">childItem</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="n">parentItem</span> <span class="o">=</span> <span class="n">childItem</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">parentItem</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">parentItem</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="n">parentItem</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">parentItem</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.rowCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.rowCount">[docs]</a>    <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">parentItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parentItem</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">parentItem</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">parentItem</span><span class="o">.</span><span class="n">childCount</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusBaseModel.hasChildren"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.hasChildren">[docs]</a>    <span class="k">def</span> <span class="nf">hasChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">parentItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parentItem</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">parentItem</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">parentItem</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusBaseProxyModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseProxyModel.html#taurus.qt.qtcore.model.TaurusBaseProxyModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseProxyModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A taurus base Qt filter &amp; sort model&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="c1"># filter configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFilterCaseSensitivity</span><span class="p">(</span><span class="n">QtQt</span><span class="o">.</span><span class="n">CaseInsensitive</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFilterKeyColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFilterRole</span><span class="p">(</span><span class="n">QtQt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
+
+        <span class="c1"># sort configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSortCaseSensitivity</span><span class="p">(</span><span class="n">QtQt</span><span class="o">.</span><span class="n">CaseInsensitive</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSortRole</span><span class="p">(</span><span class="n">QtQt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
+
+        <span class="c1"># general configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDynamicSortFilter</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">(),</span> <span class="n">name</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

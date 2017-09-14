@@ -1,0 +1,537 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.tree.taurusdbtree &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.tree.taurusdbtree</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.tree.taurusdbtree</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides widgets that display the database in a tree format&quot;&quot;&quot;</span>
+
+<span class="c1"># todo: tango-centric!!</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusDbTreeWidget&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusauthority</span> <span class="k">import</span> <span class="n">TaurusAuthority</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.model</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getElementTypeIcon</span><span class="p">,</span> <span class="n">getElementTypeIconName</span>
+<span class="kn">from</span> <span class="nn">taurustree</span> <span class="k">import</span> <span class="n">TaurusBaseTreeWidget</span>
+
+
+<div class="viewcode-block" id="TaurusDbTreeWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_TaurusDbTreeWidget.html#taurus.qt.qtgui.tree.TaurusDbTreeWidget">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbTreeWidget</span><span class="p">(</span><span class="n">TaurusBaseTreeWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A class:`taurus.qt.qtgui.tree.TaurusBaseTreeWidget` that connects to a</span>
+<span class="sd">    :class:`taurus.core.taurusauthority.TaurusAuthority` model. It can show the list of database</span>
+<span class="sd">    elements in four different perspectives:</span>
+
+<span class="sd">    - device : a three level hierarchy of devices (domain/family/name)</span>
+<span class="sd">    - server : a server based perspective</span>
+<span class="sd">    - class : a class based perspective</span>
+
+<span class="sd">    Filters can be inserted into this widget to restrict the tree nodes that are</span>
+<span class="sd">    seen.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">KnownPerspectives</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;By device&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="n">getElementTypeIconName</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">),</span>
+            <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;View by device tree&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">TaurusDbDeviceProxyModel</span><span class="p">,</span> <span class="n">TaurusDbDeviceModel</span><span class="p">,</span> <span class="p">],</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;PlainDevice&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;By plain device&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="n">getElementTypeIconName</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">),</span>
+            <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;View by plain device tree (it may take a long time if there are problems with the exported devices)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">TaurusDbDeviceProxyModel</span><span class="p">,</span> <span class="n">TaurusDbPlainDeviceModel</span><span class="p">,</span> <span class="p">],</span>
+        <span class="p">},</span>
+
+        <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Server</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;By server&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="n">getElementTypeIconName</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Server</span><span class="p">),</span>
+            <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;View by server tree&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">TaurusDbServerProxyModel</span><span class="p">,</span> <span class="n">TaurusDbServerModel</span><span class="p">,</span> <span class="p">],</span>
+        <span class="p">},</span>
+        <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;By class&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="n">getElementTypeIconName</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">),</span>
+            <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;View by class tree&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">TaurusDbDeviceClassProxyModel</span><span class="p">,</span> <span class="n">TaurusDbDeviceClassModel</span><span class="p">,</span> <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="n">DftPerspective</span> <span class="o">=</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span>
+
+<div class="viewcode-block" id="TaurusDbTreeWidget.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_TaurusDbTreeWidget.html#taurus.qt.qtgui.tree.TaurusDbTreeWidget.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusAuthority</span></div>
+
+<div class="viewcode-block" id="TaurusDbTreeWidget.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_TaurusDbTreeWidget.html#taurus.qt.qtgui.tree.TaurusDbTreeWidget.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusDbTreeWidget.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_TaurusDbTreeWidget.html#taurus.qt.qtgui.tree.TaurusDbTreeWidget.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.tree&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Views&#39;</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;icon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;designer:listview.png&quot;</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">_TaurusTreePanel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A demonstration panel to show how :class:`taurus.qt.qtcore.TaurusDbBaseModel`</span>
+<span class="sd">    models can interact with several model view widgets like QTreeView,</span>
+<span class="sd">    QTableView, QListView and QComboBox&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;doc please!&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">designMode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">designMode</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="c1">#        tb = self._toolbar = Qt.QToolBar(&quot;Taurus tree panel toolbar&quot;)</span>
+<span class="c1">#        tb.setFloatable(False)</span>
+<span class="c1">#        refreshAction = self._refreshAction = tb.addAction(Qt.QIcon.fromTheme(&quot;view-refresh&quot;),&quot;Refresh&quot;, self.refresh)</span>
+
+<span class="c1">#        l.addWidget(tb, 0, 0)</span>
+
+        <span class="n">main_panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTabWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span> <span class="o">=</span> <span class="n">TaurusDbTreeWidget</span><span class="p">(</span>
+            <span class="n">perspective</span><span class="o">=</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_table_view</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_table_view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_list_view</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QListView</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_list_view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">TaurusDbSimpleDeviceModel</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_tree_view</span> <span class="o">=</span> <span class="n">TaurusDbTreeWidget</span><span class="p">(</span>
+            <span class="n">perspective</span><span class="o">=</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Server</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_class_tree_view</span> <span class="o">=</span> <span class="n">TaurusDbTreeWidget</span><span class="p">(</span>
+            <span class="n">perspective</span><span class="o">=</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">DeviceClass</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_combo_view</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">combo_form</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_combo_view</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">combo_form</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_tree_widget</span> <span class="o">=</span> <span class="n">TaurusDbTreeWidget</span><span class="p">(</span>
+            <span class="n">perspective</span><span class="o">=</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">)</span>
+        <span class="n">qmodel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_tree_widget</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span>
+        <span class="n">qmodel</span><span class="o">.</span><span class="n">setSelectables</span><span class="p">([</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Member</span><span class="p">])</span>
+        <span class="n">device_combo</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">qmodel</span><span class="p">)</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setMaxVisibleItems</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setView</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_tree_widget</span><span class="o">.</span><span class="n">treeView</span><span class="p">())</span>
+        <span class="n">combo_form</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span>
+            <span class="s2">&quot;Device selector (by device hierarchy):&quot;</span><span class="p">,</span> <span class="n">device_combo</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_combo_attr_tree_widget</span> <span class="o">=</span> <span class="n">TaurusDbTreeWidget</span><span class="p">(</span>
+            <span class="n">perspective</span><span class="o">=</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">)</span>
+        <span class="n">qmodel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_combo_attr_tree_widget</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span>
+        <span class="n">device_combo</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">qmodel</span><span class="p">)</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setMaxVisibleItems</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setView</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_combo_attr_tree_widget</span><span class="o">.</span><span class="n">treeView</span><span class="p">())</span>
+        <span class="n">combo_form</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span>
+            <span class="s2">&quot;Attribute selector (by device hierarchy):&quot;</span><span class="p">,</span> <span class="n">device_combo</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_table_view</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_table_view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">())</span>
+        <span class="n">qmodel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_table_view</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">qmodel</span><span class="o">.</span><span class="n">setSelectables</span><span class="p">([</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">])</span>
+        <span class="n">device_combo</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">qmodel</span><span class="p">)</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setMaxVisibleItems</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">device_combo</span><span class="o">.</span><span class="n">setView</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_table_view</span><span class="p">)</span>
+        <span class="n">combo_form</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Device selector (by plain device):&quot;</span><span class="p">,</span> <span class="n">device_combo</span><span class="p">)</span>
+
+        <span class="n">main_panel</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span><span class="p">,</span> <span class="s2">&quot;Device (Tree View)&quot;</span><span class="p">)</span>
+        <span class="n">main_panel</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_device_table_view</span><span class="p">,</span> <span class="s2">&quot;Device (Table View)&quot;</span><span class="p">)</span>
+        <span class="n">main_panel</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_device_list_view</span><span class="p">,</span> <span class="s2">&quot;Device (List View)&quot;</span><span class="p">)</span>
+        <span class="n">main_panel</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_tree_view</span><span class="p">,</span> <span class="s2">&quot;Server (Tree View)&quot;</span><span class="p">)</span>
+        <span class="n">main_panel</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_tree_view</span><span class="p">,</span> <span class="s2">&quot;Class (Tree View)&quot;</span><span class="p">)</span>
+        <span class="n">main_panel</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_device_combo_view</span><span class="p">,</span> <span class="s2">&quot;ComboBox Views&quot;</span><span class="p">)</span>
+
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">main_panel</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_main_panel</span> <span class="o">=</span> <span class="n">main_panel</span>
+
+    <span class="k">def</span> <span class="nf">deviceTreeWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span>
+
+    <span class="k">def</span> <span class="nf">deviceTableWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_table_view</span>
+
+    <span class="k">def</span> <span class="nf">deviceListWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_list_view</span>
+
+    <span class="k">def</span> <span class="nf">serverTreeWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_tree_view</span>
+
+    <span class="k">def</span> <span class="nf">classTreeWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_tree_view</span>
+
+    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_updateTreeModels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">db_name</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModel</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_table_view</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setDataSource</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_list_view</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setDataSource</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_tree_view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_class_tree_view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_tree_widget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_combo_attr_tree_widget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_combo_dev_table_view</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setDataSource</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">refreshCache</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_table_view</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_list_view</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_tree_view</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_class_tree_view</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">goIntoTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="c1">#index_parent = index.parent()</span>
+        <span class="c1"># if index_parent is None:</span>
+        <span class="c1">#    return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span><span class="o">.</span><span class="n">setRootIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">goUpTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">index_parent</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index_parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree_view</span><span class="o">.</span><span class="n">setRootIndex</span><span class="p">(</span><span class="n">index_parent</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget overwriting</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusAuthority</span>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets/unsets the model name for this component</span>
+
+<span class="sd">        :param model: (str) the new model name&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_TaurusTreePanel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateTreeModels</span><span class="p">()</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT property definition</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="c1">#: This property holds the unique URI string representing the model name</span>
+    <span class="c1">#: with which this widget will get its data from. The convention used for</span>
+    <span class="c1">#: the string can be found :ref:`here &lt;model-concept&gt;`.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: In case the property :attr:`useParentModel` is set to True, the model</span>
+    <span class="c1">#: text must start with a &#39;/&#39; followed by the attribute name.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.getModel`</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.setModel`</span>
+    <span class="c1">#:     * :meth:`TaurusBaseWidget.resetModel`</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: .. seealso:: :ref:`model-concept`</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main_TaurusTreePanel</span><span class="p">(</span><span class="n">host</span><span class="p">):</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">_TaurusTreePanel</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">getElementTypeIcon</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">))</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;A Taurus Tree Example&quot;</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">w</span>
+
+
+<span class="k">def</span> <span class="nf">main_TaurusDbTreeWidget</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">perspective</span><span class="o">=</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">):</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusDbTreeWidget</span><span class="p">(</span><span class="n">perspective</span><span class="o">=</span><span class="n">perspective</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">getElementTypeIcon</span><span class="p">(</span><span class="n">perspective</span><span class="p">))</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;A Taurus Tree Example&quot;</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">w</span>
+
+
+<span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;DB panels&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">taurus</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Authority</span><span class="p">()</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">()</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">main_TaurusTreePanel</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="c1"># w = main_TaurusDbTreeWidget(host, TaurusElementType.Device)</span>
+
+    <span class="k">return</span> <span class="n">w</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+    <span class="n">Application</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;DB model demo&quot;</span><span class="p">,</span> <span class="n">app_version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                          <span class="n">org_domain</span><span class="o">=</span><span class="s2">&quot;Taurus&quot;</span><span class="p">,</span> <span class="n">org_name</span><span class="o">=</span><span class="s2">&quot;Tango community&quot;</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">demo</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">w</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

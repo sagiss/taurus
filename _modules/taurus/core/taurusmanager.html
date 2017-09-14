@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.taurusmanager &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.taurusmanager</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.taurusmanager</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the taurus base manager class&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusManager&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+
+<span class="kn">from</span> <span class="nn">.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">taurus4_deprecation</span>
+<span class="kn">from</span> <span class="nn">.util.threadpool</span> <span class="k">import</span> <span class="n">ThreadPool</span>
+
+<span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="k">import</span> <span class="n">OperationMode</span><span class="p">,</span> <span class="n">ManagerState</span><span class="p">,</span> <span class="n">TaurusSerializationMode</span>
+<span class="kn">from</span> <span class="nn">.taurusauthority</span> <span class="k">import</span> <span class="n">TaurusAuthority</span>
+<span class="kn">from</span> <span class="nn">.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
+<span class="kn">from</span> <span class="nn">.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
+<span class="kn">from</span> <span class="nn">.taurusfactory</span> <span class="k">import</span> <span class="n">TaurusFactory</span>
+<span class="kn">from</span> <span class="nn">.taurushelper</span> <span class="k">import</span> <span class="n">getSchemeFromName</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+
+
+<div class="viewcode-block" id="TaurusManager"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager">[docs]</a><span class="k">class</span> <span class="nc">TaurusManager</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A :class:`taurus.core.util.singleton.Singleton` class designed to provide Taurus management.</span>
+
+<span class="sd">       Example::</span>
+
+<span class="sd">           &gt;&gt;&gt; import taurus.core.taurusmanager</span>
+<span class="sd">           &gt;&gt;&gt; manager = taurus.core.taurusmanager.TaurusManager()</span>
+<span class="sd">           &gt;&gt;&gt; print manager == taurus.core.taurusmanager.TaurusManager()</span>
+<span class="sd">           True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">PLUGIN_KEY</span> <span class="o">=</span> <span class="s2">&quot;__taurus_plugin__&quot;</span>
+
+    <span class="n">DefaultSerializationMode</span> <span class="o">=</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">Concurrent</span>
+    <span class="n">default_scheme</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;DEFAULT_SCHEME&#39;</span><span class="p">,</span> <span class="s2">&quot;tango&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initialization. Nothing to be done here for now.&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="TaurusManager.init"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Singleton instance initialization.</span>
+<span class="sd">           For internal usage only. Do **NOT** call this method directly&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">ManagerState</span><span class="o">.</span><span class="n">UNINITIALIZED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reInit</span><span class="p">()</span>
+        <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.reInit"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.reInit">[docs]</a>    <span class="k">def</span> <span class="nf">reInit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reinitialization&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">==</span> <span class="n">ManagerState</span><span class="o">.</span><span class="n">INITED</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;reInit()&quot;</span><span class="p">)</span>
+        <span class="n">this_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_this_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">this_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultSerializationMode</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">Concurrent</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span> <span class="o">=</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;TaurusTP&quot;</span><span class="p">,</span>
+                                           <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                                           <span class="n">Psize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                           <span class="n">Qsize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_default_scheme</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_scheme</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">ManagerState</span><span class="o">.</span><span class="n">INITED</span></div>
+
+<div class="viewcode-block" id="TaurusManager.cleanUp"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cleanup&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">==</span> <span class="n">ManagerState</span><span class="o">.</span><span class="n">CLEANED</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;cleanUp()&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TaurusManager] cleanUp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">ManagerState</span><span class="o">.</span><span class="n">CLEANED</span></div>
+
+<div class="viewcode-block" id="TaurusManager.addJob"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.addJob">[docs]</a>    <span class="k">def</span> <span class="nf">addJob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a new job (callable) to the queue. The new job will be processed</span>
+<span class="sd">        by a separate thread</span>
+
+<span class="sd">        :param job: (callable) a callable object</span>
+<span class="sd">        :param callback: (callable) called after the job has been processed</span>
+<span class="sd">        :param args: (list) list of arguments passed to the job</span>
+<span class="sd">        :param kw: (dict) keyword arguments passed to the job</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">Concurrent</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_thread_pool&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Job cannot be processed.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s2">&quot;The requested job cannot be processed. Make sure this manager is initialized&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">job</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.setSerializationMode"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.setSerializationMode">[docs]</a>    <span class="k">def</span> <span class="nf">setSerializationMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the serialization mode for the system.</span>
+
+<span class="sd">        :param mode: (TaurusSerializationMode) the new serialization mode&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">mode</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getSerializationMode"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getSerializationMode">[docs]</a>    <span class="k">def</span> <span class="nf">getSerializationMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gives the serialization operation mode.</span>
+
+<span class="sd">        :return: (TaurusSerializationMode) the current serialization mode&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span></div>
+
+<div class="viewcode-block" id="TaurusManager.setOperationMode"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.setOperationMode">[docs]</a>    <span class="k">def</span> <span class="nf">setOperationMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated. Sets the operation mode for the system.</span>
+
+<span class="sd">        :param mode: (OperationMode) the new operation mode&quot;&quot;&quot;</span>
+        <span class="n">dep</span> <span class="o">=</span> <span class="s1">&#39;setOperationMode&#39;</span>
+        <span class="n">rel</span> <span class="o">=</span> <span class="s1">&#39;Taurus4&#39;</span>
+        <span class="n">dbg_msg</span> <span class="o">=</span> <span class="s2">&quot;Don&#39;t use this method&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is deprecated (from </span><span class="si">%s</span><span class="s1">). </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dep</span><span class="p">,</span> <span class="n">rel</span><span class="p">,</span> <span class="n">dbg_msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getOperationMode"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getOperationMode">[docs]</a>    <span class="k">def</span> <span class="nf">getOperationMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated. Gives the current operation mode.</span>
+
+<span class="sd">        :return: (OperationMode) the current operation mode&quot;&quot;&quot;</span>
+        <span class="n">dep</span> <span class="o">=</span> <span class="s1">&#39;getOperationMode&#39;</span>
+        <span class="n">rel</span> <span class="o">=</span> <span class="s1">&#39;Taurus4&#39;</span>
+        <span class="n">dbg_msg</span> <span class="o">=</span> <span class="s2">&quot;Don&#39;t use this method&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is deprecated (from </span><span class="si">%s</span><span class="s1">). </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dep</span><span class="p">,</span> <span class="n">rel</span><span class="p">,</span> <span class="n">dbg_msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">OperationMode</span><span class="o">.</span><span class="n">ONLINE</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getDefaultFactory"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getDefaultFactory">[docs]</a>    <span class="k">def</span> <span class="nf">getDefaultFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gives the default factory.</span>
+
+<span class="sd">        :return: (taurus.core.taurusfactory.TaurusFactory) the default taurus factory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPlugins</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_scheme</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getPlugins"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getPlugins">[docs]</a>    <span class="k">def</span> <span class="nf">getPlugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gives the information about the existing plugins</span>
+
+<span class="sd">        :return: (dict&lt;str, class taurus.core.taurusfactory.TaurusFactory&gt;)the list of plugins</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_plugins</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getFactory"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getFactory">[docs]</a>    <span class="k">def</span> <span class="nf">getFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gives the factory class object supporting the given scheme</span>
+
+<span class="sd">        :param scheme: (str or None) the scheme. If None the default scheme is used</span>
+<span class="sd">        :return: (taurus.core.taurusfactory.TaurusFactory or None) the factory class object for the</span>
+<span class="sd">                 given scheme or None if a proper factory is not found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">scheme</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDefaultFactory</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPlugins</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">scheme</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getObject"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getObject">[docs]</a>    <span class="k">def</span> <span class="nf">getObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gives the object for the given class with the given name</span>
+
+<span class="sd">        :param cls: (taurus.core.taurusmodel.TaurusModel) object class</span>
+<span class="sd">        :param name: (str) the object name</span>
+<span class="sd">        :return: (taurus.core.taurusmodel.TaurusModel or None) a taurus model object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_factory</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">return</span> <span class="n">factory</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.findObject"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.findObject">[docs]</a>    <span class="k">def</span> <span class="nf">findObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">absolute_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finds the object with the given name</span>
+
+<span class="sd">        :param absolute_name: (str) the object name</span>
+<span class="sd">        :return: (taurus.core.taurusmodel.TaurusModel or None) the taurus model object or None if</span>
+<span class="sd">                 no suitable name found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_factory</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">return</span> <span class="n">factory</span><span class="o">.</span><span class="n">findObject</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.findObjectClass"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.findObjectClass">[docs]</a>    <span class="k">def</span> <span class="nf">findObjectClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">absolute_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finds the object class for the given object name</span>
+
+<span class="sd">        :param absolute_name: (str) the object name</span>
+<span class="sd">        :return: (class taurus.core.taurusmodel.TaurusModel or None) the taurus model class object or</span>
+<span class="sd">                 None if no suitable name found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_factory</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">return</span> <span class="n">factory</span><span class="o">.</span><span class="n">findObjectClass</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getAuthority"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getAuthority">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthority</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a database object for the given name</span>
+
+<span class="sd">        :param name: (str) database name</span>
+<span class="sd">        :return: (taurus.core.taurusauthority.TaurusAuthority) the authority for the given name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="n">TaurusAuthority</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getDatabase"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getDatabase">[docs]</a>    <span class="k">def</span> <span class="nf">getDatabase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated. Use getAuthority instead&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;getDatabase is deprecated. Use getAuthority instead&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getDevice"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a device object for the given name</span>
+
+<span class="sd">        :param name: (str) device name</span>
+<span class="sd">        :return: (taurus.core.taurusdevice.TaurusDevice) the device for the given name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="n">TaurusDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusManager.getAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a attribute object for the given name</span>
+
+<span class="sd">        :param name: (str) attribute name</span>
+<span class="sd">        :return: (taurus.core.taurusattribute.TaurusAttribute) the attribute for the given name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="n">TaurusAttribute</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+    <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;getAttribute&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getConfiguration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a configuration object for the given name</span>
+
+<span class="sd">        :param name: (str) configuration name</span>
+<span class="sd">        :return: (taurus.core.taurusconfiguration.TaurusConfiguration) the configuration for the given name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">scheme</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getScheme</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scheme</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPlugins</span><span class="p">()[</span><span class="n">scheme</span><span class="p">]()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s1">&#39;Invalid scheme &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">scheme</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusManager.getScheme"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.getScheme">[docs]</a>    <span class="k">def</span> <span class="nf">getScheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the scheme name for a given model name</span>
+
+<span class="sd">        :param name: (str) model name</span>
+<span class="sd">        :return: (str) scheme name</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">getSchemeFromName</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">DeprecationWarning</span><span class="p">(</span>
+            <span class="s1">&#39;_get_schema is deprecated. Use getScheme instead&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">plugin_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_plugin_classes</span><span class="p">()</span>
+        <span class="n">plugins</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">plugin_class</span> <span class="ow">in</span> <span class="n">plugin_classes</span><span class="p">:</span>
+            <span class="n">schemes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">plugin_class</span><span class="o">.</span><span class="n">schemes</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">scheme</span> <span class="ow">in</span> <span class="n">schemes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">plugins</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">scheme</span><span class="p">):</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="n">scheme</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Conflicting plugins: </span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="s2"> both implement &quot;</span>
+                                 <span class="s2">&quot;scheme </span><span class="si">%s</span><span class="s2">. Will keep using </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                                                                    <span class="n">plugin_class</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">scheme</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">plugins</span><span class="p">[</span><span class="n">scheme</span><span class="p">]</span> <span class="o">=</span> <span class="n">plugin_class</span>
+        <span class="k">return</span> <span class="n">plugins</span>
+
+<div class="viewcode-block" id="TaurusManager.buildPlugins"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.buildPlugins">[docs]</a>    <span class="k">def</span> <span class="nf">buildPlugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the current valid plugins</span>
+
+<span class="sd">        :return: (dic) plugins</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_plugins</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_plugin_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">upgrade_classes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">elems</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_this_path</span><span class="p">)</span>
+        <span class="n">dirs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">elem</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">elem</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_this_path</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">plugin_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PLUGIN_KEY</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">plugin_file</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="s1">&#39;__init__.py&#39;</span><span class="p">)):</span>
+                <span class="k">continue</span>
+            <span class="n">dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+
+        <span class="n">plugins</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">full_module_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;taurus.core.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                             <span class="n">d</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">]</span>
+        <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+        <span class="n">full_module_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;EXTRA_SCHEME_MODULES&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+
+        <span class="k">for</span> <span class="n">full_module_name</span> <span class="ow">in</span> <span class="n">full_module_names</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">full_module_name</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">],</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">imp1</span><span class="p">:</span>
+                <span class="c1"># just in case we are in python 2.4</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">m</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">full_module_name</span><span class="p">,</span>
+                                   <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">])</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Failed to inspect </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">full_module_name</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Details:&#39;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">plugin</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">TaurusFactory</span><span class="p">)</span> <span class="ow">and</span> \
+                       <span class="nb">issubclass</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Singleton</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;schemes&#39;</span><span class="p">):</span>
+                            <span class="n">schemes</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;schemes&#39;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">schemes</span><span class="p">):</span>
+                                <span class="n">plugin</span> <span class="o">=</span> <span class="n">s</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">scheme</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_scheme</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">scheme</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                                    <span class="n">s</span><span class="o">.</span><span class="n">schemes</span> <span class="o">=</span> <span class="p">(</span><span class="n">scheme</span><span class="p">,)</span>
+                                    <span class="n">plugin</span> <span class="o">=</span> <span class="n">s</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">plugin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found plugin </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">plugin</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+                    <span class="n">plugins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plugin</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">plugins</span>
+
+    <span class="k">def</span> <span class="nf">_find_scheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory_class</span><span class="p">):</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">factory_class</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_name</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">class_name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">class_name</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaurusManager.applyPendingOperations"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.applyPendingOperations">[docs]</a>    <span class="k">def</span> <span class="nf">applyPendingOperations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ops</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Executes the given operations</span>
+
+<span class="sd">        :param ops: the sequence of operations</span>
+<span class="sd">        :type ops: sequence&lt;taurus.core.taurusoperation.TaurusOperation&gt;&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">ops</span><span class="p">:</span>
+            <span class="n">o</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusManager.changeDefaultPollingPeriod"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager.changeDefaultPollingPeriod">[docs]</a>    <span class="k">def</span> <span class="nf">changeDefaultPollingPeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="n">plugin_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_plugin_classes</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">plugin_class</span> <span class="ow">in</span> <span class="n">plugin_classes</span><span class="p">:</span>
+            <span class="n">scheme</span> <span class="o">=</span> <span class="n">plugin_class</span><span class="o">.</span><span class="n">schemes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getFactory</span><span class="p">(</span><span class="n">scheme</span><span class="p">)()</span><span class="o">.</span><span class="n">changeDefaultPollingPeriod</span><span class="p">(</span><span class="n">period</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__name__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">(</span><span class="si">{1}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__str__name__</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__str__name__</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">manager</span> <span class="o">=</span> <span class="n">TaurusManager</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="n">manager</span><span class="o">.</span><span class="n">getPlugins</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

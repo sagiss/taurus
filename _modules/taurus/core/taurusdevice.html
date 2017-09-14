@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.taurusdevice &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.taurusdevice</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.taurusdevice</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the base class for a taurus device&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusDevice&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusDevState</span><span class="p">,</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusModel</span>
+
+
+<div class="viewcode-block" id="TaurusDevice"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevice</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;A Device object. Different schemes may assign different roles, but</span>
+<span class="sd">       in general it is a parent of Taurus Attribute objects and a child</span>
+<span class="sd">       of a Taurus Authority&quot;&quot;&quot;</span>
+
+    <span class="n">_description</span> <span class="o">=</span> <span class="s2">&quot;A Taurus Device&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Object initialization.&quot;&quot;&quot;</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">storeCallback</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;storeCallback&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">storeCallback</span><span class="p">:</span>
+            <span class="n">storeCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reimplement in schemes if you want to support membership testing for</span>
+<span class="sd">        attributes of the device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; does not support membership testing&quot;</span> <span class="o">%</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a scheme-agnostic representation of the state of a Taurus</span>
+<span class="sd">        device. This default implementation always returns</span>
+<span class="sd">        `TaurusDevState.Ready`</span>
+
+<span class="sd">        Subclasses of TaurusDevice may reimplement it to return other</span>
+<span class="sd">        :class:`taurus.core.TaurusDevState` enumeration values.</span>
+
+<span class="sd">        :return: (TaurusDevState) `TaurusDevState.Ready`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TaurusDevState</span><span class="o">.</span><span class="n">Ready</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusModel implementation</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusDevice.getTaurusElementType"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice.getTaurusElementType">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusElementType</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusDevice.buildModelName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice.buildModelName">[docs]</a>    <span class="k">def</span> <span class="nf">buildModelName</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent_model</span><span class="p">,</span> <span class="n">relative_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;build an &#39;absolute&#39; model name from the parent model and the &#39;relative&#39;</span>
+<span class="sd">        name.</span>
+<span class="sd">        - If parent_model is a TaurusAuthority, the return is a composition of</span>
+<span class="sd">        the authority model name and the device name</span>
+<span class="sd">        - If parent_model is a TaurusDevice, the relative name is ignored and</span>
+<span class="sd">        the parent name is returned</span>
+
+<span class="sd">        Note: This is a basic implementation. You may need to reimplement this</span>
+<span class="sd">              for a specific scheme if it supports &quot;useParentModel&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parent_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">relative_name</span>
+        <span class="n">parent_name</span> <span class="o">=</span> <span class="n">parent_model</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">relative_name</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent_model</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">parent_name</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parent_name</span><span class="p">,</span> <span class="n">relative_name</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusDevice.getNameValidator"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice.getNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getNameValidator</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">getDeviceNameValidator</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusDevice.getDisplayDescrObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice.getDisplayDescrObj">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescrObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayName</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)))</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">))</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;device state&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+<div class="viewcode-block" id="TaurusDevice.getChildObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice.getChildObj">[docs]</a>    <span class="k">def</span> <span class="nf">getChildObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">child_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">child_name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">obj_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">(),</span> <span class="n">child_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">findObject</span><span class="p">(</span><span class="n">obj_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDevice.poll"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice.poll">[docs]</a>    <span class="k">def</span> <span class="nf">poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">asynch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">req_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Polling certain attributes of the device. This default</span>
+<span class="sd">        implementation simply polls each attribute one by one&#39;&#39;&#39;</span>
+
+        <span class="c1"># asynchronous requests are not supported. If asked to do it,</span>
+        <span class="c1"># just return an ID of 1 and in the reply (req_id != None) we do a</span>
+        <span class="c1"># synchronous polling.</span>
+        <span class="k">if</span> <span class="n">asynch</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">attr</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_description</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

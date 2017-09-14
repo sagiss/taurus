@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.container.qcontainer &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.container.qcontainer</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.container.qcontainer</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides basic pure Qt container widgets&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QGroupWidget&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getStandardIcon</span>
+
+<span class="n">_TitleBarStyleExpanded</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;.QFrame {{</span>
+<span class="s2">border-width: 0px;</span>
+<span class="s2">border-style: solid;</span>
+<span class="s2">border-color: </span><span class="si">{stop_color}</span><span class="s2">;</span>
+<span class="s2">border-top-left-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-top-right-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-bottom-left-radius: 0px;</span>
+<span class="s2">border-bottom-right-radius: 0px;</span>
+<span class="s2">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,</span>
+<span class="s2">                                  stop: 0 </span><span class="si">{start_color}</span><span class="s2">, stop: 1 </span><span class="si">{stop_color}</span><span class="s2">);</span>
+<span class="s2">}}&quot;&quot;&quot;</span>
+
+<span class="n">_TitleBarStyleCollapsed</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;.QFrame {{</span>
+<span class="s2">border-width: 0px;</span>
+<span class="s2">border-style: solid;</span>
+<span class="s2">border-color: </span><span class="si">{stop_color}</span><span class="s2">;</span>
+<span class="s2">border-top-left-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-top-right-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-bottom-left-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-bottom-right-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,</span>
+<span class="s2">                                  stop: 0 </span><span class="si">{start_color}</span><span class="s2">, stop: 1 </span><span class="si">{stop_color}</span><span class="s2">);</span>
+<span class="s2">}}&quot;&quot;&quot;</span>
+
+<span class="n">_TitleLabelStyle</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;.QLabel {{ color : </span><span class="si">{font_color}</span><span class="s2">; }}&quot;&quot;&quot;</span>
+
+<span class="n">_ContentBarStyleWithTitle</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;ContentFrame {{</span>
+<span class="s2">border-top-width: 0px;</span>
+<span class="s2">border-left-width: 1px;</span>
+<span class="s2">border-right-width: 1px;</span>
+<span class="s2">border-bottom-width: 1px;</span>
+<span class="s2">border-style: solid;</span>
+<span class="s2">border-color: </span><span class="si">{border_color}</span><span class="s2">;</span>
+<span class="s2">border-top-left-radius: 0px;</span>
+<span class="s2">border-top-right-radius: 0px;</span>
+<span class="s2">border-bottom-left-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-bottom-right-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">background-color: qlineargradient(x1: 0, y1: 0, x2: 1.0, y2: 1.0,</span>
+<span class="s2">                                  stop: 0 </span><span class="si">{start_color}</span><span class="s2">, stop: 1 </span><span class="si">{stop_color}</span><span class="s2">);</span>
+<span class="s2">/*</span>
+<span class="s2">  background-position: center center;</span>
+<span class="s2">*/</span>
+<span class="s2">}}&quot;&quot;&quot;</span>
+
+<span class="n">_ContentBarStyleWithoutTitle</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;ContentFrame {{</span>
+<span class="s2">border-width: 1px;</span>
+<span class="s2">border-style: solid;</span>
+<span class="s2">border-color: </span><span class="si">{border_color}</span><span class="s2">;</span>
+<span class="s2">border-top-left-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-top-right-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-bottom-left-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">border-bottom-right-radius: </span><span class="si">{border_radius}</span><span class="s2">;</span>
+<span class="s2">background-color: qlineargradient(x1: 0, y1: 0, x2: 1.0, y2: 1.0,</span>
+<span class="s2">                                  stop: 0 </span><span class="si">{start_color}</span><span class="s2">, stop: 1 </span><span class="si">{stop_color}</span><span class="s2">);</span>
+<span class="s2">/*</span>
+<span class="s2">  background-position: center center;</span>
+<span class="s2">*/</span>
+<span class="s2">}}&quot;&quot;&quot;</span>
+
+<span class="c1"># Empty content QFrame to avoid frame style to be propagated</span>
+<span class="c1"># to child QFrame widgets</span>
+
+
+<span class="k">class</span> <span class="nc">ContentFrame</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFrame</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="QGroupWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget">[docs]</a><span class="k">class</span> <span class="nc">QGroupWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An expandable/collapsible composite widget&quot;&quot;&quot;</span>
+
+    <span class="n">DefaultTitleBarVisible</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">DefaultTitleBarHeight</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">DefaultTitleBarStyle</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;start_color&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb(60, 150, 255)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;stop_color&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb(0, 65, 200)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;font_color&#39;</span><span class="p">:</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;border_radius&#39;</span><span class="p">:</span> <span class="s1">&#39;5px&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">DefaultContentVisible</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">DefaultContentStyle</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;start_color&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb(224, 224, 224)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;stop_color&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb(255, 255, 255)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;border_color&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb(0, 85, 227)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;border_radius&#39;</span><span class="p">:</span> <span class="s1">&#39;5px&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleVisible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultTitleBarVisible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_contentVisible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultContentVisible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleBarStyle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultTitleBarStyle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_contentStyle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultContentStyle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateStyle</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetContentVisible</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetTitleHeight</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetTitleVisible</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">panelLayout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">panelLayout</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">panelLayout</span><span class="o">.</span><span class="n">setMargin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">panelLayout</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleBar</span> <span class="o">=</span> <span class="n">titleBar</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFrame</span><span class="p">()</span>
+        <span class="n">panelLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">titleBar</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setMargin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleBar</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;border: 0px&quot;</span><span class="p">)</span>
+        <span class="n">styleOption</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStyleOption</span><span class="p">()</span>
+        <span class="n">styleOption</span><span class="o">.</span><span class="n">initFrom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span><span class="p">)</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">standardIcon</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">SP_DesktopIcon</span><span class="p">,</span> <span class="n">styleOption</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleLabel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upDownButton</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upDownButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;border: 0px&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upDownButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">switchContentVisible</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titleLabel</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upDownButton</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="n">content</span> <span class="o">=</span> <span class="n">ContentFrame</span><span class="p">()</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">content</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="n">panelLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Internal method that updates the style &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contentVisible</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">_TitleBarStyleExpanded</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">_TitleBarStyleCollapsed</span>
+        <span class="n">fullTitleBarStyle</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_titleBarStyle</span><span class="p">)</span>
+        <span class="n">fullTitleLabelStyle</span> <span class="o">=</span> <span class="n">_TitleLabelStyle</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_titleBarStyle</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">titleVisible</span><span class="p">:</span>
+            <span class="n">contentStyleTemplate</span> <span class="o">=</span> <span class="n">_ContentBarStyleWithTitle</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">contentStyleTemplate</span> <span class="o">=</span> <span class="n">_ContentBarStyleWithoutTitle</span>
+
+        <span class="n">contentStyle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contentStyle</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">contentStyle</span><span class="p">[</span><span class="s1">&#39;border_color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titleBarStyle</span><span class="p">[</span><span class="s1">&#39;stop_color&#39;</span><span class="p">]</span>
+        <span class="n">fullContentStyle</span> <span class="o">=</span> <span class="n">contentStyleTemplate</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">contentStyle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleBar</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">fullTitleBarStyle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">fullTitleLabelStyle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_content</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">fullContentStyle</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="QGroupWidget.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.container&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;Taurus Containers&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s2">&quot;designer:groupwidget.png&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.content"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.content">[docs]</a>    <span class="k">def</span> <span class="nf">content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the contents widget</span>
+
+<span class="sd">        :return: (Qt.QFrame) the content widget&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.titleBar"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.titleBar">[docs]</a>    <span class="k">def</span> <span class="nf">titleBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the title bar widget</span>
+
+<span class="sd">        :return: (Qt.QFrame) the title bar widget&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titleBar</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.titleButton"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.titleButton">[docs]</a>    <span class="k">def</span> <span class="nf">titleButton</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the title button widget</span>
+
+<span class="sd">        :return: (Qt.QToolButton) the title button widget&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.collapseButton"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.collapseButton">[docs]</a>    <span class="k">def</span> <span class="nf">collapseButton</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the collapse button widget</span>
+
+<span class="sd">        :return: (Qt.QToolButton) the collapse button widget&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upDownButton</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setTitle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setTitle">[docs]</a>    <span class="k">def</span> <span class="nf">setTitle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s title</span>
+
+<span class="sd">        :param title: (str) the new widget title&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">title</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.getTitle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.getTitle">[docs]</a>    <span class="k">def</span> <span class="nf">getTitle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s title</span>
+
+<span class="sd">        :return: (str) this widget&#39;s title&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titleLabel</span><span class="o">.</span><span class="n">text</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setTitleIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setTitleIcon">[docs]</a>    <span class="k">def</span> <span class="nf">setTitleIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icon</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s title icon</span>
+
+<span class="sd">        :param icon: (Qt.QIcon) the new widget title icon&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.getTitleIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.getTitleIcon">[docs]</a>    <span class="k">def</span> <span class="nf">getTitleIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s title icon</span>
+
+<span class="sd">        :return: (Qt.QIcon) this widget&#39;s title icon&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titleButton</span><span class="o">.</span><span class="n">icon</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.switchContentVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.switchContentVisible">[docs]</a>    <span class="k">def</span> <span class="nf">switchContentVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Switches this widget&#39;s contents visibility&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setContentVisible</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isContentVisible</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.isContentVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.isContentVisible">[docs]</a>    <span class="k">def</span> <span class="nf">isContentVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s contents visibility</span>
+
+<span class="sd">        :return: (bool) this widget&#39;s contents visibility&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contentVisible</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.resetContentVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.resetContentVisible">[docs]</a>    <span class="k">def</span> <span class="nf">resetContentVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets this widget&#39;s contents visibility&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setContentVisible</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultContentVisible</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setContentVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setContentVisible">[docs]</a>    <span class="k">def</span> <span class="nf">setContentVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s contents visibility</span>
+
+<span class="sd">        :param show: (bool) the new widget contents visibility&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_contentVisible</span> <span class="o">=</span> <span class="n">show</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateStyle</span><span class="p">()</span>
+
+        <span class="c1">#if show: icon_name = &quot;go-previous&quot;</span>
+        <span class="c1"># else: icon_name = &quot;go-down&quot;</span>
+        <span class="c1">#icon = Qt.QIcon.fromTheme(icon_name)</span>
+
+        <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+            <span class="n">icon_name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">SP_TitleBarShadeButton</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">icon_name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">SP_TitleBarUnshadeButton</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">getStandardIcon</span><span class="p">(</span><span class="n">icon_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upDownButton</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upDownButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_content</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">show</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjustSize</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.isTitleVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.isTitleVisible">[docs]</a>    <span class="k">def</span> <span class="nf">isTitleVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s title visibility</span>
+
+<span class="sd">        :return: (bool) this widget&#39;s title visibility&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titleVisible</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.resetTitleVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.resetTitleVisible">[docs]</a>    <span class="k">def</span> <span class="nf">resetTitleVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets this widget&#39;s title visibility&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTitleVisible</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultTitleBarVisible</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setTitleVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setTitleVisible">[docs]</a>    <span class="k">def</span> <span class="nf">setTitleVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s title visibility</span>
+
+<span class="sd">        :param icon: (bool) the new widget title visibility&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleVisible</span> <span class="o">=</span> <span class="n">show</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleBar</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">show</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.getTitleHeight"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.getTitleHeight">[docs]</a>    <span class="k">def</span> <span class="nf">getTitleHeight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s title height</span>
+
+<span class="sd">        :return: (bool) this widget&#39;s title height&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">titleButton</span><span class="p">()</span><span class="o">.</span><span class="n">iconSize</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setTitleHeight"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setTitleHeight">[docs]</a>    <span class="k">def</span> <span class="nf">setTitleHeight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s title height</span>
+
+<span class="sd">        :param icon: (bool) the new widget title height&quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">titleButton</span><span class="p">()</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collapseButton</span><span class="p">()</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.resetTitleHeight"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.resetTitleHeight">[docs]</a>    <span class="k">def</span> <span class="nf">resetTitleHeight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets this widget&#39;s title height&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTitleHeight</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultTitleBarHeight</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.getTitleStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.getTitleStyle">[docs]</a>    <span class="k">def</span> <span class="nf">getTitleStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s title style</span>
+
+<span class="sd">        :return: (dict) this widget&#39;s title style&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titleBarStyle</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setTitleStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setTitleStyle">[docs]</a>    <span class="k">def</span> <span class="nf">setTitleStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_map</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s title style</span>
+<span class="sd">        Used key/values for style_map:</span>
+<span class="sd">        - &#39;start_color&#39;  : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+<span class="sd">        - &#39;stop_color&#39;   : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+<span class="sd">        - &#39;font_color&#39;   : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+<span class="sd">        - &#39;border_radius&#39;: radius (Ex.: &#39;5px&#39;, &#39;5px,2px&#39;)</span>
+
+<span class="sd">        :param style_map: (dict) the new widget title style&quot;&quot;&quot;</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultTitleBarStyle</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">style</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">style_map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titleBarStyle</span> <span class="o">=</span> <span class="n">style</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.resetTitleStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.resetTitleStyle">[docs]</a>    <span class="k">def</span> <span class="nf">resetTitleStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets this widget&#39;s title style&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTitleStyle</span><span class="p">({})</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.getTitleStyleStr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.getTitleStyleStr">[docs]</a>    <span class="k">def</span> <span class="nf">getTitleStyleStr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s title style</span>
+
+<span class="sd">        :return: (dict) this widget&#39;s title style&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titleBarStyle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setTitleStyleStr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setTitleStyleStr">[docs]</a>    <span class="k">def</span> <span class="nf">setTitleStyleStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_map</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s title style</span>
+<span class="sd">        Used key/values for style_map:</span>
+<span class="sd">        - &#39;start_color&#39;  : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+<span class="sd">        - &#39;stop_color&#39;   : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+<span class="sd">        - &#39;font_color&#39;   : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+<span class="sd">        - &#39;border_radius&#39;: radius (Ex.: &#39;5px&#39;, &#39;5px,2px&#39;)</span>
+
+<span class="sd">        :param style_map: (dict) the new widget title style&quot;&quot;&quot;</span>
+        <span class="n">style_map</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">style_map</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTitleStyle</span><span class="p">(</span><span class="n">style_map</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.resetTitleStyleStr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.resetTitleStyleStr">[docs]</a>    <span class="k">def</span> <span class="nf">resetTitleStyleStr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets this widget&#39;s title style&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetTitleStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.getContentStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.getContentStyle">[docs]</a>    <span class="k">def</span> <span class="nf">getContentStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s content style</span>
+
+<span class="sd">        :return: (dict) this widget&#39;s content style&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contentStyle</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setContentStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setContentStyle">[docs]</a>    <span class="k">def</span> <span class="nf">setContentStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_map</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s content style</span>
+<span class="sd">        Used key/values for style_map:</span>
+<span class="sd">        - &#39;start_color&#39;  : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+<span class="sd">        - &#39;stop_color&#39;   : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+
+<span class="sd">        :param style_map: (dict) the new widget content style&quot;&quot;&quot;</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultContentStyle</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">style</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">style_map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_contentStyle</span> <span class="o">=</span> <span class="n">style</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_updateStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.resetContentStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.resetContentStyle">[docs]</a>    <span class="k">def</span> <span class="nf">resetContentStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets this widget&#39;s content style&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setContentStyle</span><span class="p">({})</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.getContentStyleStr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.getContentStyleStr">[docs]</a>    <span class="k">def</span> <span class="nf">getContentStyleStr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns this widget&#39;s content style</span>
+
+<span class="sd">        :return: (dict) this widget&#39;s content style&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_contentStyle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.setContentStyleStr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.setContentStyleStr">[docs]</a>    <span class="k">def</span> <span class="nf">setContentStyleStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_map</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets this widget&#39;s content style</span>
+<span class="sd">        Used key/values for style_map:</span>
+<span class="sd">        - &#39;start_color&#39;  : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+<span class="sd">        - &#39;stop_color&#39;   : brush (Ex.: &#39;#E0E0E0&#39;, &#39;rgb(0,0,0)&#39;, &#39;white&#39;)</span>
+
+<span class="sd">        :param style_map: (dict) the new widget content style&quot;&quot;&quot;</span>
+        <span class="n">style_map</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">style_map</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setContentStyle</span><span class="p">(</span><span class="n">style_map</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QGroupWidget.resetContentStyleStr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_QGroupWidget.html#taurus.qt.qtgui.container.QGroupWidget.resetContentStyleStr">[docs]</a>    <span class="k">def</span> <span class="nf">resetContentStyleStr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resets this widget&#39;s content style&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetContentStyle</span><span class="p">()</span></div>
+
+    <span class="c1">#: This property contains the widget&#39;s title</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.getTitle`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.setTitle`</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getTitle</span><span class="p">,</span> <span class="n">setTitle</span><span class="p">)</span>
+
+    <span class="c1">#: This property contains the widget&#39;s title icon</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.getTitleIcon`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.setTitleIcon`</span>
+    <span class="n">titleIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QIcon&quot;</span><span class="p">,</span> <span class="n">getTitleIcon</span><span class="p">,</span> <span class="n">setTitleIcon</span><span class="p">)</span>
+
+    <span class="c1">#: This property contains the widget&#39;s title height</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.getTitleHeight`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.setTitleHeight`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.resetTitleHeight`</span>
+    <span class="n">titleHeight</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span>
+        <span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getTitleHeight</span><span class="p">,</span> <span class="n">setTitleHeight</span><span class="p">,</span> <span class="n">resetTitleHeight</span><span class="p">)</span>
+
+    <span class="c1">#: This property contains the widget&#39;s title visibility</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.isTitleVisible`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.setTitleVisible`</span>
+    <span class="n">titleVisible</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">isTitleVisible</span><span class="p">,</span> <span class="n">setTitleVisible</span><span class="p">)</span>
+
+    <span class="c1">#: This property contains the widget&#39;s content&#39;s visibility</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.isContentVisible`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.setContentVisible`</span>
+    <span class="c1">#:     * :meth:`taurus.qt.qtgui.container.QGroupWidget.resetContentVisible`</span>
+    <span class="n">contentVisible</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span>
+        <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">isContentVisible</span><span class="p">,</span> <span class="n">setContentVisible</span><span class="p">,</span> <span class="n">resetContentVisible</span><span class="p">)</span>
+
+    <span class="c1"># : This property contains the widget&#39;s content style</span>
+    <span class="c1"># : The style must be a json dictionary</span>
+    <span class="c1"># :</span>
+    <span class="c1"># : **Access functions:**</span>
+    <span class="c1"># :</span>
+    <span class="c1"># :     * :meth:`taurus.qt.qtgui.container.QGroupWidget.getContentStyleStr`</span>
+    <span class="c1"># :     * :meth:`taurus.qt.qtgui.container.QGroupWidget.setContentStyleStr`</span>
+    <span class="c1"># :     * :meth:`taurus.qt.qtgui.container.QGroupWidget.resetContentStyleStr`</span>
+    <span class="n">contentStyle</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getContentStyleStr</span><span class="p">,</span> <span class="n">setContentStyleStr</span><span class="p">,</span>
+                                   <span class="n">resetContentStyleStr</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;The style must be a json dictionary&quot;</span><span class="p">)</span>
+
+    <span class="c1"># : This property contains the widget&#39;s title style</span>
+    <span class="c1"># : The style must be a json dictionary</span>
+    <span class="c1"># :</span>
+    <span class="c1"># : **Access functions:**</span>
+    <span class="c1"># :</span>
+    <span class="c1"># :     * :meth:`taurus.qt.qtgui.container.QGroupWidget.getTitleStyleStr`</span>
+    <span class="c1"># :     * :meth:`taurus.qt.qtgui.container.QGroupWidget.setTitleStyleStr`</span>
+    <span class="c1"># :     * :meth:`taurus.qt.qtgui.container.QGroupWidget.resetTitleStyleStr`</span>
+    <span class="n">titleStyle</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getTitleStyleStr</span><span class="p">,</span> <span class="n">setTitleStyleStr</span><span class="p">,</span>
+                                 <span class="n">resetTitleStyleStr</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;The style must be a json dictionary&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
+    <span class="s2">&quot;QGroup Widget&quot;</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">QGroupWidget</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Database&quot;</span>
+    <span class="n">contentLayout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">content</span><span class="p">()</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">contentLayout</span><span class="p">)</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;&amp;Host&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">())</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;&amp;Port&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">())</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">QGroupWidget</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Hello world&quot;</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">titleIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;video-x-generic&quot;</span><span class="p">)</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">setTitleStyle</span><span class="p">({</span>
+        <span class="s1">&#39;start_color&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb(255, 60, 60)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;stop_color&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb(200, 0, 0)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;font_color&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb(140, 0, 0)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;border_radius&#39;</span><span class="p">:</span> <span class="s1">&#39;10px&#39;</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">setContentStyle</span><span class="p">({</span>
+        <span class="s1">&#39;border_radius&#39;</span><span class="p">:</span> <span class="s1">&#39;0px&#39;</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="n">contentLayout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">content</span><span class="p">()</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">contentLayout</span><span class="p">)</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Press here&quot;</span><span class="p">))</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Status&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">())</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Coment&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">())</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Build&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">())</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Upper limit&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">())</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Lower limit&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">())</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">QGroupWidget</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Hello world 2&quot;</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">titleIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;network-server&quot;</span><span class="p">)</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">titleVisible</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">contentLayout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">content</span><span class="p">()</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">contentLayout</span><span class="p">)</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Something&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">())</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;More&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">())</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">panel</span> <span class="o">=</span> <span class="n">QGroupWidget</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;5&quot;</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">titleIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;folder&quot;</span><span class="p">)</span>
+    <span class="n">contentLayout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">content</span><span class="p">()</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">contentLayout</span><span class="p">)</span>
+    <span class="n">panel2</span> <span class="o">=</span> <span class="n">QGroupWidget</span><span class="p">()</span>
+    <span class="n">panel2</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;5.1&quot;</span>
+    <span class="n">panel2</span><span class="o">.</span><span class="n">titleIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;folder&quot;</span><span class="p">)</span>
+    <span class="n">panel2</span><span class="o">.</span><span class="n">titleHeight</span> <span class="o">=</span> <span class="mi">48</span>
+    <span class="n">contentLayout2</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">()</span>
+    <span class="n">panel2</span><span class="o">.</span><span class="n">content</span><span class="p">()</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">contentLayout2</span><span class="p">)</span>
+    <span class="n">contentLayout2</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Something&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">())</span>
+    <span class="n">contentLayout2</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;More&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">())</span>
+    <span class="n">contentLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">panel2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">addStretch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">adjustSize</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">w</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+    <span class="n">Application</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Group widget demo&quot;</span><span class="p">,</span> <span class="n">app_version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                          <span class="n">org_domain</span><span class="o">=</span><span class="s2">&quot;Taurus&quot;</span><span class="p">,</span> <span class="n">org_name</span><span class="o">=</span><span class="s2">&quot;Tango community&quot;</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">demo</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">w</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

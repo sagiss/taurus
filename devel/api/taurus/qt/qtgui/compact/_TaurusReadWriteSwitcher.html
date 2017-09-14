@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusReadWriteSwitcher &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtgui.compact" href="../compact.html"/>
+        <link rel="next" title="taurus.qt.qtgui.console" href="../console.html"/>
+        <link rel="prev" title="TaurusLabelEditRW" href="_TaurusLabelEditRW.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+      
+          <li><a href="../compact.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui.compact</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">TaurusReadWriteSwitcher</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/compact/_TaurusReadWriteSwitcher.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusreadwriteswitcher">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher" title="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher"><code class="xref py py-class docutils literal"><span class="pre">TaurusReadWriteSwitcher</span></code></a><a class="headerlink" href="#taurusreadwriteswitcher" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-443693a957a90bb7941aaa40f10e06fb1c81660a.png" alt="Inheritance diagram of TaurusReadWriteSwitcher" usemap="#inheritance914d53f9bc" class="inheritance"/>
+<map id="inheritance914d53f9bc" name="inheritance914d53f9bc">
+<area shape="rect" id="node1" title="A base class defining the API for configurable objects." alt="" coords="5,197,173,245"/>
+<area shape="rect" id="node9" title="A generic Taurus component." alt="" coords="152,293,323,341"/>
+<area shape="rect" id="node2" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="219,101,291,149"/>
+<area shape="rect" id="node10" title="TaurusListener Interface" alt="" coords="197,197,312,245"/>
+<area shape="rect" id="node14" title="This is a Qt.QWidget that additionally accepts a model property." alt="" coords="253,581,360,629"/>
+<area shape="rect" id="node12" title="The base class for all Qt Taurus widgets." alt="" coords="168,389,307,437"/>
+<area shape="rect" id="node11" title="Base class for the Taurus container widgets." alt="" coords="159,485,316,533"/>
+<area shape="rect" id="node13" title="This is a base class for creating widgets that can switch" alt="" coords="217,677,396,725"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher">
+<em class="property">class </em><code class="descname">TaurusReadWriteSwitcher</code><span class="sig-paren">(</span><em>parent=None</em>, <em>designMode=False</em>, <em>readWClass=None</em>, <em>writeWClass=None</em>, <em>enterEditTriggers=None</em>, <em>exitEditTriggers=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/compact/abstractswitcher.html#TaurusReadWriteSwitcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.container.tauruswidget.TaurusWidget</span></code></p>
+<p>This is a base class for creating widgets that can switch
+beetween read and write mode by combining a Taurus widget for reading
+and a Taurus Widget for writing.</p>
+<p>For example, if you want to combine a TaurusLabel with a
+TaurusValueLineEdit, you can implement it as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyRWSwitcher</span><span class="p">(</span><span class="n">TaurusReadWriteSwitcher</span><span class="p">):</span>
+    <span class="n">readWClass</span> <span class="o">=</span> <span class="n">TaurusLabel</span>
+    <span class="n">writeWClass</span> <span class="o">=</span> <span class="n">TaurusValueLineEdit</span>
+</pre></div>
+</div>
+<p>Alternatively, you can instantiate the TaurusReadWriteSwitcher class
+directly and pass the read and write classes to the constructor:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">TaurusReadWriteSwitcher</span><span class="p">(</span><span class="n">readWClass</span><span class="o">=</span><span class="n">TaurusLabel</span><span class="p">,</span>
+                            <span class="n">writeWClass</span><span class="o">=</span><span class="n">TaurusValueLineEdit</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or you can even set the read and write widgets (instead of classes)
+after instantiation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">TaurusReadWriteSwitcher</span><span class="p">()</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">TaurusLabel</span><span class="p">()</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">TaurusValueLineEdit</span><span class="p">()</span>
+<span class="n">w</span><span class="o">.</span><span class="n">setReadWidget</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">setWriteWidget</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>TaurusReadWriteSwitcher will normally show the read widget by default,
+but it will allow to switch to &#8220;edit mode&#8221; (where the write widget
+is shown instead). Enetering and exiting the edit mode is controlled
+by &#8220;triggers&#8221;. Triggers can be key presses, QEvents or signals.</p>
+<p>The default implementation sets pressing F2 or doubleclicking the read
+widget as the triggers for entering edit mode, and pressing Escape,
+losing the focus or applying the value on the write widget as the
+triggers for leaving the edit mode. This can be customized by changing
+<cite>enterEditTriggers</cite> and <cite>exitEditTriggers</cite> class members or by passing
+<cite>enterEditTriggers</cite> and <cite>exitEditTriggers</cite> keyword parameters to the
+constructor of TaurusReadWriteSwitcher:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><cite>enterEditTriggers</cite> is a tuple containing one or more of the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>key shortcut (either a Qt.Qt.Key or a QKeySequence)</li>
+<li>event type on the read widget (a Qt.QEvent.Type)</li>
+<li>signal from the read widget (a str representing a Signal signature)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><cite>exitEditTriggers</cite> is a tuple containing one or more of the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>key shortcut (either a Qt.Qt.Key or a QKeySequence)</li>
+<li>event type on the write widget (a Qt.QEvent.Type)</li>
+<li>signal from the write widget (a str representing a Signal signature)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p><a class="reference external" href="mailto:#&#37;&#52;&#48;todo">#<span>&#64;</span>todo</a>: check integration with designer</p>
+<dl class="method">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.enterEdit">
+<code class="descname">enterEdit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/compact/abstractswitcher.html#TaurusReadWriteSwitcher.enterEdit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.enterEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot for entering Edit mode</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">args and kwargs are ignored</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.enterEditTriggers">
+<code class="descname">enterEditTriggers</code><em class="property"> = (16777265, 4)</em><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.enterEditTriggers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.eventFilter">
+<code class="descname">eventFilter</code><span class="sig-paren">(</span><em>obj</em>, <em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/compact/abstractswitcher.html#TaurusReadWriteSwitcher.eventFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.eventFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented to intercept events from the read and write widgets</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.exitEdit">
+<code class="descname">exitEdit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/compact/abstractswitcher.html#TaurusReadWriteSwitcher.exitEdit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.exitEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slot for entering Edit mode</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">args and kwargs are ignored</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.exitEditTriggers">
+<code class="descname">exitEditTriggers</code><em class="property"> = (16777216, 9, 'applied')</em><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.exitEditTriggers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/compact/abstractswitcher.html#TaurusReadWriteSwitcher.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.model">
+<code class="descname">model</code><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the model name for this component.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the model name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.readWClass">
+<code class="descname">readWClass</code><em class="property"> = None</em><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.readWClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setModel">
+<code class="descname">setModel</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/compact/abstractswitcher.html#TaurusReadWriteSwitcher.setModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This implementation propagates the model to the read and write widgets.
+You may reimplement it to do things like passing different models to each.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setReadWidget">
+<code class="descname">setReadWidget</code><span class="sig-paren">(</span><em>widget</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/compact/abstractswitcher.html#TaurusReadWriteSwitcher.setReadWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setReadWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the read Widget to be used. You can reimplement this
+method to tweak the read widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>widget</strong> (<code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>) &#8211; This should be Taurus widget</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setWriteWidget">
+<code class="descname">setWriteWidget</code><span class="sig-paren">(</span><em>widget</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/compact/abstractswitcher.html#TaurusReadWriteSwitcher.setWriteWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.setWriteWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the write Widget to be used You can reimplement this
+method to tweak the write widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>widget</strong> (<code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>) &#8211; This should be Taurus widget
+(typically a TaurusBaseWritableWidget)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.writeWClass">
+<code class="descname">writeWClass</code><em class="property"> = None</em><a class="headerlink" href="#taurus.qt.qtgui.compact.TaurusReadWriteSwitcher.writeWClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../console.html" class="btn btn-neutral float-right" title="taurus.qt.qtgui.console" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusLabelEditRW.html" class="btn btn-neutral" title="TaurusLabelEditRW" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

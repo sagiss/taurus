@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Creating GUIs with the TaurusGUI framework &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../index.html"/>
+        <link rel="up" title="Developer’s Guide" href="index.html"/>
+        <link rel="next" title="Taurus Qt Designer tutorial" href="designer_tutorial.html"/>
+        <link rel="prev" title="Taurus development guidelines" href="coding_guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus.html">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+    <li>Creating GUIs with the TaurusGUI framework</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/devel/taurusgui_newgui.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="creating-guis-with-the-taurusgui-framework">
+<span id="taurusgui-newgui"></span><h1>Creating GUIs with the TaurusGUI framework<a class="headerlink" href="#creating-guis-with-the-taurusgui-framework" title="Permalink to this headline">¶</a></h1>
+<p>The easiest way to create a new GUI using Taurus is by invoking:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurusgui</span> <span class="o">--</span><span class="n">new</span><span class="o">-</span><span class="n">gui</span>
+</pre></div>
+</div>
+<p>This shows a &#8220;wizard&#8221; application that will guide you through
+the process of creating a <a class="reference internal" href="api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui" title="taurus.qt.qtgui.taurusgui.TaurusGui"><code class="xref py py-class docutils literal"><span class="pre">TaurusGui</span></code></a>-based GUI in a few minutes
+without having to program a single line of code.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/taurusgui-newgui01.png"><img alt="../_images/taurusgui-newgui01.png" src="../_images/taurusgui-newgui01.png" style="width: 100%;" /></a>
+</div>
+<p>The taurus GUI thus created can be populated with <em>panels</em> containing
+any Qt widget (typically from Taurus, but it may also be from any
+other arbitrary module).</p>
+<p>The GUI can also be modified and extended at execution time as explained
+in <a class="reference internal" href="../users/ui/taurusgui.html#taurusgui-ui"><span class="std std-ref">this section of the user guide</span></a>.</p>
+<p>The Taurus widgets can be associated with models when they are added
+to the GUI and, in many cases, they may also accept drag &amp; drop of the
+model name(s) from other widgets (or from a model selector) at any time,
+e.g.: the user can start plotting the time evolution of a given value by
+just dragging its name from a TaurusForm and “dropping” it into a
+TaurusTrend widget.</p>
+<div class="section" id="advanced-control-over-the-gui">
+<h2>Advanced control over the GUI<a class="headerlink" href="#advanced-control-over-the-gui" title="Permalink to this headline">¶</a></h2>
+<p>While the procedure described above is enough in many cases, sometimes more
+control over the GUI contents, appearance and behaviour is required. This
+more advanced control can be exerted at several levels:</p>
+<ul class="simple">
+<li>First, it is possible to edit the configuration files that define a
+TaurusGUI-based application. These are declarative python and XML files
+(editable as plain text) complemented by Qt settings files (editable with
+the provided <a class="reference internal" href="../users/ui/configurations.html#configurations"><span class="std std-ref">taurusconfigbrowser</span></a> application).</li>
+<li>On a lower level, custom specific widgets (created either programmatically, as in
+the <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Examples</span></a> or via the <a class="reference internal" href="designer_tutorial.html#taurusqtdesigner-tutorial"><span class="std std-ref">Qt designer</span></a>)
+can be added as panels to a TaurusGUI application.</li>
+<li>At the same level, it is also possible to do simple inter-panel communication
+thanks to a <a class="reference internal" href="api/taurus/qt/qtcore/communication/_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager" title="taurus.qt.qtcore.communication.SharedDataManager"><code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtcore.communication.SharedDataManager</span></code></a> broker
+component instantiated by the GUI.</li>
+<li>Finally, the maximum level of control can be achieved by programmatically
+accessing the <a class="reference internal" href="api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui" title="taurus.qt.qtgui.taurusgui.TaurusGui"><code class="xref py py-class docutils literal"><span class="pre">TaurusGui</span></code></a> class itself. In this way, all the higher
+level features described before are still available, while there are no
+limitations on the customizations that can be done.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="designer_tutorial.html" class="btn btn-neutral float-right" title="Taurus Qt Designer tutorial" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="coding_guide.html" class="btn btn-neutral" title="Taurus development guidelines" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

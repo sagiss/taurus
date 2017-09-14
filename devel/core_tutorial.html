@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus core tutorial &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../index.html"/>
+        <link rel="up" title="Developer’s Guide" href="index.html"/>
+        <link rel="next" title="Taurus custom settings" href="tauruscustomsettings.html"/>
+        <link rel="prev" title="Taurus icon guide" href="icon_guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus.html">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+    <li>taurus core tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/devel/core_tutorial.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurus-core-tutorial">
+<span id="id1"></span><h1>taurus core tutorial<a class="headerlink" href="#taurus-core-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>The core has been designed to provide a model-based abstraction to the various
+sources of data and/or control objects supported via the Taurus schemes (we use
+the term &#8220;model&#8221; to refer to the model component in an MVC driven architecture).</p>
+<p>An scheme is a plugin for Taurus that provides the glue between Taurus and a
+given source of data and/or of objects that can be controlled. For example,
+schemes exist for various control system libraries (such as
+<a class="reference external" href="http://www.tango-controls.org/">Tango</a>, or <a class="reference external" href="http://www.aps.anl.gov/epics/">EPICS</a>) as well as for processing data (e.g. the
+<a class="reference internal" href="api/taurus/core/evaluation.html#module-taurus.core.evaluation" title="taurus.core.evaluation"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.evaluation</span></code></a> scheme).</p>
+<p>Each scheme implements at least a Factory (derived from
+<a class="reference internal" href="api/taurus/core/_TaurusFactory.html#taurus.core.TaurusFactory" title="taurus.core.TaurusFactory"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.TaurusFactory</span></code></a>) which provides Taurus model objects ,
+for a given model name.</p>
+<div class="section" id="model-concept">
+<span id="id2"></span><h2>Model concept<a class="headerlink" href="#model-concept" title="Permalink to this headline">¶</a></h2>
+<p>All Taurus Elements (Devices, Attributes, etc) are model objects with an
+associated unique name. The model name is an URI (as defined in <a class="reference external" href="https://tools.ietf.org/html/rfc3986">RFC3986</a>).</p>
+<p>In practice, the URIs have the following form (for a complete and rigorous
+description refer to <a class="reference external" href="https://tools.ietf.org/html/rfc3986">RFC3986</a>):</p>
+<p>[&lt;scheme&gt;:][&lt;authority&gt;][&lt;path&gt;][?&lt;query&gt;][#&lt;fragment&gt;]</p>
+<p>Notes:</p>
+<ul class="simple">
+<li>The &lt;authority&gt;, if present, starts by &#8216;//&#8217;</li>
+<li>The &lt;path&gt;, if present, starts by &#8216;/&#8217; (except for relative URIs)</li>
+</ul>
+<p>A model object (also referred to occasionally as Taurus Element) is an instance
+of a class derived from one of <a class="reference internal" href="api/taurus/core/_TaurusAuthority.html#taurus.core.TaurusAuthority" title="taurus.core.TaurusAuthority"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.TaurusAuthority</span></code></a>,
+<a class="reference internal" href="api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice" title="taurus.core.TaurusDevice"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.TaurusDevice</span></code></a>, <a class="reference internal" href="api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute" title="taurus.core.TaurusAttribute"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.TaurusAttribute</span></code></a>.</p>
+</div>
+<div class="section" id="examples-of-model-names">
+<h2>Examples of model names<a class="headerlink" href="#examples-of-model-names" title="Permalink to this headline">¶</a></h2>
+<p>Different schemes may choose different conventions to name the models that they
+provide.</p>
+<p>The following are some examples for the <a class="reference internal" href="api/taurus/core/tango.html#module-taurus.core.tango" title="taurus.core.tango"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.tango</span></code></a> scheme:</p>
+<p>The full Taurus model name for a Tango device <cite>sys/tg_test/1</cite> registered in
+a Tango Database running on <cite>machine:10000</cite> is:</p>
+<p><code class="docutils literal"><span class="pre">tango://machine:10000/sys/tg_test/1</span></code></p>
+<p>Now, if we assume that:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">tango</span></code> is set as the default scheme and that</li>
+<li><code class="docutils literal"><span class="pre">machine:10000</span></code> is set as the default TANGO_HOST</li>
+<li>and that <code class="docutils literal"><span class="pre">tgtest1</span></code> is set as an alias of <code class="docutils literal"><span class="pre">sys/tg_test/1</span></code></li>
+</ul>
+</div></blockquote>
+<p>then the same Tango device could be accessed as:</p>
+<p><code class="docutils literal"><span class="pre">tgtest1</span></code></p>
+<p>In the case of Tango attributes, here are some equivalent examples given the
+above assumptions:</p>
+<p><code class="docutils literal"><span class="pre">tango://machine:10000/sys/tg_test/1/double_scalar</span></code>,</p>
+<p><code class="docutils literal"><span class="pre">sys/tg_test/1/double_scalar</span></code>,</p>
+<p><code class="docutils literal"><span class="pre">tango:tgtest1/double_scalar</span></code>,</p>
+<p><code class="docutils literal"><span class="pre">tgtest1/double_scalar</span></code></p>
+<p>See <a class="reference internal" href="api/taurus/core/tango.html#module-taurus.core.tango" title="taurus.core.tango"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.tango</span></code></a> for a more exhaustive description and more
+examples related to Tango.</p>
+<p>The following are some examples for the <a class="reference internal" href="api/taurus/core/evaluation.html#module-taurus.core.evaluation" title="taurus.core.evaluation"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.evaluation</span></code></a> scheme:</p>
+<p>An evaluation attribute that generates an array of dimensionless random
+values when read:</p>
+<p><code class="docutils literal"><span class="pre">eval:rand(256)</span></code></p>
+<p>An evaluation attribute that applies a multiplication factor to an existing
+tango attribute (and which is updated every time that the tango attribute
+changes):</p>
+<p><code class="docutils literal"><span class="pre">eval:123.4*{tango:sys/tg_test/1/double_scalar}</span></code></p>
+<p>Or one that adds noise to a tango image attribute:</p>
+<p><code class="docutils literal"><span class="pre">eval:img={tango:sys/tg_test/1/short_image_ro};img+10*rand(*img.shape)</span></code></p>
+<p>And, by using custom evaluators, one can easily access virtually anything
+available from a python module. For example, using the datetime module
+to get today&#8217;s date as a Taurus attribute:</p>
+<p><code class="docutils literal"><span class="pre">eval:&#64;datetime.*/date.today().isoformat()</span></code></p>
+<p>See <a class="reference internal" href="api/taurus/core/evaluation.html#module-taurus.core.evaluation" title="taurus.core.evaluation"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.evaluation</span></code></a> for a more exhaustive description and some
+tricks with the Evaluation scheme and the custom evaluators.</p>
+<p>Now an example for the <a class="reference internal" href="api/taurus/core/epics.html#module-taurus.core.epics" title="taurus.core.epics"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.epics</span></code></a> scheme. The model name for the
+EPICS process variable (PV) &#8220;my:example.RBV&#8221; is:</p>
+<p><code class="docutils literal"><span class="pre">epics:my:example.RBV</span></code></p>
+<p>Note that you can create your own schemes and add them to taurus (e.g., an
+scheme to access your own home-brew control system). Some schemes that are in
+our TO-DO list are:</p>
+<ul class="simple">
+<li>A scheme to access datasets in HDF5 files as Taurus attributes</li>
+<li>A scheme to access ranges of cells in a spreadsheet file as Taurus attributes</li>
+<li>A scheme to access column/row data in ASCII files as Taurus attributes</li>
+<li>A scheme to access data from mySQL databases as Taurus attributes</li>
+<li>A scheme to access Tango-archived data as Taurus attributes</li>
+</ul>
+</div>
+<div class="section" id="model-access">
+<h2>model access<a class="headerlink" href="#model-access" title="Permalink to this headline">¶</a></h2>
+<p>Taurus users are encouraged to write code that is &#8220;scheme-agnostic&#8221;,
+that is, that it neither assumes the availability of certain schemes nor uses
+any scheme-specific feature. For this, Taurus provides several high-level
+scheme-agnostic helpers to obtain the Taurus Element associated to a given
+model name:</p>
+<ul class="simple">
+<li><a class="reference internal" href="api/taurus.html#taurus.Authority" title="taurus.Authority"><code class="xref py py-func docutils literal"><span class="pre">taurus.Authority()</span></code></a></li>
+<li><a class="reference internal" href="api/taurus.html#taurus.Device" title="taurus.Device"><code class="xref py py-func docutils literal"><span class="pre">taurus.Device()</span></code></a></li>
+<li><a class="reference internal" href="api/taurus.html#taurus.Attribute" title="taurus.Attribute"><code class="xref py py-func docutils literal"><span class="pre">taurus.Attribute()</span></code></a></li>
+<li><a class="reference internal" href="api/taurus.html#taurus.Object" title="taurus.Object"><code class="xref py py-func docutils literal"><span class="pre">taurus.Object()</span></code></a></li>
+</ul>
+<p>The first four helpers require you to know which type of Element (e.g.,
+Attribute, Device,...) is represented by the model name. If you do not know that
+beforehand, you can use <a class="reference internal" href="api/taurus.html#taurus.Object" title="taurus.Object"><code class="xref py py-meth docutils literal"><span class="pre">taurus.Object()</span></code></a> which will automatically find the
+type and provide you with the corresponding model object (but of course this is
+slightly less efficient than using one of the first three helpers).</p>
+<p>These helpers will automatically find out which scheme corresponds to the given
+model and will delegate the creation of the model object to the corresponding
+scheme-specific Factory. Therefore, the returned model object will be of a
+specialized subclass of the corresponding Taurus generic Element and it
+will expose the scheme-agnostic API plus optionally some scheme-specific
+methods (e.g., <a class="reference internal" href="api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice" title="taurus.core.tango.TangoDevice"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.tango.TangoDevice</span></code></a> objects provide all the
+API of a <a class="reference internal" href="api/taurus/core/_TaurusDevice.html#taurus.core.TaurusDevice" title="taurus.core.TaurusDevice"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.TaurusDevice</span></code></a> but they also provide all the methods
+from a <a class="reference external" href="http://www.esrf.eu/computing/cs/tango/tango_doc/kernel_doc/pytango/latest/client_api/device_proxy.html#PyTango.DeviceProxy" title="(in PyTango v8.1)"><code class="xref py py-class docutils literal"><span class="pre">PyTango.DeviceProxy</span></code></a>)</p>
+<p>For example, obtaining the device model object for a TangoTest Device
+can be done as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus</span>
+<span class="n">testDev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or, using <a class="reference internal" href="api/taurus.html#taurus.Object" title="taurus.Object"><code class="xref py py-meth docutils literal"><span class="pre">taurus.Object()</span></code></a>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus</span>
+<span class="n">testDev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Also for example, obtaining the Taurus Attribute model corresponding to the
+EPICS Process Variable called &#8220;my:example.RBV&#8221; is just:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus</span>
+<span class="n">testDev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;epics:my:example.RBV&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Taurus also provides other helpers to access lower level objects for dealing
+with models:</p>
+<ul class="simple">
+<li><a class="reference internal" href="api/taurus.html#taurus.Factory" title="taurus.Factory"><code class="xref py py-func docutils literal"><span class="pre">taurus.Factory()</span></code></a></li>
+<li><a class="reference internal" href="api/taurus.html#taurus.Manager" title="taurus.Manager"><code class="xref py py-func docutils literal"><span class="pre">taurus.Manager()</span></code></a></li>
+</ul>
+<p>And also some useful methods to validate names, find out the element type(s)
+for a given name and other related tasks:</p>
+<ul class="simple">
+<li><a class="reference internal" href="api/taurus.html#taurus.isValidName" title="taurus.isValidName"><code class="xref py py-func docutils literal"><span class="pre">taurus.isValidName()</span></code></a></li>
+<li><a class="reference internal" href="api/taurus.html#taurus.getValidTypesForName" title="taurus.getValidTypesForName"><code class="xref py py-func docutils literal"><span class="pre">taurus.getValidTypesForName()</span></code></a></li>
+<li><a class="reference internal" href="api/taurus.html#taurus.getSchemeFromName" title="taurus.getSchemeFromName"><code class="xref py py-func docutils literal"><span class="pre">taurus.getSchemeFromName()</span></code></a></li>
+</ul>
+</div>
+<div class="section" id="advantages-of-accessing-tango-via-taurus-over-pytango">
+<h2>Advantages of accessing Tango via Taurus over PyTango<a class="headerlink" href="#advantages-of-accessing-tango-via-taurus-over-pytango" title="Permalink to this headline">¶</a></h2>
+<p>If you are familiar with <a class="reference external" href="http://packages.python.org/PyTango/">PyTango</a> you may be asking yourself what is the real
+advantage of using taurus instead of <a class="reference external" href="http://packages.python.org/PyTango/">PyTango</a> directly for accessing Tango
+objects. There are actually many benefits from using taurus. Here is a list of
+the most important ones.</p>
+<dl class="docutils">
+<dt><em>integration with other schemes</em></dt>
+<dd>Taurus is not just Tango. For example, you can treat a Tango Attribute just
+as you would treat an EPICS attribute, and use them both in the same
+application.</dd>
+<dt><em>model unicity:</em></dt>
+<dd><p class="first">you may request the same model many times without performance hit, since
+taurus will give you the same object:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">taurus</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim1</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim2</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">sim1</span> <span class="o">==</span> <span class="n">sim2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Whereas in <a class="reference external" href="http://packages.python.org/PyTango/">PyTango</a> the same code always results in the construction of new
+DeviceProxy objects:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">PyTango</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim1</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceProxy</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim2</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceProxy</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">sim1</span> <span class="o">==</span> <span class="n">sim2</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd>
+<dt><em>model intelligence:</em></dt>
+<dd><p class="first">taurus is clever enough to know that, for example, &#8216;sys/tg_test/1&#8217;
+represents the same model as &#8216;tango:SYS/Tg_TEST/1&#8217; so:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">taurus</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim1</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim2</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s1">&#39;tango:SYS/Tg_TEST/1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">sim1</span> <span class="o">==</span> <span class="n">sim2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd>
+<dt><em>tango event abstraction:</em></dt>
+<dd><p class="first">taurus cleverly hides the complexities and restrictions of the tango event
+system. With taurus you can:</p>
+<blockquote>
+<div><ul class="simple">
+<li>subscribe to the same event multiple times</li>
+<li>handle tango events from any thread</li>
+</ul>
+</div></blockquote>
+<p class="last">Some optimizations are also done to ensure that the tango event thread is
+not blocked by the user event handle code.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tauruscustomsettings.html" class="btn btn-neutral float-right" title="Taurus custom settings" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="icon_guide.html" class="btn btn-neutral" title="Taurus icon guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

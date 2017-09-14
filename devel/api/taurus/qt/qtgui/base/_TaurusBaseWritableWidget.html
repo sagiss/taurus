@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusBaseWritableWidget &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtgui.base" href="../base.html"/>
+        <link rel="next" title="TaurusConfigurationControllerHelper" href="_TaurusConfigurationControllerHelper.html"/>
+        <link rel="prev" title="TaurusBaseWidget" href="_TaurusBaseWidget.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.1 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 4.1 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+      
+          <li><a href="../base.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui.base</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">TaurusBaseWritableWidget</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/base/_TaurusBaseWritableWidget.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusbasewritablewidget">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget" title="taurus.qt.qtgui.base.TaurusBaseWritableWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWritableWidget</span></code></a><a class="headerlink" href="#taurusbasewritablewidget" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-b32a17ec9e3bda650520312fbe07402185e5928d.png" alt="Inheritance diagram of TaurusBaseWritableWidget" usemap="#inheritanced5a1d7a92b" class="inheritance"/>
+<map id="inheritanced5a1d7a92b" name="inheritanced5a1d7a92b">
+<area shape="rect" id="node1" title="A base class defining the API for configurable objects." alt="" coords="5,197,173,245"/>
+<area shape="rect" id="node4" title="A generic Taurus component." alt="" coords="89,293,260,341"/>
+<area shape="rect" id="node2" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="219,101,291,149"/>
+<area shape="rect" id="node5" title="TaurusListener Interface" alt="" coords="197,197,312,245"/>
+<area shape="rect" id="node6" title="The base class for all Qt Taurus widgets." alt="" coords="105,389,244,437"/>
+<area shape="rect" id="node7" title="The base class for all taurus input widgets" alt="" coords="81,485,269,533"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget">
+<em class="property">class </em><code class="descname">TaurusBaseWritableWidget</code><span class="sig-paren">(</span><em>name</em>, <em>taurus_parent=None</em>, <em>designMode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.base.taurusbase.TaurusBaseWidget</span></code></p>
+<p>The base class for all taurus input widgets</p>
+<p>it emits the applied signal when the value has been applied.</p>
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.applied">
+<code class="descname">applied</code><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.applied" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base signal applied</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.forceApply">
+<code class="descname">forceApply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.forceApply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.forceApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>It (re)applies the value regardless of pending operations.
+WARNING: USE WITH CARE. In most cases what you need is to make sure
+that pending operations are properly created, not calling this method</p>
+<p>It emits the applied signal if apply is not aborted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.getAutoApply">
+<code class="descname">getAutoApply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.getAutoApply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getAutoApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>whether autoApply mode is enabled or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.getForcedApply">
+<code class="descname">getForcedApply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.getForcedApply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getForcedApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>whether forcedApply mode is enabled or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.getModelClass">
+<code class="descname">getModelClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.getModelClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getModelClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget" title="taurus.qt.qtgui.base.TaurusBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWidget</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.getOperationCallbacks">
+<code class="descname">getOperationCallbacks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.getOperationCallbacks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getOperationCallbacks" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>returns the operation callbacks (i.e., a sequence of methods that will be called after an operation is executed</dt>
+<dd>(this default implementation it returns an empty list).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">sequence</span></code> &lt;<code class="xref py py-class docutils literal"><span class="pre">callable</span></code>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget" title="taurus.qt.qtgui.base.TaurusBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWidget</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.getValue">
+<code class="descname">getValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.getValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be implemented in derived classes to return
+the value to be written. Note that this may differ
+from the displayed value (e.g. for a numeric value being
+edited by a QLineEdit-based widget, the displayed value will
+be a string while getValue will return a number)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.handleEvent">
+<code class="descname">handleEvent</code><span class="sig-paren">(</span><em>src</em>, <em>evt_type</em>, <em>evt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.handleEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.handleEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget" title="taurus.qt.qtgui.base.TaurusBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWidget</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.isReadOnly">
+<code class="descname">isReadOnly</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.isReadOnly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.isReadOnly" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget" title="taurus.qt.qtgui.base.TaurusBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWidget</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.notifyValueChanged">
+<code class="descname">notifyValueChanged</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.notifyValueChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.notifyValueChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclasses should connect some particular signal to this method for
+indicating that something has changed.
+e.g., a QLineEdit should connect its &#8220;textChanged&#8221; signal...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.postAttach">
+<code class="descname">postAttach</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.postAttach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.postAttach" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget" title="taurus.qt.qtgui.base.TaurusBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWidget</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.resetAutoApply">
+<code class="descname">resetAutoApply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.resetAutoApply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.resetAutoApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>resets the autoApply mode (i.e.: sets it to False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.resetForcedApply">
+<code class="descname">resetForcedApply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.resetForcedApply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.resetForcedApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>resets the forcedApply mode (i.e.: sets it to False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.resetPendingOperations">
+<code class="descname">resetPendingOperations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.resetPendingOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.resetPendingOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget" title="taurus.qt.qtgui.base.TaurusBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWidget</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.setAutoApply">
+<code class="descname">setAutoApply</code><span class="sig-paren">(</span><em>auto</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.setAutoApply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.setAutoApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets autoApply mode. In autoApply mode, the widget writes the value
+automatically whenever it is changed by the user (e.g., when
+<a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.notifyValueChanged" title="taurus.qt.qtgui.base.TaurusBaseWritableWidget.notifyValueChanged"><code class="xref py py-meth docutils literal"><span class="pre">notifyValueChanged()</span></code></a> is called). If False, a value changed just
+flags a &#8220;pending operation&#8221; which needs to be applied manually by
+the user before the value gets written.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>auto</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; True for setting autoApply mode. False for disabling</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.setForcedApply">
+<code class="descname">setForcedApply</code><span class="sig-paren">(</span><em>forced</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.setForcedApply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.setForcedApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the forcedApply mode. In forcedApply mode, values are written even
+if there are not pending operations (e.g. even if the displayed value is
+the same as the currently applied one).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>forced</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; True for setting forcedApply mode. False for disabling</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.setValue">
+<code class="descname">setValue</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.setValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.setValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be implemented in derived classes to provide
+a (widget-specific) way of updating the displayed value based
+on a given attribute value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> &#8211; The attribute value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.updatePendingOperations">
+<code class="descname">updatePendingOperations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.updatePendingOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.updatePendingOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget" title="taurus.qt.qtgui.base.TaurusBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWidget</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.updateStyle">
+<code class="descname">updateStyle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.updateStyle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.updateStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented from <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget" title="taurus.qt.qtgui.base.TaurusBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWidget</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.valueChanged">
+<code class="descname">valueChanged</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.valueChanged" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.0: </span>Use notifyValueChanged instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseWritableWidget.writeValue">
+<code class="descname">writeValue</code><span class="sig-paren">(</span><em>forceApply=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseWritableWidget.writeValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseWritableWidget.writeValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the value to the attribute, either by applying pending
+operations or (if the ForcedApply flag is True), it writes directly when
+no operations are pending</p>
+<p>It emits the applied signal if apply is not aborted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>forceApply</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; If True, it behaves as in forceApply mode
+(even if the forceApply mode is disabled by
+<code class="xref py py-meth docutils literal"><span class="pre">setForceApply()</span></code>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusConfigurationControllerHelper.html" class="btn btn-neutral float-right" title="TaurusConfigurationControllerHelper" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusBaseWidget.html" class="btn btn-neutral" title="TaurusBaseWidget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

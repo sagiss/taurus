@@ -1,0 +1,735 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.plot.curvesAppearanceChooserDlg &mdash; taurus 4.1.2-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.plot.curvesAppearanceChooserDlg</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.plot.curvesAppearanceChooserDlg</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">curvesAppearanceChooserDlg.py:</span>
+<span class="sd">    A Qt dialog for choosing plot appearance (symbols and lines)</span>
+<span class="sd">    for a QwtPlot-derived widget (like Taurusplot)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Qwt5</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="n">NamedLineStyles</span> <span class="o">=</span> <span class="p">{</span><span class="kc">None</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                   <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">:</span> <span class="s2">&quot;No line&quot;</span><span class="p">,</span>
+                   <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">:</span> <span class="s2">&quot;_____&quot;</span><span class="p">,</span>
+                   <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DashLine</span><span class="p">:</span> <span class="s2">&quot;_ _ _&quot;</span><span class="p">,</span>
+                   <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DotLine</span><span class="p">:</span> <span class="s2">&quot;.....&quot;</span><span class="p">,</span>
+                   <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DashDotLine</span><span class="p">:</span> <span class="s2">&quot;_._._&quot;</span><span class="p">,</span>
+                   <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DashDotDotLine</span><span class="p">:</span> <span class="s2">&quot;.._..&quot;</span><span class="p">,</span>
+                   <span class="p">}</span>
+<span class="n">ReverseNamedLineStyles</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedLineStyles</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="n">ReverseNamedLineStyles</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+
+<span class="n">NamedCurveStyles</span> <span class="o">=</span> <span class="p">{</span><span class="kc">None</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">NoCurve</span><span class="p">:</span> <span class="s2">&quot;No curve&quot;</span><span class="p">,</span>
+                    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">Lines</span><span class="p">:</span> <span class="s2">&quot;Lines&quot;</span><span class="p">,</span>
+                    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">Sticks</span><span class="p">:</span> <span class="s2">&quot;Sticks&quot;</span><span class="p">,</span>
+                    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">Steps</span><span class="p">:</span> <span class="s2">&quot;Steps&quot;</span><span class="p">,</span>
+                    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">Dots</span><span class="p">:</span> <span class="s2">&quot;Dots&quot;</span>
+                    <span class="p">}</span>
+<span class="n">ReverseNamedCurveStyles</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedCurveStyles</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="n">ReverseNamedCurveStyles</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+
+<span class="n">NamedSymbolStyles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="kc">None</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">NoSymbol</span><span class="p">:</span> <span class="s2">&quot;No symbol&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Ellipse</span><span class="p">:</span> <span class="s2">&quot;Circle&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Rect</span><span class="p">:</span> <span class="s2">&quot;Square&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Diamond</span><span class="p">:</span> <span class="s2">&quot;Diamond&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Triangle</span><span class="p">:</span> <span class="s2">&quot;Triangle&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">DTriangle</span><span class="p">:</span> <span class="s2">&quot;Down Triangle&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">UTriangle</span><span class="p">:</span> <span class="s2">&quot;Up triangle&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">LTriangle</span><span class="p">:</span> <span class="s2">&quot;Left Triangle&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">RTriangle</span><span class="p">:</span> <span class="s2">&quot;Right Triangle&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Cross</span><span class="p">:</span> <span class="s2">&quot;Cross&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">XCross</span><span class="p">:</span> <span class="s2">&quot;XCross&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">HLine</span><span class="p">:</span> <span class="s2">&quot;Horizontal line&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">VLine</span><span class="p">:</span> <span class="s2">&quot;Vertical line&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Star1</span><span class="p">:</span> <span class="s2">&quot;Star1&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Star2</span><span class="p">:</span> <span class="s2">&quot;Star2&quot;</span><span class="p">,</span>
+    <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtSymbol</span><span class="o">.</span><span class="n">Hexagon</span><span class="p">:</span> <span class="s2">&quot;Hexagon&quot;</span>
+<span class="p">}</span>
+
+<span class="n">ReverseNamedSymbolStyles</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedSymbolStyles</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="n">ReverseNamedSymbolStyles</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+
+<span class="n">NamedColors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Black&quot;</span><span class="p">,</span> <span class="s2">&quot;Red&quot;</span><span class="p">,</span> <span class="s2">&quot;Blue&quot;</span><span class="p">,</span> <span class="s2">&quot;Magenta&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;Green&quot;</span><span class="p">,</span> <span class="s2">&quot;Cyan&quot;</span><span class="p">,</span> <span class="s2">&quot;Yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;Gray&quot;</span><span class="p">,</span> <span class="s2">&quot;White&quot;</span><span class="p">]</span>
+
+
+<span class="nd">@UILoadable</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser">[docs]</a><span class="k">class</span> <span class="nc">CurvesAppearanceChooser</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A widget for choosing plot appearance for one or more curves.</span>
+<span class="sd">    The current curves properties are passed using the setCurves() method using</span>
+<span class="sd">    a dictionary with the following structure::</span>
+
+<span class="sd">        curvePropDict={name1:prop1, name2:prop2,...}</span>
+
+<span class="sd">    where propX is an instance of :class:`CurveAppearanceProperties`</span>
+<span class="sd">    When applying, a signal is emitted and the chosen properties are made</span>
+<span class="sd">    available in a similar dictionary. &quot;&quot;&quot;</span>
+
+    <span class="n">NAME_ROLE</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span>
+
+    <span class="n">controlChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">curveAppearanceChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+    <span class="n">CurveTitleEdited</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">,</span> <span class="s1">&#39;QString&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">curvePropDict</span><span class="o">=</span><span class="p">{},</span> <span class="n">showButtons</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">autoApply</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># try:</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CurvesAppearanceChooser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoApply</span> <span class="o">=</span> <span class="n">autoApply</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sStyleCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">NamedSymbolStyles</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lStyleCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NamedLineStyles</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cStyleCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NamedCurveStyles</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">showButtons</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">applyBT</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetBT</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">NamedColors</span><span class="p">:</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colorIcon</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">color</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">color</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__itemsDict</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCurves</span><span class="p">(</span><span class="n">curvePropDict</span><span class="p">)</span>
+        <span class="c1"># set the icon for the background button (stupid designer limitations</span>
+        <span class="c1"># forces to do it programatically)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bckgndBT</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:color-fill.svg&quot;</span><span class="p">))</span>
+
+        <span class="c1"># connections.</span>
+        <span class="c1"># Note: The assignToY1BT and assignToY2BT buttons are not connected to anything</span>
+        <span class="c1"># Their signals are handled by the Config dialog because we haven&#39;t got</span>
+        <span class="c1"># access to the curve objects here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">itemSelectionChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSelectedCurveChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">itemChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onItemChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applyBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onApply</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onReset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sStyleCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onSymbolStyleChanged</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sStyleCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lStyleCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cStyleCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sSizeSB</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lWidthSB</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sFillCB</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cFillCB</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onControlChanged</span><span class="p">)</span>
+        <span class="c1"># except Exception, e:</span>
+        <span class="c1"># print &quot;CURVE APPEARANCE EXCEPTION:&quot;,str(e)</span>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.setCurves"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.setCurves">[docs]</a>    <span class="k">def</span> <span class="nf">setCurves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curvePropDict</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Populates the list of curves from the properties dictionary. It uses</span>
+<span class="sd">        the curve title for display, and stores the curve name as the item data</span>
+<span class="sd">        (with role=CurvesAppearanceChooser.NAME_ROLE)</span>
+
+<span class="sd">        :param curvePropDict:   (dict) a dictionary whith keys=curvenames and</span>
+<span class="sd">                                values= :class:`CurveAppearanceProperties` object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span> <span class="o">=</span> <span class="n">curvePropDict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_curvePropDictOrig</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">curvePropDict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__itemsDict</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="c1"># create and insert the item</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QListWidgetItem</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">title</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__itemsDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NAME_ROLE</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;&lt;b&gt;Curve Name:&lt;/b&gt; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsSelectable</span> <span class="o">|</span>
+                          <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsUserCheckable</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsDragEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEditable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">setCurrentRow</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.onItemChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onItemChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onItemChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot used when an item data has changed&#39;&#39;&#39;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NAME_ROLE</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">previousTitle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">title</span>
+        <span class="n">currentTitle</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">previousTitle</span> <span class="o">!=</span> <span class="n">currentTitle</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">currentTitle</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">CurveTitleEdited</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">currentTitle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.updateTitles"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.updateTitles">[docs]</a>    <span class="k">def</span> <span class="nf">updateTitles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newTitlesDict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Updates the titles of the curves that are displayed in the curves list.</span>
+
+<span class="sd">        :param newTitlesDict: (dict&lt;str,str&gt;) dictionary with key=curve_name and</span>
+<span class="sd">                              value=title</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">newTitlesDict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">newTitlesDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__itemsDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">title</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.getSelectedCurveNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.getSelectedCurveNames">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectedCurveNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the curve names for the curves selected at the curves list.</span>
+
+<span class="sd">        *Note*: The names may differ from the displayed text, which</span>
+<span class="sd">        corresponds to the curve titles (this method is what you likely need if</span>
+<span class="sd">        you want to get keys to use in curves or curveProp dicts).</span>
+
+<span class="sd">        :return: (string_list) the names of the selected curves</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NAME_ROLE</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.showProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.showProperties">[docs]</a>    <span class="k">def</span> <span class="nf">showProperties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Updates the dialog to show the given properties.</span>
+
+<span class="sd">        :param prop: (CurveAppearanceProperties) the properties object</span>
+<span class="sd">                     containing what should be shown. If a given property is set</span>
+<span class="sd">                     to None, the corresponding widget will show a &quot;neutral&quot;</span>
+<span class="sd">                     display</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shownProp</span>
+        <span class="c1"># set the Style comboboxes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sStyleCB</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sStyleCB</span><span class="o">.</span><span class="n">findText</span><span class="p">(</span><span class="n">NamedSymbolStyles</span><span class="p">[</span><span class="n">prop</span><span class="o">.</span><span class="n">sStyle</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lStyleCB</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lStyleCB</span><span class="o">.</span><span class="n">findText</span><span class="p">(</span><span class="n">NamedLineStyles</span><span class="p">[</span><span class="n">prop</span><span class="o">.</span><span class="n">lStyle</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cStyleCB</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cStyleCB</span><span class="o">.</span><span class="n">findText</span><span class="p">(</span><span class="n">NamedCurveStyles</span><span class="p">[</span><span class="n">prop</span><span class="o">.</span><span class="n">cStyle</span><span class="p">]))</span>
+        <span class="c1"># set sSize and lWidth spinboxes. if prop.sSize is None, it puts -1</span>
+        <span class="c1"># (which is the special value for these switchhboxes)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sSizeSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">sSize</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lWidthSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">lWidth</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="c1"># Set the Color combo boxes. The item at index 0 is the empty one in</span>
+        <span class="c1"># the comboboxes Manage unknown colors by including them</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">sColor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">findData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">sColor</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>  <span class="c1"># if the color is not one of the supported colors, add it to the combobox</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>  <span class="c1"># set the index to what will be the added one</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_colorIcon</span><span class="p">(</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">sColor</span><span class="p">)),</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">sColor</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">lColor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">findData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">lColor</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>  <span class="c1"># if the color is not one of the supported colors, add it to the combobox</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>  <span class="c1"># set the index to what will be the added one</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_colorIcon</span><span class="p">(</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">lColor</span><span class="p">)),</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">lColor</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="c1"># set the Fill Checkbox. The prop.sFill value can be in 3 states: True,</span>
+        <span class="c1"># False and None</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">sFill</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">checkState</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PartiallyChecked</span>
+        <span class="k">elif</span> <span class="n">prop</span><span class="o">.</span><span class="n">sFill</span><span class="p">:</span>
+            <span class="n">checkState</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">checkState</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
+        <span class="c1"># set the Area Fill Checkbox. The prop.cFill value can be in 3 states:</span>
+        <span class="c1"># True, False and None</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">cFill</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">checkState</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PartiallyChecked</span>
+        <span class="k">elif</span> <span class="n">prop</span><span class="o">.</span><span class="n">cFill</span><span class="p">:</span>
+            <span class="n">checkState</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">checkState</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cFillCB</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="n">checkState</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.onControlChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onControlChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onControlChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot to be called whenever a control widget is changed. It emmits a</span>
+<span class="sd">        &#39;controlChanged signal and applies the change if in autoapply mode.</span>
+<span class="sd">        It ignores any arguments passed&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">controlChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoApply</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">onApply</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.onSelectedCurveChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onSelectedCurveChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onSelectedCurveChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates the shown properties when the curve selection changes&quot;&quot;&quot;</span>
+        <span class="n">plist</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                 <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSelectedCurveNames</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">plist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plist</span> <span class="o">=</span> <span class="p">[</span><span class="n">CurveAppearanceProperties</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shownProp</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">plist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showProperties</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shownProp</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_onSymbolStyleChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Slot called when the Symbol style is changed, to ensure that symbols</span>
+<span class="sd">        are visible if you choose them</span>
+
+<span class="sd">        :param text: (str) the new symbol style label</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sSizeSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">text</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;No symbol&quot;</span><span class="p">]:</span>
+            <span class="c1"># a symbol size of 0 is invisible and 1 means you should use</span>
+            <span class="c1"># cStyle=dots</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sSizeSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.getShownProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.getShownProperties">[docs]</a>    <span class="k">def</span> <span class="nf">getShownProperties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a copy of the currently shown properties and updates</span>
+<span class="sd">        self._shownProp</span>
+
+<span class="sd">        :return: (CurveAppearanceProperties)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="p">()</span>
+        <span class="c1"># get the values from the Style comboboxes. Note that the empty string</span>
+        <span class="c1"># (&quot;&quot;) translates into None</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">sStyle</span> <span class="o">=</span> <span class="n">ReverseNamedSymbolStyles</span><span class="p">[</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sStyleCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())]</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">lStyle</span> <span class="o">=</span> <span class="n">ReverseNamedLineStyles</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lStyleCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())]</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">cStyle</span> <span class="o">=</span> <span class="n">ReverseNamedCurveStyles</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cStyleCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())]</span>
+        <span class="c1"># get sSize and lWidth from the spinboxes</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">sSize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sSizeSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">lWidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lWidthSB</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">sSize</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">sSize</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">lWidth</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">lWidth</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Get the Color combo boxes. The item at index 0 is the empty one in</span>
+        <span class="c1"># the comboboxes</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">sColor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">sColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">lColor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">lColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+        <span class="c1"># get the sFill from the Checkbox.</span>
+        <span class="n">checkState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sFillCB</span><span class="o">.</span><span class="n">checkState</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">checkState</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PartiallyChecked</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">sFill</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">sFill</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">checkState</span><span class="p">)</span>
+        <span class="c1"># get the cFill from the Checkbox.</span>
+        <span class="n">checkState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cFillCB</span><span class="o">.</span><span class="n">checkState</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">checkState</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PartiallyChecked</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">cFill</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">cFill</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">checkState</span><span class="p">)</span>
+        <span class="c1"># store the props</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shownProp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.onApply"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onApply">[docs]</a>    <span class="k">def</span> <span class="nf">onApply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply does 2 things:</span>
+
+<span class="sd">            - It updates `self.curvePropDict` using the current values</span>
+<span class="sd">              choosen in the dialog</span>
+<span class="sd">            - It emits a curveAppearanceChanged signal that indicates the names</span>
+<span class="sd">              of the curves that changed and the new properties. (The names and</span>
+<span class="sd">              the properties are returned by the function as well)</span>
+
+<span class="sd">        :return: (tuple&lt;CurveAppearanceProperties,list&gt;) a tuple containing the</span>
+<span class="sd">                 curve properties and a list of the selected curve names (as a</span>
+<span class="sd">                 list&lt;str&gt;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSelectedCurveNames</span><span class="p">()</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getShownProperties</span><span class="p">()</span>
+        <span class="c1"># Update self.curvePropDict for selected properties</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">prop</span><span class="p">],</span>
+                                                                    <span class="n">conflict</span><span class="o">=</span><span class="n">CurveAppearanceProperties</span><span class="o">.</span><span class="n">inConflict_update_a</span><span class="p">)</span>
+        <span class="c1"># emit a (PyQt) signal telling what properties (first argument) need to</span>
+        <span class="c1"># be applied to which curves (second argument)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curveAppearanceChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+        <span class="c1"># return both values</span>
+        <span class="k">return</span> <span class="n">prop</span><span class="p">,</span> <span class="n">names</span></div>
+
+<div class="viewcode-block" id="CurvesAppearanceChooser.onReset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onReset">[docs]</a>    <span class="k">def</span> <span class="nf">onReset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;slot to be called when the reset action is triggered. It reverts to</span>
+<span class="sd">        the original situation&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCurves</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_curvePropDictOrig</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">clearSelection</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_colorIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="c1"># to do: create a border</span>
+        <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="n">pixmap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">color</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CurveAppearanceProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties">[docs]</a><span class="k">class</span> <span class="nc">CurveAppearanceProperties</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;An object describing the appearance of a TaurusCurve&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sStyle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sSize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sColor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sFill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">lStyle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lWidth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lColor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cStyle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">yAxis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cFill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creator of :class:`CurveAppearanceProperties`</span>
+<span class="sd">        Possible keyword arguments are:</span>
+<span class="sd">            - sStyle= symbolstyle</span>
+<span class="sd">            - sSize= int</span>
+<span class="sd">            - sColor= color</span>
+<span class="sd">            - sFill= bool</span>
+<span class="sd">            - lStyle= linestyle</span>
+<span class="sd">            - lWidth= int</span>
+<span class="sd">            - lColor= color</span>
+<span class="sd">            - cStyle= curvestyle</span>
+<span class="sd">            - cFill= bool</span>
+<span class="sd">            - yAxis= axis</span>
+<span class="sd">            - visible = bool</span>
+<span class="sd">            - title= title</span>
+
+<span class="sd">        Where:</span>
+<span class="sd">            - color is a color that QColor() understands (i.e. a</span>
+<span class="sd">              Qt.Qt.GlobalColor, a color name, or a Qt.Qcolor)</span>
+<span class="sd">            - symbolstyle is one of Qwt5.QwtSymbol.Style</span>
+<span class="sd">            - linestyle is one of Qt.Qt.PenStyle</span>
+<span class="sd">            - curvestyle is one of Qwt5.QwtPlotCurve.CurveStyle</span>
+<span class="sd">            - axis is one of Qwt5.QwtPlot.Axis</span>
+<span class="sd">            - title is something that Qwt5.QwtText() accepts in its constructor</span>
+<span class="sd">              (i.e. a QwtText, QString or any basestring)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sStyle</span> <span class="o">=</span> <span class="n">sStyle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sSize</span> <span class="o">=</span> <span class="n">sSize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sColor</span> <span class="o">=</span> <span class="n">sColor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sFill</span> <span class="o">=</span> <span class="n">sFill</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lStyle</span> <span class="o">=</span> <span class="n">lStyle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lWidth</span> <span class="o">=</span> <span class="n">lWidth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lColor</span> <span class="o">=</span> <span class="n">lColor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cStyle</span> <span class="o">=</span> <span class="n">cStyle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cFill</span> <span class="o">=</span> <span class="n">cFill</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yAxis</span> <span class="o">=</span> <span class="n">yAxis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="n">visible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyList</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sStyle&quot;</span><span class="p">,</span> <span class="s2">&quot;sSize&quot;</span><span class="p">,</span> <span class="s2">&quot;sColor&quot;</span><span class="p">,</span> <span class="s2">&quot;sFill&quot;</span><span class="p">,</span> <span class="s2">&quot;lStyle&quot;</span><span class="p">,</span> <span class="s2">&quot;lWidth&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;lColor&quot;</span><span class="p">,</span> <span class="s2">&quot;cStyle&quot;</span><span class="p">,</span> <span class="s2">&quot;cFill&quot;</span><span class="p">,</span> <span class="s2">&quot;yAxis&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;visible&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Just for debug&quot;&quot;&quot;</span>
+        <span class="nb">print</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">77</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyList</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="n">k</span> <span class="o">+</span> <span class="s2">&quot;= &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">77</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="CurveAppearanceProperties.inConflict_update_a"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.inConflict_update_a">[docs]</a>    <span class="k">def</span> <span class="nf">inConflict_update_a</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This  function can be passed to CurvesAppearance.merge()</span>
+<span class="sd">        if one wants to update prop1 with prop2 except for those</span>
+<span class="sd">        attributes of prop2 that are set to None&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">a</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">b</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="CurveAppearanceProperties.inConflict_none"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.inConflict_none">[docs]</a>    <span class="k">def</span> <span class="nf">inConflict_none</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;In case of conflict, returns None&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="CurveAppearanceProperties.conflictsWith"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.conflictsWith">[docs]</a>    <span class="k">def</span> <span class="nf">conflictsWith</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns a list of attribute names that are in conflict between this self and other&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">aname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyList</span><span class="p">:</span>
+            <span class="n">vself</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aname</span><span class="p">)</span>
+            <span class="n">vother</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">aname</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">vself</span> <span class="o">!=</span> <span class="n">vother</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">strict</span> <span class="ow">or</span> <span class="ow">not</span><span class="p">(</span><span class="n">vself</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">vother</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aname</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CurveAppearanceProperties.merge"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plist</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">conflict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns a CurveAppearanceProperties object formed by merging a list</span>
+<span class="sd">        of other CurveAppearanceProperties objects</span>
+
+<span class="sd">        **Note:** This is a class method, so it can be called without previously</span>
+<span class="sd">        instantiating an object</span>
+
+<span class="sd">        :param plist: (sequence&lt;CurveAppearanceProperties&gt;) objects to be merged</span>
+<span class="sd">        :param attributes: (sequence&lt;str&gt;) the name of the attributes to</span>
+<span class="sd">                           consider for the merge. If None, all the attributes</span>
+<span class="sd">                           will be merged</span>
+<span class="sd">        :param conflict: (callable) a function that takes 2 objects (having a</span>
+<span class="sd">                         different attribute)and returns a value that solves the</span>
+<span class="sd">                         conflict. If None is given, any conflicting attribute</span>
+<span class="sd">                         will be set to None.</span>
+
+<span class="sd">        :return: (CurveAppearanceProperties) merged properties</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">plist</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;plist must contain at least 1 member&quot;</span><span class="p">)</span>
+        <span class="n">plist</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">plist</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">plist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">attributes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sStyle&quot;</span><span class="p">,</span> <span class="s2">&quot;sSize&quot;</span><span class="p">,</span> <span class="s2">&quot;sColor&quot;</span><span class="p">,</span> <span class="s2">&quot;sFill&quot;</span><span class="p">,</span> <span class="s2">&quot;lStyle&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;lWidth&quot;</span><span class="p">,</span> <span class="s2">&quot;lColor&quot;</span><span class="p">,</span> <span class="s2">&quot;cStyle&quot;</span><span class="p">,</span> <span class="s2">&quot;cFill&quot;</span><span class="p">,</span> <span class="s2">&quot;yAxis&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">conflict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">conflict</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="o">.</span><span class="n">inConflict_none</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">CurveAppearanceProperties</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="n">alist</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plist</span><span class="p">]</span>
+            <span class="n">p</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">alist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="n">alist</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">if</span> <span class="n">alist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">ai</span><span class="p">:</span>
+                    <span class="c1"># print &quot;MERGING:&quot;,alist[0],ai,conflict(alist[0],ai)</span>
+                    <span class="n">p</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">conflict</span><span class="p">(</span><span class="n">alist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ai</span><span class="p">))</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">p</span></div>
+
+<div class="viewcode-block" id="CurveAppearanceProperties.applyToCurve"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.applyToCurve">[docs]</a>    <span class="k">def</span> <span class="nf">applyToCurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curve</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;applies the current properties to a given curve</span>
+<span class="sd">        If a property is set to None, it is not applied to the curve&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">DeprecationWarning</span><span class="p">(</span>
+            <span class="s2">&quot;CurveAppearanceProperties.applyToCurve() is deprecated. Use TaurusCurve.setAppearanceProperties() instead&quot;</span><span class="p">)</span>
+        <span class="n">curve</span><span class="o">.</span><span class="n">setAppearanceProperties</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+
+<span class="c1">#        s=curve.symbol()</span>
+<span class="c1">#        if self.sStyle is not None: s.setStyle(symbol[self.sStyle])</span>
+<span class="c1">#        if self.sSize is not None: s.setSize(self.sSize)</span>
+<span class="c1">#        if self.sColor is not None: s.brush().setColor(Qt.QColor(self.sColor))</span>
+<span class="c1">#        if self.sFill is not None:</span>
+<span class="c1">#            if self.sFill: s.brush().setStyle(Qt.Qt.SolidPattern)</span>
+<span class="c1">#            else: s.brush().setStyle(Qt.Qt.NoBrush)</span>
+<span class="c1">#        p=curve.pen()</span>
+<span class="c1">#        if self.lStyle is not None: p.setStyle(lineStyles[self.lStyle])</span>
+<span class="c1">#        if self.lWidth is not None: p.setWidth(self.lWidth)</span>
+<span class="c1">#        if self.lColor is not None: p.setColor(Qt.QColor(self.lColor))</span>
+<span class="c1">#        curveStyle=curve.style()</span>
+<span class="c1">#        if self.cStyle is not None: curveStyle.setStyle(self.cStyle)</span>
+<span class="c1">#        if self.cFill is not None:</span>
+<span class="c1">#            if self.cFill:</span>
+<span class="c1">#                color = p.color()</span>
+<span class="c1">#                color.setAlphaF(0.5)</span>
+<span class="c1">#                b = self.brush()</span>
+<span class="c1">#                b.setColor(color)</span>
+<span class="c1">#                b.setStyle(Qt.Qt.SolidPattern)</span>
+<span class="c1">#            else:</span>
+<span class="c1">#                c.brush().setStyle(Qt.Qt.NoBrush)</span>
+<span class="c1">#        if self.yAxis is not None: curve.setYAxis(self.yAxis)</span>
+<span class="c1">#        if self.title is not None: curve.setTitle(Qwt5.QwtText(self.title))</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.1.2-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
