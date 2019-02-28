@@ -568,8 +568,10 @@ class AttributeEventWait(object):
 
     def clearEventSet(self):
         "Clears the internal event buffer"
+        self.lock()
         self._event_set.clear()
         self._last_val = None
+        self.unlock()
 
     def eventReceived(self, s, t, v):
         """Event listener method for the underlying attribute. Do not call this
